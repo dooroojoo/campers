@@ -10,5 +10,4 @@ public class CampersApplication {
 		SpringApplication.run(CampersApplication.class, args);
 	}
 	
-	String str = "";
 }
