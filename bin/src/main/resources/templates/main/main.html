@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>main</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<h1>Rest API</h1>
+	
+	<h3>Restful 서비스(API)</h3>
+	
+	<pre>
+	- REST 아키텍쳐를 준수하는 서비스
+	- Spring MVC Controller에서는 요청받은 내용을 처리하고 데이터를 가공해서 처리 결과를 "특정 플랫폼"에 적합한 형태의 View로 만들어서 응답
+	- 하지만 Restful 서비스에서는 데이터만 처리하거나 응답 데이터가 있다면 JSON/XML로 응답함(View와는 무관)
+	=> 클라이언트는 규칙에 맞게 작업을 요청하면 되고 서버는 어떤 플랫폼에서 어떻게 사용할 것인지를 신경쓰지 않고 요청 받은 데이터만
+	   처리하고 응답하면 됨. 클라이언트는 받은 데이터를 알아서 가공해서 사용함. 즉, 멀티 플랫폼에서 사용 가능.
+	   이런 특성으로, 사용자 플랫폼과 view에 상관하지 않고 요청한 데이터만 응답해주는 오픈 API에서 Restful한 서비스 방식을 많이 사용함.
+	</pre>
+
+	<!-- 
+		rest라는 소프트웨어 만드는 아키텍쳐
+		Controller : 화면에서 값을 받아서 메소드 안에서 서비스로 전달. 리턴 뷰로 포워딩/리다이렉트
+		"응답 = 화면"으로 처리해왔지만
+		API의 응답 데이터 형식이 보통 Json, xml
+		Json 형식의 데이터, xml 형식의 데이터 응답에 대해서 화면에 대한 고려를 전혀하지 않는 것 : restful -> rest 아키텍처 형식을 맞춤
+		return 을 화면으로 하지 않는 것의 차이?
+		
+		REST란 어떤 자원에 대해 CRUD(Create, Read, Update, Delete) 연산을 수행하기 위해 URI(Resource)로 요청을 보내는 것
+		데이터만 주고 받기 때문에 가벼움
+		
+	 -->
+	 
+	 <h3>Rest(Representational Safe Transfer) : 보여지는 것과 무관함</h3>
+	 <pre>
+	 - 데이터를 주고 받는 방식의 아키텍처(디자인 패턴)
+	 
+	 - HTTP URI를 통한 자원의 명시
+	 	* url?category=1&name=value 와 같은 쿼리스트링 방식이 아니라 url/category/1과 같은 방식을 사용
+	 	* 대문자 사용 지양
+	 	* _ 대신 - 사용
+	 	* URL 마지막에 / 사용하지 않음
+	 	* 파일 확장자 포함하지 않음
+	 	* 행위를 포함하지 않음(insert, update, delete)
+	 	* 가급적 명사 사용(동사 사용 지양)
+	 
+	 - HTTP Method(Get, Post, Put, Delete)로 해당 자원을 제어하는 행위를 표현
+	 	* GET - Read(Select) : URL/1
+	 	* POST - Create(Insert) : URL
+	 	* PUT - Update : URL/1
+	 	* DELETE - Delete : URL/1
+	 </pre>
+	 
+	 <h3>1. 도서 조회(GET)</h3>
+	 <pre>
+	 GET book/category/novel
+	 GET book/category/essay
+	 GET book/category/poem
+	 GET book/category/magazine
+	 GET book/category/dictionary
+	 </pre>
+	 
+	 <form id="bookCategoryForm">
+	 	<input type="radio" name="category" id="novel" value="novel" checked>
+	 	<label for="novel">소설</label>
+	 	<input type="radio" name="category" id="essay" value="essay">
+	 	<label for="essay">수필</label>
+	 	<input type="radio" name="category" id="poem" value="poem">
+	 	<label for="poem">시</label>
+	 	<input type="radio" name="category" id="magazine" value="magazine">
+	 	<label for="magazine">잡지</label>
+	 	<input type="radio" name="category" id="dictionary" value="dictionary">
+	 	<label for="dictionary">사전</label>
+	 	<input type="button" value="유형별 도서 조회">
+	 	<div class="result"></div>
+	 </form>
+	 
+	 <script>
+	 	$(function(){
+	 		$("#bookCategoryForm input[type=button]").on('click', function(){
+	 			
+	 			let category = $("#bookCategoryForm [name=category]:checked").val();
+	 			
+	 			$.ajax({
+	 				url : "/book/category/" + category,
+	 				type : "get",
+	 				dataType : "json",
+	 				success : function(data) {
+	 					console.log(data);
+	 					// caption 제목과 같은 애
+	 					let html = "<table><caption>" + category + "의 조회 결과</caption>"
+	 								+ "<tr><th>아이디</th><th>제목</th><th>저자</th><th>출판사</th></tr>";
+	 					
+	 					for(let index in data){
+	 						html += "<tr><td>" + data[index].id + "</td>"
+	 								+ "<td>" + data[index].title + "</td>"
+	 								+ "<td>" + data[index].author + "</td>"
+	 								+ "<td>" + data[index].publisher + "</td></tr>";
+	 					}
+	 					
+	 					html += "</table>";
+	 					
+	 					$("#bookCategoryForm .result").html(html);
+	 					
+	 				},
+	 				error : function(e){
+	 					console.log(e);
+	 				}
+	 			});
+	 		});
+	 	});
+	 </script>
+	 
+	 <!-- 
+		https://yejip.com/web/2020-12-14-ajax1/
+		@ResponseBody를 쓰면 json이 아니여도 String 타입도 그냥 넘어감
+	 -->
+	 
+	 <h3>2. 도서 등록(POST)</h3>
+	 <pre>
+	 POST book
+	 </pre>
+	 <form id="bookEnrollForm">
+	      <label>유형 : </label>
+	      <select name="category">
+	         <option value="novel">소설</option>
+	         <option value="essay">수필</option>
+	         <option value="poem">시</option>
+	         <option value="magazine">잡지</option>
+	         <option value="dictionary">사전</option>
+	      </select>
+	      <label>제목 : </label>
+	      <input type="text" name="title" required>
+	      <label>저자 : </label>
+	      <input type="text" name="author" required>
+	      <label>출판사 : </label>
+	      <input type="text" name="publisher" required>
+	      <input type="button" value="도서등록">
+	</form>
+
+	 
+	 <script>
+         $(function(){
+            $("#bookEnrollForm input[type=button]").on('click',function(){
+               let param = {};
+               // {} : key와 value로 이루어진 객체 생성 
+               param.category = $("#bookEnrollForm [name=category]").val();
+               param.title = $("#bookEnrollForm [name=title]").val();
+               param.author = $("#bookEnrollForm [name=author]").val();
+               param.publisher = $("#bookEnrollForm [name=publisher]").val();
+            
+               console.log(param);
+               
+               $.ajax({
+            	   url : "/book",
+            	   data : JSON.stringify(param),
+            	   dataType : "json",
+            	   contentType : "application/json; charset=utf-8",
+            	   /* data : param, [test] */
+            	   type : "post",
+            	   success : function(data) {
+            		   console.log($("#bookEnrollForm")[0]);
+            		   /* alert(data); [test] */
+            		   alert(data.msg);
+            		   
+            		   // 한개 밖에 없으니까 0번 인덱스 -> reset 지움
+            		   // [0]가 없으면 안됨
+            		   // 아이디 값을 가진 엘리먼트 (아이디가 중복되는 엘리먼트를 만들면 안됨:클래스는 인덱스됨)
+            		   $("#bookEnrollForm")[1].reset();
+            		   
+            	   },
+            	   error : function(e){
+            		   console.log(e);
+            	   }
+               });
+            })
+         })
+         
+   </script>
+   
+   <h3>3. 도서 수정(PUT)</h3>
+   <pre>
+   GET book/1
+   </pre>
+   <form id="bookSearchForm">
+	      <label>아이디 : </label>
+	      <input type="text" name="id" required>
+	      <input type="button" value="아이디로 도서 조회">
+	<div class="result2"></div>
+	</form>
+	
+	<script>
+         $(function(){
+            $("#bookSearchForm input[type=button]").on('click',function(){
+            	let id = $("#bookSearchForm [name=id]").val();
+            	
+               console.log(id);
+               
+               $.ajax({
+            	   url : "/book/" + id,
+            	   dataType : "json",
+            	   contentType : "application/json; charset=utf-8",
+            	   type : "get",
+            	   success : function(data) {
+            		   
+            		   console.log(data);
+            		   
+            		   if(data.id == 0) {
+            			   alert("해당하는 도서 정보가 없습니다.");
+            			   $("#bookUpdateForm")[0].reset();
+            		   } else {
+            			   let form = $("#bookUpdateForm");
+            			   // form.find() : form 하위 후손요소 중에 "선택자"에 해당하는 요소를 찾는다
+            			   // prop() : 속성 값을 바꿈 
+            			   form.find("[name=id]").val(data.id);
+            			   form.find("option[value="+ data.category +"]").prop("selected", true);
+            			   form.find("[name=title]").val(data.title);
+            			   form.find("[name=author]").val(data.author);
+            			   form.find("[name=publisher]").val(data.publisher);
+            		   }
+						
+            	   },
+            	   error : function(e){
+            		   console.log(e);
+            	   }
+               });
+            });
+         });
+   </script>
+   
+   <pre>
+   PUT book/1
+   </pre>
+   <form id="bookUpdateForm">
+		<input type="hidden" name="id">
+		<label>유형 : </label>
+	      <select name="category">
+	         <option value="novel">소설</option>
+	         <option value="essay">수필</option>
+	         <option value="poem">시</option>
+	         <option value="magazine">잡지</option>
+	         <option value="dictionary">사전</option>
+	      </select>
+	      <label>제목 : </label>
+	      <input type="text" name="title" required>
+	      <label>저자 : </label>
+	      <input type="text" name="author" required>
+	      <label>출판사 : </label>
+	      <input type="text" name="publisher" required>
+	      <input type="button" value="도서수정">
+	</form>
+	
+	<script>
+		$(function(){
+			$("#bookUpdateForm input[type=button]").on('click', function(){
+				let param = {};
+				param.category = $("#bookUpdateForm [name=category]").val();
+				param.title = $("#bookUpdateForm [name=title]").val();
+				param.author = $("#bookUpdateForm [name=author]").val();
+				param.publisher = $("#bookUpdateForm [name=publisher]").val();
+				
+				let id = $("#bookUpdateForm [name=id]").val();
+				
+				$.ajax({
+					url : "/book/" + id,
+					// json 형식으로 변환 : 넘길 데이터
+					data : JSON.stringify(param),
+					// json 타입으로 받아오겠다
+					dataType : "json",
+					// json 타입으로 내용이 넘어간다 : 넘길 데이터 타입
+					contentType : "application/json; charset=utf-8",
+					type : "put",
+					success : function(data) {
+						console.log(data);
+						alert(data.msg);
+						console.log(data.dataType);
+						
+						$("#bookUpdateForm")[0].reset();
+						$("#bookSearchForm")[0].reset();
+						
+						
+					},
+					error : function(e) {
+						console.log(e);
+					}
+					
+				});
+			});
+		});
+	</script>
+	
+	<h3>4. 도서 삭제(DELETE)</h3>
+	<pre>
+	DELETE book/1
+	</pre>
+	
+	<form id="bookDeleteForm">
+		<label>아이디 : </label>
+		<input type="text" name="id">
+		<input type="button" value="아이디로 도서삭제">
+	</form>
+	
+	<script>
+		$(function(){
+			$("#bookDeleteForm input[type=button]").on('click', function(){
+				if(!confirm("정말 삭제하시겠습니까?")) return;
+				let id = $("#bookDeleteForm [name=id]").val();
+				
+				$.ajax({
+					url : "/book/" + id,
+					dataType : "json",
+					type : "delete",
+					success : function(data) {
+						alert(data.msg);
+						$("#bookDeleteForm")[0].reset();
+					},
+					error : function(e){
+						console.log(e);
+					}
+				});
+				
+			});
+		});
+	</script>
+	
+</body>
+</html>

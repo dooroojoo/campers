@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>header</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- 외부 css -->
+    <link href="resources/css/common/header-footer-style.css" rel="stylesheet">
+    <!-- 외부 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- header -->
+    <div class="header">
+        <header>
+        <div class="sidebar-menu"></div>
+       </header>
+       
+          <section id="menu-section">
+            <ul class="sidebar-list">
+              <li class="sidebar"><a href="#">캠핑장 검색</a></li>
+              <li class="sidebar"><a href="#">예약 확인</a></li>
+              <li class="sidebar"><a href="#">자유게시판</a></li>
+              <li class="sidebar"><a href="#">고객센터</a></li>
+            </ul>
+          </section>
+        <div class="main-logo">
+          <a href="#"><img src="resources/images/common/header_footer/logo.png"> </a>
+        </div>
+    
+        <div class="join-icon">
+          <a href="#"><img src="resources/images/common/header_footer/join.png"></a>
+        </div>
+    
+        <div class="mypage-icon">
+          <a href="#"><img src="resources/images/common/header_footer/member.png"></a>
+        </div>
+    
+      </div>
+
+    
+    
+    <!-- 사이드 메뉴 효과 스크립트 -->
+    <script>
+      const menuToggle = document.querySelector('.sidebar-menu');
+      const menuBar = document.getElementById('menu-section');
+
+     menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('close');
+      menuBar.classList.toggle('close');
+    });
+
+  </script>
+  
+</body>
+</html>

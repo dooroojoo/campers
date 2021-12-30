@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+html{
+    width: 100%;
+    font-size: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+  color: rgb(231, 111, 82);
+}
+
+img {
+  max-width: 100%;
+}
+
+body{
+  margin : 0px;
+}
+
+/* 헤더 */
+.header {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-bottom: 5%;
+
+  }
+
+/* 메뉴바 아이콘 */
+.sidebar-menu{
+  width: 30px;
+  height: 30px;
+  background: url("../image/option.png");
+  background-size: 30px;
+  margin-left: 50%;
+  cursor: pointer;
+  z-index: 999;
+  transition: 0.5s;
+}
+
+.sidebar-menu.close{
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background: url("../image/option2.png");
+  background-size: 30px;
+  margin-left: 50%;
+  cursor: pointer;
+  z-index: 999;
+  transition: 0.5s;
+}
+
+/* 로고 */
+.main-logo{
+  width: 140px;
+  text-align: center;
+  display: block; 
+  margin: 0px auto;
+}
+
+.main-logo img{
+  width: 140px;
+  margin-left: 18px;
+}
+
+/* 사이드바 메뉴 */
+.sidebar-list { 
+  margin : 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+#menu-section{
+  position: absolute;
+  top: 0px;
+  left: -230px;
+  width: 200px;
+  height: 100%;
+  min-height: 100vh;
+  background-color: white;
+  transition: left 0.5s ease-out;
+  box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+}
+
+#menu-section.close{
+  position: absolute;
+  top: 0%;
+  left: 0px;
+  width: 200px;
+  height: 100%;
+  background-color: white;
+  z-index: 0;
+  transition: left 0.5s ease-out;
+}
+
+.sidebar-list{
+  margin-top: 100%;
+  padding-left: 45px;
+}
+
+.sidebar{
+  font-size: 18px;
+  margin: 30px 0;
+}
+
+.sidebar:nth-child(1){
+  margin-top: 50px;
+}
+
+.sidebar a:hover{
+  color: rgb(231, 111, 82);
+  text-decoration: none;
+}
+
+
+/* 회원가입, 마이페이지 아이콘 */
+.join-icon img{
+  position: relative;
+  right: 330%;
+  bottom: -50px;
+  width: 35px;
+}
+
+.mypage-icon img{
+  position: relative;
+  right: 300%;
+  bottom: -50px;
+  width: 30px;
+}
+
+
+/* 푸터 */
+
+.footer {
+  max-width: 100%;
+  height: 130px;
+  background-color: #F2F2F2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.footer-logo{
+  width: 120px;
+  margin-left: 32%;
+  margin-right: 2%;
+}
+
+.footer-logo img{
+  width: 120px;
+}
+
+.text-link {
+  width: 100%;
+}
+
+.text-link > ul > li{
+  font-size: 14px;
+  list-style-type: none;
+  display: inline;
+  margin-right: 3%;
+}
+
+.footer-text{
+  font-size: 12px;
+  color: #adadad;
+}
