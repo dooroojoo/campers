@@ -1,0 +1,55 @@
+.content{
+    width: 1100px;
+    margin: auto;
+}
+
+.changinfo{
+    width: 1100px;
+}
+
+.changinfo_h1{
+    border-bottom: 3px solid gray;
+    margin-top: 30px;
+}
+
+.changinfo_content_div{
+    width: 600px;
+    height: 250px;
+    margin-top: 50px;
+    margin-left: 25%;
+    background: lightgray;
+}
+
+.changinfo_content_header{
+    padding : 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-bottom: 3px solid gray;
+    text-align: center;
+    color: red;
+}
+
+.changinfo_privacy{
+    font-weight: bold;
+    margin-left: 120px;
+}
+
+
+.changinfoPwdModify_pwdbutton{
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-left: 100px;
+    background: black;
+    color: white;
+    font-weight: bold;
+    width: 10rem;
+    height: 2.5rem;
+}
+
+.check_pwd_form{
+    margin-left: 50px;
+}
+
+.check_pwd_form2{
+    margin-left: 13px;
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mypage_camp_enrollment</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- 외부 css -->
+    <link href="../header-footer/css/mypage_camp_enrollment.css" rel="stylesheet">
+    <!-- 외부 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="content">
+        <div class="mypage_camp_enrollment">
+            <header class="mypage_camp_enrollment_header">
+                <h1 class="mypage_camp_enrollment_h1">캠핑장 등록</h1>
+            </header>
+        </div>
+        <div class="mypage_camp_enrollment_content">
+            <form>
+            <table class="mypage_camp_enrollment_table">
+                <tr class="mypage_camp_enrollment_table_header">
+                    <th colspan="2">캠핑장 등록 정보 신청서</th>
+                </tr>
+                <tr>
+                    <th>캠핑장 이름</th>
+                    <td><input class="textbox" type="text" placeholder="캠핑장 이름을 입력하세요."></td>
+                </tr>
+                <tr>
+                    <th>캠핑장 주소</th>
+                    <td><input class="textbox" type="text" placeholder="캠핑장 주소를 입력하세요."></td>
+                </tr>
+                <tr>
+                    <th>사업장 대표번호</th>
+                    <td><input class="textbox" type="text" placeholder="사업장 대표번호를 입력하세요."></td>
+                </tr>
+                <tr>
+                    <th>사업장 형태</th>
+                    <td><input type="checkbox" checked>카라반 <input type="checkbox">캠핑 <input type="checkbox">글램핑</td>
+                </tr>
+                <tr>
+                    <th>사업자 등록증</th>
+                    <td><input type="file"></td>
+                </tr>
+                <tr>
+                    <th>사업장 사진</th>
+                    <td><input type="file">
+                </tr>
+                <tr>
+                    <th>사업장 계좌번호</th>
+                    <td><select class="textbox2" placeholder="은행">
+                            <option value="1">농협</option>
+                            <option value="">신한은행</option>
+                            <option value="1">국민은행</option>
+                        </select>
+                        <input class="textbox" type="text" placeholder="계좌번호">
+                    </td>
+                </tr>
+                <tr>
+                    <th>사업장 주요시설</th>
+                    <td><input type="checkbox" checked>샤워실 <input type="checkbox">화장실 <input type="checkbox">개수대 
+                        <input type="checkbox">매점 <input type="checkbox">전기 <input type="checkbox">와이파이
+                    </td>
+                </tr>
+                <tr>
+                    <th>사업장 이용시설</th>
+                    <td><input type="checkbox" checked>바베큐장 <input type="checkbox">수영장
+                        <input type="checkbox">조식제공 <input type="checkbox">반려동물
+                    </td>
+                </tr>
+                <tr>
+                    <th>사업장 이용시간</th>
+                    <td>입실시간
+                        <select class="intime">
+                            <option value="in0">00:00</option>
+                            <option value="in1">01:00</option>
+                            <option value="in2">02:00</option>
+                            <option value="in3">03:00</option>
+                            <option value="in4">04:00</option>
+                            <option value="in5">05:00</option>
+                            <option value="in6">06:00</option>
+                            <option value="in7">07:00</option>
+                            <option value="in8">08:00</option>
+                            <option value="in9" selected>09:00</option>
+                            <option value="in10">10:00</option>
+                            <option value="in11">11:00</option>
+                            <option value="in12">12:00</option>
+                            <option value="in13">13:00</option>
+                            <option value="in14">14:00</option>
+                            <option value="in15">15:00</option>
+                            <option value="in16">16:00</option>
+                            <option value="in17">17:00</option>
+                            <option value="in18">18:00</option>
+                            <option value="in19">19:00</option>
+                            <option value="in20">20:00</option>
+                            <option value="in21">21:00</option>
+                            <option value="in22">22:00</option>
+                            <option value="in23">23:00</option>
+                        </select>
+                        퇴실시간
+                        <select class="outtime">
+                            <option value="out0">00:00</option>
+                            <option value="out1">01:00</option>
+                            <option value="out2">02:00</option>
+                            <option value="out3">03:00</option>
+                            <option value="out4">04:00</option>
+                            <option value="out5">05:00</option>
+                            <option value="out6">06:00</option>
+                            <option value="out7">07:00</option>
+                            <option value="out8">08:00</option>
+                            <option value="out9">09:00</option>
+                            <option value="out10">10:00</option>
+                            <option value="out11">11:00</option>
+                            <option value="out12">12:00</option>
+                            <option value="out13" selected>13:00</option>
+                            <option value="out14">14:00</option>
+                            <option value="out15">15:00</option>
+                            <option value="out16">16:00</option>
+                            <option value="out17">17:00</option>
+                            <option value="out18">18:00</option>
+                            <option value="out19">19:00</option>
+                            <option value="out20">20:00</option>
+                            <option value="out21">21:00</option>
+                            <option value="out22">22:00</option>
+                            <option value="out23">23:00</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>사업장 운영정책</th>
+                    <td>
+                        <textarea cols="90" rows="10" placeholder="가이드 외 사업장 운영정책을 입력 해주세요.
+1. 코로나 4단계 기간에는 동거가족 외 4인 이상의 캠핑을 금지합니다.
+2. 안전주의사항 : 개별숯 화롯대 장작 개인화기 일체사용금지 (안전과 화재예방을 위해서 개별숯 화롯대 장작 개인화기 바베큐장 외 사용 금지합니다.)
+3. 반려동물 주의사항 : 반려동물 구역 외 출입금지
+4. 이용객 외 방문객, 방문차량 허용되지 않습니다.
+5. 침실 내에서 취사를 금지합니다
+6. 가이드 외 사업장 세부정보를 입력 해주세요
+7. 바베큐비용 : 바베큐 그릴 + 숯 + 석쇠 현장결제 가격
+8. 장작 : 장작 현장결제 가격
+9. 샤워장 이용 규칙 : 온수 유무, 사용시간 등등
+10. 차량주차유무 : 차량 추가 주차 가능여부 입력 해주세요. (차량 추가 시 금액)"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>사업장 소개</th>
+                    <td><textarea cols="90" rows="10" placeholder="사업장 소개를 입력 해주세요."></textarea></td>
+                </tr>
+                <tr>
+                    <th>객실 최대인원</th>
+                    <td><input class="textbox" type="text" placeholder="객실 최대인원을 입력해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 이름(호수)</th>
+                    <td><input class="textbox" type="text" placeholder="객실 이름을 입력해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 가격</th>
+                    <td><input class="textbox" type="text" placeholder="객실 가격을 입력해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 크기</th>
+                    <td><input class="textbox" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 소개</th>
+                    <td><input class="textbox" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 사진</th>
+                    <td><input type="file"></td>
+                </tr>
+                <tr>
+                    <th>객실 바닥 형태</th>
+                    <td><input type="radio" name="1" checked>데크 <input type="radio" name="1">잔디 <input type="radio" name="1">파쇄석 </td>
+                </tr>
+                <tr>
+                    <th>객실 주차 여부</th>
+                    <td><input type="radio" name="2" checked>텐트 옆 주차 <input type="radio" name="2">주차장 주차 <input type="radio" name="2">외부 주차</td>
+                </tr>
+                <tr>
+                    <th>객실 형태</th>
+                    <td><input type="radio" name="3" checked>카라반 <input type="radio" name="3">캠핑 <input type="radio" name="3">글램핑</td>
+                </tr>
+                <tr>
+                    <th>객실 수량</th>
+                    <td><input class="textbox2" type="number" placeholder="1"></td>
+                </tr>
+            </table>
+            </form>
+            <div class="room_plus">
+                <img class="room_plus_img" src="image/plus.png">객실 추가하기
+            </div>
+            <div class="camp_plus">
+                <input class="camp_plus_button" type="submit" value="캠핑장 등록하기">
+            </div>    
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+.content{
+    width: 1100px;
+    margin: auto;
+}
+
+.mypage_camp_management_no{
+    width: 1100px;
+}
+
+.mypage_camp_management_no_h1{
+    border-bottom: 3px solid gray;
+    margin-top: 30px;
+}
+
+.mypage_camp_management_no_content_div{
+    width: 500px;
+    height: 150px;
+    margin-top: 3%;
+    margin-left: 27%;
+    background: lightgray;
+}
+
+.mypage_camp_management_no_content_header{
+    padding : 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-bottom: 3px solid gray;
+    text-align: center;
+    color: red;
+}
+
+.no_message{
+    margin-left: 32%;
+}
+
+.mypage_camp_management_no_textarea{
+    margin-top : 10px;
+    margin-right: 30px;
+}
+
+.mypage_camp_management_no_privacy{
+    font-weight: bold;
+    margin-left: 4.5rem;
+    margin-top: 0.5rem;
+}
+
+.out_button{
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-left: 100px;
+    background: black;
+    color: white;
+    font-weight: bold;
+    width: 8rem;
+    height: 2rem;
+}
