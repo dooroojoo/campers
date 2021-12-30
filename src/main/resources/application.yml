@@ -1,6 +1,6 @@
 # server port config
 server:
-  port: 8001
+  port: 8080
   
 # oracle driver config
 spring:
