@@ -1,0 +1,23 @@
+# server port config
+server:
+  port: 8001
+  
+# oracle driver config
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: campers
+    password: campers
+
+# mybatis config
+mybatis:
+  mapper-locations: mappers/**/*.xml
+# /*  : 경로의 바로 하위에 있는 모든 경로 매핑. ex) AAA/* : AAA/BBB, AAA/CCC 해당, AAA/BBB/CCC 해당하지 않음  
+# /** : 경로의 모든 하위 경로(디렉토리) 매핑  ex) AAA/** : AAA/BBB, AAA/CCC, AAA/BBB/CCC, AAA/BBB/CCC/.../.../... 전부 해당     
+
+# logging level (root level - 전역설정)
+logging:
+  level:
+    root: info
+#logging level (package level - 지역설정)
