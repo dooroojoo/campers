@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- 외부 css -->
+    <link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
+    <link href="/resources/css/main/main-style.css" rel="stylesheet" type="text/css">
+    <!-- 슬라이드 라이브러리 -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <!-- 캘린더 라이브러리 -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!-- 외부 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">	
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nunito:wght@300&display=swap" rel="stylesheet">
+      <title>Document</title>
+    <style>
+        body {
+        height: 100vh;
+        background-image: url('/resources/images/member/camping7.jpg');
+        background-repeat : no-repeat;
+        background-size : cover;
+        min-height: 1100px;
+        }
+
+        .signup-container{  
+            
+            margin: 100px auto;
+            width: 660px;
+            height: 1000px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+            
+        }
+        .signup-header {
+            background-color: black;
+            width: 660;
+            height: 80px;
+            border-radius: 10px 10px 0 0;
+            color: white;
+            font-size: 30px;
+        }
+        .gotoback{
+            padding: 23px 10px;
+            width: 33px;
+            cursor: pointer;
+
+        }
+
+        .signup-logo {
+            width: 100px;
+            margin-left: 215px;
+        }
+        .signup-form {
+            font-weight: 900;
+            margin-top: 30px;
+            margin-left: 80px;
+        }
+
+        .signup-form img {
+            margin-left: 170px;
+            cursor: pointer;
+        }
+
+        .signup-form input {
+            margin: 10px auto;
+            height: 35px;
+            width: 500px;
+            border-radius: 10px;
+            border: solid 1px #c9c9c9
+        }
+        .phone input {
+            width: 156px;
+            margin-right: 10px;   
+        }
+
+        .email input {
+            width: 250px;
+        }
+        .email select {
+            margin: 10px auto;
+            height: 40px;
+            width: 230px;
+            border-radius: 10px;
+            border: solid 1px #c9c9c9
+        }
+        .atSign {
+            font-size: 22px;
+            color: #4e4e4e;
+        }
+        .signupBtn{
+            margin-top: 30px;
+            width: 505px;
+            height: 50px;
+            background-color: black;
+            color: white;
+            border:none;
+            border-radius: 10px;
+            font-weight: 900;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 17px;
+        }
+        .redStar {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <img class="gotoback" src="/resources/images/member/left-arrow.png"></img>
+            <img class="signup-logo" src="/resources/images/common/header_footer/logo.png">
+        </div>
+        <div class="signup-form">
+        <form th:action="@{/member/signup}" method="post">
+            <label>프로필 이미지</label><br>
+            <img src="/resources/images/member/profileInput.png"><br>
+            <label>아이디</label><label class="redStar">*</label><br>
+            <input type="text" name="id"><br>
+            <label>비밀번호</label><label class="redStar">*</label><br>
+            <input type="password" name="pwd"><br>
+           <!--  <label>비밀번호 확인</label><label class="redStar">*</label><br>
+            <input type="text"><br> -->
+            <label>이름</label><label class="redStar">*</label><br>
+            <input type="text" name="userName"><br>
+            <label>닉네임</label><label class="redStar">*</label><br>
+            <input type="text" name="nickName"><br>
+            <div class="email">
+                <label>이메일</label><label class="redStar">*</label><br>
+                <input type="text" name="email"><!-- <label class="atSign">@</label><select>
+                    <option>naver.com</option>
+                    <option>daum.net</option>
+                    <option>gamil.com</option>
+                    <option>hanmail.net</option>
+                    <option>nate.com</option>
+                    <option>직접입력</option>
+                </select> -->
+            </div>
+            <div class="phone">
+                <label>휴대전화</label><label class="redStar">*</label><br>
+                <input type="text" name="phone"><!-- <input type="text"><input type="text"><br> -->
+                <button class="signupBtn" type="submit">가입하기</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</body>
+</html>
