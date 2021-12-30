@@ -1,0 +1,42 @@
+aside{
+    float: left;
+}
+
+a {    
+    color: black;
+}
+
+.mypage_category{
+    width: 200px;
+    height: 700px;;
+   /* border : 1px solid black; */
+    padding-left: 10px;
+    padding-top : 10px;
+   /* filter: blur(1px); */
+    box-shadow: rgb(0 0 0 / 50%) 0px 6px 16px;
+}
+
+.ca_head{
+    margin-top: 2rem;
+    margin-left: 1rem;
+    font-size : 2rem;
+    font-weight: bold;
+}
+
+.mypage_category_ul{
+    list-style : none;
+    color : rgb(231, 111, 82);
+    font-size : 1.2rem;
+    font-weight: bold;
+    line-height : 4;
+}
+
+.mypage_category_li a:link{
+    color: black;
+    text-decoration: none;
+}
+
+.mypage_category_li a:hover {
+    color: rgb(231, 111, 82);
+    text-decoration: underline;
+}

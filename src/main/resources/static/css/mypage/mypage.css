@@ -1,0 +1,277 @@
+@charset "UTF-8";
+
+@charset "UTF-8";
+
+html{
+    font-size: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+  color: rgb(231, 111, 82);
+}
+
+body {
+  margin: 0px;
+}
+
+/* 헤더 */
+.header {
+    width: 100%;
+    height: 150px;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 메뉴바 아이콘 */
+.sidebar-menu{
+  width: 30px;
+  height: 30px;
+  background: url("../image/option.png");
+  background-size: 30px;
+  margin-left: 50%;
+  cursor: pointer;
+  z-index: 999;
+  transition: 0.5s;
+}
+
+.sidebar-menu.close{
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background: url("../image/option2.png");
+  background-size: 30px;
+  margin-left: 50%;
+  cursor: pointer;
+  z-index: 999;
+  transition: 0.5s;
+}
+
+/* 로고 */
+.main-logo{
+  width: 140px;
+  text-align: center;
+  display: block; 
+  margin: 0px auto;
+}
+
+.main-logo img{
+  width: 140px;
+  margin-left: 18px;
+}
+
+/* 사이드바 메뉴 */
+.sidebar-list { 
+  margin : 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+#menu-section{
+  position: absolute;
+  top: 0px;
+  left: -230px;
+  width: 200px;
+  height: 100%;
+  min-height: 100vh;
+  background-color: white;
+  transition: left 0.5s ease-out;
+}
+
+#menu-section.close{
+  position: absolute;
+  top: 0%;
+  left: 0px;
+  width: 200px;
+  height: 100%;
+  background-color: white;
+  z-index: 0;
+  transition: left 0.5s ease-out;
+}
+
+.sidebar-list{
+  margin-top: 100%;
+  padding-left: 45px;
+}
+
+.sidebar{
+  font-size: 18px;
+  margin: 30px 0;
+}
+
+.sidebar:nth-child(1){
+  margin-top: 50px;
+}
+
+.sidebar a:hover{
+  color: rgb(231, 111, 82);
+  text-decoration: none;
+}
+
+
+/* 회원가입, 마이페이지 아이콘 */
+.join-icon img{
+  position: relative;
+  right: 330%;
+  bottom: -50px;
+  width: 35px;
+}
+
+.mypage-icon img{
+  position: relative;
+  right: 300%;
+  bottom: -50px;
+  width: 30px;
+}
+
+
+/* 푸터 */
+
+.footer {
+  width: 100%;
+  height: 130px;
+  background-color: #F2F2F2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.footer-logo{
+  width: 120px;
+  margin-left: 32%;
+  margin-right: 2%;
+}
+
+.footer-logo img{
+  width: 120px;
+}
+
+.text-link {
+  width: 100%;
+}
+
+.text-link > ul > li{
+  font-size: 14px;
+  list-style-type: none;
+  display: inline;
+  margin-right: 3%;
+}
+
+.footer-text{
+  font-size: 12px;
+  color: #adadad;
+}
+
+/* ========================================================*/
+
+.content{
+  width :1100px;
+  margin:auto;
+}
+
+.mypage_content{
+  width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-rows: 400px 400px;
+  grid-template-columns: 600px 600px;
+  
+}
+
+.mypage_content_1, .mypage_content_2, .mypage_content_3, .mypage_content_4{
+  width: 300px;
+  height: 300px;
+  border: 0px solid gray;
+  margin-top : 10rem;
+  margin-left : 50px;
+}
+
+.mypage_content_1{
+
+}
+
+.mypage_content_2{
+
+}
+
+.mypage_content_3{
+
+}
+
+.mypage_content_top{
+  font-size: 1.5rem;
+  font-weight : bold;
+  color: black;
+  height: 35px;
+  line-height: 35px;
+  border-bottom: 3px solid gray;
+  text-align : left;
+  padding-left : 1rem;
+}
+
+.mypage_photo_select{
+  width: 6rem;
+  height: 2.5rem;
+  color : black;
+  font-weight : bold;
+  background: gray;
+  margin-top: 5px;
+  margin-left: 35px;
+}
+
+.mypage_photo_reg{
+  width: 6rem;
+  height: 2.5rem;
+  color : white;
+  font-weight : bold;
+  background: black;
+  margin-left: 20px;
+}
+
+.mypage_character{
+  margin-left: 90px;
+  margin-top: 5px;
+  width: 7.5rem;
+  height: 7.5rem;
+}
+
+.mypage_wishlist{
+  margin-left: 55px;
+  margin-top: 20px;
+  width: 12rem;
+  height: 9rem;
+}
+
+.mypage_img_user{
+  width : 24px;
+  height : 24px;
+  padding-right : 10px;
+}
+
+.mypage_content_p{
+  font-weight : bold;
+  text-align: center;
+}
+
+.mypage_content_3_ul{
+  font-weight : bold;
+  margin-top: 50px;
+  list-style : none;
+  line-height : 3;
+}
+
+.mypage_content_4_ul{
+  font-weight : bold;
+  list-style : none;
+  margin-top : 20px;
+}
+

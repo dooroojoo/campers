@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wish_camp</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- 외부 css -->
+    <link href="../header-footer/css/wishcamp.css" rel="stylesheet">
+    <!-- 외부 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="content">
+        <div class="wishcamp">
+            <header class="wishcamp_header">
+                <h1 class="wishcamp_h1">찜한 캠핑장</h1>
+            </header>
+        </div>
+        <div class="wishcamp_content_center" id="wishcamp_content_center">
+            <div class="wishcamp_content_1">
+                <div class="wcc_p">
+                    <img src="image/깊은산속.jpg">
+                    <p class="wishcamp_content_p">아침고요수목원</p>
+                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
+                    <p class="phone">010 1234 5678</p>
+                    <hr class="line">
+                    <input class="checkbox" type="checkbox">                    
+                </div>
+            </div>
+            <div class="wishcamp_content_2">
+                <div class="wcc_p">
+                    <img src="image/007.png">
+                    <p class="wishcamp_content_p">아침고요수목원</p>
+                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
+                    <p class="phone">010 1234 5678</p>
+                    <hr class="line">
+                    <input class="checkbox" type="checkbox">       
+                </div>
+            </div>
+            <div class="wishcamp_content_3">
+                <div class="wcc_p">
+                    <img src="image/007.png">
+                    <p class="wishcamp_content_p">아침고요수목원</p>
+                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
+                    <p class="phone">010 1234 5678</p>
+                    <hr class="line">
+                    <input class="checkbox" type="checkbox">                      
+                </div>
+            </div>
+            <div class="wishcamp_content_4">
+                <div class="wcc_p">
+                    <img src="image/007.png">
+                    <p class="wishcamp_content_p">아침고요수목원</p>
+                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
+                    <p class="phone">010 1234 5678</p>
+                    <hr class="line">
+                    <input class="checkbox" type="checkbox">                       
+                </div>
+            </div>
+            <div class="wishcamp_content_5">
+                <div class="wcc_p">
+                    <img src="image/007.png">
+                    <p class="wishcamp_content_p">아침고요수목원</p>
+                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
+                    <p class="phone">010 1234 5678</p>
+                    <hr class="line">
+                    <input class="checkbox" type="checkbox">             
+                </div>
+            </div>
+            <div class="wishcamp_content_6">
+                <div class="wcc_p">
+                    <img src="image/007.png">
+                    <p class="wishcamp_content_p">아침고요수목원</p>
+                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
+                    <p class="phone">010 1234 5678</p>
+                    <hr class="line">
+                    <input class="checkbox" type="checkbox">                 
+                </div>
+            </div>
+            <div class="wishcamp_content_7">
+                <div class="wcc_p">
+                    <img src="image/007.png">
+                    <p class="wishcamp_content_p">아침고요수목원</p>
+                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
+                    <p class="phone">010 1234 5678</p>
+                    <hr class="line">
+                    <input class="checkbox" type="checkbox">                
+                </div>
+            </div>
+            <div class="wishcamp_content_8">
+                <div class="wcc_p">
+                    <img src="image/007.png">
+                    <p class="wishcamp_content_p">아침고요수목원</p>
+                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
+                    <p class="phone">010 1234 5678</p>
+                    <hr class="line">
+                    <input class="checkbox" type="checkbox">                     
+                </div>
+            </div>
+            <input type="checkbox" id="allCheckbox">
+        </div>
+        <div class="button_content">
+            <div class="full_check"><input class="checkbox" type="checkbox" id="allCheckbox">전체선택</div>
+            <div class="one_check"><img class="remove" src="image/remove.png"> 빼기</div>
+        </div>
+    </div>
+    <!-- 페이징 처리 -->
+    <div class="member_pages">
+        <ul class="member_paging">
+
+
+            <!-- 맨 처음으로 이동하는 버튼(<<) -->
+            <li><a href="">&lt;&lt;</a></li>
+            
+
+
+            <!-- 이전 페이지로(<) -->
+            <li>
+                <c:choose>
+                    <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
+                    <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
+                </c:choose>
+            </li>
+            
+
+
+            <!-- 최대 10개의 페이지 목록 -->
+            <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                <li>
+                    <c:choose>
+                        <c:when test="">
+                            <div class="current_page">
+                                <a href="#">1</a>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- <a href="${contextPath }/board/list?page=${ p }${ searchParam }">${ p }</a> -->
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+            </c:forEach>
+
+
+
+            <!-- 다음 페이지로(>) -->
+            <li>
+                <c:choose>
+                    <c:when test=""><a href="">&gt;</a></c:when>
+                    <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
+                </c:choose>
+            </li>
+
+
+
+            <!-- 맨 끝으로 이동하는 버튼(>>) -->
+            <li><a href="">&gt;&gt;</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    /* 전체선택 */
+    $(document).on('click', "#allCheckbox", function(){
+        $('.checkbox:not(:disabled)').not(this).prop('checked', this.checked);
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+.content{
+    width: 1100px;
+    margin: auto;
+}
+
+.mypage_camp_enrollment{
+    width: 1100px;
+}
+
+.mypage_camp_enrollment_h1{
+    border-bottom: 3px solid gray;
+    margin-top: 30px;
+    padding-left:20px;
+    padding-bottom: 10px;
+}
+
+.mypage_camp_enrollment_table{
+    margin-left : 0%;
+    border: 1px solid lightgray;
+    width: 1100px;
+}
+
+.textbox{
+    height: 30px;
+}
+
+.textbox2{
+    height: 36px;
+}
+
+input[type=number]:hover::-webkit-inner-spin-button {  
+    width: 18px;
+    height: 30px;
+}
+
+.mypage_camp_enrollment_table_header{
+    background:#C4C4C4;
+}
+
+th{
+    width: 200px;
+    height: 50px;
+}
+
+
+.room_plus{
+    display: flex;
+    background-color : black;
+    width: 180px;
+    height: 30px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+.room_plus_img{
+    width: 20px;
+    height: 20px;
+    padding-top : 2px;
+    padding-left : 15px;
+    padding-right: 10px;
+}
+
+.camp_plus{
+    margin-left : 50%;
+}
+
+.camp_plus_button{
+    background: black;
+    color : white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    width : 180px;
+    height: 40px;
+}

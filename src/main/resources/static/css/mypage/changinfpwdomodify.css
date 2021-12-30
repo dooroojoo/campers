@@ -1,0 +1,56 @@
+.changinfo{
+    width: 1100px;
+    margin: auto;
+}
+
+.changinfo_h1{
+    border-bottom: 3px solid gray;
+    margin-top: 30px;
+}
+
+.changinfo_content_div{
+    width: 600px;
+    height: 350px;
+    margin-top: 50px;
+    margin-left: 34%;
+    background: lightgray;
+}
+
+.changinfo_content_header{
+    padding : 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-bottom: 3px solid gray;
+    text-align: center;
+}
+
+.changinfo_content_star{
+    color: red;
+}
+
+.changinfo_privacy{
+    font-weight: bold;
+    margin-left: 120px;
+}
+
+
+.changinfoPwdModify_pwdbutton{
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-left: 80px;
+    background: black;
+    color: white;
+    font-weight: bold;
+    width: 13rem;
+    height: 2.5rem;
+}
+
+.changinfoPwdModify_pwd_form, .changinfoPwdModify_newpwd_form, .changinfoPwdModify_newpwd_form2{
+    margin-left : 40px;
+    width : 12rem
+}
+
+small{
+    margin-left: 150px;
+    color: gray;
+}

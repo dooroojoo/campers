@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mypage_reserve</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- 외부 css -->
+    <link href="../header-footer/css/mypage_guest_reserve.css" rel="stylesheet">
+    <!-- 외부 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="content">
+        <div class="mypage_guest_reserve">
+            <header class="mypage_guest_reserve_header">
+                <h1 class="mypage_guest_reserve_h1">회원 예약내역 확인</h1>
+            </header>
+        </div>
+        <div>
+            <table class="mypage_guest_reserve_table">
+                <tr class="mypage_guest_reserve_table_header">
+                    <th class="mypage_guest_reserve_table_header_no">NO</th>
+                    <th>예약 캠핑장</th>
+                    <th>캠핑장 주소</th>
+                    <th>예약 날짜</th>
+                    <th class="mypage_guest_reserve_table_header_status">예약 상태</th>
+                </tr>
+                <tr>
+                    <th class="mypage_guest_reserve_table_body"></th>
+                    <th class="mypage_guest_reserve_table_body"><img class="mypage_guest_reserve_table_img" src="image/007.png"><p class="camp_name">아침고요 수목원</p></th>
+                    <th class="mypage_guest_reserve_table_body"><p class="camp_address">강원도 춘천시 동내면 장학리 108-7 아침고요 수목원</p>
+                        <small class="camp_phone">010-1234-5678</small></th>
+                    <th class="mypage_guest_reserve_table_body"><p class="camp_date">2021.12.01(수) ~ 2021.12.02(목)</p>
+                        <small class="camp_room">아침고요수목원 101번 캠핑장</small></th>
+                    <th class="mypage_guest_reserve_table_body2"><input class="mypage_guest_reserve_button" type="button" value="예약취소"></th>
+                </tr>
+                <tr>
+                    <th class="mypage_guest_reserve_table_body"></th>
+                    <th class="mypage_guest_reserve_table_body"><img class="mypage_guest_reserve_table_img" src="image/007.png"><p class="camp_name">아침고요 수목원</p></th>
+                    <th class="mypage_guest_reserve_table_body"><p class="camp_address">강원도 춘천시 동내면 장학리 108-7 아침고요 수목원</p>
+                        <small class="camp_phone">010-1234-5678</small></th>
+                    <th class="mypage_guest_reserve_table_body"><p class="camp_date">2021.12.01(수) ~ 2021.12.02(목)</p>
+                        <small class="camp_room">아침고요수목원 101번 캠핑장</small></th>
+                    <th class="mypage_guest_reserve_table_body2"><input class="mypage_guest_reserve_button" type="button" value="예약취소"></th>
+                </tr>
+            </table>
+        </div>
+        <!-- 페이징 처리 -->
+     <div class="member_pages">
+        <ul class="member_paging">
+
+
+            <!-- 맨 처음으로 이동하는 버튼(<<) -->
+            <li><a href="">&lt;&lt;</a></li>
+            
+
+
+            <!-- 이전 페이지로(<) -->
+            <li>
+                <c:choose>
+                    <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
+                    <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
+                </c:choose>
+            </li>
+            
+
+
+            <!-- 최대 10개의 페이지 목록 -->
+            <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                <li>
+                    <c:choose>
+                        <c:when test="">
+                            <div class="current_page">
+                                <a href="#">1</a>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- <a href="${contextPath }/board/list?page=${ p }${ searchParam }">${ p }</a> -->
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+            </c:forEach>
+
+
+
+            <!-- 다음 페이지로(>) -->
+            <li>
+                <c:choose>
+                    <c:when test=""><a href="">&gt;</a></c:when>
+                    <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
+                </c:choose>
+            </li>
+
+
+
+            <!-- 맨 끝으로 이동하는 버튼(>>) -->
+            <li><a href="">&gt;&gt;</a></li>
+        </ul>
+    </div>
+
+
+</div>
+    </div>
+</body>
+</html>
