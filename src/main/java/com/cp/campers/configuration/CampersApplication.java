@@ -6,11 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("com.cp.campers")
-public class campersApplication {
+public class CampersApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(campersApplication.class, args);
-		
+		SpringApplication.run(CampersApplication.class, args);	
 	}
 
 }
