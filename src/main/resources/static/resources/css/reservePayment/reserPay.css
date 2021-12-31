@@ -1,0 +1,295 @@
+@charset "UTF-8";
+
+.reserPay_Wrap *{
+    font-family: 'Noto Serif KR', serif;
+}
+
+
+.reserPay_Outer{
+    width: 1300px;
+    margin: 0 auto;
+}
+
+.reserPay_Wrap{
+    width: 1000px;
+    margin: 100px auto;
+}
+
+.reserPay_Wrap .reser_tit{
+    /* background: rgb(255, 249, 215);
+    width: 400px; */
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+.reserPay_Wrap .reser_check{
+    width: 293px;
+    height: 165px;
+    background-color: rgb(235, 237, 243);
+    border-radius: 20px;
+    margin-top: 50px;
+    margin-left: 237px;
+ 
+}
+
+.reserPay_Wrap .camcon{
+    width: 30px;
+    height: 30px;
+}
+
+.reserPay_Wrap .camRedDate{
+    color:red;
+}
+
+.camDate_flex{
+    display: flex;
+}
+
+.reserPay_Wrap .befor_date{
+    line-height: 30px;
+    margin-left: 7px;
+}
+
+.reserPay_Wrap .reser_box{
+    padding: 28px 55px;
+    font-size: 21px;
+}
+
+.reserPay_Wrap .reser_box > div{
+    padding: 2.5px 0;
+}
+
+.reserPay_Wrap .reser_room_text{
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.reserPay_Wrap .reserPay_flex1{
+    display: flex;
+}
+
+
+.reserPay_Wrap .inp_qty {
+    display:inline-block;
+    overflow: hidden;
+    height:38px;
+    border:1px solid #dcdcdc;
+    margin-left: 26px;
+}
+
+.reserPay_Wrap .inp_qty:after {
+    content:'';
+    display:block;
+    clear:both;
+}
+
+.reserPay_Wrap .inp_qty button {
+    float:left;
+    width:38px;
+    height:100%;
+    vertical-align: middle; 
+    background:#fff;
+    background-color: rgb(231 111 82);
+    border-color: rgb(231 111 82);
+}
+.reserPay_Wrap .inp_qty button:hover {
+    cursor: pointer;
+    background: rgb(231 111 82);;
+}
+.reserPay_Wrap .inp_qty input {
+    float:left;
+    width:45px;
+    height:38px;
+    margin:0 1px;
+    font-size:14px;
+    line-height:38px;
+    text-align:center;
+    text-indent:0;
+    background:transparent;
+    border:none;
+
+}
+
+.reserPay_Wrap .inp_qty span {
+    background-color: rgb(231 111 82);
+}
+
+.reserPay_Wrap .room_su {
+    margin-left: 27px;
+    font-size: 14px;
+}
+
+
+.reserPay_Wrap .reser_roomselec{
+    margin-top: 50px;
+}
+
+
+.reserPay_Wrap .reser_room_text {
+    padding: 10px;
+}
+
+.reserPay_Wrap .reser_roomselec {
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.reserPay_Wrap .title1 {
+    margin-top: 65px;
+    line-height: 50px;
+    font-size: 25px;
+    font-weight: bold;
+    border-bottom: 1px solid #282A35;
+}
+
+.reserPay_Wrap .title1 > span {
+    margin-bottom: 10px;
+}
+
+.reserPay_Wrap .ques_text {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.reserPay_Wrap .ques_text .t1 {
+    padding: 15px;
+}
+
+
+.reserPay_Outer .red{
+    color: red;
+}
+
+.reserPay_Wrap .inp_check input {
+    cursor: pointer;
+}
+
+.reserPay_Wrap .reserPay_inner{
+    width: 800px;
+    margin-left: 100px;
+}
+
+.reserPay_Wrap .inp_text input:focus {
+    color:#101010;
+    border-color:#101010;
+}
+
+.reserPay_Wrap .inp_text input {
+    width: 100%;
+    height: 58px;
+    padding: 0 8px;
+    line-height: 58px;
+    color: #555;
+    text-indent: 4px;
+    border: 1px solid #dcdcdc;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 21px;
+}
+
+.reserPay_inner .reser_name {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px 0 20px 0;
+}
+
+.reserPay_inner textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 10px;
+    color: #555;
+    font-size: 21px;
+    line-height: 26px;
+    border: 1px solid #dcdcdc;
+    outline: none;
+    resize: none;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+.reserPay_inner textarea:focus {
+    color:#555555;
+    border-color:#101010;
+}
+
+.reserPay_inner .textbox {
+    margin: 20px 0 20px 0;
+}
+
+
+.reserPay_Wrap .agreeText{
+    font-size: 21px;
+    cursor:pointer;
+}
+
+.reserPay_Wrap input[type=checkbox]{
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+
+}
+
+
+.reserPay_Wrap .checkboxMargin{
+    margin-top: 30px;
+    margin-left: 10px;
+
+}
+
+.reserPay_Wrap .payText{
+    font-size: 21px;
+    margin-top: 30px;
+    margin-left: 10px;
+}
+
+.reserPay_Wrap .payText > div{
+    padding: 2.5px 0;
+}
+
+.reserPay_Wrap .chk1_1{
+    font-size: 19px;
+}
+
+.reserPay_Wrap .payBox{
+    border: 1px solid black;
+    border-radius: 5px;
+    background: white;
+    padding: 5px;
+    cursor: pointer;
+    box-shadow: 2px 2px 3px rgb(0 0 0 / 20%);
+}
+
+.reserPay_Wrap .marginPay{
+    margin: 23px 0 23px 10px;
+}
+
+.reserPay_Wrap input[type=radio]{
+    cursor: pointer;
+}
+
+.reserPay_Wrap .goPay{
+    font-size: 20px;
+    width: 100%;
+    height: 40px;
+    border-radius: 12px;
+    background-color: rgb(231 111 82);
+    cursor: pointer;
+    box-shadow: 5px 5px 10px rgb(0 0 0 / 20%);
+}
+
+.reserPay_Wrap pre.content {
+    display: none; /*클릭 했을 때 열리도록 기본적으로 디스플레이 none으로 설정*/
+    font-size: 18px;
+}
+
+
+
+
+
+
+
+
+
