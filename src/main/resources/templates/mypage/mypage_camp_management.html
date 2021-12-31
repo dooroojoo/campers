@@ -16,14 +16,19 @@
     
 </head>
 <body>
+	<!-- header -->
+    <div th:replace="common/header.html"></div>
+
     <div class="content">
+     <!-- category -->
+	<div th:replace="mypage/mypage_category.html"></div>
+        <div>
+            <table class="mypage_camp_management_table">
         <div class="mypage_camp_management">
             <header class="mypage_camp_management_header">
                 <h1 class="mypage_camp_management_h1">캠핑장 관리</h1>
             </header>
         </div>
-        <div>
-            <table class="mypage_camp_management_table">
                 <tr class="mypage_camp_management_table_header">
                     <th class="mypage_camp_management_table_header_no">NO</th>
                     <th class="mypage_camp_management_table_header_camp">캠핑장 이름</th>
@@ -33,30 +38,29 @@
                 </tr>
                 <tr>
                     <th class="mypage_camp_management_table_body"></th>
-                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="image/007.png"><p class="camp_name">아침고요 수목원</p></th>
+                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
                     <th class="mypage_camp_management_table_body"><p class="camp_address">김광중</p><small class="camp_name">아침고요 수목원</small></th>
                     <th class="mypage_camp_management_table_body"><p class="camp_date">운영상태</p></th>
                     <th class="mypage_camp_management_table_body2"><input class="mypage_camp_management_button" type="button" value="해지신청"></th>
                 </tr>
                 <tr>
                     <th class="mypage_camp_management_table_body"></th>
-                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="image/007.png"><p class="camp_name">아침고요 수목원</p></th>
+                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
                     <th class="mypage_camp_management_table_body"><p class="camp_address">김광중</p><small class="camp_name">아침고요 수목원</small></th>
                     <th class="mypage_camp_management_table_body"><p class="camp_date">대기중</p></th>
                     <th class="mypage_camp_management_table_body2"><input class="mypage_camp_management_button" type="button" value="신청완료"></th>
                 </tr>
                 <tr>
                     <th class="mypage_camp_management_table_body"></th>
-                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="image/007.png"><p class="camp_name">아침고요 수목원</p></th>
+                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
                     <th class="mypage_camp_management_table_body"><p class="camp_address">김광중</p><small class="camp_name">아침고요 수목원</small></th>
                     <th class="mypage_camp_management_table_body"><p class="camp_date">거절</p><label class="camp_date_reject">거절사유</label></th>
                     <th class="mypage_camp_management_table_body2"><input class="mypage_camp_management_button" type="button" value="신청완료"></th>
                 </tr>
             </table>
             <div class="room_plus">
-                <img class="room_plus_img" src="image/plus.png">객실 추가하기
+                <img class="room_plus_img" src="resources/images/mypage/plus.png">객실 추가하기
             </div>
-        </div>
         <!-- 페이징 처리 -->
      <div class="member_pages">
         <ul class="member_paging">
@@ -109,9 +113,12 @@
             <li><a href="">&gt;&gt;</a></li>
         </ul>
     </div>
+        </div>
 
 
-</div>
+	</div>
     </div>
+	<!-- footer -->
+    <div th:replace="common/footer.html"></div>  
 </body>
 </html>

@@ -8,7 +8,7 @@
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
-    <link href="resources/css/mypage/changinfomodify.css" rel="stylesheet">
+    <link href="resources/css/mypage/changinfo_modify.css" rel="stylesheet">
     <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,12 +18,20 @@
 
 </head>
 <body>
+	<!-- header -->
+    <div th:replace="common/header.html"></div>
+	
+	<div class="content">
+	
+	<!-- category -->
+	<div th:replace="mypage/mypage_category.html"></div>	
+    
+    <div class="changinfo_content">
     <div class="changinfo">
         <header class="changinfo_header">
             <h1 class="changinfo_h1">회원정보 수정</h1>
-        </header>
     </div>
-    <div class="changinfo_content">
+        </header>
         <div class="changinfo_content_div">
             <header class="changinfo_content_header">(<label class="changinfo_content_star">*</label>) 표시가 있는 항목은 반드시 입력해야 합니다.</header>        
             <div class="changinfo_privacy">
@@ -45,6 +53,10 @@
             </div>
         </div>
     </div>
+    </div>
+    
+    <!-- footer -->
+    <div th:replace="common/footer.html"></div>  
     
     <script>
         $("#user_id").blur(function(){
