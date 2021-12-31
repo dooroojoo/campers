@@ -18,13 +18,20 @@
 
 </head>
 <body>
+	<!-- header -->
+    <div th:replace="common/header.html"></div>
+    
     <div class="content">
+    
+    <!-- category -->
+	<div th:replace="mypage/mypage_category.html"></div>
+    
+    <div class="changinfo_content">
     <div class="changinfo">
         <header class="changinfo_header">
             <h1 class="changinfo_h1">회원탈퇴</h1>
         </header>
     </div>
-    <div class="changinfo_content">
         <div class="changinfo_content_div">
             <header class="changinfo_content_header">
                 회원탈퇴를 원하시면 비밀번호를 입력하신후<br>
@@ -40,5 +47,9 @@
         </div>
     </div>
     </div>
+    
+    <!-- footer -->
+    <div th:replace="common/footer.html"></div>    
+    
 </body>
 </html>

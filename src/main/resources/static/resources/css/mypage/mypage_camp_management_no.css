@@ -63,3 +63,14 @@
 .check_pwd_form2{
     margin-left: 13px;
 }
+
+/* 푸터 */
+.footer {
+  width: 100%;
+  height: 130px;
+  background-color: #F2F2F2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
+}

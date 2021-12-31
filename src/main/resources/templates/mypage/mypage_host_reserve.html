@@ -16,14 +16,20 @@
     
 </head>
 <body>
+	<!-- header -->
+    <div th:replace="common/header.html"></div>
+    
     <div class="content">
+    
+    <!-- category -->
+	<div th:replace="mypage/mypage_category.html"></div>
+        <div>
+            <table class="mypage_host_reserve_table">
         <div class="mypage_host_reserve">
             <header class="mypage_host_reserve_header">
                 <h1 class="mypage_host_reserve_h1">사업자 예약내역 확인</h1>
             </header>
         </div>
-        <div>
-            <table class="mypage_host_reserve_table">
                 <tr class="mypage_host_reserve_table_header">
                     <th class="mypage_host_reserve_table_header_no">NO</th>
                     <th class="mypage_host_reserve_table_header_camp">예약 캠핑장</th>
@@ -34,7 +40,7 @@
                 </tr>
                 <tr>
                     <th class="mypage_host_reserve_table_body"></th>
-                    <th class="mypage_host_reserve_table_body"><img class="mypage_host_reserve_table_img" src="image/007.png"><p class="camp_name">아침고요 수목원</p></th>
+                    <th class="mypage_host_reserve_table_body"><img class="mypage_host_reserve_table_img" src="resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
                     <th class="mypage_host_reserve_table_body"><p class="guest_name">김광중</p><small class="guest_phone">010-1234-5678</small></th>
                     <th class="mypage_host_reserve_table_body"></th>
                     <th class="mypage_host_reserve_table_body"><p class="camp_date">2021.12.01(수) ~ 2021.12.02(목)</p>
@@ -43,7 +49,7 @@
                 </tr>
                 <tr>
                     <th class="mypage_host_reserve_table_body"></th>
-                    <th class="mypage_host_reserve_table_body"><img class="mypage_host_reserve_table_img" src="image/007.png"><p class="camp_name">아침고요 수목원</p></th>
+                    <th class="mypage_host_reserve_table_body"><img class="mypage_host_reserve_table_img" src="resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
                     <th class="mypage_host_reserve_table_body"><p class="guest_name">김광중</p><small class="guest_phone">010-1234-5678</small></th>
                     <th class="mypage_host_reserve_table_body"></th>
                     <th class="mypage_host_reserve_table_body"><p class="camp_date">2021.12.01(수) ~ 2021.12.02(목)</p>
@@ -51,7 +57,6 @@
                     <th class="mypage_host_reserve_table_body2"><input class="mypage_host_reserve_button" type="button" value="신청취소"></th>
                 </tr>
             </table>
-        </div>
         <!-- 페이징 처리 -->
      <div class="member_pages">
         <ul class="member_paging">
@@ -104,9 +109,12 @@
             <li><a href="">&gt;&gt;</a></li>
         </ul>
     </div>
+        </div>
 
 
 </div>
     </div>
+    <!-- footer -->
+    <div th:replace="common/footer.html"></div> 
 </body>
 </html>

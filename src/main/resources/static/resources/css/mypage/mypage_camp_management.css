@@ -1,6 +1,8 @@
 .content{
-    width: 1100px;
+   width: 1100px;
     margin: auto;
+    display: flex;
+    float: left;
 }
 
 .mypage_camp_management{
@@ -8,14 +10,15 @@
 }
 
 .mypage_camp_management_h1{
-    border-bottom: 3px solid gray;
+    border-bottom: 3px solid lightgray;
     margin-top: 30px;
-    padding-left:20px;
-    padding-bottom: 10px;
+    margin-left: 15%;
+    width: 1100px;
 }
 
 .mypage_camp_management_table{
     padding : 20px;
+    margin-left: 20%;
 }
 
 .mypage_camp_management_table_header{
@@ -121,6 +124,7 @@
     /* 페이징 */
     .member_pages {
         margin: 10px;
+        margin-left: 15%;
     }
     .member_paging {
         height: 50px;
@@ -152,3 +156,14 @@
     .member_paging .current_page a{
         color: white;
     }
+
+/* 푸터 */
+.footer {
+  width: 100%;
+  height: 130px;
+  background-color: #F2F2F2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
+}

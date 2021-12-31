@@ -16,13 +16,20 @@
     
 </head>
 <body>
+	<!-- header -->
+    <div th:replace="common/header.html"></div>
+
     <div class="content">
+    
+     <!-- category -->
+	<div th:replace="mypage/mypage_category.html"></div>
+       
+        <div class="mypage_camp_enrollment_content">
         <div class="mypage_camp_enrollment">
             <header class="mypage_camp_enrollment_header">
                 <h1 class="mypage_camp_enrollment_h1">캠핑장 등록</h1>
             </header>
         </div>
-        <div class="mypage_camp_enrollment_content">
             <form>
             <table class="mypage_camp_enrollment_table">
                 <tr class="mypage_camp_enrollment_table_header">
@@ -195,12 +202,14 @@
             </table>
             </form>
             <div class="room_plus">
-                <img class="room_plus_img" src="image/plus.png">객실 추가하기
+                <img class="room_plus_img" src="resources/images/mypage/plus.png">객실 추가하기
             </div>
             <div class="camp_plus">
                 <input class="camp_plus_button" type="submit" value="캠핑장 등록하기">
             </div>    
         </div>
     </div>
+    <!-- footer -->
+    <div th:replace="common/footer.html"></div>   
 </body>
 </html>

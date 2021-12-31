@@ -1,22 +1,29 @@
+/* memberout */
 .content{
     width: 1100px;
     margin: auto;
+    display: flex;
+    float: left;
 }
 
 .changinfo{
-    width: 1100px;
+    width: 900px;
+    margin: auto;
+    display: grid;
 }
 
 .changinfo_h1{
-    border-bottom: 3px solid gray;
+    border-bottom: 3px solid lightgray;
     margin-top: 30px;
+    margin-left: 15%;
+    width: 1100px;
 }
 
 .changinfo_content_div{
     width: 600px;
     height: 250px;
     margin-top: 50px;
-    margin-left: 25%;
+    margin-left: 50%;
     background: lightgray;
 }
 
@@ -52,4 +59,15 @@
 
 .check_pwd_form2{
     margin-left: 13px;
+}
+
+/* 푸터 */
+.footer {
+  width: 100%;
+  height: 130px;
+  background-color: #F2F2F2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
 }

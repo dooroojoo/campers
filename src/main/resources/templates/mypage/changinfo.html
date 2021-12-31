@@ -18,13 +18,21 @@
 
 </head>
 <body>
+
+	<!-- header -->
+    <div th:replace="common/header.html"></div>
+
     <div class="content">
+    
+     <!-- category -->
+	<div th:replace="mypage/mypage_category.html"></div>
+    
+        <div class="changinfo_content">
         <div class="chnginfo">
             <header class="changinfo_header">
                 <h1 class="changinfo_h1">회원정보</h1>
             </header>
         </div>
-        <div class="changinfo_content">
             <div class="changinfo_content_div">
                 <header class="changinfo_content_header">회원님의 정보를 수정, 탈퇴하기가 가능 합니다</header>        
                 <div class="changinfo_privacy">
@@ -40,5 +48,8 @@
             </div>
         </div>
     </div>
+    
+    <!-- footer -->
+    <div th:replace="common/footer.html"></div>   
 </body>
 </html>

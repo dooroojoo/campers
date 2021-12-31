@@ -16,16 +16,24 @@
     
 </head>
 <body>
+	<!-- header -->
+    <div th:replace="common/header.html"></div>
+	
     <div class="content">
+    
+    <!-- category -->
+	<div th:replace="mypage/mypage_category.html"></div>
+	
+        <div class="wishcamp_content_center" id="wishcamp_content_center">
         <div class="wishcamp">
             <header class="wishcamp_header">
                 <h1 class="wishcamp_h1">찜한 캠핑장</h1>
             </header>
         </div>
-        <div class="wishcamp_content_center" id="wishcamp_content_center">
+        	<div class="wishcam_content_controller">
             <div class="wishcamp_content_1">
                 <div class="wcc_p">
-                    <img src="image/깊은산속.jpg">
+                    <img class="" src="resources/images/mypage/깊은산속.jpg">
                     <p class="wishcamp_content_p">아침고요수목원</p>
                     <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
                     <p class="phone">010 1234 5678</p>
@@ -35,7 +43,7 @@
             </div>
             <div class="wishcamp_content_2">
                 <div class="wcc_p">
-                    <img src="image/007.png">
+                    <img class="campimg" src="resources/images/mypage/007.png">
                     <p class="wishcamp_content_p">아침고요수목원</p>
                     <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
                     <p class="phone">010 1234 5678</p>
@@ -45,7 +53,7 @@
             </div>
             <div class="wishcamp_content_3">
                 <div class="wcc_p">
-                    <img src="image/007.png">
+                    <img class="campimg" src="resources/images/mypage/007.png">
                     <p class="wishcamp_content_p">아침고요수목원</p>
                     <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
                     <p class="phone">010 1234 5678</p>
@@ -55,7 +63,7 @@
             </div>
             <div class="wishcamp_content_4">
                 <div class="wcc_p">
-                    <img src="image/007.png">
+                    <img class="campimg" src="resources/images/mypage/007.png">
                     <p class="wishcamp_content_p">아침고요수목원</p>
                     <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
                     <p class="phone">010 1234 5678</p>
@@ -65,7 +73,7 @@
             </div>
             <div class="wishcamp_content_5">
                 <div class="wcc_p">
-                    <img src="image/007.png">
+                    <img class="campimg" src="resources/images/mypage/007.png">
                     <p class="wishcamp_content_p">아침고요수목원</p>
                     <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
                     <p class="phone">010 1234 5678</p>
@@ -75,7 +83,7 @@
             </div>
             <div class="wishcamp_content_6">
                 <div class="wcc_p">
-                    <img src="image/007.png">
+                    <img class="campimg" src="resources/images/mypage/007.png">
                     <p class="wishcamp_content_p">아침고요수목원</p>
                     <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
                     <p class="phone">010 1234 5678</p>
@@ -85,7 +93,7 @@
             </div>
             <div class="wishcamp_content_7">
                 <div class="wcc_p">
-                    <img src="image/007.png">
+                    <img class="campimg" src="resources/images/mypage/007.png">
                     <p class="wishcamp_content_p">아침고요수목원</p>
                     <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
                     <p class="phone">010 1234 5678</p>
@@ -95,7 +103,7 @@
             </div>
             <div class="wishcamp_content_8">
                 <div class="wcc_p">
-                    <img src="image/007.png">
+                    <img class="campimg" src="resources/images/mypage/007.png">
                     <p class="wishcamp_content_p">아침고요수목원</p>
                     <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
                     <p class="phone">010 1234 5678</p>
@@ -103,14 +111,12 @@
                     <input class="checkbox" type="checkbox">                     
                 </div>
             </div>
-            <input type="checkbox" id="allCheckbox">
-        </div>
+            </div>
         <div class="button_content">
             <div class="full_check"><input class="checkbox" type="checkbox" id="allCheckbox">전체선택</div>
-            <div class="one_check"><img class="remove" src="image/remove.png"> 빼기</div>
+            <div class="one_check"><img class="remove" src="resources/images/mypage/remove.png"> 빼기</div>
         </div>
-    </div>
-    <!-- 페이징 처리 -->
+        <!-- 페이징 처리 -->
     <div class="member_pages">
         <ul class="member_paging">
 
@@ -162,7 +168,14 @@
             <li><a href="">&gt;&gt;</a></li>
         </ul>
     </div>
+        </div>
+        
+    
+    </div>
 </div>
+
+<!-- footer -->
+<div th:replace="common/footer.html"></div>
 
 <script>
     /* 전체선택 */
@@ -170,8 +183,6 @@
         $('.checkbox:not(:disabled)').not(this).prop('checked', this.checked);
     });
 </script>
-
-
 
 </body>
 </html>
