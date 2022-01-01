@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>report list</title>
+
+	<!-- css -->
+	<link href="/resources/css/admin/adminReport.css" rel="stylesheet" type="text/css">
+	<!-- css -->
+	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div th:replace="common/header.html"></div>
+
+    <div class="admin_outer">
+        <div class="admin_wrap">
+
+
+            <!-- 1. 신고 관리 -->
+            <div class="report_area">
+
+                <div class="report_title">
+                    <h2>신고 관리</h2>
+                </div>
+                <div class="report_list">
+
+
+                    <ul class="report_header">
+                        <li class="report_pk">신고번호</li>
+                        <li class="report_reporter">신고자</li>
+                        <li class="report_id">피신고자</li>
+                        <li class="report_reason">신고사유</li>
+                        <li class="report_date">신고일</li>
+                        <li class="report_type">구분</li>
+                        <li class="report_update">관리</li>
+                    </ul>
+
+
+                    <ul class="report_header">
+                        <li class="report_pk">0001</li>
+                        <li class="report_reporter">user05</li>
+                        <li class="report_id">user01</li>
+                        <li class="report_reason">불법 도박정보를 계속해서 올려서 신고해요 제재 좀 해주세요<br>불법 도박정보를 계속해서 올려서 신고해요 제재 좀 해주세요<br>불법 도박정보를 계속해서 올려서 신고해요 제재 좀 해주세요</li>
+                        <li class="report_date" title="21.03.21 15:27:53">21.03.21</li>
+                        <li class="report_type">게시판</li>
+                        <li class="report_update"><button type="submit">완료</button></li>
+                    </ul>
+
+
+                    <ul class="report_header">
+                        <li class="report_pk">0001</li>
+                        <li class="report_reporter">user05</li>
+                        <li class="report_id">user01</li>
+                        <li class="report_reason">불법 도박정보를 계속해서 올려서 신고해요 제재 좀 해주세요불법 도박정보를 계속해서 올려서 신고해요 제재 좀 해주세요</li>
+                        <li class="report_date" title="21.03.21 15:27:53">21.03.21</li>
+                        <li class="report_type">게시판</li>
+                        <li class="report_update"><button type="submit">완료</button></li>
+                    </ul>
+
+
+                    <ul class="report_header">
+                        <li class="report_pk">0001</li>
+                        <li class="report_reporter">user05</li>
+                        <li class="report_id">user01</li>
+                        <li class="report_reason">lace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.comlace@naver.com</li>
+                        <li class="report_date" title="21.03.21 15:27:53">21.03.21</li>
+                        <li class="report_type">게시판</li>
+                        <li class="report_update"><button type="submit">완료</button></li>
+                    </ul>
+
+
+                </div>
+
+
+
+                <!-- 2. 페이징 처리 -->
+                <div class="report_pages">
+                    <ul class="report_paging">
+
+
+                        <!-- 맨 처음으로 이동하는 버튼(<<) -->
+                        <li><a href="">&lt;&lt;</a></li>
+                        
+
+
+                        <!-- 이전 페이지로(<) -->
+                        <li>
+                            <c:choose>
+                                <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
+                                <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
+                            </c:choose>
+                        </li>
+                        
+
+
+                        <!-- 최대 10개의 페이지 목록 -->
+                        <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                            <li>
+                                <c:choose>
+                                    <c:when test="">
+                                        <div class="current_page">
+                                            <a href="#">1</a>
+                                        </div>
+                                    </c:when>            
+                                    <c:otherwise>
+                                        <!-- <a href="${contextPath }/board/list?page=${ p }${ searchParam }">${ p }</a> -->
+                                    </c:otherwise>
+                                </c:choose>
+                            </li>
+                        </c:forEach>
+            
+
+
+                        <!-- 다음 페이지로(>) -->
+                        <li>
+                            <c:choose>
+                                <c:when test=""><a href="">&gt;</a></c:when>
+                                <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
+                            </c:choose>
+                        </li>
+
+
+
+                        <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                        <li><a href="">&gt;&gt;</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

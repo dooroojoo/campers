@@ -10,6 +10,21 @@ public class adminController {
 
 	@GetMapping("/member")
 	public String adminMember() {
-		return "admin/memberList";
+		return "admin/adminMember";
+	}
+	
+	@GetMapping("/report")
+	public String adminReport() {
+		return "admin/adminReport";
+	}
+	
+	@GetMapping("/camp")
+	public String adminCamp() {
+		return "admin/adminCamp";
+	}
+	
+	@GetMapping("/camp/detail")
+	public String adminCampDetail() {
+		return "admin/campDetail";
 	}
 }

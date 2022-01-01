@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+
+.ad_outer {
+    width: 1000px;
+    margin: auto;
+}
+
+.ad_wrap {
+    width: 980px;
+}
+
+ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+/* 숙소신청 상세 헤더 */
+.ad_title{
+    padding-left: 20px;
+    border-bottom: 1px solid black;
+}
+.ad_title h2 {
+    margin: 10px auto;
+}
+.ad_headerArea {
+    margin-bottom: 80px;
+    border-bottom: 1px solid rgb(154, 154, 154);
+    
+}
+
+/* 신청 양식 테이블 */
+.table_title{
+    padding-left: 50px;
+}
+.ad_headerArea>ul {
+	display: flex;
+	list-style: none;
+    text-align: center;
+    height: 50px;
+	line-height: 50px;
+}
+.ad_headerArea .ad_pk {
+    width: 15%;
+}
+.ad_headerArea .ad_id {
+    text-align: left;
+    width: 65%;
+}
+.ad_headerArea .ad_date {
+    width: 20%;
+}
+table {
+    border-spacing: 0px;
+}
+.ad_table {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+}
+.td_head {
+    line-height: 30px;
+    background: #ebebeb;
+    color: gray;
+}
+.table_div {
+    padding: 10px;
+    word-break: break-all;
+}
+
+.table_div>img {
+    max-width: 650px;
+}
+.ad_tr>td {
+    border-bottom: 1px solid #d8d8d8;
+}
+
+/* 구분선 */
+hr {
+    color: rgb(154, 154, 154);
+}
+
+/* 버튼 영역 */
+.ad_btnArea {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 35px 0;
+}
+.ad_btnArea button {
+    margin: 0 25px;
+}
+.ad_before button,
+.ad_reject button,
+.ad_enroll button {
+    width: 5em;
+    height: 2.5em;
+    border: rgb(239, 239, 239);
+    border-radius: 8px
+}
+.ad_before button:hover,
+.ad_reject button:hover,
+.ad_enroll button:hover{
+    cursor: pointer;
+}
+.ad_before button { /* 이전 */
+    background: lightgray;
+    color: white;
+}
+.ad_reject button { /* 거절 */
+    background: black;
+    color: white;
+}
+.ad_enroll button { /* 등록 */
+    background: white;
+    color: black;
+    border: 1px solid black;
+}
+
+/* 거절 사유 작성 */
+.writeArea {
+    margin: 1.5em auto;
+    padding: .5em;
+    width: 350px;
+    border: 1px solid #dadada;
+    border-radius: 15px;
+}
+.writeArea textarea:focus {
+    outline: none;
+}
