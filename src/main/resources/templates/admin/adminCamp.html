@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>camp list</title>
+
+	<!-- css -->
+	<link href="/resources/css/admin/adminCamp.css" rel="stylesheet" type="text/css">
+	<!-- css -->
+	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div th:replace="common/header.html"></div>
+
+    <div class="admin_outer">
+        <div class="admin_wrap">
+
+
+            <!-- 1. 숙소 관리 -->
+            <div class="accomd_area">
+                <div class="accomd_title">
+                    <h2>숙소 관리</h2>
+                </div>
+                <div class="accomd_list">
+                    <ul class="accomd_header">
+                        <li class="accomd_pk">번호</li>
+                        <li class="accomd_id">작성자</li>
+                        <li class="accomd_date">신청일</li>
+                        <li class="accomd_name">숙소명</li>
+                        <li class="accomd_status">승인상태</li>
+                        <li class="accomd_request">요청구분</li>
+                        <li class="accomd_update">관리</li>
+                    </ul>
+                    <ul class="accomd_header">
+                        <li class="accomd_pk">0001</li>
+                        <li class="accomd_id">member01</li>
+                        <li class="accomd_date" title="21.03.21 10:27:39">21.03.21</li>
+                        <li class="accomd_name">구봉산 오토캠핑장 나인힐스구봉산 오토캠핑장 나인힐스구봉산 오토캠핑장 나인힐스</li>
+                        <li class="accomd_request">완료</li>
+                        <li class="accomd_status">등록</li>
+                        <li class="accomd_update">
+                            <button type="submit">보기</button>
+                        </li>
+                    </ul>
+                    <ul class="accomd_header">
+                        <li class="accomd_pk">0002</li>
+                        <li class="accomd_id">member02</li>
+                        <li class="accomd_date" title="21.03.21 10:27:39">21.03.22</li>
+                        <li class="accomd_name">구봉산 오토캠핑장 나인힐</li>
+                        <li class="accomd_request">해지</li>
+                        <li class="accomd_status">대기 중</li>
+                        <li class="accomd_update">
+                            <button type="submit">삭제</button>
+                        </li>
+                    </ul>
+                    <ul class="accomd_header">
+                        <li class="accomd_pk">0003</li>
+                        <li class="accomd_id">member03</li>
+                        <li class="accomd_date" title="21.03.21 10:27:39">21.03.23</li>
+                        <li class="accomd_name">구봉산 오토캠핑장 나인힐스</li>
+                        <li class="accomd_request">신규</li>
+                        <li class="accomd_status">대기 중</li>
+                        <li class="accomd_update">
+                            <button type="submit">보기</button>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <!-- 2. 페이징 처리 -->
+                <div class="accomd_pages">
+                    <ul class="accomd_paging">
+                        <!-- 맨 처음으로 이동하는 버튼(<<) -->
+                        <li><a href="">&lt;&lt;</a></li>
+                        
+                        <!-- 이전 페이지로(<) -->
+                        <li>
+                            <c:choose>
+                                <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
+                                <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
+                            </c:choose>
+                        </li>
+                        
+                        <!-- 최대 10개의 페이지 목록 -->
+                        <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                            <li>
+                                <c:choose>
+                                    <c:when test="">
+                                        <div class="current_page">
+                                            <a href="#">1</a>
+                                        </div>
+                                    </c:when>            
+                                    <c:otherwise>
+                                        <!-- <a href="${contextPath }/board/list?page=${ p }${ searchParam }">${ p }</a> -->
+                                    </c:otherwise>
+                                </c:choose>
+                            </li>
+                        </c:forEach>
+                        
+                        <!-- 다음 페이지로(>) -->
+                        <li>
+                            <c:choose>
+                                <c:when test=""><a href="">&gt;</a></c:when>
+                                <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
+                            </c:choose>
+                        </li>
+
+                        <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                        <li><a href="">&gt;&gt;</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- 3. 검색 영역 -->
+            <div class="search_area">
+                <form method="get" action="#">
+                    <div class="select_wrap conditionWrap">
+                        <select id="searchCondition" name="searchCondition">
+                            <option value="name" selected>숙소명</option>
+                            <option value="id">아이디</option>
+                        </select>
+                    </div>
+                    <span class="input_area">
+                        <input type="search" name="searchValue">
+					</span>
+					<button type="submit">검색</button>
+				</form>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+</html>

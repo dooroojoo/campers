@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+.admin_outer {
+    width: 1000px;
+    margin: auto;
+}
+
+.admin_wrap {
+    width: 980px;
+}
+
+ul, li {
+    margin: 0;
+	padding: 0;
+}
+.report_title{
+    padding-left: 20px;
+    border-bottom: 1px solid black;
+}
+.report_title h2 {
+    margin: 10px auto;
+}
+
+.report_list{
+    min-height: 700px;
+}
+
+.report_list>ul>li { /* 신고 사유 text */
+    padding: 5px;
+    /* white-space: pre-wrap; */
+    /* overflow: visible; */
+    word-break: break-all;
+}
+
+.report_list>ul {
+    min-height: 60px;
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+    text-align: center;
+    border-bottom: 1px solid rgb(213, 213, 213);
+}
+.report_header{
+    min-height: 60px;
+    /* flex에서 수직 정렬 */
+    align-items: center;
+}
+.report_list .report_pk {
+    width: 10%;
+}
+.report_list .report_id {
+    width: 10%;
+}
+.report_list .report_reporter {
+    width: 10%;
+}
+.report_list .report_reason {
+    width: 40%;
+}
+.report_list .report_date {
+    width: 10%;
+}
+.report_list .report_type {
+    width: 10%;
+}
+.report_list .report_update {
+    width: 10%;
+}
+
+
+.report_id:hover,
+.report_reason:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* 완료 버튼 */
+.report_update button {
+    width: 4em;
+    height: 2.3em;
+    border: rgb(239, 239, 239);
+    border-radius: 8px
+}
+.report_update button:hover {
+    cursor: pointer;
+}
+
+/* 페이징 */
+.report_pages {
+    margin: 10px;
+}
+.report_paging {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    list-style: none;
+    width: 480px;
+    margin: auto;
+    align-items: center;
+}
+.report_paging a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-align: center;
+}
+.report_paging li{
+    width: 45px;
+}
+.report_paging .current_page {
+    background-color: black;
+    border-radius: 100%;
+    margin: 17px auto;
+    width: 25px;
+    height: 25px;
+    color: white;
+}
+.report_paging .current_page a{
+    color: white;
+}

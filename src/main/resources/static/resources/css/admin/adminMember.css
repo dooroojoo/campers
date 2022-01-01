@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+.admin_outer {
+    width: 1000px;
+    margin: auto;
+}
+
+.admin_wrap {
+    width: 980px;
+}
+
+ul, li {
+	margin: 0;
+	padding: 0;
+}
+/* 회원관리 헤더 */
+.member_title{
+    padding-left: 20px;
+    border-bottom: 1px solid black;
+}
+.member_title h2 {
+    margin: 10px auto;
+}
+.member_list{
+    min-height: 700px;
+}
+.member_list>ul {
+    min-height: 55px;
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+    text-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(213, 213, 213);
+}
+.member_list>ul>li {
+    padding: 5px;
+    /* white-space: pre-wrap; */
+    /* overflow: visible; */
+    word-break: break-all;
+}
+#member_header {
+    min-height: 60px;
+    /* flex에서 수직 정렬 */
+}
+.member_list .member_pk {
+    width: 10%;
+}
+.member_list .member_id {
+    width: 10%;
+}
+.member_list .member_name {
+    width: 10%;
+}
+.member_list .member_email {
+    width: 27%;
+}
+.member_list .member_joinDate {
+    width: 10%;
+}
+.member_list .member_author {
+    width: 10%;
+}
+.member_list .member_status {
+    width: 12%;
+}
+.member_list .member_update {
+    width: 8%;
+}
+
+/* select 박스 외형 감추기 */
+.member_list select,
+.search_area select{
+    -webkit-appearance: none;
+    /* 네이티브 외형 감추기 */
+    -moz-appearance: none; 
+    appearance: none;
+    /* label 여백 주기 */
+    padding-left: 0.6em;;
+    border: 1px solid #dadada;
+}
+#select_author{
+    width: 75px;
+    height: 32px;
+}
+#select_status{
+    width: 90px;
+    height: 32px;
+}
+.select_wrap{ /* 화살표 대체 */
+    display: inline-block;
+    position: relative;
+}
+.select_wrap:before{
+    content:'';
+    display: block;
+    position: absolute;
+    top: 55%;
+    right: 8px;
+    transform: translate(0,-50%);
+    width: 0;
+    height: 0;
+    border:9px solid darkgray;
+    border-left:6px solid transparent;
+    border-right:6px solid transparent;
+    border-bottom:none;
+}
+
+/* 버튼 영역 */
+.member_update button,
+.search_area button {
+    width: 4em;
+    height: 2.3em;
+    border: rgb(239, 239, 239);
+    border-radius: 8px
+}
+.member_update button:hover,
+.search_area button:hover {
+    cursor: pointer;
+}
+
+/* 페이징 */
+.member_pages {
+    margin: 10px;
+}
+.member_paging {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    list-style: none;
+    width: 480px;
+    margin: auto;
+    align-items: center;
+}
+.member_paging a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-align: center;
+}
+.member_paging li{
+    width: 45px;
+}
+.member_paging .current_page {
+    background-color: black;
+    border-radius: 100%;
+    margin: 17px auto;
+    width: 25px;
+    height: 25px;
+    color: white;
+}
+.member_paging .current_page a{
+    color: white;
+}
+
+/* 검색 영역 */
+.search_area {
+    text-align: center;
+    padding: 10px;
+}
+#searchCondition {
+    width: 90px;
+    height: 39px;
+}
+.input_area {
+    width: 180px;
+    height: 35px;
+	border: solid 1px #dadada;
+	padding: 8px 0;
+	margin-right: 5px;
+}
+.conditionWrap {
+   bottom: 2px;
+}
+.input_area input {
+	width: 180px;
+    height: 30px;
+	border: 0px;
+    padding: 0 .8em;
+}
+
+.input_area + button {
+    width: 4em;
+    height: 2.8em;
+    border: rgb(239, 239, 239);
+    border-radius: 8px;
+}
+
+.input_area input:focus,
+.search_area select:focus,
+.member_list select:focus {
+	outline: none;
+}
