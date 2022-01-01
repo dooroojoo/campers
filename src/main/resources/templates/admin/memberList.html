@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>memberList</title>
+
+	<!-- css -->
+	<link href="/resources/css/camp/campDetail.css" rel="stylesheet" type="text/css">
+	<!-- css -->
+	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div th:replace="common/header.html"></div>
+
+	<div class="admin_outer">
+        <div class="admin_wrap">
+
+
+            <!-- 1. 회원 목록&관리 영역 -->
+            <div class="member_area">
+
+
+                <div class="member_title">
+                    <h2>회원 관리</h2>
+                </div>
+
+
+                <div class="member_list">
+
+
+                    <ul id="member_header">
+                        <li class="member_pk">회원번호</li>
+                        <li class="member_id">아이디</li>
+                        <li class="member_name">이름</li>
+                        <li class="member_email">이메일</li>
+                        <li class="member_joinDate">가입일</li>
+                        <li class="member_author">권한</li>
+                        <li class="member_status">활동상태</li>
+                        <li class="member_update">관리</li>
+                    </ul>
+
+
+                    <ul>
+                        <li class="member_pk">001</li>
+                        <li class="member_id">user01</li>
+                        <li class="member_name">홍길동 홍길동</li>
+                        <li class="member_email">hong1@gmail.com hong1@gmail.com hong1@gmail.com</li>
+                        <li class="member_joinDate">21.03.21</li>
+                        <li class="member_author">
+                            <!-- form을 어떻게 묶어야하는지... -->
+                            <form action="#" method="post">
+                                <div class="select_wrap">
+                                    <select id="select_author" name="select_author">
+                                        <option selected>일반</option>
+                                        <option>사업자</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </li>
+                        <li class="member_status">
+                            <div class="select_wrap">
+                                <select id="select_status" name="select_status">
+                                    <option selected>활성화</option>
+                                    <option>비활성화</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="member_update">
+                            <button type="submit">수정</button>
+                        </li>
+                    </ul>
+
+
+                    <ul>
+                        <li class="member_pk">001</li>
+                        <li class="member_id">user01</li>
+                        <li class="member_name">홍길동</li>
+                        <li class="member_email">hong1@gmail.com</li>
+                        <li class="member_joinDate">21.03.21</li>
+                        <li class="member_author">
+                            <!-- form을 어떻게 묶어야하는지... -->
+                            <form action="#" method="post">
+                                <div class="select_wrap">
+                                    <select id="select_author" name="select_author">
+                                        <option selected>일반</option>
+                                        <option>사업자</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </li>
+                        <li class="member_status">
+                            <div class="select_wrap">
+                                <select id="select_status" name="select_status">
+                                    <option selected>활성화</option>
+                                    <option>비활성화</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="member_update">
+                            <button type="submit">수정</button>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+                <!-- 페이징 처리 -->
+                <div class="member_pages">
+                    <ul class="member_paging">
+
+
+                        <!-- 맨 처음으로 이동하는 버튼(<<) -->
+                        <li><a href="">&lt;&lt;</a></li>
+                        
+
+
+                        <!-- 이전 페이지로(<) -->
+                        <li>
+                            <c:choose>
+                                <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
+                                <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
+                            </c:choose>
+                        </li>
+                        
+
+
+                        <!-- 최대 10개의 페이지 목록 -->
+                        <li>
+                            <div class="current_page">
+                                <a href="#">1</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="">
+                                <a href="#">2</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="">
+                                <a href="#">3</a>
+                            </div>
+                        </li>
+            
+
+
+                        <!-- 다음 페이지로(>) -->
+                        <li>
+                            <c:choose>
+                                <c:when test=""><a href="">&gt;</a></c:when>
+                                <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
+                            </c:choose>
+                        </li>
+            
+
+
+                        <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                        <li><a href="">&gt;&gt;</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+            
+            <!-- 2. 회원 검색 영역 -->
+            <div class="search_area">
+
+                <form method="get" action="#">
+
+                    <div class="select_wrap conditionWrap">
+                        <select id="searchCondition" name="searchCondition">
+                            <option value="no" selected>회원번호</option>
+                            <option value="id">아이디</option>
+                        </select> 
+                    </div>
+
+
+                    <span class="input_area">
+                        <input type="search" name="searchValue" value="">
+					</span>
+
+
+					<button type="submit">검색</button>
+
+				</form>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
