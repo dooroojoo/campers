@@ -1,0 +1,520 @@
+@charset "UTF-8";
+
+/* html {
+    font-size : 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+} */
+
+.accom_wrap {
+    width: 1000px;
+    margin: auto;
+}
+.accom_content {
+    width: 980px;
+    margin: auto;
+}
+ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+/* pre { */
+    /* 스크롤바 자동으로 처리 */
+    /* overflow: visible; */
+    /* 공백을 공백으로 처리&자동 줄바꿈 */
+    /* white-space: pre-wrap; */
+    /* margin: 0; */
+/* } */
+
+.text_controller {  /* 글자 자동 내림 */
+    padding: 5px;
+    /* white-space: pre-wrap; */
+    overflow: visible;
+    word-break: break-all;
+}
+.camp_title {
+	padding: 0 10px;
+}
+
+/*----- 1. 숙소명 헤더 -----*/
+.accom_header {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 15px 0;
+}
+.btnBefore {    /* 이전 */
+    font-size: 30px;
+    margin-right: 32%;
+}
+
+.btnBefore:hover {
+    cursor: pointer;
+}
+
+/*----- 2. 숙소 이미지 -----*/
+/* 2) 슬라이드 */
+.div-accomdImg img {  /* 사진 크기 */
+    width: 900px;
+    border-radius: 15px;
+    min-height: 500px;
+}
+
+.slide_accomd{
+    width: 900px;
+    height: auto;
+    position:relative;
+    margin : 0 30px;
+    z-index: 1;
+}
+
+.accomd_button1{
+    left:6px;
+    bottom : 250px;
+    position:absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    text-align: center;
+    z-index: 2;
+}
+
+.accomd_button2{
+    right:8px;
+    bottom : 250px;
+    position:absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    text-align: center;
+    z-index: 2;
+}
+
+.accomd_button1:hover,
+.accomd_button2:hover{
+    background: rgb(221, 221, 221, 0.5);
+}
+
+.direction {
+    line-height: 40px;
+}
+
+.swiper_acconmd {
+    width: 900px;
+    height: 520px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+/*----- 3_1. 숙소 연락 정보 -----*/
+#copy:hover,
+#share:hover {
+    cursor: pointer;
+}
+
+/*----- 3. 예약 영역 -----*/
+.accom_info {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 100px 50px 50px;
+}
+
+.accom_profile { /* 연락 정보 */
+    padding: 20px 0px;
+    font-size: 19px;
+}
+
+.accom_profile_icon {
+    margin: 0px 5px;
+}
+
+.accom_profile div {
+    padding: 15px;
+}
+.accom_address {
+    display: flex;
+    align-items: flex-start;
+}
+.accom_reservation {
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    margin: 20px 0;
+    padding: 24px;
+    box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+    max-height: 200px;
+}
+
+.rvArea {
+    border : 1px solid rgb(221, 221, 221);
+    border-radius: 12px;
+}
+
+.rv_top { 
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.check_left {
+    border-right: 1px solid rgb(221, 221, 221);
+}
+
+.check_io { /* 체크인/아웃 */
+    color: rgb(155, 155, 155);
+    font-size: 12px;
+    padding: 10px 15px 0px 15px;
+}
+
+.io_date {
+    text-align: right;
+    margin-left: 50px;
+    padding: 10px 15px;
+}
+
+.rv_bottom {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.rv_person { /* 인원 */
+    color: rgb(155, 155, 155);
+    font-size: 15px;   
+}
+
+/* 객실 */
+/* select 박스 외형 감추기 */
+.rv_select select{
+    -webkit-appearance: none;
+    /* 네이티브 외형 감추기 */
+    -moz-appearance: none; 
+    appearance: none;
+    /* label 여백 주기 */
+    padding-left: 0.6em;;
+    border: 1px solid #dadada;
+}
+#roomName{
+    width: 180px;
+    height: 40px;
+    padding: 5px 25px 5px 5px;
+    text-align: right;
+    border-radius: 10px;
+}
+.rv_select{ /* 화살표 대체 */
+    display: inline-block;
+    position: relative;
+}
+.rv_select:before{
+    content:'';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translate(0,-50%);
+    width: 0;
+    height: 0;
+    border:9px solid darkgray;
+    border-left:6px solid transparent;
+    border-right:6px solid transparent;
+    border-bottom:none;
+}
+.rv_select select:focus {
+	outline: none;
+}
+
+.rvBtn,
+.rvBtn button { /* 버튼 영역 */
+    color: white;
+}
+
+.rvBtn {
+    margin: 10px auto;
+    padding: 5px auto;
+    background-color: tomato;
+    border-radius: 12px;
+    width: 300px;
+    min-height: 40px;
+    text-align: center;
+    line-height: 47px;
+}
+
+.rvBtn button {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+.rvBtn button:hover {
+    cursor: pointer;
+}
+
+/*----- 소개 공통 적용 -----*/
+.introduce {
+    margin: 30px;
+}
+
+.io_date,
+.rv_bottom,
+.policyArea,
+.review_top {
+    display: flex;
+}
+
+fieldset {
+    padding: 30px;
+    border: 1px solid #dadada;
+    border-radius: 20px;
+}
+
+/*----- 4. 숙소 소개 -----*/
+.accom_intro {
+    margin-bottom: 80px;
+}
+
+/*---- 5. 시설 및 부가 이용 -----*/
+.accom_facility {
+    margin-bottom: 80px;
+}
+
+.fac1 {
+    width: 120px;
+}
+
+.facility {
+    margin: 0 0 50px 0;
+}
+
+.main_icon,
+.sub_icon {
+	line-height: 30px;
+	display: flex;
+	list-style: none;
+    text-align: center;
+}
+
+.fac_msg {
+    font-size: 13px;
+    color: gray;
+}
+
+
+/*---- 6. 운영 정책 -----*/
+.accomd_policy {
+    margin-bottom: 80px;
+}
+
+.checkTime_ul { /* 입퇴실 시간 */
+    line-height: 45px;
+	display: flex;
+	list-style: none;
+    text-align: left; 
+}
+
+#checkTime_li_icon {
+    width: 55px;
+    text-align: center;
+}
+
+.checkTime_li {
+    width: 60px;
+}
+
+.checkTime_li_io {
+    width: 70px;
+}
+
+
+.policyIcon { /* 운영 정책 안내 */
+    padding: 0 19px;
+}
+
+.policyArea {
+    padding-top: 20px;
+}
+
+
+/*---- 7. 취소 및 환불 규정 -----*/
+.accom_refund {
+    margin-bottom: 80px;
+}
+
+.refund_div>ul {
+    min-height: 40px;
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+    text-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(242, 242, 242);
+}
+
+.refund_date,
+.refund_fees,
+.refund_price {
+    width: 33%;
+}
+
+.refund_header {
+    background-color: rgb(242, 242, 242);
+}
+
+
+
+/*---- 8. 객실 목록 -----*/
+.rooms_list{
+    margin-bottom: 80px;
+}
+
+.rooms_title{
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+.rooms_title h4 {
+    padding-left: 30px;
+}
+
+.rooms_area {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+}
+
+.rooms_wrap {
+    width: 250px;
+    height: 300px;
+    border-radius: 20px;
+    border: 1px solid #d1d1d1;
+    margin: 15px auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.rooms_img {
+    width: 100%;
+    height: 70%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow:hidden;
+    
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transition: all 0.3s ease-in-out;
+}
+
+.rooms_img:hover {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+}
+
+.rooms_info:hover,
+.rooms_img:hover {
+    cursor: pointer;
+}
+
+.rooms_info {
+    margin-bottom: 15px;
+}
+
+.rooms_info div {
+    padding: 3px 0;
+}
+
+.info_person {
+    font-size: 12px;
+}
+
+
+/*---- 9. 리뷰 목록 -----*/
+.review_list{
+    margin-bottom: 58px;
+}
+
+.review_title{ /* 리뷰 타이틀 */
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+.review_title h4 {
+    padding-left: 30px;
+}
+
+.review_area { /* 리뷰 리스트 */
+    margin: 50px 10px;
+}
+
+.writer_wrap>ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    list-style: none;
+}
+
+.review_content { /* 리뷰 하나 */
+    width: 460px;
+    min-height: 120px;
+    margin: 30px 0;
+}
+
+.writer_profile {   /* 프로필 사진 */
+    margin: 10px 20px;
+}
+
+.icon_img {
+    width: 40px;
+    height: 40px;
+}
+
+.writer_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.delete_a {
+    margin-left: 200px;
+    padding-top: 36px;
+}
+
+.delete_a a {
+    /* text-decoration: underline; */
+    color: black;
+    font-size: 12px;
+}
+
+.delete_a a:hover {
+    cursor: pointer;
+}
+
+.review_bottom {
+    padding: 20px 30px;
+}
+
+/*----- top 이동 버튼 -----*/
+#moveA {
+	text-decoration: none;
+	width: 60px;
+	height: 60px;
+	display: none;
+	font-size: 15px;
+	border: 2px solid lightgray;
+	border-radius: 100%;
+	color: tomato;
+	text-align: center;
+    line-height: 60px;
+	position: fixed;
+	right: 60px;
+	bottom: 65px;
+}

@@ -1,0 +1,189 @@
+@charset "UTF-8";
+
+
+/*----- 모달 배경 -----*/
+.modal_background{
+    position: absolute;
+    top:0; left: 0; bottom: 0; right: 0;
+    width: 100%;
+    height: 451vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    /* 숨기기 */
+    z-index: -1;
+    opacity: 0;
+}
+
+/*----- 모달 천천히 올라오기 -----*/
+.show {
+    opacity: 1;
+    z-index: 1000;
+    transition: all .5s;
+}
+
+.window {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+/*----- 모달창 크기 고정 -----*/
+.room_modal{
+    position: absolute;
+    top: 47%; left: 50%;
+    /* transform: translate(-50%,  40%); */
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+    border-radius: 10px;
+    width: 900px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 18px 0;
+    margin: auto;
+    
+    /* 초기에 약간 아래에 배치 */
+    transform: translate(-50%, 50%);
+}
+
+.show .room_modal {
+    transform: translate(-50%, 46%);
+    transition: all .5s;
+}
+
+
+/*----- 창닫기 -----*/
+.close_icon{
+    width: 95%;
+    height: 30%;
+    text-align: right; 
+    font-size: 23px;
+}
+
+.close_icon2:hover{
+    cursor: pointer;
+}
+
+.room_title h3{
+    margin: 40px 0;
+}
+
+
+/*----- 2. 숙소 이미지 -----*/
+/* 2) 슬라이드 */
+.div-img img {  /* 사진 크기 */
+    width: 700px;
+    border-radius: 15px;
+    text-align: center;
+    min-height: 400px;
+}
+
+.slide1{
+    width: 770px;
+    height: auto;
+    position:relative;
+    margin : 0 30px;
+    z-index: 1;
+}
+
+.button1{
+    left:35px;
+    bottom : 45%;
+    position:absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    text-align: center;
+    z-index: 2;
+}
+
+.button2{
+    right: 35px;
+    bottom : 45%;
+    position:absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    text-align: center;
+    z-index: 2;
+}
+
+.button1:hover,
+.button2:hover{
+    background: rgb(221, 221, 221, 0.5);
+}
+
+.direction {
+    line-height: 40px;
+}
+
+.swiper {
+    width: 780px;
+    position: relative;
+    z-index: 1;
+}
+
+
+/*----- 객실 가격 -----*/
+.room_price {
+    color: tomato;
+    margin-bottom: 30px;
+}
+
+.room_price h2{
+    display: inline;
+}
+
+
+/*----- 객실 내용 -----*/
+/* [공통] 내용 */
+.room_content {
+    width: 700px;
+    text-align: left;
+}
+
+fieldset {
+    margin-bottom: 50px;
+    padding: 30px;
+    border: 1px solid #dadada;
+    border-radius: 20px;
+}
+
+pre {
+    /* 스크롤바 자동으로 처리 */
+    overflow: visible;
+    /* 공백을 공백으로 처리&자동 줄바꿈 */
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+/* 객실 유형 */
+.room_info>fieldset>ul {
+	display: flex;
+	justify-content: space-between;
+	list-style: none;
+    text-align: center;
+    align-items: center;
+    padding: 0;
+}
+
+.room_header {
+    font-size: 12px;
+    color: gray;
+    /* flex에서 수직 정렬 */
+}
+.type {
+    width: 25%;
+}
+.size {
+    width: 25%;
+}
+.floor {
+    width: 25%;
+}
+.parking {
+    width: 25%;
+}
+
