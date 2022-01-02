@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>admin member</title>
+<script>
+	const successMessage = '[[${ successMessage }]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
 
 	<!-- css -->
 	<link href="/resources/css/admin/adminMember.css" rel="stylesheet" type="text/css">
@@ -19,16 +26,12 @@
 
             <!-- 1. 회원 목록&관리 영역 -->
             <div class="member_area">
-
-
                 <div class="member_title">
                     <h2>회원 관리</h2>
                 </div>
 
 
                 <div class="member_list">
-
-
                     <ul id="member_header">
                         <li class="member_pk">회원번호</li>
                         <li class="member_id">아이디</li>
@@ -39,68 +42,37 @@
                         <li class="member_status">활동상태</li>
                         <li class="member_update">관리</li>
                     </ul>
-
-
-                    <ul>
-                        <li class="member_pk">001</li>
-                        <li class="member_id">user01</li>
-                        <li class="member_name">홍길동 홍길동</li>
-                        <li class="member_email">hong1@gmail.com hong1@gmail.com hong1@gmail.com</li>
-                        <li class="member_joinDate">21.03.21</li>
-                        <li class="member_author">
-                            <!-- form을 어떻게 묶어야하는지... -->
-                            <form action="#" method="post">
-                                <div class="select_wrap">
-                                    <select id="select_author" name="select_author">
-                                        <option selected>일반</option>
-                                        <option>사업자</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </li>
-                        <li class="member_status">
-                            <div class="select_wrap">
-                                <select id="select_status" name="select_status">
-                                    <option selected>활성화</option>
-                                    <option>비활성화</option>
-                                </select>
-                            </div>
-                        </li>
-                        <li class="member_update">
-                            <button type="submit">수정</button>
-                        </li>
-                    </ul>
-
-
-                    <ul>
-                        <li class="member_pk">001</li>
-                        <li class="member_id">user01</li>
-                        <li class="member_name">홍길동</li>
-                        <li class="member_email">hong1@gmail.com</li>
-                        <li class="member_joinDate">21.03.21</li>
-                        <li class="member_author">
-                            <!-- form을 어떻게 묶어야하는지... -->
-                            <form action="#" method="post">
-                                <div class="select_wrap">
-                                    <select id="select_author" name="select_author">
-                                        <option selected>일반</option>
-                                        <option>사업자</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </li>
-                        <li class="member_status">
-                            <div class="select_wrap">
-                                <select id="select_status" name="select_status">
-                                    <option selected>활성화</option>
-                                    <option>비활성화</option>
-                                </select>
-                            </div>
-                        </li>
-                        <li class="member_update">
-                            <button type="submit">수정</button>
-                        </li>
-                    </ul>
+                    
+	                <ul th:each="member : ${ memberList }">
+	                	<form th:action="@{/admin/member/update}" method="post" name="updateFrom${ member.userNo }">
+	                        <li class="member_pk" th:text="${ member.userNo }"></li>
+	                        <li class="member_id" th:text="${ member.id }"></li>
+	                        <li class="member_name" th:text="${ member.userName }"></li>
+	                        <li class="member_email" th:text="${ member.email }"></li>
+	                        <li class="member_joinDate" th:text="${ #dates.format(member.createDate, 'yyyy-MM-dd') }"></li>
+	                        <li class="member_author">
+	                            <div class="select_wrap">
+	                                <select id="select_author" name="authorityCode" th:each="memberRole : ${member.memberRoleList}">
+	                                    <option value="1" th:selected="${ memberRole.authorityCode } == '1'">일반</option>
+	                                    <option value="2" th:selected="${ memberRole.authorityCode } == '3'">사업자</option>
+	                                </select>
+	                            </div>
+	                        </li>
+	                        <li class="member_status">
+	                            <div class="select_wrap">
+	                                <select id="select_status" name="status">
+	                                    <option value="Y" th:selected="${ member.status } == 'Y'">활성화</option>
+	                                    <option value="N" th:selected="${ member.status } == 'N'">비활성화</option>
+	                                    <option value="X" th:selected="${ member.status } == 'X'">탈퇴</option>
+	                                </select>
+	                            </div>
+	                        </li>
+	                        <li class="member_update">
+	                            <button type="submit">수정</button>
+	                        </li>
+	                        <input type="hidden" name="userNo" th:value="${ member.userNo }">
+                    	</form>
+	                </ul>
                 </div>
 
 
@@ -167,7 +139,6 @@
             <div class="search_area">
 
                 <form method="get" action="#">
-
                     <div class="select_wrap conditionWrap">
                         <select id="searchCondition" name="searchCondition">
                             <option value="no" selected>회원번호</option>
@@ -182,7 +153,6 @@
 
 
 					<button type="submit">검색</button>
-
 				</form>
 
             </div>
