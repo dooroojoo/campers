@@ -120,7 +120,7 @@ height: auto !important;
 }
 
 #btn-minus{
-    background: url('../image/minus.svg');
+    background: url("/resources/images/main/minus.svg");
     background-repeat: no-repeat;
     background-size: 75%;
     background-position: center;
@@ -129,7 +129,7 @@ height: auto !important;
 }
 #btn-plus{
     border-radius: 80%;
-    background: url('../image/plus.svg');
+    background: url("/resources/images/main/plus.svg");
     background-repeat: no-repeat;
     background-size: 75%;
     background-position: center;
@@ -202,7 +202,7 @@ height: auto !important;
     top: 50%;
     width: 35px;
     height: 40px;
-    background: url('../image/search2.png');
+    background: url("/resources/images/main/search2.png");
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;
@@ -211,7 +211,7 @@ height: auto !important;
 }
 
 .main-search-sub:hover{
-    background: url('../image/search.png');
+    background: url("/resources/images/main/search.png");
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;
