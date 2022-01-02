@@ -18,7 +18,7 @@
 
 </head>
 <body>
-<div th:replace="common/header.html"></div>
+<div th:replace="common/adminHeader.html"></div>
 
 	<div class="admin_outer">
         <div class="admin_wrap">
@@ -54,7 +54,7 @@
 	                            <div class="select_wrap">
 	                                <select id="select_author" name="authorityCode" th:each="memberRole : ${member.memberRoleList}">
 	                                    <option value="1" th:selected="${ memberRole.authorityCode } == '1'">일반</option>
-	                                    <option value="2" th:selected="${ memberRole.authorityCode } == '3'">사업자</option>
+	                                    <option value="2" th:selected="${ memberRole.authorityCode } == '2'">사업자</option>
 	                                </select>
 	                            </div>
 	                        </li>
@@ -83,51 +83,35 @@
 
 
                         <!-- 맨 처음으로 이동하는 버튼(<<) -->
-                        <li><a href="">&lt;&lt;</a></li>
+                        <li><a href="/admin/memberPage?page=1">&lt;&lt;</a></li>
                         
 
 
                         <!-- 이전 페이지로(<) -->
-                        <li>
-                            <c:choose>
-                                <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
-                                <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
-                            </c:choose>
-                        </li>
+                        <li th:if="${ pi.page > 1 }"><a href="/admin/memberPage?page=${ pi.page -1 }">&lt;</a></li>
+                        <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
                         
 
 
                         <!-- 최대 10개의 페이지 목록 -->
-                        <li>
-                            <div class="current_page">
-                                <a href="#">1</a>
+                        <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                            <div class="current_page" th:if="${ p == pi.page }">
+                                <a href="#" th:text="${ p }"></a>
+                            </div>
+                            <div th:unless="${ p == pi.page }">
+                                <a th:href="@{/admin/memberPage?page={p}(p=${p})}" th:text="${ p }"></a>
                             </div>
                         </li>
-                        <li>
-                            <div class="">
-                                <a href="#">2</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="">
-                                <a href="#">3</a>
-                            </div>
-                        </li>
-            
 
 
                         <!-- 다음 페이지로(>) -->
-                        <li>
-                            <c:choose>
-                                <c:when test=""><a href="">&gt;</a></c:when>
-                                <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
-                            </c:choose>
-                        </li>
+                        <li th:if="${ pi.page < pi.maxPage }"><a href="/admin/member?page=${ pi.page + 1 }">&gt;</a></li>
+                        <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
             
 
 
                         <!-- 맨 끝으로 이동하는 버튼(>>) -->
-                        <li><a href="">&gt;&gt;</a></li>
+                        <li><a href="/admin/member?pagePage=${ pi.maxPage }">&gt;&gt;</a></li>
                     </ul>
                 </div>
 
@@ -138,17 +122,17 @@
             <!-- 2. 회원 검색 영역 -->
             <div class="search_area">
 
-                <form method="get" action="#">
+                <form action="/admin/member/search" method="get">
                     <div class="select_wrap conditionWrap">
                         <select id="searchCondition" name="searchCondition">
-                            <option value="no" selected>회원번호</option>
-                            <option value="id">아이디</option>
+                            <option value="no" th:selected="${ param.searchCondition } == 'no'">회원번호</option>
+                            <option value="id" th:selected="${ param.searchCondition } == 'id'">아이디</option>
                         </select> 
                     </div>
 
 
                     <span class="input_area">
-                        <input type="search" name="searchValue" value="">
+                        <input type="search" name="searchValue" th:value="${ param.searchValue }">
 					</span>
 
 

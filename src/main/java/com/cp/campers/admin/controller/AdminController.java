@@ -2,16 +2,19 @@ package com.cp.campers.admin.controller;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.admin.model.service.AdminService;
 import com.cp.campers.member.model.vo.Member;
 
@@ -28,17 +31,34 @@ public class AdminController {
 		this.messageSource = messageSource;
 	}
 
+	/* 회원 목록 */
 	@GetMapping("member")
 	public ModelAndView adminMember(ModelAndView mv) {
 		
-		List<Member> memberList = adminService.findAllMember();
+		int page = 1;
 		
-		mv.addObject("memberList", memberList);
+		Map<String, Object> map = adminService.findAllMember(page);
+		
+		mv.addObject("memberList", map.get("memberList"));
+		mv.addObject("pi", map.get("pi"));
 		mv.setViewName("admin/member");
-		// 페이징바 해야 됨
+
 		return mv;
 	}
 	
+	/* 회원 목록 + 페이징처리 */
+	@GetMapping("memberPage")
+	public String adminMemberpaging(Model model, int page) {
+		
+		Map<String, Object> map = adminService.findAllMember(page);
+		
+		model.addAttribute("memberList", map.get("memberList"));
+		model.addAttribute("pi", map.get("pi"));
+
+		return "admin/member";
+	}
+	
+	/* 회원정보 수정 */
 	@PostMapping("member/update")
 	public String updateMember(Member member, int authorityCode, RedirectAttributes rttr, Locale locale) {
 		
@@ -50,16 +70,29 @@ public class AdminController {
 		return "redirect:/admin/member";
 	}
 	
+	/* 회원 검색 */
+	@GetMapping("member/search")
+	public String seachMember(Search search, Model model) {
+		
+		List<Member> memberList = adminService.searchMember(search);
+		model.addAttribute("memberList", memberList);
+		
+		return "admin/member";
+	}
+	
+	/* 신고목록 */
 	@GetMapping("report")
 	public String adminReport() {
 		return "admin/adminReport";
 	}
 	
+	/* 숙소목록 */
 	@GetMapping("camp")
 	public String adminCamp() {
 		return "admin/adminCamp";
 	}
 	
+	/* 숙소신청 */
 	@GetMapping("camp/detail")
 	public String adminCampDetail() {
 		return "admin/campDetail";
