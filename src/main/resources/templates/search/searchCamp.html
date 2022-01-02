@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캠핑장 검색</title>
+     <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- 외부 css -->
+    <link href="resources/css/search/search-style.css" rel="stylesheet">
+    <!-- 캘린더 라이브러리 -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!-- 외부 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- header -->
+    <div th:replace="common/header.html"></div>
+      
+    <div class="search-wrapper">
+      <!-- 검색페이지 컨텐츠 -->
+      <div class="search-camping">
+          <!-- 검색 조건 컨텐츠 -->
+        <div class="search-check">
+            <div class="search-form">
+                <form class="search-camping-form">
+                   <p>지역</p>
+                   <label class="search-area search-container">
+                   <input type="text" placeholder="어디로 여행가세요?">
+                    </label>
+                
+                  
+                   <p>날짜</p>
+                   <label class="search-date search-container">
+                    <input type="text" id="main-date-check" class="area-text" name="daterange" value="" />
+                   </label>
+
+                  
+                   <p>인원</p>
+                  <div class="search-number-input">
+                    <div class="search-number-wrap">
+                      <input type="search" placeholder="인원을 추가해주세요" readonly style="cursor: default;">
+                      <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                    <input class="quantity" min="0" max="6" name="quantity" value="1" type="number">
+                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                  </div>
+                  </div>
+
+                <p>캠핑장명</p>
+                   <label class="search-name search-container">
+                   <input type="text" placeholder="캠핑장 이름으로 찾아볼까요?" >
+                </label>
+                   
+                <div class="search-camp-type">
+                  <p>숙소유형</p>
+                  <div class="camp-type-btn">
+                   <label class="search-type">
+                      <input type="checkbox" class="s-type-camping"><span class="search-style">캠핑</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-glamping"><span class="search-style">글램핑</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-caravan"><span class="search-style">카라반</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="search-convenient-type">
+                  <p>주요시설</p>
+                  <div class="camp-type-btn">
+                   <label class="search-type">
+                      <input type="checkbox" class="s-type-camping"><span class="search-style">수영장</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-glamping"><span>바베큐장</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-caravan"><span>반려동물</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-caravan"><span>조식제공</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-caravan"><span class="search-style">매점</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-caravan"><span class="search-style">샤워실</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-caravan"><span>와이파이</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-caravan"><span class="search-style">전기</span>
+                    </label>
+                    <label class="search-type">
+                      <input type="checkbox" class="s-type-caravan"><span class="search-style">개수대</span>
+                    </label>
+                  </div>
+            </div>
+
+            <div class="search-bottom-type">
+              <p>바닥</p>
+              <div class="camp-type-btn">
+               <label class="search-type">
+                  <input type="checkbox" class="s-type-camping"><span class="search-style">데크</span>
+                </label>
+                <label class="search-type">
+                  <input type="checkbox" class="s-type-glamping"><span class="search-style">잔디</span>
+                </label>
+                <label class="search-type">
+                  <input type="checkbox" class="s-type-caravan"><span class="search-style">파쇄석</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="search-submit">
+              <input type="submit" value="검색하기">
+            </div>
+            </form>
+            </div>
+        </div>
+
+            <!-- 검색 리스트 조회 컨텐츠 -->
+        <div class="search-list">
+            <div class="search-contents">
+              <div class="search-list-top">
+
+                <!-- 아래 코드는 submit 버튼 눌렀을 때에만 나타나게 -->
+                <div class="list-top-text">
+                   <p>총 {조회된 컬럼 갯수}개의 캠핑장이 검색되었습니다.</p>
+                  </div>
+                  
+
+                <!-- 조회된 갯수만큼 반복문 -->
+                <div class="search-list-col">
+                  <div class="list-col-wrapper">
+                  <div class="list-col-img">
+                    <img src="resources/images/main/list1.jpg">
+                
+                  
+                  <div class="list-col-text">
+                    <ul>
+                      <li class="list-col-address">전남 장성군 {주소 일부}</li>
+                      <li class="list-col-name">빨간단풍 가족캠핑장 {캠핑장명}</li>
+                      <li class="list-col-count">최대인원 5인 {최대인원}</li>
+                      <li class="list-col-price">50,000 ~ 100,000</li>
+                    </ul>
+
+                    <!-- 선택한 날짜에 예약가능할 시에 -->
+                    <div class="list-col-state">
+                      <p class="list-bookable">예약가능</p>
+                    </div>
+
+                     <!-- 선택한 날짜에 예약불가 시에 -->
+                     <!-- <div class="list-col-state">
+                      <p class="list-booked">예약마감</p>
+                    </div> -->
+
+                  </div>
+                </div>
+                </div>
+              </div>
+              <!-- 반복문 끝 -->
+
+
+
+
+              <!-- 페이징 처리 / 수정예정 -->
+              <!-- <div class="member_pages">
+                <ul class="member_paging">
+
+                    맨 처음으로 이동하는 버튼(<<)
+                    <li><a href="">&lt;&lt;</a></li>
+                 
+                    이전 페이지로(<)
+                    <li>
+                        <c:choose>
+                            <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
+                            <c:otherwise><a href="#">&lt;</a></c:otherwise>
+                        </c:choose>
+                    </li>
+
+                    최대 10개의 페이지 목록
+                    <li>
+                        <div class="current_page">
+                            <a href="#">1</a>
+                        </div>
+                    </li>
+        
+                    다음 페이지로(>)
+                    <li>
+                        <c:choose>
+                            <c:when test=""><a href="">&gt;</a></c:when>
+                            <c:otherwise><a href ="#">&gt;</a></c:otherwise>
+                        </c:choose>
+                    </li>
+
+                    맨 끝으로 이동하는 버튼(>>)
+                    <li><a href="">&gt;&gt;</a></li>
+                </ul>
+            </div> -->
+
+                </div>
+            </div>
+
+        </div>
+    
+    </div>
+      </div>
+    
+     <!-- 푸터 -->
+    <div th:replace="common/footer.html"></div>
+ 
+ 	<!-- 제이쿼리 충돌 방지 코드 -->
+	<script type="text/javascript"> $.noConflict(); </script>
+
+	<!-- 인원수 증가 버튼 클릭시 submit 제출되지 않게-->
+	  <script>
+	  $('form').on('click', 'button:not([type="submit"])', function(e){
+	    e.preventDefault();
+	  })
+	  </script>
+
+	<!-- 제이쿼리 충돌 방지 코드 -->
+	<script type="text/javascript"> $.noConflict(); </script>
+	
+	<!-- 캘린더 스크립트 -->
+	<script type="text/javascript" src="resources/js/main/datePicker.js"></script>
+</body>
+</html>
