@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAMPERS</title>
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
-    <link href="resources/css/common/header-footer-style.css" rel="stylesheet">
-    <link href="resources/css/main/main-style.css" rel="stylesheet">
+    <link th:href="@{resources/css/common/header-footer-style.css}" rel="stylesheet">
+    <link th:href="@{resources/css/main/main-style.css}" rel="stylesheet">
     <!-- 슬라이드 라이브러리 -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+   <link rel="stylesheet" type="text/css" th:href="@{/resources/js/main/slick/slick.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/resources/js/main/slick/slick-theme.css}"/>
     <!-- 캘린더 라이브러리 -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -111,6 +111,7 @@
               <div class="next" id="main-arrow"><img src="resources/images/main/next.png"></div>
             </div>
         </div>
+        <script type="text/javascript" th:src="@{/resources/js/main/slick/slick.min.js}"></script>
 
         <div class="main-qna-txt">
          <span>
@@ -214,18 +215,34 @@
     <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
 
-  
+  	<!-- 제이쿼리 충돌 방지 코드 -->
+	<script type="text/javascript"> $.noConflict(); </script>
+	
     <!-- 버튼 클릭으로 인원 수 추가 삭제 -->
-    <script src="resources/js/main/guestEvent.js"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main/guestEvent.js}"></script>
 
     <!-- 추천리스트 슬라이드 -->
-    <script src="resources/js/main/slickSlide.js"></script>
+    <script>
+    $('.main-slide-wrapper').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        nextArrow:$('.next'),
+        prevArrow:$('.prev'),
+      });
+    </script>
+    
+    <!-- 제이쿼리 충돌 방지 코드 -->
+	<script type="text/javascript"> $.noConflict(); </script>
 
     <!-- 슬라이드 마우스 오버 효과 -->
-    <script src="resources/js/main/slideHover.js"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main/slideHover.js}"></script>
 
     <!-- 캘린더 스크립트 -->
-    <script src="resources/js/main/datePicker.js"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main/datePicker.js}"></script>
+    
+    
       
 </body>
 </html>

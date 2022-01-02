@@ -40,7 +40,7 @@ body{
 .sidebar-menu{
   width: 30px;
   height: 30px;
-  background: url("../image/option.png");
+  background: url("/resources/images/common/header_footer/option.png");
   background-size: 30px;
   margin-left: 50%;
   cursor: pointer;
@@ -52,7 +52,7 @@ body{
   position: relative;
   width: 30px;
   height: 30px;
-  background: url("../image/option2.png");
+  background: url("/resources/images/common/header_footer/option2.png");
   background-size: 30px;
   margin-left: 50%;
   cursor: pointer;
