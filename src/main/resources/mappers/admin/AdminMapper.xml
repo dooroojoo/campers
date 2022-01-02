@@ -29,18 +29,30 @@
       <result property="authorityDesc" column="AUTHORITY_DESC"/>
    </resultMap>
    
-   <select id="findAllMember" resultMap="memberResultMap">
-   	SELECT
-	      A.USER_NO,
-	      A.USER_ID, 
-	      A.USER_NAME, 
-	      A.EMAIL, 
-	      A.CREATE_DATE,
-	      A.STATUS,
-	      B.AUTHORITY_CODE
-	 FROM MEMBER A
-	 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
-	 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+   <select id="getListCount" resultType="_int">
+   		SELECT
+		      COUNT(A.USER_NO)
+		 FROM MEMBER A
+		 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
+		 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+   </select>
+   
+   <select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
+   	SELECT * 
+      FROM (SELECT ROWNUM RNUM, A.*
+		      FROM (SELECT
+                          A.USER_NO,
+                          A.USER_ID, 
+                          A.USER_NAME, 
+                          A.EMAIL, 
+                          A.CREATE_DATE,
+                          A.STATUS,
+                          B.AUTHORITY_CODE
+                     FROM MEMBER A
+                     LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
+                     LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+                    ORDER BY A.CREATE_DATE) A)
+	 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
    </select>
    
    <update id="updateMember" parameterType="com.cp.campers.member.model.vo.Member">
@@ -54,5 +66,26 @@
 		   SET AUTHORITY_CODE = #{ authorityCode }
 		WHERE USER_NO = #{ memberNo }
    </update>
-   
+
+   <select id="searchMember" parameterType="com.cp.campers.admin.model.vo.Search" resultMap="memberResultMap">
+   		SELECT
+		      A.USER_NO,
+		      A.USER_ID, 
+		      A.USER_NAME, 
+		      A.EMAIL, 
+		      A.CREATE_DATE,
+		      A.STATUS,
+		      B.AUTHORITY_CODE
+		 FROM MEMBER A
+		 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
+		 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+		<choose>
+		<when test="searchCondition == 'no'">		
+		WHERE A.USER_NO = #{ searchValue }
+		</when>
+		<when test="searchCondition == 'id'">
+		WHERE A.USER_ID = #{ searchValue }
+		</when>
+		</choose>
+   </select>
 </mapper>

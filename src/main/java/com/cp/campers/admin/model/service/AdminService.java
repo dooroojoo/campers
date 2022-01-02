@@ -5,12 +5,15 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
 
 @Service
 public interface AdminService {
 
-	List<Member> findAllMember();
+	Map<String, Object> findAllMember(int page);
 	
 	int updateMember(Member member, int authorityCode);
+
+	List<Member> searchMember(Search search);
 }

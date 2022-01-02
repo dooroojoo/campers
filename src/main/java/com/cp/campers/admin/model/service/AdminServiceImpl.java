@@ -1,5 +1,7 @@
 package com.cp.campers.admin.model.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cp.campers.admin.model.dao.AdminMapper;
+import com.cp.campers.admin.model.vo.PageInfo;
+import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
 
@@ -22,8 +26,22 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<Member> findAllMember() {
-		return adminMapper.findAllMember();
+	public Map<String, Object> findAllMember(int page) {
+		
+		// 1. 총 회원수
+		int listCount = adminMapper.getListCount();
+		// 2. PageInfo 객체
+		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		// 3. 페이징 처리된 회원목록
+		pi.setStartRow(page);
+		pi.setEndRow(pi.getStartRow());
+		List<Member> memberList = adminMapper.findAllMember(pi);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pi", pi);
+		map.put("memberList", memberList);
+		
+		return map;
 	}
 
 	@Transactional
@@ -41,6 +59,11 @@ public class AdminServiceImpl implements AdminService{
 		if(result1==1 && result2==1) result = 1;
 		
 		return result;
+	}
+
+	@Override
+	public List<Member> searchMember(Search search) {
+		return adminMapper.searchMember(search);
 	}
 
 }
