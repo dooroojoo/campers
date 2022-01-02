@@ -24,7 +24,7 @@ ul, li {
 .member_list{
     min-height: 700px;
 }
-.member_list>ul {
+.member_list>ul>form {
     min-height: 55px;
 	display: flex;
 	justify-content: space-around;
@@ -33,38 +33,43 @@ ul, li {
     align-items: center;
     border-bottom: 1px solid rgb(213, 213, 213);
 }
-.member_list>ul>li {
+.member_list #member_header {
+    min-height: 60px;
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+    text-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(213, 213, 213);
+}
+.member_list>ul>form>li {
     padding: 5px;
     /* white-space: pre-wrap; */
     /* overflow: visible; */
     word-break: break-all;
 }
-#member_header {
-    min-height: 60px;
-    /* flex에서 수직 정렬 */
-}
-.member_list .member_pk {
+.member_pk {
     width: 10%;
 }
-.member_list .member_id {
+.member_id {
     width: 10%;
 }
-.member_list .member_name {
+.member_name {
     width: 10%;
 }
-.member_list .member_email {
+.member_email {
     width: 27%;
 }
-.member_list .member_joinDate {
+.member_joinDate {
     width: 10%;
 }
-.member_list .member_author {
+.member_author {
     width: 10%;
 }
-.member_list .member_status {
+.member_status {
     width: 12%;
 }
-.member_list .member_update {
+.member_update {
     width: 8%;
 }
 
