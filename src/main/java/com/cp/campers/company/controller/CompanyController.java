@@ -12,4 +12,19 @@ public class CompanyController {
 	public String csCenter() {
 		return "company/csCenter";
 	}
+	
+	@GetMapping("introduce")
+	public String introduce() {
+		return "company/introduce";
+	}
+	
+	@GetMapping("policy")
+	public String policy() {
+		return "company/policy";
+	}
+	
+	@GetMapping("privacy")
+	public String privacy() {
+		return "company/privacy";
+	}
 }

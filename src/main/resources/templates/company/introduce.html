@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사소개</title>
+    <!-- 외부 css -->
+    <link href="/resources/css/company/footer-sub-style.css" rel="stylesheet">
+    <!-- 외부 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+	<!-- header -->
+  	 <div th:replace="common/header.html"></div>
+
+
+      <!-- 회사소개 내용 -->
+   	 <div class="company-wrapper">
+        <div class="company-contents">
+            <h2>회사 소개</h2>
+            <img src="/resources/images/company/company.jpg">
+            <p>
+                캠퍼스는 캠핑장 올인원 예약 플랫폼을 제공합니다.<br>
+                숙박 여정의 불편함을 해결하고<br>
+                신뢰할 수 있는 환경을 구축하여, 캠핑장 산업을 더 나은 방향으로 변화시킵니다.<br><br>
+
+                캠핑장, 글램핑장, 카라반을 이용하는 가장 합리적인 방법.<br>
+                캠퍼스는 엄선된 전국의 캠핑장과 제휴하고 있습니다.<br><br>
+
+                다양한 조건 검색 서비스로 사용자의 니즈에 따른 캠핑장 조회가 가능하며, <br>
+                결제 시스템 구축으로 사용자의 불편함을 개소하려고 노력하였습니다.<br>
+            
+            </p>
+        </div>
+
+    </div>
+
+	<!-- 푸터 -->
+    <div th:replace="common/footer.html"></div>
+
+
+
+
+</body>
+</html>
