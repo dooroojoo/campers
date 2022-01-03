@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,12 +45,14 @@ public class MemberController {
 	 }
 	 
 	 @PostMapping("/signup")
-	 public String signUp(Model model, @RequestParam MultipartFile singleFile,
+	 public String signUp(@Value("${custom.path.upload-images}") String uploadFilesPath, Model model, @RequestParam MultipartFile singleFile,
              HttpServletRequest request,Member member) {
 	      
 	      /* 파일을 저장할 경로 */
-		 String filePath = "C:\\Users\\calls\\git\\campers\\src\\main\\resources\\static\\resources\\images\\uploadFiles\\profileImg";
+		 //String filePath = "C:\\Users\\calls\\git\\campers\\src\\main\\resources\\static\\resources\\images\\uploadFiles\\profileImg";
 	      
+		 String filePath = uploadFilesPath + "/profileImg";
+		 
 	      File mkdir = new File(filePath);
 	      if(!mkdir.exists()) mkdir.mkdir();
 	      
@@ -69,12 +72,15 @@ public class MemberController {
 	      member.setEmail(email1+"@"+email2);
 	      member.setPhone(phone1+"-"+phone2+"-"+phone3);
 	      try {
-	         singleFile.transferTo(new File(filePath + "\\" + savedName));
+	         singleFile.transferTo(new File(filePath + "/" + savedName));
 	         member.setProfilePath("/resources/images/uploadFiles/profileImg/"+savedName);
 	         memberService.signUp(member);
 	      } catch (IllegalStateException | IOException e) {
 	         e.printStackTrace();
 	      }
+	      log.info("root = "+request.getSession().getServletContext().getRealPath("/"));
+	      System.out.println("root"+request.getSession().getServletContext().getRealPath("/"));
+	      
 		 return "redirect:/";
 	 }
 	
