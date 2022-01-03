@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>footer</title>
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nunito:wght@300&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+   <style>
+        .freeBoard-wrap{
+            display: flex;
+            justify-content: center;
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 980px;
+            /* font-weight: 900; */
+        }
+        .freeBoard-content {
+            margin-top: 44px;
+             min-width: 800px;
+        }
+        .freeBoard-label {
+            float: left;
+            font-size: 39px;
+            font-weight: 100;
+        }
+        .freeBoard-box:first-child{
+            border-top: 3px solid black;
+        }
+        .freeBoard-box{
+            display: flex;
+            border: 1px solid #D1D1D1;
+            padding: 25px 25px;
+            border-top: none;
+            cursor: pointer;
+            
+        }
+        .freeBoard-label-small{
+            font-size: 22px;
+            float: left;
+            margin-top: 20px;
+            margin-left: 20px;
+            font-weight: 100;
+        }
+        .freeBoard-box:hover{
+            background-color: #fbfbfb;
+
+            
+        }
+        .freeBoard-box img{
+            max-width: 50px;
+            min-height: 50px;
+            border-radius: 10px;
+            max-height: 50px;
+            min-width: 50px;
+            transition: all 0.2s linear;
+            overflow: hidden;
+        }
+        .freeBoard-box:hover img{
+            transform: scale(1.1);
+        }
+        .box-left {
+            align-items: center;
+        }
+        .box-left p {
+            margin: 0;
+            text-align: left;
+            margin-top: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            
+        }
+        .box-left label{
+            float: left;
+            margin-right: 25px;
+            color: #adadad;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .box-right {
+            margin-left: auto;
+        }
+
+        .freeBoard-footer {
+            display: flex;
+            margin-bottom: 50px;
+            justify-content: space-between;
+            
+        }
+        .freeBoard-footer button {
+            margin-top: 5px;
+            border-radius: 5px;
+            padding: 7px 7px;
+            border: #D1D1D1 1px solid;
+            background-color: white;
+            font-weight: 900;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+
+            
+        }
+        
+        .freeBoard-aside {
+            font-size: 21px;
+            line-height: 50px;
+            margin-top: 155px;
+            margin-right: 30px;
+            border: 1px solid #e3e3e3;
+            height: 208px;
+            font-weight: 500;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: rgb(0 0 0 / 8%) 10px 10px 6px;
+            position: fixed;
+            left: 76%;
+
+        }
+
+        /* 페이징 */
+        .member_pages {
+            margin: 10px;
+        }
+        .member_paging {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            list-style: none;
+            width: 480px;
+            margin: auto;
+            align-items: center;
+        }
+
+        .member_paging a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            text-align: center;
+        }
+        .member_paging li{
+            width: 45px;
+        }
+        .member_paging .current_page {
+            background-color: black;
+            border-radius: 100%;
+            margin: 17px auto;
+            width: 25px;
+            height: 25px;
+            color: white;
+        }
+        .member_paging .current_page a{
+            color: white;
+        }
+        .mycomment {
+            border-bottom: 2px solid grey;
+        }
+  		 .freeBoard-aside a {
+        	color: black;
+        	text-decoration: none;	
+        }
+    
+    </style>
+</head>
+<body>
+   <div th:replace="common/header.html"></div>
+  <div class="freeBoard-wrap">
+            
+            <div class="freeBoard-aside">
+          
+                 <div>
+           			 <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+		        </div>
+		        <div>
+		            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+		        </div>
+		        <div>
+		            <a href="/board/list" class="gotolist">목록으로</a>
+		        </div>
+		        <div>
+		            <a href="/board/write" class="boradWrite">글쓰기</a>
+		        </div>
+            </div>
+        
+          <div class="freeBoard-container">
+              <label class="freeBoard-label">자유게시판</label><label class="freeBoard-label-small">자유게시판에서 작성한 댓글입니다.</label><br>
+              
+          
+              <div class="freeBoard-content">
+                  <div class="freeBoard-box">
+                      <div class="box-left">
+                          <p>가평인 것 같은데요..</p>
+                          <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
+                        </div>
+                        <div class="box-right">
+                            방금 전
+                        </div>
+                    </div>
+                    <div class="freeBoard-box">
+                        <div class="box-left">
+                            <p>가평인 것 같은데요..</p>
+                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
+                          </div>
+                          <div class="box-right">
+                              방금 전
+                          </div>
+                      </div>
+                      <div class="freeBoard-box">
+                        <div class="box-left">
+                            <p>가평인 것 같은데요..</p>
+                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
+                          </div>
+                          <div class="box-right">
+                              방금 전
+                          </div>
+                      </div>
+                      <div class="freeBoard-box">
+                        <div class="box-left">
+                            <p>가평인 것 같은데요..</p>
+                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
+                          </div>
+                          <div class="box-right">
+                              방금 전
+                          </div>
+                      </div>
+                      <div class="freeBoard-box">
+                        <div class="box-left">
+                            <p>가평인 것 같은데요..</p>
+                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
+                          </div>
+                          <div class="box-right">
+                              방금 전
+                          </div>
+                      </div>
+                      <div class="freeBoard-box">
+                        <div class="box-left">
+                            <p>가평인 것 같은데요..</p>
+                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
+                          </div>
+                          <div class="box-right">
+                              방금 전
+                          </div>
+                      </div>
+                      <div class="freeBoard-box">
+                        <div class="box-left">
+                            <p>가평인 것 같은데요..</p>
+                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
+                          </div>
+                          <div class="box-right">
+                              방금 전
+                          </div>
+                      </div>
+                </div>
+                <div class="freeBoard-footer">
+                    <div class="freeBoard-footerLeft">
+                        <button>글쓰기</button>
+                    </div>
+                    <div class="freeBoard-footerRight">
+                        <button>내글 보기</button>
+                    </div>
+                </div>
+                <div class="freeBoard-pagingbar">
+                    <!-- 페이징 처리 -->
+                    <div class="member_pages">
+                        <ul class="member_paging">
+                            
+                            
+                            <!-- 맨 처음으로 이동하는 버튼(<<) -->
+                            <li><a href="">&lt;&lt;</a></li>
+                            
+                            
+                            
+                            <!-- 이전 페이지로(<) -->
+                            <li>
+                                <c:choose>
+                                    <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
+                                    <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
+                                </c:choose>
+                            </li>
+                            
+                            
+                            
+                            <!-- 최대 10개의 페이지 목록 -->
+                            <!--<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">-->
+                                <li>
+                                    <div class="current_page">
+                                        <a href="#">1</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">2</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">3</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">4</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">5</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">6</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">7</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">8</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">9</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="">
+                                        <a href="#">10</a>
+                                    </div>
+                                </li>
+                                <!--</c:forEach>-->
+                                
+                                <!-- 다음 페이지로(>) -->
+                                <li>
+                                    <c:choose>
+                                        <c:when test=""><a href="">&gt;</a></c:when>
+                                        <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
+                                    </c:choose>
+                                </li>
+                                
+                                
+                                
+                                <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                                <li><a href="">&gt;&gt;</a></li>
+                            </ul>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="common/footer.html"></div> 
+       
+</body>
+</html>
