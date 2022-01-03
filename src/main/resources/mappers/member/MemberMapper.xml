@@ -75,7 +75,7 @@
 			, #{ pwd }
 			, #{ userName }
 			, #{ nickName }
-			, null
+			, #{ profilePath }
 			, #{ email }
 			, #{ phone }
 			, DEFAULT
