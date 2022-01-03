@@ -73,7 +73,7 @@ public class AdminController {
 	/* 회원 검색 */
 	@GetMapping("member/search")
 	public String seachMember(Search search, Model model) {
-		
+	
 		int page = 1;
 		
 		Map<String, Object> map = adminService.searchMember(page, search);
