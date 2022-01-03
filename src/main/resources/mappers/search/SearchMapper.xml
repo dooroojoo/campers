@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cp.campers.search.model.dao.SearchMapper">
+
+	<select id="mainSearch" parameterType="hashmap" resultType="com.cp.campers.search.model.vo.SearchCamp">
+		SELECT
+			   C.CAMP_NAME
+			 , C.CAMP_ADDRESS
+			 , R.
+			 , CATEGORY
+		  FROM CAMP C
+		  JOIN ROOM R USING CAMP_NO
+		 WHERE CAMP_STATUS = 'Y'
+		  = #{category}
+	</select>
+
+
+
+
+</mapper>
