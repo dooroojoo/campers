@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>admin member</title>
+<script>
+	const successMessage = '[[${ successMessage }]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
+
+	<!-- css -->
+	<link href="/resources/css/admin/adminMember.css" rel="stylesheet" type="text/css">
+	<!-- css -->
+	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div th:replace="common/adminHeader.html"></div>
+
+	<div class="admin_outer">
+        <div class="admin_wrap">
+
+
+            <!-- 1. 회원 목록&관리 영역 -->
+            <div class="member_area">
+                <div class="member_title">
+                    <h2>회원 관리</h2>
+                </div>
+
+
+                <div class="member_list">
+                    <ul id="member_header">
+                        <li class="member_pk">회원번호</li>
+                        <li class="member_id">아이디</li>
+                        <li class="member_name">이름</li>
+                        <li class="member_email">이메일</li>
+                        <li class="member_joinDate">가입일</li>
+                        <li class="member_author">권한</li>
+                        <li class="member_status">활동상태</li>
+                        <li class="member_update">관리</li>
+                    </ul>
+                    
+	                <ul th:each="member : ${ memberList }">
+	                	<form th:action="@{/admin/member/update}" method="post" name="updateFrom${ member.userNo }">
+	                        <li class="member_pk" th:text="${ member.userNo }"></li>
+	                        <li class="member_id" th:text="${ member.id }"></li>
+	                        <li class="member_name" th:text="${ member.userName }"></li>
+	                        <li class="member_email" th:text="${ member.email }"></li>
+	                        <li class="member_joinDate" th:text="${ #dates.format(member.createDate, 'yyyy-MM-dd') }"></li>
+	                        <li class="member_author">
+	                            <div class="select_wrap">
+	                                <select id="select_author" name="authorityCode" th:each="memberRole : ${member.memberRoleList}">
+	                                    <option value="1" th:selected="${ memberRole.authorityCode } == '1'">일반</option>
+	                                    <option value="2" th:selected="${ memberRole.authorityCode } == '2'">사업자</option>
+	                                </select>
+	                            </div>
+	                        </li>
+	                        <li class="member_status">
+	                            <div class="select_wrap">
+	                                <select id="select_status" name="status">
+	                                    <option value="Y" th:selected="${ member.status } == 'Y'">활성화</option>
+	                                    <option value="N" th:selected="${ member.status } == 'N'">비활성화</option>
+	                                    <option value="X" th:selected="${ member.status } == 'X'">탈퇴</option>
+	                                </select>
+	                            </div>
+	                        </li>
+	                        <li class="member_update">
+	                            <button type="submit">수정</button>
+	                        </li>
+	                        <input type="hidden" name="userNo" th:value="${ member.userNo }">
+                    	</form>
+	                </ul>
+                </div>
+
+
+
+                <!-- 페이징 처리 -->
+                <div class="member_pages">
+                    <ul class="member_paging">
+
+
+                        <!-- 맨 처음으로 이동하는 버튼(<<) -->
+                        <li><a href="/admin/memberPage?page=1">&lt;&lt;</a></li>
+                        
+
+
+                        <!-- 이전 페이지로(<) -->
+                        <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/memberPage?page={page}(page=${pi.page-1})}">&lt;</a></li>
+                        <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
+                        
+
+
+                        <!-- 최대 10개의 페이지 목록 -->
+                        <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                            <div class="current_page" th:if="${ p == pi.page }">
+                                <a href="#" th:text="${ p }"></a>
+                            </div>
+                            <div th:unless="${ p == pi.page }">
+                                <a th:href="@{/admin/memberPage?page={p}(p=${p})}" th:text="${ p }"></a>
+                            </div>
+                        </li>
+
+
+                        <!-- 다음 페이지로(>) -->
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/memberPage?page={page}(page=${pi.page+1})}">&gt;</a></li>
+                        <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
+            
+
+
+                        <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                        <li><a th:href="@{/admin/memberPage?page={page}(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+            
+            <!-- 2. 회원 검색 영역 -->
+            <div class="search_area">
+
+                <form action="/admin/member/search" method="get">
+                    <div class="select_wrap conditionWrap">
+                        <select id="searchCondition" name="searchCondition">
+                            <option value="no" th:selected="${ param.searchCondition } == 'no'">회원번호</option>
+                            <option value="id" th:selected="${ param.searchCondition } == 'id'">아이디</option>
+                        </select> 
+                    </div>
+
+
+                    <span class="input_area">
+                        <input type="search" name="searchValue" th:value="${ param.searchValue }">
+					</span>
+
+
+					<button type="submit">검색</button>
+				</form>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

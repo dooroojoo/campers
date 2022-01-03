@@ -105,13 +105,6 @@ height: auto !important;
     margin-right: 7%;
 }
 
-.number-btn{
-    border: 0.3px solid rgb(161, 161, 161);
-    margin-left: 3%;
-    padding: 4% 3% 0% 3%;
-    border-radius: 100%;
-    display: inline;
-}
 
 .number-btn:hover{
     transition: 0.1s;
@@ -119,36 +112,77 @@ height: auto !important;
     background-color: rgba(160, 160, 160, 0.486);
 }
 
-#btn-minus{
-    background: url("/resources/images/main/minus.svg");
-    background-repeat: no-repeat;
-    background-size: 75%;
-    background-position: center;
-    border: none;
-     
-}
-#btn-plus{
-    border-radius: 80%;
-    background: url("/resources/images/main/plus.svg");
-    background-repeat: no-repeat;
-    background-size: 75%;
-    background-position: center;
-    border: none;
-}
+
 
 .main-guest{
     width: 150px;
 }
 
 
-#guest-number{
-    border: none;
-    width: 10px;
-    margin-left: 3px;
-    margin-right: -2%;
-    position: relative;
-    top: -3px;
-    cursor:default;
+/* 인원 수 증가 버튼 */
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.main-guest {
+  border: 0;
+  display: inline-flex;
+}
+
+.main-guest,
+.main-guest * {
+  box-sizing: border-box;
+}
+
+.main-guest button {
+  outline:none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 0.5rem;
+  height: 0.5rem;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  border-radius: 50%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.main-guest button:before,
+.main-guest button:after {
+  display: inline-block;
+  position: absolute;
+  content: '';
+  width: 1rem;
+  height: 2px;
+  background-color: #212121;
+  transform: translate(-50%, -50%);
+}
+.main-guest button.plus:after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.main-guest input[type=number] {
+  font-family: sans-serif;
+  max-width: 1rem;
+  padding: .1rem;
+  border: none;
+  border-width: 0 2px;
+  font-size: 1rem;
+  height: 1rem;
+  font-weight: bold;
+  text-align: center;
+  color:tomato;
 }
 
 /* 체크박스 버튼으로 변경 */

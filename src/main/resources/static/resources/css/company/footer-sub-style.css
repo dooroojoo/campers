@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+body {
+    width: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+input:focus {outline:none;}
+
+img{
+max-width: 100%;
+height: auto !important;
+}
+
+/* 회사소개 */
+.company-wrapper{
+    max-width: 1900px;
+    margin : 0 auto;
+    margin-bottom: 6%;
+}
+
+.company-contents{
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    margin: auto;
+}
+
+.company-contents img{
+    width: 100%;
+    
+}
+
+
+

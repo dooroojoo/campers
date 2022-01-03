@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캠핑장 검색</title>
+    <!-- jQuery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- 외부 css -->
+    <link href="/resources/css/company/cs-style.css" rel="stylesheet">
+    <!-- 외부 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+</head>
+<body>
+ 	 <!-- header -->
+    <div th:replace="common/header.html"></div>
+
+
+       <!-- 고객센터 컨텐츠 -->
+
+      <div class="cs-wrapper">
+        <div class="cs-container">
+            <h2>고객센터</h2>
+        </div>   
+        <div class="cs-qna-wrap">
+            <div class="cs-qna-menu">
+                <p>자주 묻는 질문</p>
+                <div class="cs-qna-btn">
+                <button type="button" class="qna-menu" onclick="menuClick(1)">예약취소</button>
+                <button type="button" class="qna-menu" onclick="menuClick(2)">결제/영수증</button>
+                <button type="button" class="qna-menu" onclick="menuClick(3)">예약문의</button>
+                <button type="button" class="qna-menu" onclick="menuClick(4)">이용문의</button>
+             </div>
+        
+
+        <!-- 예약취소 -->
+        <div class="cs-qna-text" id="cs-cancle">
+            <dl>
+                <dt><img src="/resources/images/company/qna1.png" class="qna-img">예약 취소를 하고싶어요.</dt>
+                    <dd>마이페이지 - 예약내역확인에서 취소가 가능합니다.<br>
+                    예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며,<br>
+                    취소수수료가 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다.</dd>
+            </dl>
+
+            <dl>
+                <dt><img src="/resources/images/company/qna1.png" class="qna-img">천재지변으로 인한 예약취소는 어떻게 하나요?</dt>
+                    <dd>일반적인 우천에 의한 예약 취소 및 변경 불가합니다.<br>
+                        태풍 등 기상 특보 시, 입실 당일 현장 날씨 및 캠핑장의 정책에 따라 연기 또는 취소 결정됩니다.<br>
+                        입실 당일 오전에 캠핑장에 연락하셔서 안내 받으시기 바랍니다.</dd>
+            </dl>
+
+            <dl>
+                <dt><img src="/resources/images/company/qna1.png" class="qna-img">입실일을 변경하고 싶어요.</dt>
+                    <dd>예약 이용일 변경 불가합니다.<br>
+                        (취소수수료 확인 후) 기존 예약건 취소 및 재예약하셔야 합니다.</dd>
+            </dl>
+
+            <dl>
+                <dt><img src="/resources/images/company/qna1.png" class="qna-img">객실타입을 변경하고 싶어요.</dt>
+                    <dd>캠퍼스 고객센터로 문의하시기 바랍니다.</dd>
+            </dl>
+
+            <dl>
+                <dt><img src="/resources/images/company/qna1.png" class="qna-img">예약취소했는데 언제 환불되나요?</dt>
+                    <dd>취소 신청 후 간편결제 사업자 또는 은행/신용카드사에 따라 환불 절차에 일정 시간이 소요됩니다.<br>
+                        영업일 기준(토/일/공휴일 제외)으로 실시간 계좌이체 2~3일, 신용카드 3~5일 소요됩니다.</dd>
+            </dl>
+        </div>
+
+
+
+        <!-- 결제/영수증 -->
+        <div class="cs-qna-text" id="cs-pay">
+          <dl>
+              <dt><img src="/resources/images/company/qna1.png" class="qna-img">현금영수증 발급받고 싶어요.</dt>
+                  <dd>결제 시 입력된 정보(메일, 휴대폰번호)로 자동 발급되고 있습니다.<br>
+                    캠핑톡 고객센터를 통하여 발행번호를 확인하실 수 있으며,<br>
+                    국세청 홈텍스에서 직접 등록이 가능합니다.</dd>
+          </dl>
+
+          <dl>
+              <dt><img src="/resources/images/company/qna1.png" class="qna-img">결제 영수증 발급받고 싶어요.</dt>
+                  <dd>결제 영수증은 개별 카드사의 결제 내역 또는 결제 대행사 페이지에서<br>
+                    고객님께서 직접 발급 가능합니다.<br>
+                    <br>
+                    [신용/체크카드]<br>
+                    - 이니시스 (https://www.inicis.com/payment-view) 에서 확인이 가능합니다.<br>
+                    <br>
+                    [카카오페이]<br>
+                    - 카카오톡 > pay > 서비스 > 우측 톱니바퀴 > 이용내역 > 결제 > 결제내역 상세 > 카드매출전표</dd>
+          </dl>
+
+          <dl>
+              <dt><img src="/resources/images/company/qna1.png" class="qna-img">제가 이용 중인 신용카드가 결제 목록에 없어요.</dt>
+                  <dd>결제 시 사용 가능한 카드 종류는 PG사(전자결제 대행사)에서 정하는 부분이고,<br>
+                    일부 카드는 결제 지원이 되지 않습니다.<br>
+                    IBK기업은행 또는 우리카드의 경우, 목록에서 비씨를 선택하시면 결제 가능합니다.<br>
+                    카카오뱅크 카드는 KB국민카드를 선택하시면 결제 가능합니다.</dd>
+          </dl>
+
+          <dl>
+              <dt><img src="/resources/images/company/qna1.png" class="qna-img">간편계좌이체 등록 해지는 어떻게 하나요?</dt>
+                  <dd>간편 결제 사이트에서 변경이 가능합니다.<br>
+                    자세한 사항은 등록하신 간편결제사(카카오페이 등)으로 문의해주시기 바랍니다.</dd>
+          </dl>
+
+          <dl>
+              <dt><img src="/resources/images/company/qna1.png" class="qna-img">결제 완료했는데 예약 내역에 없어요.</dt>
+                  <dd>진행중이던 결제가 정상적으로 완료되어야 예약완료 및 확정됩니다.<br>
+                  예약내역에서 확인되지 않는다면 결제가 진행되지 않은 것이므로<br>
+                  결제가 정상적으로 이루어졌는지 확인 부탁드립니다.<br>
+                    <br>
+                  결제가 완료되었는데도 예약내역에서 확인이 되지 않는다면<br>
+                  캠퍼스 고객센터로 문의해주세요.</dd>
+          </dl>
+      </div>
+
+
+      <!-- 예약문의 -->
+      <div class="cs-qna-text" id="cs-booking">
+        <dl>
+            <dt><img src="/resources/images/company/qna1.png" class="qna-img">부대시설, 조식 등 부가요금은 어떻게 지불하나요?</dt>
+                <dd>객실 예약 이외의 추가발생(조식, 추가인원, 침구 등) 요금은 현장 결제로 진행됩니다.</dd>
+        </dl>
+
+        <dl>
+            <dt><img src="/resources/images/company/qna1.png" class="qna-img">예약확인은 어떻게 하나요?</dt>
+                <dd>예약은 마이페이지에서 확인 가능합니다.</dd>
+        </dl>
+
+        <dl>
+            <dt><img src="/resources/images/company/qna1.png" class="qna-img">비회원도 예약 가능한가요?</dt>
+                <dd>비회원은 예약, 결제 서비스가 불가합니다.<br>
+                회원가입 후 진행해주세요.</dd>
+        </dl>
+
+        <dl>
+            <dt><img src="/resources/images/company/qna1.png" class="qna-img">미성년자도 예약이 가능한가요?</dt>
+                <dd>만 19세 미만의 미성년자는 청소년 보호법에 의거하여 숙박업소 출입/고용이 불가하며,<br>
+                  숙박시설 이용에 제한이 있을 수 있습니다.<br>
+                  </dd>
+        </dl>
+
+        <dl>
+            <dt><img src="/resources/images/company/qna1.png" class="qna-img">여러 개의 객실을 동시에 예약할 수 있나요?</dt>
+                <dd>상품 선택 후 객실 수 선택에서 같은 상품을 다수 선택이 가능합니다.<br></dd>
+        </dl>
+    </div>
+
+
+     <!-- 이용문의 -->
+     <div class="cs-qna-text" id="cs-service">
+      <dl>
+          <dt><img src="/resources/images/company/qna1.png" class="qna-img">고객센터 연결 지연 시 어떻게 하나요?</dt>
+              <dd>일부 시간대에는 통화량이 많아 상담사 연결이 지연될 수 있습니다.<br>
+                순차적으로 상담 드리니 양해 부탁드립니다.</dd>
+      </dl>
+
+      <dl>
+          <dt><img src="/resources/images/company/qna1.png" class="qna-img">내 업체를 캠핑톡에 입점하고 싶어요.</dt>
+              <dd>로그인 후 사이트 하단에서 '신규 업체 등록'을 클릭하시면 업체 등록 신청이 가능합니다.<br>
+              신청 후 관리자의 심사 후 사업자 권한이 부여됩니다.</dd>
+      </dl>
+
+      <dl>
+          <dt><img src="/resources/images/company/qna1.png" class="qna-img">회원탈퇴는 어떻게 하나요?</dt>
+              <dd>마이페이지 - 회원정보수정에서 탈퇴하기가 가능합니다.</dd>
+      </dl>
+
+      <dl>
+          <dt><img src="/resources/images/company/qna1.png" class="qna-img">소셜회원 로그인 해제는 어떻게 하나요?</dt>
+              <dd>소셜 회원의 로그인은 가입 시 연동 된 계정으로 자동 로그인 됩니다.<br>
+                동일한 소셜의 다른 계정으로 로그인을 원하시는 경우 연동 로그인 해제 후 <br>
+                접속을 원하는 계정으로 로그인을 시도해 주시길 바랍니다.<br>
+              <br>
+              [카카오톡]<br>
+              ① 캠퍼스 사이트에 로그인 되어있는 카카오 계정으로 카카오톡 접속<br>
+              ② 카카오톡 전체 설정 선택 후 개인/보안 클릭<br>
+              ③ 개인정보 관리 선택 후 카카오계정 및 연결된 서비스 접속<br>
+              ④ 연결된 서비스 관리에서 CAMPER 선택 후 모든 정보 삭제 클릭<br>
+              -> 캠퍼스 사이트 재접속 후 원하는 카카오톡 계정으로 재로그인 가능</dd>
+      </dl>
+
+      <dl>
+          <dt><img src="/resources/images/company/qna1.png" class="qna-img">찜한 캠핑장은 어디서 볼 수 있나요?</dt>
+              <dd>마이페이지 - 찜한캠핑장 메뉴에서 확인 가능합니다.</dd>
+      </dl>
+  </div>
+
+        </div>
+        </div>
+
+        <div class="cs-center-wrap">
+          <div class="cs-center-title">
+            <p>고객센터 안내</p>
+          </div>
+          <div class="cs-center-contents">
+            <p class="cs-center-text">고객 센터 문의</p>
+            <p>
+              이메일 : campers@cs.co.kr<br>
+              전화번호 : 02-111-2222<br>
+              <br>
+              고객센터로 연락주시면 확인 도와드리겠습니다.<br>
+              캠핑장 신규 업체 등록 신청은 사이트 하단에 있는 메뉴를 통해 이동할 수 있습니다.<br>
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    <!-- 푸터 -->
+    <div th:replace="common/footer.html"></div>
+
+
+    <!-- 아코디언 패널 -->
+    <script src="/resources/js/company/csMenuBtn.js"></script>
+
+    <!-- 고객센터 메뉴 화면 전환 -->
+    <script src="/resources/js/company/csMenuClick.js"></script>
+
+    <!-- 버튼 색상 변경 -->
+    <script src="/resources/js/company/csHandleClick.js"></script>
+  
+</body>
+</html>
