@@ -78,8 +78,8 @@
 
 
                 <!-- 페이징 처리 -->
-                <div class="member_pages">
-                    <ul class="member_paging">
+                <div class="admin_pages">
+                    <ul class="admin_paging">
 
 
                         <!-- 맨 처음으로 이동하는 버튼(<<) -->
@@ -125,8 +125,8 @@
                 <form action="/admin/member/search" method="get">
                     <div class="select_wrap conditionWrap">
                         <select id="searchCondition" name="searchCondition">
-                            <option value="no" th:selected="${ param.searchCondition } == 'no'">회원번호</option>
-                            <option value="id" th:selected="${ param.searchCondition } == 'id'">아이디</option>
+                            <option value="no" th:selected="${#strings.equals(param.searchCondition, 'no')}">회원번호</option>
+                            <option value="id" th:selected="${#strings.equals(param.searchCondition, 'id')}">아이디</option>
                         </select> 
                     </div>
 
