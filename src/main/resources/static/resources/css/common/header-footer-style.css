@@ -10,9 +10,6 @@ a {
     color: black;
 }
 
-a:hover {
-  color: rgb(231, 111, 82);
-}
 
 img {
   max-width: 100%;

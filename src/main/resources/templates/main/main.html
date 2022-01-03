@@ -35,23 +35,23 @@
         
         <!-- 검색 기능 -->
         <div class="main-search">
-           <form class="main-search-check">
+           <form class="main-search-check" action="/search/main" method="get">
 
               <div class="main-search-top">
                <div class="main-area container">
               <label><img src="resources/images/main/point.png">지역
-              <input type="text" class="area-text" placeholder="여행 목적지가 어디신가요?">
+              <input type="text" class="area-text" placeholder="여행 목적지가 어디신가요?" name="area" required>
               </label></div>
 
               <div class="main-checkDate container">
                 <label><img src="resources/images/main/calendar.png">체크인 / 체크아웃
-                <input type="text" id="main-date-check" class="area-text" name="daterange" value="" />
+                <input type="text" id="main-date-check" class="area-text" name="daterange" required>
                 </label></div>
 
                 <div class="main-guest container">
                   <label><img src="resources/images/main/guest.png">인원
 					  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
-					  <input class="quantity" min="0" max="6" name="quantity" value="1" type="number">
+					  <input class="quantity" min="0" max="6" name="guest" value="1" type="number" required>
 					  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                     <input type="text" class="area-text" placeholder="인원 수를 추가해주세요" readonly style="cursor:default;">
                   </label> </div>
@@ -60,13 +60,13 @@
                 <div class="main-search-bottom">
                   <div class="main-typeBtn btmContainer">
                     <label class="checkbox-mainType">
-                      <input type="checkbox" class="main-camping-type"><span><img src="resources/images/main/campfire.png" class="main-type-icon">캠핑장</span></label>
+                      <input type="checkbox" class="main-camping-type" id="main-type" name="camping"><span><img src="resources/images/main/campfire.png" class="main-type-icon">캠핑장</span></label>
                     <label class="checkbox-mainType">
-                      <input type="checkbox" class="main-glamping-type"><span><img src="resources/images/main/tent.png" class="main-type-icon">글램핑</span></label>
+                      <input type="checkbox" class="main-glamping-type" id="main-type" name="glamping"><span><img src="resources/images/main/tent.png" class="main-type-icon">글램핑</span></label>
                       <label class="checkbox-mainType">
-                        <input type="checkbox" class="main-caravan-type"><span><img src="resources/images/main/caravan.png" class="main-type-icon">카라반</span></label>
+                        <input type="checkbox" class="main-caravan-type" id="main-type" name="caravan"><span><img src="resources/images/main/caravan.png" class="main-type-icon">카라반</span></label>
                       
-                        <input type="submit" class="main-search-sub" value="">
+                        <input type="submit" class="main-search-sub" value=" ">
                       </div>
               </div>
            </form>
@@ -246,6 +246,18 @@
 	    e.preventDefault();
 	  })
 	  </script>
+	  
+	  
+	 <!-- 숙소타입 1개 이상 선택되지 않았을 시 form 전송 안 되고 alert -->
+	 <script>
+	 $('.main-search-sub').on('click', function(){
+		 if($('input[type="checkbox"]').is(":checked") == false){
+			 alert("숙소 타입을 선택해 주세요.");
+			 return false;
+		 }
+	 });   
+	    
+	 </script>
 	  
 </body>
 </html>
