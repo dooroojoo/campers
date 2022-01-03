@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cp.campers.mypage.model.dao.MypageMapper">
+		
+	<resultMap type="com.cp.campers.mypage.model.vo.Camp" id="CampResultMap">
+		<id property="campNo" column="CAMP_NO"/>
+		<result property="campName" column="CAMP_NAME"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="campAddress" column="CAMP_ADDRESS"/>
+		<result property="campPhone" column="CAMP_PHONE"/>
+		<result property="campIntro" column="CAMP_INTRO"/>
+		<result property="campPath" column="CAMP_PATH"/>
+		<result property="campPolicy" column="CAMP_POLICY"/>
+		<result property="campStatus" column="CAMP_STATUS"/>
+		<result property="accountNum" column="ACCOUNT_NUM"/>
+		<result property="bank" column="BANK"/>
+		<result property="checkin" column="CHECKIN"/>
+		<result property="checkout" column="CHECKOUT"/>
+		<result property="refusal" column="REFUSAL"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="BusinessTypeResultMap">
+		<id property="businessNo" column="BUSINESS_NO"/>
+		<result property="businessType" column="BUSINESS_TYPE"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.CampBusinessType" id="CampBusinessTypeResultMap">
+		<id property="campNo" column="CAMP_NO"/>
+		<result property="businessNo" column="BUSINESS_NO"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.CampFacility" id="CampFacilityResultMap">
+		<id property="campNo" column="CAMP_NO"/>
+		<result property="FacilityNo" column="FACILITY_NO"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.CampFile" id="CampFileResultMap">
+		<id property="campNo" column="CAMP_NO"/>
+		<result property="fileNo" column="FILE_NO"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.Room" id="RoomResultMap">
+		<id property="roomNO" column="ROOM_NO"/>
+		<result property="roomName" column="ROOM_NAME"/>
+		<result property="roomMember" column="ROOM_MEMBER"/>
+		<result property="roomPrice" column="ROOM_PRICE"/>
+		<result property="roomSize" column="ROOM_SIZE"/>
+		<result property="roomFloor" column="ROOM_FLOOR"/>
+		<result property="roomParking" column="ROOM_PARKING"/>
+		<result property="roomInfo" column="ROOM_INFO"/>
+		<result property="roomAmount" column="ROOM_AMOUNT"/>
+		<result property="roomForm" column="ROOM_FORM"/>
+		<result property="roomCount" column="ROOM_COUNT"/>
+		<result property="campNo" column="CAMP_NO "/>		
+	</resultMap>
+     
+   <insert id="insertCamp" parameterType="com.cp.campers.mypage.model.vo.Camp">
+   	INSERT INTO CAMP
+		(
+			CAMP_NO
+			,CAMP_NAME
+			,USER_NO
+			,CAMP_ADDRESS
+			,CAMP_PHONE
+			,CAMP_INTRO
+			,CAMP_PATH
+			,CAMP_POLICY
+			,CAMP_STATUS
+			,ACCOUNT_NUM
+			,BANK
+			,CHECKIN
+			,CHECKOUT
+			,REFUSAL
+		)
+		VALUES
+		(
+			SEQ_CAMP_NO.NEXTVAL
+			, #{ campName }
+			, #{ userNo }
+			, #{ campAddress }
+			, #{ campPhone }
+			, #{ campIntro }
+			, #{ campPath }
+			, #{ campPolicy }
+			, DEFAULT
+			, #{ accountNum }
+			, #{ bank }
+			, #{ checkin }
+			, #{ checkout }
+			, #{ refusal }
+		)
+   </insert>
+   
+</mapper>

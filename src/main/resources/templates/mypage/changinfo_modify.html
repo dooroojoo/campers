@@ -8,7 +8,7 @@
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
-    <link href="resources/css/mypage/changinfo_modify.css" rel="stylesheet">
+    <link href="/resources/css/mypage/changinfo_modify.css" rel="stylesheet" type="text/css">
     <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +40,8 @@
                     <div class="check_font" id="id_check"></div>
                     <h4 class="changinfo_name">이름<input type="text" class="changinfo_name_form2" id="user_name" name="user_name" value="이름"></input></h4>
                     <div class="check_font" id="name_check"></div>
-                    <h4 class="changinfo_pwd">비밀번호(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_pwd_form2" id="user_pwd" name="user_pwd" value="비밀번호"></input><button class="changinfo_pwdbutton">비밀번호 변경</button></h4>
+                    <h4 class="changinfo_pwd">비밀번호(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_pwd_form2" id="user_pwd" name="user_pwd" value="비밀번호"></input>
+                    <a th:href="@{/mypage/changinfo/changinfo_pwd_modify}"><button class="changinfo_pwdbutton">비밀번호 변경</button></a></h4>
                     <div class="check_font" id="pwd_check"></div>
                     <h4 class="changinfo_email">이메일(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_email_form2" id="user_email" name="user_email" value="이메일"></input></h4>
                     <div class="check_font" id="email_check"></div>

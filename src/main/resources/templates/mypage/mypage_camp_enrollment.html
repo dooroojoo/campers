@@ -8,7 +8,7 @@
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
-    <link href="resources/css/mypage/mypage_camp_enrollment.css" rel="stylesheet">
+    <link href="/resources/css/mypage/mypage_camp_enrollment.css" rel="stylesheet" type="text/css">
     <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,22 +30,22 @@
                 <h1 class="mypage_camp_enrollment_h1">캠핑장 등록</h1>
             </header>
         </div>
-            <form>
+            <form th:action="@{/mypage/mypage_camp_enrollment" method="post">
             <table class="mypage_camp_enrollment_table">
                 <tr class="mypage_camp_enrollment_table_header">
                     <th colspan="2">캠핑장 등록 정보 신청서</th>
                 </tr>
                 <tr>
                     <th>캠핑장 이름</th>
-                    <td><input class="textbox" type="text" placeholder="캠핑장 이름을 입력하세요."></td>
+                    <td><input class="textbox" name="campName" type="text" placeholder="캠핑장 이름을 입력하세요."></td>
                 </tr>
                 <tr>
                     <th>캠핑장 주소</th>
-                    <td><input class="textbox" type="text" placeholder="캠핑장 주소를 입력하세요."></td>
+                    <td><input class="textbox" name="campAddress" type="text" placeholder="캠핑장 주소를 입력하세요."></td>
                 </tr>
                 <tr>
                     <th>사업장 대표번호</th>
-                    <td><input class="textbox" type="text" placeholder="사업장 대표번호를 입력하세요."></td>
+                    <td><input class="textbox" name="campPhone" type="text" placeholder="사업장 대표번호를 입력하세요."></td>
                 </tr>
                 <tr>
                     <th>사업장 형태</th>
@@ -61,12 +61,12 @@
                 </tr>
                 <tr>
                     <th>사업장 계좌번호</th>
-                    <td><select class="textbox2" placeholder="은행">
+                    <td><select class="textbox2" name="bank" placeholder="은행">
                             <option value="1">농협</option>
                             <option value="">신한은행</option>
                             <option value="1">국민은행</option>
                         </select>
-                        <input class="textbox" type="text" placeholder="계좌번호">
+                        <input class="textbox" name="accountNum" type="text" placeholder="계좌번호">
                     </td>
                 </tr>
                 <tr>
@@ -84,7 +84,7 @@
                 <tr>
                     <th>사업장 이용시간</th>
                     <td>입실시간
-                        <select class="intime">
+                        <select class="intime" name="checkin" >
                             <option value="in0">00:00</option>
                             <option value="in1">01:00</option>
                             <option value="in2">02:00</option>
@@ -111,7 +111,7 @@
                             <option value="in23">23:00</option>
                         </select>
                         퇴실시간
-                        <select class="outtime">
+                        <select class="outtime" name="checkout">
                             <option value="out0">00:00</option>
                             <option value="out1">01:00</option>
                             <option value="out2">02:00</option>
@@ -142,7 +142,7 @@
                 <tr>
                     <th>사업장 운영정책</th>
                     <td>
-                        <textarea cols="90" rows="10" placeholder="가이드 외 사업장 운영정책을 입력 해주세요.
+                        <textarea name="campPolicy" cols="90" rows="10" placeholder="가이드 외 사업장 운영정책을 입력 해주세요.
 1. 코로나 4단계 기간에는 동거가족 외 4인 이상의 캠핑을 금지합니다.
 2. 안전주의사항 : 개별숯 화롯대 장작 개인화기 일체사용금지 (안전과 화재예방을 위해서 개별숯 화롯대 장작 개인화기 바베큐장 외 사용 금지합니다.)
 3. 반려동물 주의사항 : 반려동물 구역 외 출입금지
@@ -157,27 +157,27 @@
                 </tr>
                 <tr>
                     <th>사업장 소개</th>
-                    <td><textarea cols="90" rows="10" placeholder="사업장 소개를 입력 해주세요."></textarea></td>
+                    <td><textarea name="campIntro" cols="90" rows="10" placeholder="사업장 소개를 입력 해주세요."></textarea></td>
                 </tr>
                 <tr>
                     <th>객실 최대인원</th>
-                    <td><input class="textbox" type="text" placeholder="객실 최대인원을 입력해주세요."></td>
+                    <td><input class="textbox" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요."></td>
                 </tr>
                 <tr>
                     <th>객실 이름(호수)</th>
-                    <td><input class="textbox" type="text" placeholder="객실 이름을 입력해주세요."></td>
+                    <td><input class="textbox" name="roomName" type="text" placeholder="객실 이름을 입력해주세요."></td>
                 </tr>
                 <tr>
                     <th>객실 가격</th>
-                    <td><input class="textbox" type="text" placeholder="객실 가격을 입력해주세요."></td>
+                    <td><input class="textbox" name="roomPrice" type="text" placeholder="객실 가격을 입력해주세요."></td>
                 </tr>
                 <tr>
                     <th>객실 크기</th>
-                    <td><input class="textbox" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요."></td>
+                    <td><input class="textbox" name="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요."></td>
                 </tr>
                 <tr>
                     <th>객실 소개</th>
-                    <td><input class="textbox" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."></td>
+                    <td><input class="textbox" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."></td>
                 </tr>
                 <tr>
                     <th>객실 사진</th>
@@ -185,28 +185,28 @@
                 </tr>
                 <tr>
                     <th>객실 바닥 형태</th>
-                    <td><input type="radio" name="1" checked>데크 <input type="radio" name="1">잔디 <input type="radio" name="1">파쇄석 </td>
+                    <td><input type="radio" name="roomFloor" name="1" checked>데크 <input type="radio" name="roomFloor" name="1">잔디 <input type="radio" name="roomFloor" name="1">파쇄석 </td>
                 </tr>
                 <tr>
                     <th>객실 주차 여부</th>
-                    <td><input type="radio" name="2" checked>텐트 옆 주차 <input type="radio" name="2">주차장 주차 <input type="radio" name="2">외부 주차</td>
+                    <td><input type="radio" name="roomParking" name="2" checked>텐트 옆 주차 <input type="radio" name="roomParking" name="2">주차장 주차 <input type="radio" name="roomParking" name="2">외부 주차</td>
                 </tr>
                 <tr>
                     <th>객실 형태</th>
-                    <td><input type="radio" name="3" checked>카라반 <input type="radio" name="3">캠핑 <input type="radio" name="3">글램핑</td>
+                    <td><input type="radio" name="roomForm" name="3" checked>카라반 <input type="radio" name="roomForm" name="3">캠핑 <input type="radio" name="roomForm" name="3">글램핑</td>
                 </tr>
                 <tr>
                     <th>객실 수량</th>
-                    <td><input class="textbox2" type="number" placeholder="1"></td>
+                    <td><input class="textbox2" name="roomAmount" type="number" placeholder="1"></td>
                 </tr>
             </table>
-            </form>
             <div class="room_plus">
                 <img class="room_plus_img" src="resources/images/mypage/plus.png">객실 추가하기
             </div>
             <div class="camp_plus">
                 <input class="camp_plus_button" type="submit" value="캠핑장 등록하기">
             </div>    
+            </form>
         </div>
     </div>
     <!-- footer -->

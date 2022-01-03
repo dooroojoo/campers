@@ -8,7 +8,7 @@
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
-    <link href="resources/css/mypage/changinfo.css" rel="stylesheet">
+    <link href="/resources/css/mypage/changinfo.css" rel="stylesheet" type="text/css">
     <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,14 +36,14 @@
             <div class="changinfo_content_div">
                 <header class="changinfo_content_header">회원님의 정보를 수정, 탈퇴하기가 가능 합니다</header>        
                 <div class="changinfo_privacy">
-                    <h4 class="changinfo_id">아이디<label class="changinfo_id_form">아이디</label></h4>
+                    <h4 class="changinfo_id">아이디<label class="changinfo_id_form">${user.name}</label></h4>
                     <h4 class="changinfo_name">이름<label class="changinfo_name_form">이름</label></h4>
                     <h4 class="changinfo_pwd">비밀번호<label class="changinfo_pwd_form">비밀번호</label></h4>
                     <h4 class="changinfo_email">이메일<label class="changinfo_email_form">이메일</label></h4>
                     <h4 class="changinfo_phone">전화번호<label class="changinfo_phone_form">전화번호</label></h4>
                     <h4 class="changinfo_nickname">닉네임<label class="changinfo_nickname_form">닉네임</label></h4>
-                    <a href="../header-footer/changinfomodify.html"><button class="changeinfo_changebutton">수정하기</button></a>
-                    <a href="../header-footer/changinfo_memberout.html"><button class="changeinfo_outbutton">탈퇴하기</button></a>
+                    <a th:href="@{/mypage/changinfo/changinfo_modify}"><button class="changeinfo_changebutton">수정하기</button></a>
+                    <a th:href="@{/mypage/changinfo/changinfo_memberout}"><button class="changeinfo_outbutton">탈퇴하기</button></a>
                 </div>
             </div>
         </div>
