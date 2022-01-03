@@ -8,7 +8,7 @@
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
-    <link href="resources/css/mypage/mypage_category.css" rel="stylesheet">
+    <link href="/resources/css/mypage/mypage_category.css" rel="stylesheet">
     <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,11 +19,11 @@
 <div class="content">
     <aside>
         <div class="mypage_category">
-            <div class="ca_head">마이페이지</div>
+            <a th:href="@{/mypage}"><div class="ca_head">마이페이지</div></a>
             <ul class="mypage_category_ul">
-                <li class="mypage_category_li"><a href="#">회원정보수정</a></li>
-                <li class="mypage_category_li"><a href="#">찜한캠핑장</a></li>
-                <li class="mypage_category_li"><a href="#">예약내역확인</a></li>
+                <li class="mypage_category_li"><a th:href="@{/mypage/changinfo}">회원정보수정</a></li>
+                <li class="mypage_category_li"><a th:href="@{/mypage/wishcamp}">찜한캠핑장</a></li>
+                <li class="mypage_category_li"><a th:href="@{/mypage/mypage_guest_reserve}">예약내역확인</a></li>
                 <li class="mypage_category_li"><a href="#">고객센터</a></li>
             </ul>
         </div>
