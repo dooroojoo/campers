@@ -30,8 +30,8 @@ public class ReserPayController {
 	
 	
 	@PostMapping("/insert")
-	public String insertReserPay(//) {
-		//reserPayService.insertReserPay();
+	public String insertReserPay() {
+		//reserPayService.i\nsertReserPay();
 		
 		return null;
 	}
