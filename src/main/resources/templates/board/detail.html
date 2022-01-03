@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>detail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nunito:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+   <style>
+   		
+        .freeBoard-wrap{
+            display: flex;
+            justify-content: center;
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 1060px;
+            /* font-weight: 900; */
+        }
+        .freeBoard-header {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 2px solid black;
+        }
+ 
+
+        .freeBoard-header button{
+            border-radius: 5px;
+            padding: 5px 10px;
+            border: #D1D1D1 1px solid;
+            background-color: white;
+            font-weight: 900;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+
+        }
+        .place-right{
+            margin-left: auto;
+            margin-top : 115px;
+        }
+        .freeBoard-label {
+            float: left;
+        padding-bottom: 10px;
+        font-size: 39px;
+        margin-top: 85px;
+        font-weight: 100;
+        }
+    
+
+        .box-right {
+            margin-left: auto;
+        }
+
+        .freeBoard-aside {
+            font-size: 21px;
+            line-height: 50px;
+            margin-top: 255px;
+            margin-right: 30px;
+            border: 1px solid #e3e3e3;
+            height: 208px;
+            font-weight: 500;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: rgb(0 0 0 / 8%) 10px 10px 6px;
+            position: fixed;
+            left: 80%;
+
+        }
+        .freeBoard-aside a {
+            color: rgb(65, 65, 65);
+        }
+
+        .gotolist{
+            border-bottom: 2px solid rgb(126, 126, 126);
+        }
+        .freeBoard-container {
+            padding-top: 10px;
+            min-width: 800px;
+            border: 1px solid #e7e7e7;
+            padding-inline: 100px;
+        }
+        
+        .freeBoard-info {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e7e7e7 ;
+        }
+
+        .info-right {
+            color: grey;
+            
+        }
+        .info-right label{
+            margin-left: 25px;
+        }
+        .content-img {
+            margin-top: 30px;
+            text-align: center;
+
+        }
+        .freeBoard-content p{
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .content-img img{
+            max-width: 500px;
+        }
+        .content-option {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .content-option img {
+            width: 25px;
+        }
+        .content-left {
+            display: flex;
+        }
+        .content-left img {
+            margin-top: 5px;
+        }
+        .content-left label {
+            margin-top: 6px;
+            margin-left: 3px;
+        }
+        .freeBoard-comment{
+            border-top: 2px solid #D1D1D1;
+            
+        }
+        .comment-header{
+            margin-top: 15px;
+        }
+        .comment-header label {
+            font-weight: 900;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-size: 15px;
+        }
+        .comment-textarea {
+            border: 1px solid #D1D1D1;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            font-size: 14px;
+            
+            padding: 5px 5px;
+        }
+        .comment-textarea:focus ,.refComment-textarea:focus{
+            outline: none;
+        }
+        .comment-submit {
+            background-color: #D1D1D1;
+            float: right;
+            align-items: center;
+        }
+        .comment-write {
+            margin-top: 5px;
+            display: flex;
+        }
+        .comment-write button {
+            width: 60px;
+            border-radius: 0 10px 10px 0;
+            border: none;
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+        .comment-content{
+            /* display: flex; */
+            line-height: 15px;
+            margin-top: 25px;
+            
+        }
+        .comment-rightTop img{
+            width: 17px;
+            float: right;
+            margin-bottom: 5px;
+        }
+        .user-profile img {
+            width: 60px;
+        }
+        .comment-left {
+            display: flex;
+        }
+        .comment-leftTopBottom{
+
+            margin-left: 20px;
+        }
+        .comment-leftTop sub{
+            color: grey;
+            margin-right: 20px;
+        }
+        .comment-box, .refcomment-box {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 15px;
+            
+        }
+        .comment-content:not(:last-child) {
+            border-bottom: 1px solid #e7e7e7;
+        }
+        
+        .comment-right {
+            line-height: 28px;
+        }
+       
+        .comment-rightBottom{
+            margin-top: 39px;
+
+        }
+        .comment-rightBottom label {
+            font-size: 15px;
+        }
+        .another-list {
+            text-align: center;
+            border-bottom: 1px solid #e7e7e7;
+            border-top: none;
+            width: 1001px;
+            margin: 0 auto;
+            font-size: 13px;
+        }
+        .previous-board, .next-board  {
+            border-bottom: 1px solid #e7e7e7;
+            text-align: left;
+            padding: 20px;
+        }
+        .list-label {
+            color: grey;
+            margin-right: 70px;
+            margin-left: 30px;
+        }
+        .listBtn {
+            margin: 50px auto;
+            border-radius: 5px;
+            padding: 5px 10px;
+            width: 100px;
+            border: #D1D1D1 1px solid;
+            background-color: white;
+            font-weight: 900;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .refComment-textarea{
+            border: 1px solid #D1D1D1;
+            height: 100px;
+            margin-left: 80px;
+            margin-bottom: 20px;
+            padding: 5px 5px;
+            font-size: 14px;
+        }
+        .refComment-writer{
+            position: relative;
+        }
+        .refComment-submit{
+            display: flex;
+            margin-left: 89%;
+            position: absolute;
+            margin-top: -6%;
+            
+            
+        }
+        .refComment-submit sub{
+            margin-top: 8px;
+            margin-right: 5px;
+        }
+        .refComment-submit button{
+            border: none;
+            border-radius: 3px;
+            padding: 3px 6px;
+            cursor: pointer;
+        }
+        .ref{
+            margin-left: 40px;
+        }
+        .refcomment-box {
+            margin-top: 15px;
+        }
+        .refImg {
+            margin-bottom: 20px;
+            margin-right: 10px;
+        }
+        .comment-leftBottom{
+            display: flex;
+        }
+        .comment-leftBottom label{
+            margin-top: 16px;
+            margin-right: 10px;
+            color: gray;
+            
+        }
+        .another-list img{
+            width: 16px;
+        }
+      .freeBoard-aside a {
+        	color: black;
+        	text-decoration: none;	
+        }
+        .header {
+        	margin-bottom:1% !important;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="common/header.html"></div>
+
+  <div class="freeBoard-wrap">
+       
+    <div class="freeBoard-aside">
+          
+            
+        <div>
+            <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+        </div>
+        <div>
+            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+        </div>
+        <div>
+            <a href="/board/list" class="gotolist">목록으로</a>
+        </div>
+        <div>
+            <a href="/board/write" class="boradWrite">글쓰기</a>
+        </div>
+    </div>
+      <div class="freeBoard-container">
+          <div class="freeBoard-header">
+              <label class="freeBoard-label">자유게시판</label>
+                <div class="place-right">
+                    <button>수정</button>
+                    <button>삭제</button>
+                </div>      
+            </div>
+            
+            <div class="freeBoard-info">
+                <div class="info-left"><label>서울 근교 캠핑장 추천 부탁드려요</label></div>
+                <div class="info-right"><label>캠핑중독자</label><label>16:25</label><label>조회 11</label></div>
+            </div>
+            <div class="freeBoard-content">
+                <div class="content-img"><img src="/resources/images/board/camping.jpg"></div>
+                <p>이 사진같은 캠핑장이었으면 좋겠는데.. 있을까요?</p>
+                <div class="content-option">
+                        <div class="content-left">
+                            <div>
+                                <img src="/resources/images/board/heart.png">
+                            </div>
+                            <label>3</label>
+                        </div>
+                    <div class="content-right">
+                        <img src="/resources/images/board/report_img.png">
+                    </div>
+                </div>
+            </div>
+            <div class="freeBoard-comment">
+                <div class="comment-header">
+                    <label>댓글 작성</label><br>
+                    <div class="comment-write">
+                        <div class="comment-textarea" contenteditable="true" style="width:739px; height: 100px;">
+                        </div>
+                        <button>등록</button>
+                    </div>
+                </div>
+                <!-- 일반 댓글 -->
+                <div class="comment-content">
+                    
+                    <div class="comment-box">
+                        
+                        <div class="comment-left">
+                            <div class="user-profile"><img src="/resources/images/board/member_profile_navy.png">
+                            </div>
+                            <div class="comment-leftTopBottom">
+                                <div class="comment-leftTop"><sub>캠핑중독자</sub><sub>2021.12.26 18:15</sub></div>
+                                <div class="comment-leftBottom"><p>가평쪽으로 한번 가보세요.</p></div>
+                            </div>
+                        </div>
+                        <div class="comment-right">
+                            <div class="comment-rightTop"><img src="/resources/images/board/report_img.png"></div>
+                            <div class="comment-rightBottom"><label>답글</label></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 답글 열린 댓글-->
+                <div class="comment-content">
+                    
+                    <div class="comment-box">
+                        <div class="comment-left">
+                            <div class="user-profile"><img src="/resources/images/board/member_profile_navy.png">
+                            </div>
+                            <div class="comment-leftTopBottom">
+                                <div class="comment-leftTop"><sub>캠핑중독자</sub><sub>2021.12.26 18:15</sub></div>
+                                <div class="comment-leftBottom"><p>가평쪽으로 한번 가보세요.</p></div>
+                            </div>
+                        </div>
+                        <div class="comment-right">
+                            <div class="comment-rightTop"><img src="/resources/images/board/report_img.png"></div>
+                            <div class="comment-rightBottom"><label>답글접기</label></div>
+                        </div>
+
+                    </div>
+                    <div class="refComment-writer">
+                        <div class="refComment-textarea" contenteditable="true">
+                        </div>
+                        <div class="refComment-submit">
+                            <sub style="color: grey;">0/3000</sub>
+                            <button>등록</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 답글 달린 댓글-->
+                <div class="comment-content">
+                    
+                    <div class="comment-box">
+                        
+                        <div class="comment-left">
+                            <div class="user-profile"><img src="/resources/images/board/member_profile_navy.png">
+                            </div>
+                            <div class="comment-leftTopBottom">
+                                <div class="comment-leftTop"><sub>캠핑중독자</sub><sub>2021.12.26 18:15</sub></div>
+                                <div class="comment-leftBottom"><p>가평쪽으로 한번 가보세요.</p></div>
+                            </div>
+                        </div>
+                        <div class="comment-right">
+                            <div class="comment-rightTop"><img src="/resources/images/board/report_img.png"></div>
+                            <div class="comment-rightBottom"><label>답글</label></div>
+                        </div>
+                    </div>
+                    <div class="refComment">
+                        <div class="refcomment-box">
+                        
+                            <div class="comment-left ref">
+                                <div class="user-profile"><img class="refImg" style="width: 20px;" src="/resources/images/board/right-arrow.png"><img src="/resources/images/board/member_profile_navy.png">
+                                </div>
+                                <div class="comment-leftTopBottom">
+                                    <div class="comment-leftTop"><sub>캠핑중독자2</sub><sub>2021.12.26 18:15</sub></div>
+                                    <div class="comment-leftBottom"><label>@캠핑중독자</label><p>가평쪽으로 한번 가보세요.</p></div>
+                                </div>
+                            </div>
+                            <div class="comment-right">
+                                <div class="comment-rightTop"><img src="/resources/images/board/report_img.png"></div>
+                                <div class="comment-rightBottom"><label>답글</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="refComment">
+                        <div class="refcomment-box">
+                        
+                            <div class="comment-left ref">
+                                <div class="user-profile"><img class="refImg" style="width: 20px;" src="/resources/images/board/right-arrow.png"><img src="/resources/images/board/member_profile_navy.png">
+                                </div>
+                                <div class="comment-leftTopBottom">
+                                    <div class="comment-leftTop"><sub>캠핑중독자</sub><sub>2021.12.26 18:15</sub></div>
+                                    <div class="comment-leftBottom"><label>@캠핑중독자2</label><p>가평쪽으로 한번 가보세요.</p></div>
+                                </div>
+                            </div>
+                            <div class="comment-right">
+                                <div class="comment-rightTop"><img src="/resources/images/board/report_img.png"></div>
+                                <div class="comment-rightBottom"><label>답글</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 답글 달리고 답글창 열린 댓글-->
+                <div class="comment-content">
+                    
+                    <div class="comment-box">
+                        
+                        <div class="comment-left">
+                            <div class="user-profile"><img src="/resources/images/board/member_profile_navy.png">
+                            </div>
+                            <div class="comment-leftTopBottom">
+                                <div class="comment-leftTop"><sub>캠핑중독자</sub><sub>2021.12.26 18:15</sub></div>
+                                <div class="comment-leftBottom"><p>가평쪽으로 한번 가보세요.</p></div>
+                            </div>
+                        </div>
+                        <div class="comment-right">
+                            <div class="comment-rightTop"><img src="/resources/images/board/report_img.png"></div>
+                            <div class="comment-rightBottom"><label>답글</label></div>
+                        </div>
+                    </div>
+                    <div class="refComment">
+                        <div class="refcomment-box">
+                        
+                            <div class="comment-left ref">
+                                <div class="user-profile"><img class="refImg" style="width: 20px;" src="/resources/images/board/right-arrow.png"><img src="/resources/images/board/member_profile_navy.png">
+                                </div>
+                                <div class="comment-leftTopBottom">
+                                    <div class="comment-leftTop"><sub>캠핑중독자</sub><sub>2021.12.26 18:15</sub></div>
+                                    <div class="comment-leftBottom"><p>가평쪽으로 한번 가보세요.</p></div>
+                                </div>
+                            </div>
+                            <div class="comment-right">
+                                <div class="comment-rightTop"><img src="/resources/images/board/report_img.png"></div>
+                                <div class="comment-rightBottom"><label>답글접기</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="refComment-writer">
+                        <div class="refComment-textarea" contenteditable="true">
+                        </div>
+                        <div class="refComment-submit">
+                            <sub style="color: grey;">0/3000</sub>
+                            <button>등록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="another-list">
+        <div class="previous-board"><img src="/resources/images/board/upArrow.png"><label class="list-label">이전글</label><label>여기 캠핑지 어딘가요?</label></div>
+        <div class="next-board"><img src="/resources/images/board/downArrow.png"><label class="list-label">다음글</label><label>혼자 캠핑와서 불멍중</label></div><br>
+        <button class="listBtn">목록으로</button>
+    </div>
+    </div>
+        <div th:replace="common/footer.html"></div>
+      
+</body>
+</html>

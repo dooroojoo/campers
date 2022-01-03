@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>write</title>
+ 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nunito:wght@300&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+   <style>
+        .freeBoard-wrap{
+            display: flex;
+            justify-content: center;
+            font-family: 'Noto Sans KR', sans-serif;
+            
+            /* font-weight: 900; */
+        }
+        .freeBoard-content {
+            margin-top: 118px;
+            min-width: 600px;
+            border-top: 2px solid black;
+        }
+        .freeBoard-label {
+            float: left;
+    font-size: 39px;
+    margin-top: 67px;
+    font-weight: 100;
+        }
+  
+        .freeBoard-label-small{
+            font-size: 22px;
+    float: left;
+    margin-top: 88px;
+    margin-left: 20px;
+    font-weight: 100;
+        }
+    
+
+        .freeBoard-footer {
+            display: flex;
+            margin-bottom: 50px;
+            justify-content: space-between;
+            
+        }
+        .freeBoard-footer button {
+            margin-top: 5px;
+            border-radius: 5px;
+            padding: 7px 7px;
+            border: #D1D1D1 1px solid;
+            background-color: white;
+            font-weight: 900;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+
+            
+        }
+        
+        .freeBoard-container {
+            border-radius: 10px;
+            border: 1px solid #D1D1D1;
+            padding: 0 50px;
+            margin-bottom: 100px;
+        }
+
+        .writeTitle{
+            margin-top: 20px;
+            width: 700px;
+            height: 40px;
+            padding-left: 5px;
+            border-radius: 10px;
+            border:1px solid #bdbdbd;
+        }
+
+        .writeTitle:focus {
+            outline: none;
+        }
+    
+        .writeContent{
+            overflow: hidden;
+            padding-top: 5px;
+            padding-left: 5px;
+            font-size: 15px;
+            margin-top: 20px;
+            width: 700px;
+            max-width: 794px;
+            height: 350px;
+            max-height: 570px;
+            border-radius: 10px;
+            border: 1px solid #bdbdbd;
+            resize: none;
+            font-family: 'Noto Sans KR', sans-serif;
+
+
+        }
+        .writeContent:focus {
+            outline: none;
+        }
+
+        .photoLimit{
+            color: grey;
+        }
+        .previewBox{
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 2px solid black;
+        }
+
+        .inputImgPreview{
+            position:relative;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #8a8a8a;
+            margin-right: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .inputImgPreview img {
+            display:block; position:absolute;     top: 25%;
+            left: 25%;
+
+        }
+       
+        .freeBoard-aside {
+            font-size: 21px;
+            line-height: 50px;
+            margin-top: 155px;
+            margin-right: 30px;
+            border: 1px solid #e3e3e3;
+            height: 208px;
+            font-weight: 500;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: rgb(0 0 0 / 8%) 10px 10px 6px;
+            position: fixed;
+            left: 76%;
+
+        }
+        .boradWrite{
+            border-bottom: 2px solid grey;
+        }
+        
+   		.freeBoard-aside a {
+        	color: black;
+        	text-decoration: none;	
+        }
+    
+    </style>
+</head>
+<body>
+   <div th:replace="common/header.html"></div>
+  <div class="freeBoard-wrap">
+    <div class="freeBoard-aside">
+          
+     	 <div>
+  			 <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+        </div>
+        <div>
+            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+        </div>
+        <div>
+            <a href="/board/list" class="gotolist">목록으로</a>
+        </div>
+        <div>
+            <a href="/board/write" class="boradWrite">글쓰기</a>
+        </div>
+    </div>
+         
+        
+          <div class="freeBoard-container">
+              <label class="freeBoard-label">자유게시판</label><label class="freeBoard-label-small">글쓰기</label><br>
+              
+          
+                <div class="freeBoard-content">
+                    <input class="writeTitle" type="text" placeholder="제목을 입력하세요."><br>
+                    <textarea class="writeContent" placeholder="내용을 입력하세요."></textarea>
+                    <br><input type="file" hidden><input type="file" hidden><input type="file" hidden>
+                    <div class="previewBox">
+                        
+                        <div class="inputImgPreview"><img src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview"><img src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview"><img src="/resources/images/board/cameraImg.png"></div>
+                    </div>
+                </div>
+                <div class="freeBoard-footer">
+                    <div class="freeBoard-footerLeft">
+                        <button>취소</button>
+                        <button class="">사진첨부</button><label class="photoLimit"> 사진은 최대 3장까지 첨부 가능합니다.</label>
+                    </div>
+                    <div class="freeBoard-footerRight">
+                        <button>등록</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+         <div th:replace="common/footer.html"></div>
+	
+
+</body>
+</html>
