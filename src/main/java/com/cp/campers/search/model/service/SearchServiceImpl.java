@@ -24,4 +24,9 @@ public class SearchServiceImpl implements SearchService{
 		return searchMapper.mainSearch(map);
 	}
 
+	@Override
+	public List<SearchCamp> campAllSearch() {
+		return searchMapper.campAllSearch();
+	}
+
 }

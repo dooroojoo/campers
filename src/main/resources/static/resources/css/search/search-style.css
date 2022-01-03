@@ -300,7 +300,7 @@ input[type="number"] {
     font-weight: 600;
 }
 
-.list-col-state{
+/* .list-col-state{
     display: flex;
     flex-direction: row;
     justify-content: right;
@@ -330,7 +330,7 @@ input[type="number"] {
     margin-top: -3%;
     padding-left: 2%;
     padding-right: 2%;
-}
+} */
 
 
 /* 페이징 */

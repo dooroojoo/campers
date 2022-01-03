@@ -131,31 +131,33 @@
             <div class="search-contents">
               <div class="search-list-top">
 
+				
                 <!-- 아래 코드는 submit 버튼 눌렀을 때에만 나타나게 -->
                 <div class="list-top-text">
-                   <p>총 {조회된 컬럼 갯수}개의 캠핑장이 검색되었습니다.</p>
+                 <p th:text="${ searchSize }"></p>
                   </div>
                   
 
                 <!-- 조회된 갯수만큼 반복문 -->
-                <div class="search-list-col">
+                <div class="search-list-col" th:each="search : ${ campSearch }">
                   <div class="list-col-wrapper">
                   <div class="list-col-img">
-                    <img src="/resources/images/main/list1.jpg">
+                    <img th:src="@{/resources/images/uploadFiles/campImg/}+${search.fileName}">
                 
                   
                   <div class="list-col-text">
                     <ul>
-                      <li class="list-col-address">전남 장성군 {주소 일부}</li>
-                      <li class="list-col-name">빨간단풍 가족캠핑장 {캠핑장명}</li>
-                      <li class="list-col-count">최대인원 5인 {최대인원}</li>
-                      <li class="list-col-price">50,000 ~ 100,000</li>
+                      <li class="list-col-address" th:text="${search.cAddress}"></li>
+                      <li class="list-col-name" th:text="${search.cName}"></li>
+                      <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span></li>
+                      <li class="list-col-price" th:text="${search.minPrice}+'~'+${search.maxPrice}"></li>
                     </ul>
 
+				
                     <!-- 선택한 날짜에 예약가능할 시에 -->
-                    <div class="list-col-state">
-                      <p class="list-bookable">예약가능</p>
-                    </div>
+                    <!-- <div class="list-col-state" th:if="${search.rCount > 0}">
+                      <p class="list-bookable" >예약가능</p>
+                    </div> -->
 
                      <!-- 선택한 날짜에 예약불가 시에 -->
                      <!-- <div class="list-col-state">

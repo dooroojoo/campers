@@ -32,9 +32,22 @@ public class SearchController {
 	
 	
 	@GetMapping("camp")
-	public String searchCamp() {
-		return "search/searchCamp";
+	public ModelAndView searchCamp(ModelAndView mv) {
+		
+		List<SearchCamp> campAllSearch = searchService.campAllSearch();
+		
+		if(campAllSearch.size() == 0) {
+			mv.addObject("searchSize", "검색된 결과가 없습니다.");
+		} else {
+			mv.addObject("searchSize", campAllSearch.size()+"개의 결과가 조회되었습니다.");
+		}
+		
+		mv.addObject("campSearch", campAllSearch);
+		mv.setViewName("search/searchCamp");
+		
+		return mv;
 	}
+
 	
 	// 메인페이지 캠핑장 검색 기능
 	@GetMapping("main")
@@ -73,8 +86,13 @@ public class SearchController {
 		
 		List<SearchCamp> mainSearch = searchService.mainSearch(map);
 		
-        
-		mv.addObject("mainSearch", mainSearch);
+		if(mainSearch.size() == 0) {
+			mv.addObject("searchSize", "검색된 결과가 없습니다.");
+		} else {
+			mv.addObject("searchSize", mainSearch.size()+"개의 결과가 조회되었습니다.");
+		}
+		
+		mv.addObject("campSearch", mainSearch);
 		mv.setViewName("search/searchCamp");
 		
 		return mv;
