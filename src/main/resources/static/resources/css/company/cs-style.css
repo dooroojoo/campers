@@ -1,0 +1,149 @@
+@charset "UTF-8";
+
+body {
+    width: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+input:focus {
+    outline:none;
+}
+
+img{
+max-width: 100%;
+height: auto !important;
+}
+
+li{
+    list-style: none;
+}
+
+
+/* 자주묻는질문 */
+.cs-wrapper{
+    max-width: 1900px;
+    padding-bottom: 10%;
+    margin: auto;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.cs-container{
+    width: 1300px;
+    margin-bottom: 20px;
+    align-items: center;
+    text-align: left;
+    margin-left: 20%;
+}
+
+.cs-qna-wrap{
+    background-color: #F4F4F4;
+    width: 1000px;
+    height: 100%;
+    border: 1px solid #9B9B9B;
+    border-radius: 20px;
+    
+}
+
+.cs-qna-menu p{
+    font-size: 25px;
+    font-weight: 600;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.cs-qna-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cs-qna-btn{
+    width: 250px;
+    height: 450px;
+    display:inline;
+    
+
+}
+
+button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white;
+    color: black;
+    width: 150px;
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 20%;
+    margin-top: 10%;
+    border: 1px solid #A4A4A4;
+    border-radius: 10px;
+    padding: 3px 3px 3px 3px;
+    cursor: pointer;
+  }
+
+.cs-qna-text{
+    width: 650px;
+    font-size: 20px;
+     position: relative;
+     right: -30%;
+     margin-top: -50%;
+     font-weight: bold;
+     padding-bottom: 10%;
+  }
+
+dt img {
+    margin-right: 2%;
+} 
+
+dt{
+    cursor: pointer;
+}
+
+dd {
+    margin-top: 2%;
+    font-weight: 600;
+    font-size: 18px;
+    color: #818181;
+}
+
+#cs-pay, #cs-booking, #cs-service{
+    display: none;
+}
+
+.clicked {
+    color: white;
+    background-color: black;
+  }
+
+
+/* 고객센터 안내 */
+.cs-center-wrap{
+    background-color: #F4F4F4;
+    width: 1000px;
+    height: 100%;
+    border: 1px solid #9B9B9B;
+    border-radius: 20px;
+    margin-top: 5%;
+}
+
+.cs-center-title{
+    font-size: 25px;
+    margin-left: 5%;
+    font-weight: 600;
+}
+
+.cs-center-contents{
+    font-size: 16px;
+    margin-left: 5%;
+}
+
+.cs-center-text{
+    font-weight: 600;
+}
+
+.cs-center-contents{
+    margin-bottom: 5%;
+}

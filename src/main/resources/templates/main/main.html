@@ -40,7 +40,7 @@
               <div class="main-search-top">
                <div class="main-area container">
               <label><img src="resources/images/main/point.png">지역
-              <input type="text" class="area-text" placeholder="지역을 입력해주세요">
+              <input type="text" class="area-text" placeholder="여행 목적지가 어디신가요?">
               </label></div>
 
               <div class="main-checkDate container">
@@ -50,12 +50,11 @@
 
                 <div class="main-guest container">
                   <label><img src="resources/images/main/guest.png">인원
-                    
-                      <span class="number-btn"><input type="button" id="btn-minus"></span>
-                      <input type="text" id="guest-number" value="0" readonly style="font-size: 15px;">
-                      <span class="number-btn"> <input type="button" id="btn-plus"></span>
+					  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
+					  <input class="quantity" min="0" max="6" name="quantity" value="1" type="number">
+					  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                     <input type="text" class="area-text" placeholder="인원 수를 추가해주세요" readonly style="cursor:default;">
-                  </label></div>
+                  </label> </div>
                 </div>
 
                 <div class="main-search-bottom">
@@ -218,9 +217,6 @@
 
   	<!-- 제이쿼리 충돌 방지 코드 -->
 	<script type="text/javascript"> $.noConflict(); </script>
-	
-    <!-- 버튼 클릭으로 인원 수 추가 삭제 -->
-    <script type="text/javascript" th:src="@{/resources/js/main/guestEvent.js}"></script>
 
     <!-- 추천리스트 슬라이드 -->
     <script>
@@ -243,7 +239,13 @@
     <!-- 캘린더 스크립트 -->
     <script type="text/javascript" th:src="@{/resources/js/main/datePicker.js}"></script>
     
-    
-      
+    	
+    <!-- 인원수 증가 버튼 클릭시 submit 제출되지 않게-->
+ 	  <script>
+	  $('form').on('click', 'button:not([type="submit"])', function(e){
+	    e.preventDefault();
+	  })
+	  </script>
+	  
 </body>
 </html>
