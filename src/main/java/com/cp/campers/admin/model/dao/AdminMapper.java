@@ -16,6 +16,9 @@ public interface AdminMapper {
 	// 회원수
 	int getListCount();
 
+	// 검색한 회원수
+	int getListCountBySearch(Search search);
+
 	// 회원목록
 	List<Member> findAllMember(PageInfo pi);
 
@@ -26,6 +29,7 @@ public interface AdminMapper {
 	int updateMemberRole(MemberRole mr);
 
 	// 회원검색
-	List<Member> searchMember(Search search);
+	List<Member> searchMember(Map<String, Object> param);
+
 
 }

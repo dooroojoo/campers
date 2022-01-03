@@ -15,5 +15,5 @@ public interface AdminService {
 	
 	int updateMember(Member member, int authorityCode);
 
-	List<Member> searchMember(Search search);
+	Map<String, Object> searchMember(int page, Search search);
 }
