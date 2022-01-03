@@ -5,7 +5,7 @@
 <title>camp list</title>
 
 	<!-- css -->
-	<link href="/resources/css/admin/adminCamp.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/admin/camp.css" rel="stylesheet" type="text/css">
 	<!-- css -->
 	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
 
@@ -32,37 +32,20 @@
                         <li class="accomd_request">요청구분</li>
                         <li class="accomd_update">관리</li>
                     </ul>
-                    <ul class="accomd_header">
-                        <li class="accomd_pk">0001</li>
-                        <li class="accomd_id">member01</li>
-                        <li class="accomd_date" title="21.03.21 10:27:39">21.03.21</li>
-                        <li class="accomd_name">구봉산 오토캠핑장 나인힐스구봉산 오토캠핑장 나인힐스구봉산 오토캠핑장 나인힐스</li>
-                        <li class="accomd_request">완료</li>
-                        <li class="accomd_status">등록</li>
-                        <li class="accomd_update">
-                            <button type="submit">보기</button>
+                    <ul class="accomd_header" th:each="camp : ${ campList }">
+                        <li class="accomd_pk" th:text="${ camp.campNo }"></li>
+                        <li class="accomd_id" th:text="${ camp.userNo }"></li>
+                        <li class="accomd_date" th:each="cr : ${ camp.campRecordList }">
+                        	<span th:text="${ #dates.format(cr.recordDate, 'yyyy-MM-dd') }"></span>
                         </li>
-                    </ul>
-                    <ul class="accomd_header">
-                        <li class="accomd_pk">0002</li>
-                        <li class="accomd_id">member02</li>
-                        <li class="accomd_date" title="21.03.21 10:27:39">21.03.22</li>
-                        <li class="accomd_name">구봉산 오토캠핑장 나인힐</li>
-                        <li class="accomd_request">해지</li>
-                        <li class="accomd_status">대기 중</li>
-                        <li class="accomd_update">
-                            <button type="submit">삭제</button>
+                        <li class="accomd_name" th:text="${ camp.campName }"></li>
+                        <li class="accomd_request" th:each="cr : ${ camp.campRecordList }">
+                        	<span th:text="${ cr.record.recordName }"></span>
                         </li>
-                    </ul>
-                    <ul class="accomd_header">
-                        <li class="accomd_pk">0003</li>
-                        <li class="accomd_id">member03</li>
-                        <li class="accomd_date" title="21.03.21 10:27:39">21.03.23</li>
-                        <li class="accomd_name">구봉산 오토캠핑장 나인힐스</li>
-                        <li class="accomd_request">신규</li>
-                        <li class="accomd_status">대기 중</li>
+                        <li class="accomd_status" th:if="${ camp.campStatus } == 'Y'">등록</li>
+                        <li class="accomd_status" th:if="${ camp.campStatus } == 'N'">대기</li>
                         <li class="accomd_update">
-                            <button type="submit">보기</button>
+                            <button onclick="location.href='#'">보기</button>
                         </li>
                     </ul>
                 </div>
@@ -75,12 +58,12 @@
 
 
                         <!-- 맨 처음으로 이동하는 버튼(<<) -->
-                        <li><a href="/admin/memberPage?page=1">&lt;&lt;</a></li>
+                        <li><a href="/admin/camp?page=1">&lt;&lt;</a></li>
                         
 
 
                         <!-- 이전 페이지로(<) -->
-                        <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/memberPage?page={page}(page=${pi.page-1})}">&lt;</a></li>
+                        <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/campPage?page={page}(page=${pi.page-1})}">&lt;</a></li>
                         <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
                         
 
@@ -91,19 +74,19 @@
                                 <a href="#" th:text="${ p }"></a>
                             </div>
                             <div th:unless="${ p == pi.page }">
-                                <a th:href="@{/admin/memberPage?page={p}(p=${p})}" th:text="${ p }"></a>
+                                <a th:href="@{/admin/campPage?page={p}(p=${p})}" th:text="${ p }"></a>
                             </div>
                         </li>
 
 
                         <!-- 다음 페이지로(>) -->
-                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/memberPage?page={page}(page=${pi.page+1})}">&gt;</a></li>
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/campPage?page={page}(page=${pi.page+1})}">&gt;</a></li>
                         <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
             
 
 
                         <!-- 맨 끝으로 이동하는 버튼(>>) -->
-                        <li><a th:href="@{/admin/memberPage?page={page}(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                        <li><a th:href="@{/admin/campPage?page={page}(page=${pi.maxPage})}">&gt;&gt;</a></li>
                     </ul>
                 </div>
             </div>
@@ -111,16 +94,20 @@
 
             <!-- 3. 검색 영역 -->
             <div class="search_area">
-                <form method="get" action="#">
+                <form action="/admin/camp/search" method="get">
                     <div class="select_wrap conditionWrap">
                         <select id="searchCondition" name="searchCondition">
-                            <option value="name" selected>숙소명</option>
-                            <option value="id">아이디</option>
-                        </select>
+                            <option value="no" th:selected="${#strings.equals(param.searchCondition, 'no')}">숙소번호</option>
+                            <option value="name" th:selected="${#strings.equals(param.searchCondition, 'name')}">숙소명</option>
+                        </select> 
                     </div>
+
+
                     <span class="input_area">
-                        <input type="search" name="searchValue">
+                        <input type="search" name="searchValue" th:value="${ param.searchValue }">
 					</span>
+
+
 					<button type="submit">검색</button>
 				</form>
             </div>

@@ -13,6 +13,7 @@ import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
+import com.cp.campers.admin.model.vo.Camp;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -88,8 +89,16 @@ public class AdminServiceImpl implements AdminService{
 		int listCount = adminMapper.getCampListCount();
 		
 		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		pi.setStartRow(page);
+		pi.setEndRow(pi.getStartRow());
 		
-		return null;
+		List<Camp> campList = adminMapper.findAllCamp(pi);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("campList", campList);
+		map.put("pi", pi);
+		
+		return map;
 	}
 
 }
