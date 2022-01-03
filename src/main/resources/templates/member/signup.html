@@ -70,7 +70,6 @@
         }
 
         .signup-form img {
-            margin-left: 170px;
             cursor: pointer;
         }
 
@@ -94,7 +93,8 @@
             height: 40px;
             width: 230px;
             border-radius: 10px;
-            border: solid 1px #c9c9c9
+            border: solid 1px #c9c9c9;
+            outline: none;
         }
         .atSign {
             font-size: 22px;
@@ -115,6 +115,20 @@
         .redStar {
             color: red;
         }
+        
+        .div_after{
+		    width: 160px;
+		    height: 155px;
+		    border-radius: 70%;
+		    overflow: hidden;
+ 	   }
+    	.after {
+	    	width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    min-height: 100%;
+		}
+    	
     </style>
 </head>
 <body>
@@ -124,14 +138,17 @@
             <img class="signup-logo" src="/resources/images/common/header_footer/logo.png">
         </div>
         <div class="signup-form">
-        <form th:action="@{/member/signup}" method="post">
+        <form th:action="@{/member/signup}" method="post" enctype="multipart/form-data">
             <label>프로필 이미지</label><br>
-            <img src="/resources/images/member/profileInput.png"><br>
+            <div class="image_area" style="margin-left:170px;">
+            	<img class="profileImg" src="/resources/images/member/profileInput.png" style="height:100%;"><br>
+            </div>
+            <input type="file" class="profileInput" name="singleFile" style="display:none;"/>
             <label>아이디</label><label class="redStar">*</label><br>
             <input type="text" name="id"><br>
             <label>비밀번호</label><label class="redStar">*</label><br>
             <input type="password" name="pwd"><br>
-           <!--  <label>비밀번호 확인</label><label class="redStar">*</label><br>
+           <!-- 	<label>비밀번호 확인</label><label class="redStar">*</label><br>
             <input type="text"><br> -->
             <label>이름</label><label class="redStar">*</label><br>
             <input type="text" name="userName"><br>
@@ -139,22 +156,57 @@
             <input type="text" name="nickName"><br>
             <div class="email">
                 <label>이메일</label><label class="redStar">*</label><br>
-                <input type="text" name="email"><!-- <label class="atSign">@</label><select>
-                    <option>naver.com</option>
-                    <option>daum.net</option>
-                    <option>gamil.com</option>
-                    <option>hanmail.net</option>
-                    <option>nate.com</option>
-                    <option>직접입력</option>
-                </select> -->
+                <input type="text" name="email1"><label class="atSign">@</label><select id="selbox" name="email2">
+                    <option value="naver.com">naver.com</option>
+                    <option value="daum.net">daum.net</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="hanmail.net">hanmail.net</option>
+                    <option value="nate.com">nate.com</option>
+                    <option value="direct">직접입력</option></select><input type="text" class="email" id="selboxDirect" name="email2" style="width:224px; height:36px;"/>
             </div>
             <div class="phone">
                 <label>휴대전화</label><label class="redStar">*</label><br>
-                <input type="text" name="phone"><!-- <input type="text"><input type="text"><br> -->
+                <input type="text" name="phone1"><input type="text" name="phone2"><input type="text" name="phone3"><br>
                 <button class="signupBtn" type="submit">가입하기</button>
             </div>
         </form>
         </div>
     </div>
+    <script>
+    $(function(){
+   		$('.profileImg').click(function (e){
+   			$('.profileInput').click();
+   		}) 	
+   
+    })
+    </script>
+    <script>
+    $(function() {
+    	$('.profileInput').change(function (e) {
+    		document.querySelector('.image_area').className = "image_area div_after";
+    	})
+    })
+    </script>
+    <script>
+    $(function () {
+            $("#selboxDirect").hide();
+
+            $("#selbox").change(function () {
+
+                if ($("#selbox").val() == "direct") {
+
+                    $("#selboxDirect").show();
+                    $("#selboxDirect").focus();
+                    $("#selbox").hide();
+
+                } else {
+
+                    $("#selboxDirect").hide();
+
+                }
+            })
+        });
+    </script>
+    <script src="/resources/js/member/imagePreview.js"></script>
 </body>
 </html>

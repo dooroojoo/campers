@@ -141,8 +141,9 @@ public class Member {
 				+ status + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", memberRoleList="
 				+ memberRoleList + "]";
 	}
+
 	
-	
+
 	
 
 }

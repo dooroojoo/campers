@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,10 +34,17 @@
         <div class="main-logo">
           <a href="/main"><img src="/resources/images/common/header_footer/logo.png"> </a>
         </div>
-    
+    	<th:block sec:authorize="isAuthenticated()">
+    	<div class="join-icon">
+    	  <a href="/member/logout"><img src="/resources/images/member/logoutBtn.png"></a>
+    	</div>
+    	</th:block>
+    	
+    	<th:block sec:authorize="isAnonymous()">
         <div class="join-icon">
           <a href="/member/login"><img src="/resources/images/common/header_footer/join.png"></a>
         </div>
+        </th:block>
     
         <div class="mypage-icon">
           <a href="#"><img src="/resources/images/common/header_footer/member.png"></a>
