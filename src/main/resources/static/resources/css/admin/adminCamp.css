@@ -80,10 +80,10 @@ ul, li {
 }
 
 /* 페이징 */
-.accomd_pages {
+.admin_pages {
     margin: 10px;
 }
-.accomd_paging {
+.admin_paging {
     height: 50px;
     display: flex;
     justify-content: center;
@@ -93,16 +93,16 @@ ul, li {
     margin: auto;
     align-items: center;
 }
-.accomd_paging a {
+.admin_paging a {
     text-decoration: none;
     color: black;
     display: block;
     text-align: center;
 }
-.accomd_paging li{
+.admin_paging li{
     width: 45px;
 }
-.accomd_paging .current_page {
+.admin_paging .current_page {
     background-color: black;
     border-radius: 100%;
     margin: 17px auto;
@@ -110,7 +110,7 @@ ul, li {
     height: 25px;
     color: white;
 }
-.accomd_paging .current_page a{
+.admin_paging .current_page a{
     color: white;
 }
 

@@ -86,13 +86,21 @@ public class AdminController {
 	/* 신고목록 */
 	@GetMapping("report")
 	public String adminReport() {
-		return "admin/adminReport";
+		return "admin/report";
 	}
 	
 	/* 숙소목록 */
 	@GetMapping("camp")
-	public String adminCamp() {
-		return "admin/adminCamp";
+	public String adminCamp(Model model) {
+		
+		int page = 1;
+		
+		Map<String, Object> map = adminService.findAllCamp(page);
+		
+		model.addAttribute("campList", map.get("campList"));
+		model.addAttribute("pi", map.get("pi"));
+		
+		return "admin/camp";
 	}
 	
 	/* 숙소신청 */

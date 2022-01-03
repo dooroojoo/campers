@@ -31,5 +31,8 @@ public interface AdminMapper {
 	// 회원검색
 	List<Member> searchMember(Map<String, Object> param);
 
+	// 숙소 개수
+	int getCampListCount();
+
 
 }

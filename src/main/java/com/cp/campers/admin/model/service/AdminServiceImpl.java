@@ -1,6 +1,5 @@
 package com.cp.campers.admin.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +80,16 @@ public class AdminServiceImpl implements AdminService{
 		map.put("memberList", memberList);
 		
 		return map;
+	}
+
+	@Override
+	public Map<String, Object> findAllCamp(int page) {
+		
+		int listCount = adminMapper.getCampListCount();
+		
+		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		
+		return null;
 	}
 
 }
