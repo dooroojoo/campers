@@ -1,5 +1,8 @@
 package com.cp.campers.search.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cp.campers.search.model.service.SearchService;
 import com.cp.campers.search.model.vo.SearchCamp;
@@ -34,24 +38,46 @@ public class SearchController {
 	
 	// 메인페이지 캠핑장 검색 기능
 	@GetMapping("main")
-	public String mainSearch(@RequestParam("area") String area,
+	public ModelAndView mainSearch(@RequestParam("area") String area,
 							 @RequestParam("daterange") String date,
-							 @RequestParam("guest") int guest,
-							 @RequestParam List<String> type) {
+							 @RequestParam("guest") String guest,
+							 @RequestParam(value="camping", required =false, defaultValue="null") String camping,
+							 @RequestParam(value="glamping", required =false, defaultValue="null") String glamping,
+							 @RequestParam(value="caravan", required =false, defaultValue="null") String caravan,
+							 ModelAndView mv) throws ParseException {
+		
+		log.info(area);
+		log.info(date);
+		log.info(guest);
+		log.info(camping);
+		log.info(glamping);
+		log.info(caravan);
+		
+		
+		// String 날짜로 변환
+		String inDate = date.substring(0,9);
+		String outDate = date.substring(13,22);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date checkIn = formatter.parse(inDate);
+		Date checkOut = formatter.parse(outDate);
+
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("area", area);
-		map.put("date", date);
-		map.put("guset", guest);
-		
-		for(String t : type) {
-			map.put("type", t);
-		}
+		map.put("checkIn", checkIn);
+		map.put("checkOut", checkOut);
+		map.put("guest", guest);
+		map.put("camping", camping);
+		map.put("glamping", glamping);
+		map.put("caravan", caravan);
 		
 		List<SearchCamp> mainSearch = searchService.mainSearch(map);
-        
 		
-		return "search/searchCamp";
+        
+		mv.addObject("mainSearch", mainSearch);
+		mv.setViewName("search/searchCamp");
+		
+		return mv;
 	}
 
 }
