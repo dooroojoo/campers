@@ -190,11 +190,43 @@
     font-size: 21px;
 }
 
-.reserPay_inner .reser_name {
+.reserPay_inner .reserName {
     font-size: 24px;
     font-weight: bold;
     margin: 40px 0 20px 0;
 }
+
+.reserPay_inner .phone {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px 0 20px 0;
+}
+
+.reserPay_inner .request {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px 0 20px 0;
+    
+}
+
+.reserPay_inner .account_hol {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px 0 20px 0;
+}
+
+.reserPay_inner .accountNum {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px 0 20px 0;
+}
+
+.reserPay_inner .bank {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px 0 20px 0;
+}
+
 
 .reserPay_inner textarea {
     width: 100%;
