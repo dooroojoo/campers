@@ -10,6 +10,9 @@ public interface SearchService {
 	
 	/* 메인페이지에서 캠핑장 검색 조회 */
 	List<SearchCamp> mainSearch(HashMap<String, Object> map);
+
+	/* 캠핑장컴색페이지에서 전체 조회 */
+	List<SearchCamp> campAllSearch();
 	
 
 }
