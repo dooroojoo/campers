@@ -62,8 +62,25 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Member> searchMember(Search search) {
-		return adminMapper.searchMember(search);
+	public Map<String, Object> searchMember(int page, Search search) {
+		
+		// 1. 검색 회원수
+		int listCount = adminMapper.getListCountBySearch(search);
+		// 2. PageInfo 객체
+		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		// 3. 페이징 처리된 회원목록
+		pi.setStartRow(page);
+		pi.setEndRow(pi.getStartRow());
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("search", search);
+		List<Member> memberList = adminMapper.searchMember(param);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pi", pi);
+		map.put("memberList", memberList);
+		
+		return map;
 	}
 
 }

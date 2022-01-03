@@ -74,8 +74,11 @@ public class AdminController {
 	@GetMapping("member/search")
 	public String seachMember(Search search, Model model) {
 		
-		List<Member> memberList = adminService.searchMember(search);
-		model.addAttribute("memberList", memberList);
+		int page = 1;
+		
+		Map<String, Object> map = adminService.searchMember(page, search);
+		model.addAttribute("memberList", map.get("memberList"));
+		model.addAttribute("pi", map.get("pi"));
 		
 		return "admin/member";
 	}
