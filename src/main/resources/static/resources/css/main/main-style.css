@@ -105,15 +105,6 @@ height: auto !important;
     margin-right: 7%;
 }
 
-
-.number-btn:hover{
-    transition: 0.1s;
-    border: 0.3px solid rgb(161, 161, 161);
-    background-color: rgba(160, 160, 160, 0.486);
-}
-
-
-
 .main-guest{
     width: 150px;
 }
@@ -360,6 +351,16 @@ input[type=number]::-webkit-outer-spin-button {
     width: 200px;
     height: 105%;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+}
+
+.main-img-wrap a{
+    text-decoration: none;
+    color: black;
+}
+
+.main-img-wrap a:hover{
+  color: rgb(231, 111, 82);
+  text-decoration: none;
 }
 
 .text{
