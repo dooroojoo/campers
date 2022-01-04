@@ -1,6 +1,5 @@
 package com.cp.campers.admin.controller;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cp.campers.admin.model.vo.Camp;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.admin.model.service.AdminService;
 import com.cp.campers.member.model.vo.Member;
@@ -31,7 +31,7 @@ public class AdminController {
 		this.messageSource = messageSource;
 	}
 
-	/* 회원 목록 */
+	/* 회원목록 */
 	@GetMapping("member")
 	public ModelAndView adminMember(ModelAndView mv) {
 		
@@ -46,9 +46,9 @@ public class AdminController {
 		return mv;
 	}
 	
-	/* 회원 목록 + 페이징처리 */
+	/* 회원목록 + 페이징처리 */
 	@GetMapping("memberPage")
-	public String adminMemberpaging(Model model, int page) {
+	public String adminMemberPaging(Model model, int page) {
 		
 		Map<String, Object> map = adminService.findAllMember(page);
 		
@@ -58,7 +58,7 @@ public class AdminController {
 		return "admin/member";
 	}
 	
-	/* 회원정보 수정 */
+	/* 회원정보수정 */
 	@PostMapping("member/update")
 	public String updateMember(Member member, int authorityCode, RedirectAttributes rttr, Locale locale) {
 		
@@ -70,7 +70,7 @@ public class AdminController {
 		return "redirect:/admin/member";
 	}
 	
-	/* 회원 검색 */
+	/* 회원검색 */
 	@GetMapping("member/search")
 	public String seachMember(Search search, Model model) {
 	
@@ -89,6 +89,11 @@ public class AdminController {
 		return "admin/report";
 	}
 	
+	@GetMapping("report/modal")
+	public String reportModal() {
+		return "admin/reportModal";
+	}
+	
 	/* 숙소목록 */
 	@GetMapping("camp")
 	public String adminCamp(Model model) {
@@ -103,9 +108,65 @@ public class AdminController {
 		return "admin/camp";
 	}
 	
-	/* 숙소신청 */
+	/* 숙소목록 + 페이징처리 */
+	@GetMapping("campPage")
+	public String adminCampPaging(Model model, int page) {
+		
+		Map<String, Object> map = adminService.findAllCamp(page);
+		
+		model.addAttribute("campList", map.get("campList"));
+		model.addAttribute("pi", map.get("pi"));
+
+		return "admin/camp";
+	}
+	
+	/* 숙소검색 */
+	@GetMapping("camp/search")
+	public String campSearch(Search search, Model model) {
+		
+		int page = 1;
+		
+		Map<String, Object> map = adminService.fineCampBySearch(page, search);
+		
+		model.addAttribute("campList", map.get("campList"));
+		model.addAttribute("pi", map.get("pi"));
+		
+		return "admin/camp";
+	}
+	
+	/* 숙소검색 + 페이징 */
+	@GetMapping("camp/searchPage")
+	public String campSearchPaging(int page, Search search, Model model) {
+		
+		Map<String, Object> map = adminService.fineCampBySearch(page, search);
+		
+		model.addAttribute("campList", map.get("campList"));
+		model.addAttribute("pi", map.get("pi"));
+		
+		return "admin/camp";
+	}
+	
+	/* 숙소상세 */
 	@GetMapping("camp/detail")
-	public String adminCampDetail() {
+	public String adminCampDetail(int campNo, Model model) {
+		
+		Camp camp = adminService.detailCamp(campNo);
+		
+		model.addAttribute("camp", camp);
+		
 		return "admin/campDetail";
 	}
+	
+	/* 숙소삭제 */
+	@GetMapping("camp/delete")
+	public String adminCampDelete(int campNo, Model model, RedirectAttributes rttr, Locale locale) {
+		
+		int result = adminService.deleteCamp(campNo);
+		
+		// 일회성 저장
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteCamp", null, locale));
+		
+		return "redirect:/admin/camp";
+	}
+	
 }

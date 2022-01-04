@@ -38,5 +38,14 @@ public interface AdminMapper {
 	// 숙소목록
 	List<Camp> findAllCamp(PageInfo pi);
 
+	// 검색 숙소개수
+	int getCampListCountBySearch(Search search);
+
+	// 숙소검색
+	List<Camp> searchCamp(Map<String, Object> param);
+
+	// 숙소상세
+	Camp detailCamp(int campNo);
+
 
 }
