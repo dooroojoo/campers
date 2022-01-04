@@ -49,6 +49,6 @@ public class ReserPayController {
 		}
 		
 		// 태스트로 메인 페이지 이동
-		return "redirect:main";
+		return "redirect:/";
 	}
 }

@@ -21,6 +21,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+<script>
+	const successMessage = '[[${ successMessage }]]'
+	
+	/* 성공 실패 시 빈문자열임
+	   문자열이 있냐 없냐에 따라 alert창 띄우기 
+	   처음부터 menuList 요청에서 로드하면 successMessage가 없으므로 없을 때는 alert 띄우지 않기*/
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
 </head>
 <body>
 
