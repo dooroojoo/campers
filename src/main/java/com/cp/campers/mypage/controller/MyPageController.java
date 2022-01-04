@@ -1,11 +1,14 @@
 package com.cp.campers.mypage.controller;
 
+import java.text.Normalizer.Form;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cp.campers.member.model.service.MemberService;
 import com.cp.campers.mypage.model.service.MypageService;
 import com.cp.campers.mypage.model.vo.Camp;
 
@@ -15,10 +18,12 @@ import com.cp.campers.mypage.model.vo.Camp;
 public class MyPageController {
 
 	private MypageService mypageService;
+	private MemberService memberService;
 	
 	 @Autowired
-	   public MyPageController(MypageService mypageService) {	      
+	   public MyPageController(MypageService mypageService, MemberService memberService) {	      
 	      this.mypageService = mypageService;
+	      this.memberService = memberService;
 	 }
 	
 	@GetMapping("")
@@ -53,8 +58,8 @@ public class MyPageController {
 	
 	@PostMapping("/mypage_camp_enrollment")
 	public String mypageCampEnrollment(Camp camp) {
+		camp.setCampPath("test.png");
 		mypageService.mypageCampEnrollment(camp);
-		
 		return "redirect:/";
 	}	
 	

@@ -11,17 +11,11 @@ import com.cp.campers.mypage.model.vo.Camp;
 @Service
 public class MypageServiceImpl implements MypageService{
 
-	private MypageMapper mypageMapper;
+	private final MypageMapper mypageMapper;
 	
 	@Autowired
 	public MypageServiceImpl(MypageMapper mypageMapper) {
 		this.mypageMapper = mypageMapper;
-	}
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
