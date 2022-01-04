@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>camp list</title>
+<script>
+	const successMessage = '[[${ successMessage }]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
 
 	<!-- css -->
 	<link href="/resources/css/admin/camp.css" rel="stylesheet" type="text/css">
@@ -44,8 +51,11 @@
                         </li>
                         <li class="accomd_status" th:if="${ camp.campStatus } == 'Y'">등록</li>
                         <li class="accomd_status" th:if="${ camp.campStatus } == 'N'">대기</li>
-                        <li class="accomd_update">
-                            <button onclick="location.href='#'">보기</button>
+                        <li class="accomd_update" th:each="cr : ${ camp.campRecordList }">
+                            <button th:if="${ cr.recordNo } == '1'" 
+                            th:onclick="|location.href='@{/admin/camp/detail(campNo=${camp.campNo})}'|">보기</button>
+                            <button th:if="${ cr.recordNo } == '3'" 
+                            th:onclick="|location.href='@{/admin/camp/delete(campNo=${camp.campNo})}'|">삭제</button>
                         </li>
                     </ul>
                 </div>
@@ -54,16 +64,14 @@
                 <!-- 2. 페이징 처리 -->
                 <!-- 페이징 처리 -->
                 <div class="admin_pages">
-                    <ul class="admin_paging">
-
-
+                    <ul class="admin_paging" th:if="${#strings.isEmpty(param.searchCondition)}">
                         <!-- 맨 처음으로 이동하는 버튼(<<) -->
-                        <li><a href="/admin/camp?page=1">&lt;&lt;</a></li>
+                        <li><a th:href="@{/admin/camp/search?page=1}">&lt;&lt;</a></li>
                         
 
 
                         <!-- 이전 페이지로(<) -->
-                        <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/campPage?page={page}(page=${pi.page-1})}">&lt;</a></li>
+                        <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/campPage(page=${pi.page-1})}">&lt;</a></li>
                         <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
                         
 
@@ -74,19 +82,53 @@
                                 <a href="#" th:text="${ p }"></a>
                             </div>
                             <div th:unless="${ p == pi.page }">
-                                <a th:href="@{/admin/campPage?page={p}(p=${p})}" th:text="${ p }"></a>
+                                <a th:href="@{/admin/campPage(page=${p})}" th:text="${ p }"></a>
                             </div>
                         </li>
 
 
                         <!-- 다음 페이지로(>) -->
-                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/campPage?page={page}(page=${pi.page+1})}">&gt;</a></li>
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/campPage(page=${pi.page+1})}">&gt;</a></li>
                         <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
             
 
 
                         <!-- 맨 끝으로 이동하는 버튼(>>) -->
-                        <li><a th:href="@{/admin/campPage?page={page}(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                        <li><a th:href="@{/admin/campPage(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                    </ul>
+                    
+                    <!-- 검색 페이징바 -->
+                    <ul class="admin_paging" th:if="${not #strings.isEmpty(param.searchCondition)}">
+                        <!-- 맨 처음으로 이동하는 버튼(<<) -->
+                        <li><a th:href="@{/admin/camp/search?(page=1, searchCondition=${param.searchCondition}, searchValue=${param.searchValue})}">&lt;&lt;</a></li>
+                        
+
+
+                        <!-- 이전 페이지로(<) -->
+                        <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/camp/searchPage(page=${pi.page-1}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue})}">&lt;</a></li>
+                        <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
+                        
+
+
+                        <!-- 최대 10개의 페이지 목록 -->
+                        <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                            <div class="current_page" th:if="${ p == pi.page }">
+                                <a href="#" th:text="${ p }"></a>
+                            </div>
+                            <div th:unless="${ p == pi.page }">
+                                <a th:href="@{/admin/camp/searchPage(page=${p}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue})}" th:text="${ p }"></a>
+                            </div>
+                        </li>
+
+
+                        <!-- 다음 페이지로(>) -->
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/camp/searchPage(page=${pi.page+1}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue})}">&gt;</a></li>
+                        <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
+            
+
+
+                        <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                        <li><a th:href="@{/admin/camp/searchPage(page=${pi.maxPage}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue})}">&gt;&gt;</a></li>
                     </ul>
                 </div>
             </div>

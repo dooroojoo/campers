@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.cp.campers.admin.model.vo.Camp;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
 
@@ -21,4 +22,13 @@ public interface AdminService {
 
 	// 숙소목록
 	Map<String, Object> findAllCamp(int page);
+	
+	// 숙소검색
+	Map<String, Object> fineCampBySearch(int page, Search search);
+
+	// 숙소신청상세
+	Camp detailCamp(int campNo);
+
+	// 숙소삭제
+	int deleteCamp(int campNo);
 }
