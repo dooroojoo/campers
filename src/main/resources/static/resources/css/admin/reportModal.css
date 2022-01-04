@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+/*----- 모달 배경 -----*/
+.modal_background{
+    position: fixed;
+    top:0; left: 0; bottom: 0; right: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    /* display: none; */
+}
+
+/*----- 모달창 크기 고정 -----*/
+.report_modal{
+    position: absolute;
+    top: calc(50vh - 365px); left: calc(50vw - 250px);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+    border-radius: 10px;
+    width: 600px;
+    height: 720px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 18px 0;
+}
+
+/*----- 창닫기 -----*/
+.close_icon{
+    width: 90%;
+    height: 12%;
+    text-align: right; 
+    font-size: 23px;
+}
+
+.close_icon div:hover{
+    cursor: pointer;
+}
+
+/* [공통] 아이콘 크기 고정 */
+.report_img img {
+    margin: 0 15px;
+    width: 35px;
+    height: 35px;
+}
+
+
+/*----- 신고하기 -----*/
+/* 1. 신고하기 */
+.report_title,
+.report_message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 2. 작성자 */
+.writer {
+    margin: 20px;
+    font-size: 12px;
+}
+
+.writer h3{
+    display: inline;
+}
+
+/* 3. 신고 사유 */
+.report_reason{
+    margin: auto;
+    padding: 15px;
+    width: 290px;
+    height: 290px;
+    border: 1px solid #dadada;
+}
+
+.reason_title { /* 신고 사유 */
+    padding-top: 10px;
+    color: gray;
+}
+
+.report_ul { /* 신고 라디오 버튼 */
+    list-style: none;
+    text-align: left;
+}
+
+.report_ul li {
+    padding: 5px;
+}
+
+.etc_area textarea {
+    margin: 5px 15px;
+    padding: 5px;
+    border: 1px solid #dadada;
+}
+
+.etc_area textarea:focus {
+    outline: none;
+}
+
+/*----- 경고 메시지 -----*/
+.report_message {
+    margin: 28px 0;
+}
+
+/*----- 신고 버튼 -----*/
+.report_button button {
+    width: 5em;
+    height: 2.5em;
+    background: black;
+    color: white;
+    border-radius: 8px;
+}
+
+.report_button button:hover {
+    cursor: pointer;
+}

@@ -208,13 +208,40 @@
 						     , C.USER_NO
 						     , CR.RECORD_DATE
 						     , C.CAMP_NAME
+						     , CR.RECORD_NO
 						     , R.RECORD_NAME
 						     , C.CAMP_STATUS
 						 FROM CAMP C
 						 LEFT JOIN CAMP_RECORD CR ON (C.CAMP_NO = CR.CAMP_NO)
-						 LEFT JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)) A)
+						 LEFT JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
+						ORDER BY CR.RECORD_DATE) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
    </select>
-   		
    
+   <select id="searchCamp" parameterType="hashmap" resultMap="campResultMap">
+   		SELECT * 
+	      FROM (SELECT ROWNUM RNUM, A.*
+			      FROM (SELECT
+						       C.CAMP_NO
+						     , C.USER_NO
+						     , CR.RECORD_DATE
+						     , C.CAMP_NAME
+						     , CR.RECORD_NO
+						     , R.RECORD_NAME
+						     , C.CAMP_STATUS
+						 FROM CAMP C
+						 LEFT JOIN CAMP_RECORD CR ON (C.CAMP_NO = CR.CAMP_NO)
+						 LEFT JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
+						<choose>
+						<when test="search.searchCondition == 'no'">		
+						WHERE C.CAMP_NO = #{ search.searchValue }
+						</when>
+						<when test="search.searchCondition == 'name'">
+						WHERE C.CAMP_NAME LIKE '%' || #{ search.searchValue } || '%'
+						</when>
+						</choose>
+						ORDER BY CR.RECORD_DATE) A)
+		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
+   </select>
+
 </mapper>

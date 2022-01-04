@@ -88,7 +88,7 @@
 
 
                         <!-- 이전 페이지로(<) -->
-                        <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/memberPage?page={page}(page=${pi.page-1})}">&lt;</a></li>
+                        <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/memberPage(page=${pi.page-1})}">&lt;</a></li>
                         <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
                         
 
@@ -99,19 +99,19 @@
                                 <a href="#" th:text="${ p }"></a>
                             </div>
                             <div th:unless="${ p == pi.page }">
-                                <a th:href="@{/admin/memberPage?page={p}(p=${p})}" th:text="${ p }"></a>
+                                <a th:href="@{/admin/memberPage(page=${p})}" th:text="${ p }"></a>
                             </div>
                         </li>
 
 
                         <!-- 다음 페이지로(>) -->
-                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/memberPage?page={page}(page=${pi.page+1})}">&gt;</a></li>
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/memberPage(page=${pi.page+1})}">&gt;</a></li>
                         <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
             
 
 
                         <!-- 맨 끝으로 이동하는 버튼(>>) -->
-                        <li><a th:href="@{/admin/memberPage?page={page}(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                        <li><a th:href="@{/admin/memberPage(page=${pi.maxPage})}">&gt;&gt;</a></li>
                     </ul>
                 </div>
 

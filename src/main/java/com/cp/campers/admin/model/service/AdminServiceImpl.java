@@ -101,4 +101,40 @@ public class AdminServiceImpl implements AdminService{
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> fineCampBySearch(int page, Search search) {
+		
+		// 1. 검색한 숙소개수
+		int listCount = adminMapper.getCampListCountBySearch(search);
+		// 2. PageInfo 객체생성
+		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		pi.setStartRow(page);
+		pi.setEndRow(pi.getStartRow());
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("search", search);
+		// 3. 검색한 숙소목록
+		List<Camp> campList = adminMapper.searchCamp(param);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("campList", campList);
+		map.put("pi", pi);
+		
+		return map;
+	}
+
+	@Override
+	public Camp detailCamp(int campNo) {
+		
+		Camp camp = adminMapper.detailCamp(campNo);
+		
+		return camp;
+	}
+
+	@Override
+	public int deleteCamp(int campNo) {
+		return 0;
+	}
+
 }
