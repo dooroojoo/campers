@@ -55,7 +55,7 @@
                             <button th:if="${ cr.recordNo } == '1'" 
                             th:onclick="|location.href='@{/admin/camp/detail(campNo=${camp.campNo})}'|">보기</button>
                             <button th:if="${ cr.recordNo } == '3'" 
-                            th:onclick="|location.href='@{/admin/camp/delete(campNo=${camp.campNo})}'|">삭제</button>
+                            th:onclick="|location.href='@{/admin/camp/delete(campNo=${camp.campNo}, userNo=${camp.userNo})}'|">삭제</button>
                         </li>
                     </ul>
                 </div>

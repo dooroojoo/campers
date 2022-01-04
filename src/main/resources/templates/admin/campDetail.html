@@ -74,8 +74,7 @@
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업장 소개</span></td>
                         <td>
-                            <div class="table_div" th:text="${ camp.campIntro }"></div>
-                            <!-- <div class="table_div" th:utext="${#strings.replace(camp.campIntro, nlString, '<br>')}"></div> -->
+                            <div class="table_div"><p th:utext="${#strings.replace(camp.campIntro, newReply, '<br>')}"></p></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
@@ -117,7 +116,9 @@
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업장 운영정책</span></td>
                         <td>
-                            <div class="table_div" th:text="${ camp.campPolicy }"></div>
+                            <div class="table_div">
+                            	<p th:utext="${#strings.replace(camp.campPolicy, newReply, '<br>')}"></p>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -179,7 +180,9 @@
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">객실 소개</span></td>
                         <td>
-                            <!-- <div class="table_div" th:utext="${#strings.replace(room.roomInfo, nlString, '<br>')}"></div> -->
+                            <div class="table_div">
+                            	<p th:utext="${#strings.replace(room.roomInfo, newReply, '<br>')}"></p>
+                            </div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
@@ -201,17 +204,18 @@
 
             <!-- 5. 버튼 영역 -->
             <div class="">
-                <form action="#" method="post">
+                <form th:action="@{/admin/camp/refusal}" method="post">
                     <div class="ad_btnArea">
                         <div class="ad_before"><button type="button" onclick="location.href='/admin/camp'">이전</button></div>
-                        <div class="ad_reject"><button onclick="location.href='/admin/camp/refusal'">거절</button></div>
-                        <div class="ad_enroll"><button onclick="location.href='/admin/camp/confirm'">등록</button></div>
+                        <div class="ad_reject"><button type="submit">거절</button></div>
+                        <div class="ad_enroll"><button type="button" th:onclick="|location.href='@{/admin/camp/confirm(campNo=${camp.campNo})}'|">등록</button></div>
                     </div>
                     <div class="reject_reason">
                         <div class="writeArea">
                             <textarea id="replyCont" rows="5" cols="47" style="resize:none;border:none;" maxlength="200" 
-                            placeholder="거절 사유 작성"></textarea>
+                            name="refusal" placeholder="거절 사유 작성"></textarea>
                         </div>
+                        <input type="hidden" name="campNo" th:value="${camp.campNo}"> 
                     </div>
                 </form>
             </div>

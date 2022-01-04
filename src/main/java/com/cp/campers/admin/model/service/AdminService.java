@@ -30,5 +30,5 @@ public interface AdminService {
 	Camp detailCamp(int campNo);
 
 	// 숙소삭제
-	int deleteCamp(int campNo);
+	int deleteCamp(int campNo, int userNo);
 }

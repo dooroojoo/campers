@@ -219,6 +219,7 @@
 						 FROM CAMP C
 						 LEFT JOIN CAMP_RECORD CR ON (C.CAMP_NO = CR.CAMP_NO)
 						 LEFT JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
+						WHERE CAMP_STATUS IN ('Y', 'N')
 						ORDER BY CR.RECORD_DATE) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 	</select>
@@ -237,12 +238,13 @@
 						 FROM CAMP C
 						 LEFT JOIN CAMP_RECORD CR ON (C.CAMP_NO = CR.CAMP_NO)
 						 LEFT JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
+						WHERE CAMP_STATUS IN ('Y', 'N')
 						<choose>
 						<when test="search.searchCondition == 'no'">		
-						WHERE C.CAMP_NO = #{ search.searchValue }
+						 AND C.CAMP_NO = #{ search.searchValue }
 						</when>
 						<when test="search.searchCondition == 'name'">
-						WHERE C.CAMP_NAME LIKE '%' || #{ search.searchValue } || '%'
+						 AND C.CAMP_NAME LIKE '%' || #{ search.searchValue } || '%'
 						</when>
 						</choose>
 						ORDER BY CR.RECORD_DATE) A)
@@ -280,19 +282,9 @@
 		    WHERE C.CAMP_NO = #{ campNo }
 	</select>
 	
-	<select id="detailRoom" parameterType="_int" resultMap="roomResultMap">
-		SELECT
-		      R.ROOM_NAME
-		    , R.ROOM_MEMBER
-		    , R.ROOM_PRICE
-		    , R.ROOM_SIZE
-		    , R.ROOM_FLOOR
-		    , R.ROOM_PARKING
-		    , R.ROOM_INFO
-		    , R.ROOM_AMOUNT
-		    , R.ROOM_FORM
-		    FROM CAMP C
-		    JOIN ROOM R ON(C.CAMP_NO = R.CAMP_NO)
-		    WHERE C.CAMP_NO = #{ campNo }
-	</select>
+	<update id="deleteCamp" parameterType="_int">
+		UPDATE CAMP
+		   SET CAMP_STATUS = 'X'
+		 WHERE CAMP_NO = #{ campNo }
+	</update>
 </mapper>
