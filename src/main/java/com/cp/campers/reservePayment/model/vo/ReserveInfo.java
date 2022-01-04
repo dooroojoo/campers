@@ -18,7 +18,7 @@ public class ReserveInfo {
 	private Date checkIn; 			// 체크인
 	private Date checkOut; 			// 체크아웃
 	private String accountNum;  	// 환불계좌번호
-	private String account_hol;     // 예금주
+	private String accountHol;     // 예금주
 	private String bank;  			// 은행
 	private int roomQua; 			// 예약객실수량
 	private int roomNo;			 	// 객실번호
