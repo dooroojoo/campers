@@ -32,107 +32,103 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	
+
 	private BoardService boardService;
-	
-	 @Autowired
-	   public BoardController(BoardService boardService) {
-	      this.boardService = boardService;
-	 }
-	 
-	
+
+	@Autowired
+	public BoardController(BoardService boardService) {
+		this.boardService = boardService;
+	}
+
 	@GetMapping("/list")
-	public void boardList() {}
-	
+	public void boardList() {
+	}
+
 	@GetMapping("/detail")
-	public void detailList() {}
-	
+	public void detailList() {
+	}
+
 	@GetMapping("/write")
-	public void writeBoard() {}
-	
+	public void writeBoard() {
+	}
+
 	@GetMapping("/mycomment")
-	public void myCommentList() {}
-	
+	public void myCommentList() {
+	}
+
 	@GetMapping("/myboard")
-	public void myBoardList() {}
-	
+	public void myBoardList() {
+	}
+
 	@PostMapping("/write")
-	public String insertBoard(@Value("${custom.path.upload-images}") String uploadFilesPath, Model model, @RequestParam List<MultipartFile> images
-			, HttpServletRequest request, Board board, @AuthenticationPrincipal UserImpl loginUser) {
-		
-		  log.info(""+loginUser.getUserNo()+"");
-		  log.info(board.getTitle());
-		  log.info(board.getContent());
-		  log.info("uploadFilesPath="+uploadFilesPath);
-		  
-		  board.setWriter(loginUser.getUserNo());
-		  
-		  String filePath = uploadFilesPath + "/boardImg";
-		  
-		  File mkdir = new File(filePath);
-		  if(!mkdir.exists()) mkdir.mkdir();
-		  
-		  List<Map<String,String>> files = new ArrayList<>();
-		  
-		  int imagesize = 0;
-				  
-		  for(int i = 0 ; i < images.size(); i++) {
-			  if(images.get(i).getSize()!= 0) {
-				  imagesize += 1;
-				  
-			  }
-		  }
-		  
-		  log.info("imagesize="+imagesize);
-		  
-		  for(int i = 0 ; i < imagesize; i++) {
-			 
-			  log.info("images="+images.get(i).getOriginalFilename()+"");
-				  
-			  String originFileName = images.get(i).getOriginalFilename();
-			  String ext = originFileName.substring(originFileName.lastIndexOf("."));
-			  String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
-			  
-			  Map<String, String> file = new HashMap<>();
-			  file.put("originFileName", originFileName);
-			  file.put("savedName", savedName);
-	    	  file.put("filePath", filePath);
-	    	  files.add(file);
-		  }
-		  
-		 try {
-			 
-			 boardService.insertBoard(board);
-		  for(int i = 0 ; i < imagesize; i++) {
-			  Map<String,String> file = files.get(i);
-				images.get(i).transferTo(new File(file.get("filePath")+"\\"+file.get("savedName")));
-				
+	public String insertBoard(@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
+			@RequestParam MultipartFile[] images, HttpServletRequest request, Board board,
+			@AuthenticationPrincipal UserImpl loginUser) {
+
+		board.setWriter(loginUser.getUserNo());
+
+		String filePath = uploadFilesPath + "/boardImg";
+
+		File mkdir = new File(filePath);
+		if (!mkdir.exists())
+			mkdir.mkdir();
+
+		List<Map<String, String>> files = new ArrayList<>();
+
+		List<MultipartFile> imageList = new ArrayList<>();
+
+		for (int i = 0; i < images.length; i++) {
+
+			if (images[i].getSize() != 0) {
+				imageList.add(images[i]);
+			}
+		}
+
+		for (int i = 0; i < imageList.size(); i++) {
+
+			String originFileName = imageList.get(i).getOriginalFilename();
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+
+			Map<String, String> file = new HashMap<>();
+			file.put("originFileName", originFileName);
+			file.put("savedName", savedName);
+			file.put("filePath", filePath);
+			files.add(file);
+		}
+
+		try {
+
+			boardService.insertBoard(board);
+			for (int i = 0; i < imageList.size(); i++) {
+
+				Map<String, String> file = files.get(i);
+				imageList.get(i).transferTo(new File(file.get("filePath") + "\\" + file.get("savedName")));
+
 				Attachment attachment = new Attachment();
 				attachment.setFileName(file.get("savedName"));
 				attachment.setFileRoute("/boardImg");
-				
-				if(i==0)
+
+				if (i == 0)
 					attachment.setFileLevel(0);
 				else
 					attachment.setFileLevel(1);
-				
+
 				boardService.insertBoardImage(attachment);
-				
-		  	}
-		  
-		  	log.info("파일업로드 성공");
+
+			}
+
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
-		  for(int i = 0 ; i <imagesize; i++) {
-			  Map<String, String> file = files.get(i);
-			  new File(file.get("filePath")+"\\"+file.get("savedName")).delete();
-		  }
-		  log.info("파일업로드 실패");
-		  }
-		  
-		  
-	
+			for (int i = 0; i < imageList.size(); i++) {
+
+				Map<String, String> file = files.get(i);
+				new File(file.get("filePath") + "\\" + file.get("savedName")).delete();
+
+			}
+		}
+
 		return "board/list";
 	}
-	
+
 }
