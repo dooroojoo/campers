@@ -10,8 +10,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ReserveInfo {
 
-	private int reserNo; 			// 예약번호
-	private int userNo;  			// 회원번호
+//	private int reserNo; 			// 예약번호
+//	private int userNo;  			// 회원번호
 	private String reserName; 		// 예약자명
 	private String phone; 			// 핸드폰번호
 	private String request;			// 예약요청사항

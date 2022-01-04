@@ -53,7 +53,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.logoutSuccessUrl("/") //로그아웃 성공 후 페이지
 			.and()
 				.exceptionHandling()
-				.accessDeniedPage("/common/denied"); // 억지로 접근불가한 경로로 바꿨을때 이동할 페이지	
+				.accessDeniedPage("/common/denied") // 억지로 접근불가한 경로로 바꿨을때 이동할 페이지	
+			.and()
+				.csrf().disable();
 	}
    
 	@Override
