@@ -79,7 +79,6 @@ public class MemberController {
 	         e.printStackTrace();
 	      }
 	      log.info("root = "+request.getSession().getServletContext().getRealPath("/"));
-	      System.out.println("root"+request.getSession().getServletContext().getRealPath("/"));
 	      
 		 return "redirect:/";
 	 }
