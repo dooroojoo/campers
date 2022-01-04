@@ -155,23 +155,32 @@ public class AdminController {
 		String nlString = System.getProperty("line.separator").toString();
 		
 		Camp camp = adminService.detailCamp(campNo);
-		
-		log.info(camp.getCampName());
+		// 강사님 여쭤보기.....
+		// log.info(camp.getCampName());
 		
 		model.addAttribute("camp", camp);
-		model.addAttribute("newReply", "\n");
+		model.addAttribute("newReply", '\n');
 		
 		return "admin/campDetail";
 	}
 	
 	/* 숙소삭제 */
 	@GetMapping("camp/delete")
-	public String adminCampDelete(int campNo, Model model, RedirectAttributes rttr, Locale locale) {
-		
-		adminService.deleteCamp(campNo);
+	public String adminCampDelete(int campNo, int userNo, Model model, RedirectAttributes rttr, Locale locale) {
+
+		adminService.deleteCamp(campNo, userNo);
 		
 		// 일회성 저장
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteCamp", null, locale));
+		
+		return "redirect:/admin/camp";
+	}
+	
+	@PostMapping("camp/refusal")
+	public String adminCampRefusal(String refusal, int campNo) {
+		log.info(refusal);
+		
+		
 		
 		return "redirect:/admin/camp";
 	}

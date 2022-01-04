@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cp.campers.admin.model.dao.AdminMapper;
 import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.admin.model.vo.Search;
+import com.cp.campers.camp.model.vo.Camp;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
-import com.cp.campers.camp.model.vo.Camp;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -128,14 +128,27 @@ public class AdminServiceImpl implements AdminService{
 	public Camp detailCamp(int campNo) {
 		
 		Camp camp = adminMapper.detailCamp(campNo);
-		// camp.setRoomList(adminMapper.detailRoom(campNo));
 		
 		return camp;
 	}
 
 	@Override
-	public int deleteCamp(int campNo) {
-		return 0;
+	@Transactional
+	public int deleteCamp(int campNo, int userNo) {
+		
+		int result = 0;
+		
+		int result1 = adminMapper.deleteCamp(campNo);
+		
+		MemberRole mr = new MemberRole();
+		mr.setMemberNo(userNo);
+		mr.setAuthorityCode(1);
+		
+		int result2 = adminMapper.updateMemberRole(mr);
+		
+		if(result1==1 && result2==1) result = 1;
+		
+		return result;
 	}
 
 }
