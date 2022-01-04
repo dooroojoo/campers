@@ -57,6 +57,17 @@ th{
     padding-top: 10px;
 }
 
+.room_plus_button{
+	background-color : black;
+    width: 180px;
+    height: 30px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 1px;
+    
+}
+
 .room_plus_img{
     width: 20px;
     height: 20px;

@@ -4,7 +4,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.cp.campers.mypage.model.vo.Camp;
 
-public interface MypageService extends UserDetailsService {
+public interface MypageService{
 
 	void mypageCampEnrollment(Camp camp);
 }

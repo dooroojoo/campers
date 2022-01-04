@@ -30,7 +30,8 @@
                 <h1 class="mypage_camp_enrollment_h1">캠핑장 등록</h1>
             </header>
         </div>
-            <form th:action="@{/mypage/mypage_camp_enrollment" method="post">
+        <!--   -->
+            <form th:action="@{/mypage/mypage_camp_enrollment}" method="post">
             <table class="mypage_camp_enrollment_table">
                 <tr class="mypage_camp_enrollment_table_header">
                     <th colspan="2">캠핑장 등록 정보 신청서</th>
@@ -71,14 +72,14 @@
                 </tr>
                 <tr>
                     <th>사업장 주요시설</th>
-                    <td><input type="checkbox" checked>샤워실 <input type="checkbox">화장실 <input type="checkbox">개수대 
-                        <input type="checkbox">매점 <input type="checkbox">전기 <input type="checkbox">와이파이
+                    <td><input type="checkbox" id="ch1" name="facilityNo" value="샤워실" checked>샤워실 <input type="checkbox" id="ch2" name="facilityNo" value="화장실">화장실 <input type="checkbox" id="ch3" name="facilityNo" value="개수대">개수대 
+                        <input type="checkbox" id="ch4" name="facilityNo" value="매점">매점 <input type="checkbox" id="ch5" name="facilityNo" value="전기">전기 <input type="checkbox" id="ch6" name="facilityNo" value="와이파이">와이파이
                     </td>
                 </tr>
                 <tr>
                     <th>사업장 이용시설</th>
-                    <td><input type="checkbox" checked>바베큐장 <input type="checkbox">수영장
-                        <input type="checkbox">조식제공 <input type="checkbox">반려동물
+                    <td><input type="checkbox" id="ch01" name="facilityNo2" value="바베큐장" checked>바베큐장 <input type="checkbox" id="ch02" name="facilityNo2" value="수영장">수영장
+                        <input type="checkbox" id="ch03" name="facilityNo2" value="조식제공">조식제공 <input type="checkbox" id="ch04" name="facilityNo2" value="반려동물">반려동물
                     </td>
                 </tr>
                 <tr>
@@ -184,16 +185,16 @@
                     <td><input type="file"></td>
                 </tr>
                 <tr>
-                    <th>객실 바닥 형태</th>
-                    <td><input type="radio" name="roomFloor" name="1" checked>데크 <input type="radio" name="roomFloor" name="1">잔디 <input type="radio" name="roomFloor" name="1">파쇄석 </td>
+                    <th>객실 바닥 형태</th><!-- name="roomFloor"  -->
+                    <td><input type="radio" name="1" checked>데크 <input type="radio" name="1">잔디 <input type="radio" name="1">파쇄석 </td>
                 </tr>
                 <tr>
-                    <th>객실 주차 여부</th>
-                    <td><input type="radio" name="roomParking" name="2" checked>텐트 옆 주차 <input type="radio" name="roomParking" name="2">주차장 주차 <input type="radio" name="roomParking" name="2">외부 주차</td>
+                    <th>객실 주차 여부</th><!-- name="roomParking"  -->
+                    <td><input type="radio" name="2" checked>텐트 옆 주차 <input type="radio" name="2">주차장 주차 <input type="radio" name="2">외부 주차</td>
                 </tr>
                 <tr>
-                    <th>객실 형태</th>
-                    <td><input type="radio" name="roomForm" name="3" checked>카라반 <input type="radio" name="roomForm" name="3">캠핑 <input type="radio" name="roomForm" name="3">글램핑</td>
+                    <th>객실 형태</th><!-- name="roomForm" -->
+                    <td><input type="radio" name="3" checked>카라반 <input type="radio" name="3">캠핑 <input type="radio" name="3">글램핑</td>
                 </tr>
                 <tr>
                     <th>객실 수량</th>
@@ -201,7 +202,7 @@
                 </tr>
             </table>
             <div class="room_plus">
-                <img class="room_plus_img" src="resources/images/mypage/plus.png">객실 추가하기
+                <button type="button" id="room_plus_button" class="room_plus_button"><img class="room_plus_img" src="/resources/images/mypage/plus.png">객실 추가하기</button>
             </div>
             <div class="camp_plus">
                 <input class="camp_plus_button" type="submit" value="캠핑장 등록하기">
@@ -210,6 +211,17 @@
         </div>
     </div>
     <!-- footer -->
-    <div th:replace="common/footer.html"></div>   
+    <div th:replace="common/footer.html"></div>
+    
+    <script>
+    	$("#room_plus_button").on("click", function(){
+    		$.ajax({
+    			url : "room_plus_button",
+    			type : "GET",
+    			
+    		})
+    	})
+    </script>
+     
 </body>
 </html>

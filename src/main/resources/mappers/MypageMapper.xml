@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cp.campers.mypage.model.dao.MypageMapper">
 		
+	<resultMap type="com.cp.campers.member.model.vo.Member" id="loginMemberResultMap">
+		<id property="userNo" column="USER_NO"/>
+		<result property="id" column="USER_ID"/>
+		<result property="pwd" column="USER_PWD"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="nickName" column="NICKNAME"/>
+		<result property="profilePath" column="PROFILE_PATH"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="USER_PHONE"/>
+		<result property="status" column="STATUS"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
+	</resultMap>	
+		
 	<resultMap type="com.cp.campers.mypage.model.vo.Camp" id="CampResultMap">
 		<id property="campNo" column="CAMP_NO"/>
 		<result property="campName" column="CAMP_NAME"/>
@@ -53,24 +68,34 @@
 		<result property="roomCount" column="ROOM_COUNT"/>
 		<result property="campNo" column="CAMP_NO "/>		
 	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.RoomFile" id="RoomFileResultMap">
+		<id property="roomNo" column="ROOM_NO"/>
+		<result property="fileNo" column="FILE_NO"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.WishCamp" id="WishCampResultMap">
+		<id property="userNo" column="USER_NO"/>
+		<result property="campNo" column="CAMP_NO"/>
+	</resultMap>
      
    <insert id="insertCamp" parameterType="com.cp.campers.mypage.model.vo.Camp">
-   	INSERT INTO CAMP
+   	INSERT 
+   		INTO CAMP
 		(
 			CAMP_NO
-			,CAMP_NAME
-			,USER_NO
-			,CAMP_ADDRESS
-			,CAMP_PHONE
-			,CAMP_INTRO
-			,CAMP_PATH
-			,CAMP_POLICY
-			,CAMP_STATUS
-			,ACCOUNT_NUM
-			,BANK
-			,CHECKIN
-			,CHECKOUT
-			,REFUSAL
+			, CAMP_NAME
+			, USER_NO
+			, CAMP_ADDRESS
+			, CAMP_PHONE
+			, CAMP_INTRO
+			, CAMP_PATH
+			, CAMP_POLICY
+			, CAMP_STATUS
+			, ACCOUNT_NUM
+			, BANK
+			, CHECKIN
+			, CHECKOUT
 		)
 		VALUES
 		(
@@ -87,8 +112,21 @@
 			, #{ bank }
 			, #{ checkin }
 			, #{ checkout }
-			, #{ refusal }
 		)
+   </insert>
+   
+   <insert id="insertBusinessType" parameterType="com.cp.campers.mypage.model.vo.BusinessType">
+   	INSERT
+   	INTO BUSINESS_TYPE
+   	(
+   		BUSINESS_NO
+   		, BUSINESS_TYPE
+   	)
+   	VALUES
+   	(
+   		SEQ_BUSINESS_NO.CURRVAL
+   		, #{ businessType }
+   	)
    </insert>
    
 </mapper>
