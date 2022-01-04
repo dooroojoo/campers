@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer{
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		List<String> imageFolders = Arrays.asList("profileImg");
+		List<String> imageFolders = Arrays.asList("profileImg","boardImg");
 		
 		for(String imageFolder : imageFolders) {
 			registry.addResourceHandler("/resources/images/uploadFiles/" + imageFolder + "/**")

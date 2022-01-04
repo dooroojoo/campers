@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,17 +29,17 @@
         }
         .freeBoard-label {
             float: left;
-    font-size: 39px;
-    margin-top: 67px;
-    font-weight: 100;
+		    font-size: 39px;
+		    margin-top: 67px;
+		    font-weight: 100;
         }
   
         .freeBoard-label-small{
             font-size: 22px;
-    float: left;
-    margin-top: 88px;
-    margin-left: 20px;
-    font-weight: 100;
+		    float: left;
+		    margin-top: 88px;
+		    margin-left: 20px;
+		    font-weight: 100;
         }
     
 
@@ -121,12 +122,19 @@
             text-align: center;
             cursor: pointer;
         }
-        .inputImgPreview img {
-            display:block; position:absolute;     top: 25%;
+        
+        .beforeInput{
+        	display:block; 
+        	position:absolute;     
+        	top: 25%;
             left: 25%;
-
         }
-       
+    	.afterInput{
+	    	max-width: 100px;
+		    max-height: 100px;
+		    min-width: 100px;
+	   		min-height: 100px;
+    	}
         .freeBoard-aside {
             font-size: 21px;
             line-height: 50px;
@@ -175,34 +183,50 @@
         
           <div class="freeBoard-container">
               <label class="freeBoard-label">자유게시판</label><label class="freeBoard-label-small">글쓰기</label><br>
-              
-          
+              <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
                 <div class="freeBoard-content">
-                    <input class="writeTitle" type="text" placeholder="제목을 입력하세요."><br>
-                    <textarea class="writeContent" placeholder="내용을 입력하세요."></textarea>
-                    <br><input type="file" hidden><input type="file" hidden><input type="file" hidden>
+                    <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요."><br>
+                    <textarea class="writeContent" name="content" placeholder="내용을 입력하세요."></textarea>
+                    <br><input type="file" class="imageinput image1" name="images" hidden>
+                    <input type="file" class="imageinput image2" name="images" hidden>
+                    <input type="file" class="imageinput image3" name="images" hidden>
+                   <!--  <input type="text" name="writer" th:value="${#authentication.principal.userNo}"> -->
+                  
                     <div class="previewBox">
-                        
-                        <div class="inputImgPreview"><img src="/resources/images/board/cameraImg.png"></div>
-                        <div class="inputImgPreview"><img src="/resources/images/board/cameraImg.png"></div>
-                        <div class="inputImgPreview"><img src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview preview1"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview preview2"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview preview3"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
                     </div>
                 </div>
                 <div class="freeBoard-footer">
                     <div class="freeBoard-footerLeft">
-                        <button>취소</button>
+                        <button onclick="location.href='/board/list'">취소</button>
                         <button class="">사진첨부</button><label class="photoLimit"> 사진은 최대 3장까지 첨부 가능합니다.</label>
                     </div>
                     <div class="freeBoard-footerRight">
-                        <button>등록</button>
+                        <button type="submit">등록</button>
                     </div>
                 </div>
+              </form>
                 
             </div>
         </div>
         
          <div th:replace="common/footer.html"></div>
-	
-
+	 <script>
+    $(function(){
+   		$('.preview1').click(function (e){
+   			$('.image1').click();
+   		}) 
+   		$('.preview2').click(function (e){
+   			$('.image2').click();
+   		}) 	
+   		$('.preview3').click(function (e){
+   			$('.image3').click();
+   		}) 	
+   
+    })
+    </script>
+ <script src="/resources/js/board/imagePreview.js"></script>
 </body>
 </html>
