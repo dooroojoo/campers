@@ -173,40 +173,41 @@
 
 
 
-              <!-- 페이징 처리 / 수정예정 -->
-              <!-- <div class="member_pages">
+              <!-- 페이징 처리 -->
+               <div class="member_pages">
                 <ul class="member_paging">
 
-                    맨 처음으로 이동하는 버튼(<<)
-                    <li><a href="">&lt;&lt;</a></li>
+                    <!--  맨 처음으로 이동하는 버튼(<<) -->
+                    <li th:if="${paging.startPage != 1}">
+                    <a th:href="@{/search/camp?nowPage=1}">&lt;&lt;</a></li>
                  
-                    이전 페이지로(<)
-                    <li>
-                        <c:choose>
-                            <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
-                            <c:otherwise><a href="#">&lt;</a></c:otherwise>
-                        </c:choose>
+                    <!-- 이전 페이지로(<) -->
+                    <li th:if="${paging.startPage != 1}">
+                    <a th:href="@{/search/camp?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
                     </li>
 
-                    최대 10개의 페이지 목록
-                    <li>
-                        <div class="current_page">
-                            <a href="#">1</a>
-                        </div>
-                    </li>
-        
-                    다음 페이지로(>)
-                    <li>
-                        <c:choose>
-                            <c:when test=""><a href="">&gt;</a></c:when>
-                            <c:otherwise><a href ="#">&gt;</a></c:otherwise>
-                        </c:choose>
+                    <!-- 최대 10개의 페이지 목록 -->
+                    <span th:each="idx : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                    	<li th:switch="${idx}">
+                       		 <div class="current_page" th:case="${paging.nowPage}">
+                        		<b th:text="${idx}" ></b>
+                        	</div>
+                        	 <div class="current_page" th:case="${paging.nowPage}">
+                        	<a th:href="@{/search/camp?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" th:text="${idx}"> </a>
+                    		 </div>
+                    	</li>
+        			</span>
+        		
+                    <!-- 다음 페이지로(>)  -->
+                    <li th:if="${paging.endPage != paging.lastPage}">
+                        <a th:href="@{/search/camp?nowPage=${idx}&cntPerPage=${paging.cntPerPage}">&gt;</a>
                     </li>
 
-                    맨 끝으로 이동하는 버튼(>>)
-                    <li><a href="">&gt;&gt;</a></li>
+                    <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                    <li th:if="${paging.endPage != paging.lastPage}">
+                    <a th:href="@{/search/camp?nowPage=${paging.cntPerPage}">&gt;&gt;</a></li>
                 </ul>
-            </div> -->
+            </div>
 
                 </div>
             </div>

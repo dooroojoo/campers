@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cp.campers.search.model.service.SearchService;
+import com.cp.campers.search.model.vo.PageInfo;
 import com.cp.campers.search.model.vo.SearchCamp;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +33,24 @@ public class SearchController {
 	
 	
 	@GetMapping("camp")
-	public ModelAndView searchCamp(ModelAndView mv) {
+	public ModelAndView searchCamp(ModelAndView mv, PageInfo pi,
+								@RequestParam(value="nowPage", required=false) String nowPage,
+								@RequestParam(value="cntPerPage", required=false) String cntPerPage) {
 		
-		List<SearchCamp> campAllSearch = searchService.campAllSearch();
+		int total = searchService.campListCount();
+		if(nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		}else if (nowPage == null) {
+			nowPage = "1";
+		}else if(cntPerPage == null) {
+			cntPerPage = "10";
+		}
+		pi = new PageInfo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
+		
+		List<SearchCamp> campAllSearch = searchService.campAllSearch(pi);
+		
 		
 		if(campAllSearch.size() == 0) {
 			mv.addObject("searchSize", "검색된 결과가 없습니다.");
@@ -42,6 +58,7 @@ public class SearchController {
 			mv.addObject("searchSize", campAllSearch.size()+"개의 결과가 조회되었습니다.");
 		}
 		
+		mv.addObject("paging", pi);
 		mv.addObject("campSearch", campAllSearch);
 		mv.setViewName("search/searchCamp");
 		
