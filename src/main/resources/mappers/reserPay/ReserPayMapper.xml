@@ -21,8 +21,10 @@
 		  INTO RESERVE
 		   (
 		  	  RESER_NO
-		  	, USER_NO
+		  	, USER_NO 
 		  	, RESER_NAME
+		  	, PHONE
+		  	, RESER_STATE
 		  	, REQUEST
 		  	, CHECKIN
 		  	, CHECKOUT
@@ -34,16 +36,18 @@
 		   )
 		   VALUES
 		   (
-		   	  SEQ_RESER_NO.NEXTVAL
-		   	, 1   <!-- 임시값. 예약 쪽페이지 구현된 후 로그인한 유저의 회원번호 세션에 담아 파라미터로 넘겨줘서 insert 처리하기  -->
-		   	, #{ reserveInfo.name }
-		   	, #{ reserveInfo.request }
-		   	, #{ reserveInfo.checkIn }
-		   	. #{ reserveInfo.checkOut }
-		   	, #{ reserveInfo.account_num }
-		   	, #{ reserveInfo.account_hol }
-		   	, #{ reserveInfo.bank }
-		   	, #{ reserveInfo.room_qua }
+		      SEQ_RESER_NO.NEXTVAL
+		   	, 1    <!-- 임시값. 예약 쪽페이지 구현된 후 로그인한 유저의 회원번호 세션에 담아 파라미터로 넘겨줘서 insert 처리하기  -->
+		   	, #{ reserName }
+		   	, #{ phone }
+		   	, DEFAULT
+		   	, #{ request }
+		   	, #{ checkIn }
+		   	, #{ checkOut }
+		   	, #{ accountNum }
+		   	, #{ accountHol }
+		   	, #{ bank }
+		   	, #{ roomQua }
 		   	, 1 <!-- 임시값. 예약하기 버튼 눌렀을 때 숙소번호 reservePay.html로 가져와서 결제하기 클릭 시 hidden으로 같이 넘기기  --> 
 		   )
 	</insert>
