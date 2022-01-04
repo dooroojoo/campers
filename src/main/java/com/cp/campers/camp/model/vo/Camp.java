@@ -1,6 +1,9 @@
-package com.cp.campers.admin.model.vo;
+package com.cp.campers.camp.model.vo;
 
 import java.util.List;
+
+import com.cp.campers.admin.model.vo.CampRecord;
+import com.cp.campers.mypage.model.vo.Room;
 
 import lombok.Data;
 
@@ -10,6 +13,7 @@ public class Camp {
 	private int campNo;
 	private String campName;
 	private int userNo;
+	private String userName;
 	private String campAddress;
 	private String campPhone;
 	private String campIntro;
@@ -21,5 +25,7 @@ public class Camp {
 	private String checkin;
 	private String checkout;
 	private String refusal;
+	private List<Room> roomList;
 	private List<CampRecord> campRecordList;
+	private List<Review> reviewList;
 }

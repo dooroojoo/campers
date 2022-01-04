@@ -14,7 +14,7 @@
 		<result property="status" column="STATUS"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
-		<collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
 	</resultMap>
 
 	<resultMap type="com.cp.campers.member.model.vo.MemberRole" id="memberRoleResultMap">
@@ -34,10 +34,11 @@
    
    
    
-   <resultMap type="com.cp.campers.admin.model.vo.Camp" id="campResultMap">
+   <resultMap type="com.cp.campers.camp.model.vo.Camp" id="campResultMap">
 		<id property="campNo" column="CAMP_NO"/>
 		<result property="campName" column="CAMP_NAME"/>
 		<result property="userNo" column="USER_NO"/>
+		<result property="userName" column="USER_NAME"/>
 		<result property="campAddress" column="CAMP_ADDRESS"/>
 		<result property="campPhone" column="CAMP_PHONE"/>
 		<result property="campIntro" column="CAMP_INTRO"/>
@@ -50,6 +51,7 @@
 		<result property="checkout" column="CHECKOUT"/>
 		<result property="refusal" column="REFUSAL"/>
 		<collection property="campRecordList" resultMap="campRecordResultMap"/>
+		<collection property="roomList" resultMap="roomResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.admin.model.vo.CampRecord" id="campRecordResultMap">
@@ -65,7 +67,20 @@
 		<result property="recordName" column="RECORD_NAME"/>
 	</resultMap>
 	
-	
+	<resultMap type="com.cp.campers.mypage.model.vo.Room" id="roomResultMap">
+		<id property="roomNO" column="ROOM_NO"/>
+		<result property="roomName" column="ROOM_NAME"/>
+		<result property="roomMember" column="ROOM_MEMBER"/>
+		<result property="roomPrice" column="ROOM_PRICE"/>
+		<result property="roomSize" column="ROOM_SIZE"/>
+		<result property="roomFloor" column="ROOM_FLOOR"/>
+		<result property="roomParking" column="ROOM_PARKING"/>
+		<result property="roomInfo" column="ROOM_INFO"/>
+		<result property="roomAmount" column="ROOM_AMOUNT"/>
+		<result property="roomForm" column="ROOM_FORM"/>
+		<result property="roomCount" column="ROOM_COUNT"/>
+		<result property="campNo" column="CAMP_NO "/>		
+	</resultMap>	
 	
 	
 	<resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="businessTypeResultMap">
@@ -88,30 +103,20 @@
 		<result property="fileNo" column="FILE_NO"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.mypage.model.vo.Room" id="roomResultMap">
-		<id property="roomNO" column="ROOM_NO"/>
-		<result property="roomName" column="ROOM_NAME"/>
-		<result property="roomMember" column="ROOM_MEMBER"/>
-		<result property="roomPrice" column="ROOM_PRICE"/>
-		<result property="roomSize" column="ROOM_SIZE"/>
-		<result property="roomFloor" column="ROOM_FLOOR"/>
-		<result property="roomParking" column="ROOM_PARKING"/>
-		<result property="roomInfo" column="ROOM_INFO"/>
-		<result property="roomAmount" column="ROOM_AMOUNT"/>
-		<result property="roomForm" column="ROOM_FORM"/>
-		<result property="roomCount" column="ROOM_COUNT"/>
-		<result property="campNo" column="CAMP_NO "/>		
-	</resultMap>
+
+	
+	
+	
    
-   <select id="getListCount" resultType="_int">
+	<select id="getListCount" resultType="_int">
    		SELECT
 		      COUNT(A.USER_NO)
 		 FROM MEMBER A
 		 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
 		 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
-   </select>
+	</select>
    
-   <select id="getListCountBySearch" parameterType="com.cp.campers.admin.model.vo.Search" resultType="_int">
+	<select id="getListCountBySearch" parameterType="com.cp.campers.admin.model.vo.Search" resultType="_int">
    		SELECT
 		      COUNT(A.USER_NO)
 		 FROM MEMBER A
@@ -125,39 +130,39 @@
 		WHERE A.USER_ID = #{ searchValue }
 		</when>
 		</choose>
-   </select>
+	</select>
    
-   <select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
-   	SELECT * 
-      FROM (SELECT ROWNUM RNUM, A.*
-		      FROM (SELECT
-                          A.USER_NO,
-                          A.USER_ID, 
-                          A.USER_NAME, 
-                          A.EMAIL, 
-                          A.CREATE_DATE,
-                          A.STATUS,
-                          B.AUTHORITY_CODE
-                     FROM MEMBER A
-                     LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
-                     LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
-                    ORDER BY A.CREATE_DATE) A)
-	 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
-   </select>
+	<select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
+	   	SELECT * 
+	      FROM (SELECT ROWNUM RNUM, A.*
+			      FROM (SELECT
+	                          A.USER_NO,
+	                          A.USER_ID, 
+	                          A.USER_NAME, 
+	                          A.EMAIL, 
+	                          A.CREATE_DATE,
+	                          A.STATUS,
+	                          B.AUTHORITY_CODE
+	                     FROM MEMBER A
+	                     LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
+	                     LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+	                    ORDER BY A.CREATE_DATE) A)
+		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
+	</select>
    
-   <update id="updateMember" parameterType="com.cp.campers.member.model.vo.Member">
+	<update id="updateMember" parameterType="com.cp.campers.member.model.vo.Member">
 		UPDATE MEMBER
 		   SET STATUS = #{ status }
 		WHERE USER_NO = #{ userNo }
-   </update>
+	</update>
    
-   <update id="updateMemberRole" parameterType="com.cp.campers.member.model.vo.MemberRole">
+	<update id="updateMemberRole" parameterType="com.cp.campers.member.model.vo.MemberRole">
    		UPDATE AUTHORITY_ROLE
 		   SET AUTHORITY_CODE = #{ authorityCode }
 		WHERE USER_NO = #{ memberNo }
-   </update>
+	</update>
 
-   <select id="searchMember" parameterType="hashmap" resultMap="memberResultMap">
+	<select id="searchMember" parameterType="hashmap" resultMap="memberResultMap">
 	   	SELECT * 
 	      FROM (SELECT ROWNUM RNUM, A.*
 			      FROM (SELECT
@@ -180,14 +185,14 @@
 						 </when>
 						 </choose>) A)
 		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
-   </select>
+	</select>
    
-   <select id="getCampListCount" resultType="_int">
+	<select id="getCampListCount" resultType="_int">
    		SELECT COUNT(CAMP_NO)
    		  FROM CAMP
-   </select>
+	</select>
    
-   <select id="getCampListCountBySearch" parameterType="com.cp.campers.admin.model.vo.Search" resultType="_int">
+	<select id="getCampListCountBySearch" parameterType="com.cp.campers.admin.model.vo.Search" resultType="_int">
    		SELECT COUNT(CAMP_NO)
    		  FROM CAMP
    		<choose>
@@ -198,9 +203,9 @@
 		WHERE CAMP_NAME LIKE '%' || #{ searchValue } || '%'
 		</when>
 		</choose>
-   </select>
+	</select>
    
-   <select id="findAllCamp" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="campResultMap">
+	<select id="findAllCamp" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="campResultMap">
 	   SELECT * 
 	      FROM (SELECT ROWNUM RNUM, A.*
 			      FROM (SELECT
@@ -216,9 +221,9 @@
 						 LEFT JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
 						ORDER BY CR.RECORD_DATE) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
-   </select>
+	</select>
    
-   <select id="searchCamp" parameterType="hashmap" resultMap="campResultMap">
+	<select id="searchCamp" parameterType="hashmap" resultMap="campResultMap">
    		SELECT * 
 	      FROM (SELECT ROWNUM RNUM, A.*
 			      FROM (SELECT
@@ -242,6 +247,52 @@
 						</choose>
 						ORDER BY CR.RECORD_DATE) A)
 		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
-   </select>
+	</select>
 
+	<select id="detailCamp" parameterType="_int" resultMap="campResultMap">
+		SELECT
+		      C.CAMP_NO
+		    , C.CAMP_NAME
+		    , C.USER_NO
+		    , M.USER_NAME
+		    , C.CAMP_ADDRESS
+		    , C.CAMP_PHONE
+		    , C.CAMP_INTRO
+		    , C.CAMP_PATH
+		    , C.CAMP_POLICY
+		    , C.CAMP_STATUS
+		    , C.ACCOUNT_NUM
+		    , C.BANK
+		    , C.CHECKIN
+		    , C.CHECKOUT
+            , R.ROOM_NAME
+            , R.ROOM_MEMBER
+            , R.ROOM_PRICE
+            , R.ROOM_SIZE
+            , R.ROOM_FLOOR
+            , R.ROOM_PARKING
+            , R.ROOM_INFO
+            , R.ROOM_AMOUNT
+            , R.ROOM_FORM
+		    FROM CAMP C
+		    JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+            JOIN ROOM R ON(C.CAMP_NO = R.CAMP_NO)
+		    WHERE C.CAMP_NO = #{ campNo }
+	</select>
+	
+	<select id="detailRoom" parameterType="_int" resultMap="roomResultMap">
+		SELECT
+		      R.ROOM_NAME
+		    , R.ROOM_MEMBER
+		    , R.ROOM_PRICE
+		    , R.ROOM_SIZE
+		    , R.ROOM_FLOOR
+		    , R.ROOM_PARKING
+		    , R.ROOM_INFO
+		    , R.ROOM_AMOUNT
+		    , R.ROOM_FORM
+		    FROM CAMP C
+		    JOIN ROOM R ON(C.CAMP_NO = R.CAMP_NO)
+		    WHERE C.CAMP_NO = #{ campNo }
+	</select>
 </mapper>

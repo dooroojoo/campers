@@ -25,8 +25,8 @@
             <!-- 2. 신청 양식 헤더 -->
             <div class="ad_headerArea">
                 <ul class="ad_header">
-                    <li class="ad_pk">번호&nbsp;&nbsp;0001</li>
-                    <li class="ad_id">신청자&nbsp;&nbsp;user01</li>
+                    <li class="ad_pk">번호&nbsp;&nbsp;<span th:text="${ camp.campNo}"></span></li>
+                    <li class="ad_id">신청자&nbsp;&nbsp;<span th:text="${ camp.userName }"></span></li>
                     <li class="ad_date">신청일&nbsp;&nbsp;21.03.21&nbsp;10:27</li>
                 </ul>
             </div>
@@ -42,29 +42,24 @@
                     </colgroup>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업장명</span></td>
-                        <td><div class="table_div">구봉산 오토캠핑장 나인힐스</div></td>
+                        <td><div class="table_div" th:text="${ camp.campName }"></div></td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업장주소</span></td>
                         <td>
-                            <div class="table_div">
-                                경기도 용인시 처인구 원삼면 목신리 83-61
-                            </div>
+                            <div class="table_div" th:text="${ camp.campAddress }"></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업장 대표번호</span></td>
                         <td>
-                            <div class="table_div">
-                                010-5794-8823
-                            </div>
+                            <div class="table_div" th:text="${ camp.campPhone }"></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업자 계좌번호</span></td>
                         <td>
-                            <div class="table_div">
-                                110484234658&nbsp;신한은행
+                            <div class="table_div" th:text="${ camp.accountNum } + ' (' + ${ camp.bank } + ')'">
                             </div>
                         </td>
                     </tr>
@@ -73,22 +68,14 @@
                         <td>
                             <div class="table_div">
                                 캠핑, 펜션, 글램핑
-                            </d>
+                            </div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업장 소개</span></td>
                         <td>
-                            <div class="table_div">
-경기 최고의 키즈캠핑장 용인 나인힐스 입니다.
-용인 나인힐스는 구봉산자락에 위치한 자연친화적 전망좋은 캠핑장입니다. 
-
-아이들을 위한 놀이시설인 실내키즈카페, 2개로 분리된 대형 수영장, 대형타미야레이싱트렉, 베이블레이드 판 등 
-다양한 놀이시설이 있으며, 아이들을 위한 체험시설인 타미야카대회, 베이블레이드대회, 파츠용품 만들기, 
-솜사탕만들기등을 진행하고 있습니다. 
-
-아이들의 웃음소리가 끊이지 않은 나인힐스에서 여러분의 추억을 함께하세요. 추후계획 : 물썰매장, 실외놀이시설 (업데이트예정)
-                            </div>
+                            <div class="table_div" th:text="${ camp.campIntro }"></div>
+                            <!-- <div class="table_div" th:utext="${#strings.replace(camp.campIntro, nlString, '<br>')}"></div> -->
                         </td>
                     </tr>
                     <tr class="ad_tr">
@@ -107,7 +94,7 @@
                         <td class="td_head"><span class="table_div">사업장 등록증</span></td>
                         <td>
                             <div class="table_div">
-                                <img src="resources/images/businessRegistration.jpg">
+                                <img src="/resources/images/uploadFiles/profileImg(or  다른폴더)/파일명.jpg">
                             </div>
                         </td>
                     </tr>
@@ -130,14 +117,7 @@
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업장 운영정책</span></td>
                         <td>
-                            <div class="table_div">
-1. 매점 : 07:00 ~ 23:00 - 판매품목 : 음료, 커피, 과자, 아이스크림, 고기류, 햇반, 쌈장, 고추장, 스팸, 가스 건전지, 일회용품, 세제, 수세미 등 
-2. 수영장 : 하계시즌 09:00 ~ 18:00 춘추동계 온수수영장 운영 
-3. 샤워장 : 5월 ~ 9월 : 08:00 ~ 23:00 10 ~ 4월 : 08:00 ~ 22:00 
-4. 밤 11시 이후로는 에티켓 타임입니다. 협조 부탁드리오며 불응시 퇴실 조치 할 수 있음을 양해 바랍니다.
-
-오토캠핑 - 입실 : 12:30 / 퇴실 : 12:00 펜션/글램핑/카라반 - 입실 : 14:00 / 퇴실 : 11:00
-                            </div>
+                            <div class="table_div" th:text="${ camp.campPolicy }"></div>
                         </td>
                     </tr>
                 </table>
@@ -146,7 +126,7 @@
 
             <div class="table_title"><h3>객실</h3></div>
             <!-- 4. 신청 내용(객실) -->
-            <div class="ad_table">
+            <div class="ad_table" th:each="room : ${ camp.roomList }">
                 <table width="90%">
                     <colgroup>
                         <col width="20%">
@@ -154,73 +134,52 @@
                     </colgroup>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">객실 이름(호수)</span></td>
-                        <td class="td_body"><div class="table_div">Azone</div></td>
+                        <td class="td_body"><div class="table_div" th:text="${ room.roomName }"></div></td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">객실 수량</span></td>
-                        <td class="td_body"><div class="table_div">5</div></td>
+                        <td class="td_body"><div class="table_div" th:text="${ room.roomAmount }"></div></td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">최대 인원</span></td>
                         <td>
-                            <div class="table_div">
-                                6(명)
-                            </div>
+                            <div class="table_div" th:text="|${ room.roomMember } (명)|"></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">가격</span></td>
                         <td>
-                            <div class="table_div">
-                                50,000(원)
-                            </div>
+                            <div class="table_div" th:text="|${#numbers.formatInteger(room.roomPrice, 0, 'COMMA')} (원)|"></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">유형</span></td>
                         <td>
-                            <div class="table_div">
-                                캠핑
-                            </d>
+                            <div class="table_div" th:text="${ room.roomForm }"></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">크기</span></td>
                         <td>
-                            <div class="table_div">
-                                7m X 9m (㎡)
-                            </d>
+                            <div class="table_div" th:text="|${ room.roomSize } (㎡)|"></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">바닥형태</span></td>
                         <td>
-                            <div class="table_div">
-                                파쇄석
-                            </d>
+                            <div class="table_div"  th:text="${ room.roomFloor }"></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">주차</span></td>
                         <td>
-                            <div class="table_div">
-                                주차장 주차
-                            </d>
+                            <div class="table_div" th:text="${ room.roomParking }"></div>
                         </td>
                     </tr>
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">객실 소개</span></td>
                         <td>
-                            <div class="table_div">
-1. 매점 : 07:00 ~ 23:00
-  - 판매품목 : 음료, 커피, 과자, 아이스크림, 
-    고기류, 햇반, 쌈장, 고추장, 스팸, 가스
-    건전지, 일회용품, 세제, 수세미 등
-2. 수영장 : 하계시즌 09:00 ~ 18:00 춘추동계 온수수영장 운영
-3. 샤워장 : 5월 ~ 9월 : 08:00 ~ 23:00
-           10 ~ 4월  : 08:00 ~ 22:00
-4. 밤 11시 이후로는 에티켓 타임입니다. 협조 부탁드리오며 불응시 퇴실 조치 할 수 있음을 양해 바랍니다.
-                            </div>
+                            <!-- <div class="table_div" th:utext="${#strings.replace(room.roomInfo, nlString, '<br>')}"></div> -->
                         </td>
                     </tr>
                     <tr class="ad_tr">
@@ -244,9 +203,9 @@
             <div class="">
                 <form action="#" method="post">
                     <div class="ad_btnArea">
-                        <div class="ad_before"><button onclick="">이전</button></div>
-                        <div class="ad_reject"><button onclick="">거절</button></div>
-                        <div class="ad_enroll"><button onclick="">등록</button></div>
+                        <div class="ad_before"><button type="button" onclick="location.href='/admin/camp'">이전</button></div>
+                        <div class="ad_reject"><button onclick="location.href='/admin/camp/refusal'">거절</button></div>
+                        <div class="ad_enroll"><button onclick="location.href='/admin/camp/confirm'">등록</button></div>
                     </div>
                     <div class="reject_reason">
                         <div class="writeArea">
