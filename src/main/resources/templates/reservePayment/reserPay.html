@@ -26,12 +26,14 @@
             <div class="reser_tit">텐타우스*라바력셔리글램핑</div>
          <form action="/reserPay/insert" method="post">
          <input type="hidden" name="roomNo" value="1"><!-- 가데이터  -->
+         <input type="hidden" name="checkIn" value="1/4">
+         <input type="hidden" name="checkOut" value="1/7">
             <div class="reserPay_flex1">
                 <div class="reser_check">
                     <div class="reser_box">
                         <div class="reser_date">
-                        <span class="checkIn">1/4(화)
-                        </span><span class="checkOut">1/7(금)</span> 
+                        <span class="checkIn">1/4(화)</span>
+                        <span class="checkOut">1/7(금)</span> 
                         </div>
                         <div class="inwonsu">인원 : 5 명</div>
                         <div class="camDate_flex">
@@ -193,6 +195,7 @@
 	
 		<div th:include="common/footer.html"></div>
 	
+
 
 <!-- JS -->
  <script>
