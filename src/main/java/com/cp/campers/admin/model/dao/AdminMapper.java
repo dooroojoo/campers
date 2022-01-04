@@ -9,7 +9,8 @@ import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
-import com.cp.campers.admin.model.vo.Camp;
+import com.cp.campers.mypage.model.vo.Room;
+import com.cp.campers.camp.model.vo.Camp;
 
 @Mapper
 public interface AdminMapper {
@@ -46,6 +47,9 @@ public interface AdminMapper {
 
 	// 숙소상세
 	Camp detailCamp(int campNo);
+	
+	// 객실상세
+	List<Room> detailRoom(int campNo);
 
 
 }

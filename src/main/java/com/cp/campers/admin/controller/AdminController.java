@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cp.campers.admin.model.vo.Camp;
-import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.admin.model.service.AdminService;
+import com.cp.campers.admin.model.vo.Search;
+import com.cp.campers.camp.model.vo.Camp;
 import com.cp.campers.member.model.vo.Member;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -150,9 +152,14 @@ public class AdminController {
 	@GetMapping("camp/detail")
 	public String adminCampDetail(int campNo, Model model) {
 		
+		String nlString = System.getProperty("line.separator").toString();
+		
 		Camp camp = adminService.detailCamp(campNo);
 		
+		log.info(camp.getCampName());
+		
 		model.addAttribute("camp", camp);
+		model.addAttribute("newReply", "\n");
 		
 		return "admin/campDetail";
 	}
@@ -161,7 +168,7 @@ public class AdminController {
 	@GetMapping("camp/delete")
 	public String adminCampDelete(int campNo, Model model, RedirectAttributes rttr, Locale locale) {
 		
-		int result = adminService.deleteCamp(campNo);
+		adminService.deleteCamp(campNo);
 		
 		// 일회성 저장
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteCamp", null, locale));

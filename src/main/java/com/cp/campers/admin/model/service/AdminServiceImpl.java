@@ -13,7 +13,7 @@ import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
-import com.cp.campers.admin.model.vo.Camp;
+import com.cp.campers.camp.model.vo.Camp;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -128,6 +128,7 @@ public class AdminServiceImpl implements AdminService{
 	public Camp detailCamp(int campNo) {
 		
 		Camp camp = adminMapper.detailCamp(campNo);
+		// camp.setRoomList(adminMapper.detailRoom(campNo));
 		
 		return camp;
 	}

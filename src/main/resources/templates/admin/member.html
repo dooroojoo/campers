@@ -27,7 +27,7 @@
             <!-- 1. 회원 목록&관리 영역 -->
             <div class="member_area">
                 <div class="member_title">
-                    <h2>회원 관리</h2>
+                    <h2 onclick="location.href='/admin/member'">회원 관리</h2>
                 </div>
 
 
@@ -42,7 +42,7 @@
                         <li class="member_status">활동상태</li>
                         <li class="member_update">관리</li>
                     </ul>
-                    
+              
 	                <ul th:each="member : ${ memberList }">
 	                	<form th:action="@{/admin/member/update}" method="post" name="updateFrom${ member.userNo }">
 	                        <li class="member_pk" th:text="${ member.userNo }"></li>
@@ -73,12 +73,16 @@
 	                        <input type="hidden" name="userNo" th:value="${ member.userNo }">
                     	</form>
 	                </ul>
+	                
+	                <!-- <ul th:each="member : ${ memberList }" th:unless="${not #strings.isEmpty(memberList)}">
+	                	<li>조회된 회원이 없습니다.</li>
+	                </ul> -->
                 </div>
 
 
 
                 <!-- 페이징 처리 -->
-                <div class="admin_pages">
+                <div class="admin_pages" th:if="${#strings.isEmpty(param.searchCondition)}">
                     <ul class="admin_paging">
 
 
@@ -98,7 +102,7 @@
                             <div class="current_page" th:if="${ p == pi.page }">
                                 <a href="#" th:text="${ p }"></a>
                             </div>
-                            <div th:unless="${ p == pi.page }">
+                            <div th:if="${ p != pi.page }">
                                 <a th:href="@{/admin/memberPage(page=${p})}" th:text="${ p }"></a>
                             </div>
                         </li>
