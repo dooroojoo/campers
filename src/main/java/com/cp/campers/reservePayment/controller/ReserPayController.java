@@ -5,6 +5,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,6 @@ import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/reserPay")
 @Slf4j
 public class ReserPayController {
 
@@ -30,17 +30,12 @@ public class ReserPayController {
 	}
 	
 	
-//	@GetMapping("/reserPay")
-//	public String reserPay() {
-//		return "reservePayment/reserPay";
-//	} 
-	
+	@GetMapping("/reserPay")
 	public String reserPay() {
 		return "reservePayment/reserPay";
 	}
 	
-	
-	@PostMapping("/insert")
+	@PostMapping("/reserPay/insert")
 	public String insertReserPay(@ModelAttribute ReserveInfo reserveInfo, RedirectAttributes rttr,Locale locale) {
 		
 		log.info("예약 정보 : {}", reserveInfo);
