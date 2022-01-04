@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cp.campers.search.model.dao.SearchMapper;
+import com.cp.campers.search.model.vo.PageInfo;
 import com.cp.campers.search.model.vo.SearchCamp;
 
 @Service("searchService")
@@ -21,12 +22,18 @@ public class SearchServiceImpl implements SearchService{
 
 	@Override
 	public List<SearchCamp> mainSearch(HashMap<String, Object> map) {
+		
 		return searchMapper.mainSearch(map);
 	}
 
 	@Override
-	public List<SearchCamp> campAllSearch() {
-		return searchMapper.campAllSearch();
+	public List<SearchCamp> campAllSearch(PageInfo pi) {
+		return searchMapper.campAllSearch(pi);
+	}
+
+	@Override
+	public int campListCount() {
+		return searchMapper.campListCount();
 	}
 
 }
