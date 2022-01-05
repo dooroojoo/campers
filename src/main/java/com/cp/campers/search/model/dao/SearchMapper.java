@@ -20,6 +20,11 @@ public interface SearchMapper {
 	/* 게시글 총 개수 구하기 */
 	int campListCount();
 	
+	// 조건 검색 총 개수 구하기
+	// int campFindCount(HashMap<String, Object> map);
+
+	// 캠핑장 검색페이지에서 조건 검색 조회
+	List<SearchCamp> campFindSearch(PageInfo pi, HashMap<String, Object> map);
 
 	
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cp.campers.search.model.dao.SearchMapper">
 
-	<resultMap id="searchAllCampMap" type="com.cp.campers.search.model.vo.SearchCamp">
+	<resultMap id="searchCampMap" type="com.cp.campers.search.model.vo.SearchCamp">
 		<id property="cNo" column="CAMP_NO" />
 		<result property="cName" column="CAMP_NAME" />
 		<result property="cAddress" column="CAMP_ADDRESS" />
@@ -37,26 +37,17 @@
 		   WHERE C.CAMP_STATUS = 'Y' 
 		   AND C.CAMP_ADDRESS LIKE '%' || #{area} || '%' 
 		   AND R.ROOM_MEMBER &gt;= #{guest} 
-		   AND E.CHECKIN NOT IN #{checkIn} 
-		   AND E.CHECKOUT NOT IN #{checkOut} 
+		   AND E.CHECKIN NOT BETWEEN #{checkIn} AND #{checkOut}
 		   AND F.FILE_STATUS = 'N' 
 		   AND F.FILE_LEVEL = 1
-		   <if test='camping neq null and camping.equals("1")'>
-		   AND B.BUSINESS_TYPE like '%' || #{camping} || '%'
-		   </if>
-		   <if test='glamping neq null and glamping.equals("2")'>
-		   AND B.BUSINESS_TYPE like '%' || #{glamping} || '%'
-		   </if>
-		   <if test='caravan neq null and caravan.equals("3")'>
-		   AND B.BUSINESS_TYPE like '%' || #{caravan} || '%'
-		   </if>
+		   AND REGEXP_LIKE (B.BUSINESS_TYPE, #{type})
 		 GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME 
 		 ORDER BY C.CAMP_NAME DESC
 	</select>
 
 
 
-	<select id="campAllSearch" resultMap="searchAllCampMap">
+	<select id="campAllSearch" resultMap="searchCampMap">
 		SELECT 
 				C.CAMP_NO 
 			  , C.CAMP_NAME 
@@ -80,13 +71,79 @@
 	</select>
 	
 	
-	<!-- 게시글 총 개수 구하기 -->
+	<!-- 등록된 캠핑장 총 개수 구하기 -->
 	<select id="campListCount" resultType="_int">
 		SELECT
 				COUNT(*) 
 		   FROM CAMP 
 		  WHERE CAMP_STATUS = 'Y'
 	</select>
+	
+	
+	<!-- 조건 검색된 캠핑장 총 개수 구하기 / DB INSERT 후 테스트하기 - 페이징처리
+	<select id="campFindCount" resultType="Integer" parameterType="hashmap">
+		SELECT
+				COUNT(*)
+		   FROM ROOM R 
+		   JOIN RESERVE E ON R.ROOM_NO = E.ROOM_NO 
+		   JOIN CAMP C ON R.CAMP_NO = C.CAMP_NO 
+		   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
+		   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
+		   JOIN CAMP_BUSINESS_TYPE T ON C.CAMP_NO = T.CAMP_NO
+		   JOIN BUSINESS_TYPE B ON B.BUSINESS_NO = T.BUSINESS_NO 
+		   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
+		   JOIN FACILITY A ON A.FACILITY_NO = Y.FACILITY_NO
+		  WHERE C.CAMP_STATUS = 'Y' 
+		    AND C.CAMP_ADDRESS LIKE '%' || #{area} || '%' 
+		    AND R.ROOM_MEMBER &gt;= #{quantity} 
+		    AND E.CHECKIN NOT BETWEEN #{checkIn} AND #{checkOut}
+		    AND C.CAMP_NAME LIKE '%' || #{name} || '%'
+		    AND F.FILE_STATUS = 'N' 
+		    AND F.FILE_LEVEL = 1
+		    AND REGEXP_LIKE (B.BUSINESS_TYPE, #{type})
+		    AND REGEXP_LIKE (A.FACILITY_NAME, #{facility})
+		    AND REGEXP_LIKE (R.ROOM_FLOOR, #{floor})
+		  GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME 
+		  ORDER BY C.CAMP_NAME DESC
+	</select>-->
+	
+	
+	
+	<select id="campFindSearch" parameterType="hashmap" resultType="com.cp.campers.search.model.vo.SearchCamp">
+		SELECT 
+				C.CAMP_NO 
+			  , C.CAMP_NAME 
+			  , C.CAMP_ADDRESS 
+			  , F.FILE_ROUTE 
+			  , F.FILE_NAME 
+			  , SUM(R.ROOM_COUNT) AS ROOM_COUNT 
+			  , MAX(R.ROOM_MEMBER) AS MAX_GUEST 
+			  , MIN(R.ROOM_PRICE) AS MIN_PRICE
+			  , MAX(R.ROOM_PRICE) AS MAX_PRICE
+		   FROM ROOM R 
+		   JOIN RESERVE E ON R.ROOM_NO = E.ROOM_NO 
+		   JOIN CAMP C ON R.CAMP_NO = C.CAMP_NO 
+		   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
+		   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
+		   JOIN CAMP_BUSINESS_TYPE T ON C.CAMP_NO = T.CAMP_NO
+		   JOIN BUSINESS_TYPE B ON B.BUSINESS_NO = T.BUSINESS_NO 
+		   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
+		   JOIN FACILITY A ON A.FACILITY_NO = Y.FACILITY_NO
+		  WHERE C.CAMP_STATUS = 'Y' 
+		    AND C.CAMP_ADDRESS LIKE '%' || #{map.area} || '%' 
+		    AND R.ROOM_MEMBER &gt;= #{map.quantity} 
+		    AND E.CHECKIN NOT BETWEEN #{map.checkIn} AND #{map.checkOut}
+		    AND C.CAMP_NAME LIKE '%' || #{map.name} || '%'
+		    AND F.FILE_STATUS = 'N' 
+		    AND F.FILE_LEVEL = 1
+		    AND REGEXP_LIKE (B.BUSINESS_TYPE, #{map.type})
+		    AND REGEXP_LIKE (A.FACILITY_NAME, #{map.facility})
+		    AND REGEXP_LIKE (R.ROOM_FLOOR, #{map.floor})
+		    AND ROWNUM BETWEEN #{pi.start} AND #{pi.end}
+		  GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME 
+		  ORDER BY C.CAMP_NAME DESC
+	</select>
+	
 	
 
 </mapper>

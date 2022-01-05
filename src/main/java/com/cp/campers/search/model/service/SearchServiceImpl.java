@@ -36,4 +36,14 @@ public class SearchServiceImpl implements SearchService{
 		return searchMapper.campListCount();
 	}
 
+	//@Override
+	//public int campFindCount(HashMap<String, Object> map) {
+	//	return searchMapper.campFindCount(map);
+	//}
+
+	@Override
+	public List<SearchCamp> campFindSearch(PageInfo pi, HashMap<String, Object> map) {
+		return searchMapper.campFindSearch(pi, map);
+	}
+
 }
