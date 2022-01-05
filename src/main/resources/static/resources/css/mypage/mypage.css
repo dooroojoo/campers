@@ -187,6 +187,29 @@ body {
   margin-left : 25%;  
 }
 
+.image_area{
+	width: 7.5rem;
+  height: 7.5rem;
+}
+
+.image_area div_after{
+	width: 13remrem;
+    height: 8.5rem;
+    margin-left: 50%;
+}
+
+.profileInput{
+	height:100%;
+	display:none;
+	margin-left : 25%;
+}
+
+.profileImg after{
+	width: 13remrem;
+    height: 8.5rem;
+    margin-left: 50%;
+}
+
 .mypage_content_1, .mypage_content_2, .mypage_content_3, .mypage_content_4{
   width: 300px;
   height: 300px;
