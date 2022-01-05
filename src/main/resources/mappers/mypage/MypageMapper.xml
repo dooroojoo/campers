@@ -44,6 +44,10 @@
 		<result property="checkin" column="CHECKIN"/>
 		<result property="checkout" column="CHECKOUT"/>
 		<result property="refusal" column="REFUSAL"/>
+		<collection property="CampBusinessType" resultMap="CampBusinessTypeResultMap"/>
+		<collection property="BusinessType" resultMap="BusinessTypeResultMap"/>
+		<collection property="CampFacility" resultMap="CampFacilityResultMap"/>
+		<collection property="Facility" resultMap="FacilityResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="BusinessTypeResultMap">
@@ -53,12 +57,20 @@
 	
 	<resultMap type="com.cp.campers.mypage.model.vo.CampBusinessType" id="CampBusinessTypeResultMap">
 		<id property="campNo" column="CAMP_NO"/>
-		<result property="businessNo" column="BUSINESS_NO"/>
+		<id property="businessNo" column="BUSINESS_NO"/>
+		<association property="businessType" resultMap="BusinessTypeResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.mypage.model.vo.CampFacility" id="CampFacilityResultMap">
 		<id property="campNo" column="CAMP_NO"/>
-		<result property="FacilityNo" column="FACILITY_NO"/>
+		<id property="facilityNo" column="FACILITY_NO"/>
+		<association property="facility" resultMap="FacilityResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.Facility" id="FacilityResultMap">
+		<id property="facilityNo" column="FACILITY_NO"/>
+		<result property="facilityName" column="FACILITY_NAME"/>
+		<result property="facilityType" column="FACILITY_TYPE"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.mypage.model.vo.CampFile" id="CampFileResultMap">
@@ -106,20 +118,7 @@
      
    <select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
    	  SELECT * 
-      FROM (SELECT ROWNUM RNUM, A.*
-		      FROM (SELECT
-                          A.USER_NO,
-                          A.USER_ID, 
-                          A.USER_NAME,
-                          A.USER_PWD,
-                          A.EMAIL,
-                          A.USER_PHONE,
-                          A.NICKNAME,
-                          A.CREATE_DATE,
-                          A.STATUS
-                     FROM MEMBER A
-                     ORDER BY A.CREATE_DATE) A)                     
-	 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
+      FROM MEMBER;
    </select>
      
    <insert id="insertCamp" parameterType="com.cp.campers.mypage.model.vo.Camp">
@@ -144,7 +143,7 @@
 		(
 			SEQ_CAMP_NO.NEXTVAL
 			, #{ campName }
-			, 42
+			, #{ userNo }
 			, #{ campAddress }
 			, #{ campPhone }
 			, #{ campIntro }
@@ -158,17 +157,67 @@
 		)
    </insert>
    
-   <insert id="insertBusinessType" parameterType="com.cp.campers.mypage.model.vo.BusinessType">
+   <insert id="insertCampBusinessType">
    	INSERT
-   	INTO BUSINESS_TYPE
+   	INTO CAMP_BUSINESS_TYPE
    	(
-   		BUSINESS_NO
-   		, BUSINESS_TYPE
+   		  CAMP_NO
+   		, BUSINESS_NO
+   		
    	)
    	VALUES
    	(
-   		SEQ_BUSINESS_NO.CURRVAL
-   		, #{ businessType }
+   		SEQ_CAMP_NO.CURRVAL
+   		, #{ businessNo }
+   	)
+   </insert>
+   
+   <insert id="insertCampFacility">
+   	INSERT
+   	INTO CAMP_FACILITY
+   	(
+   		  CAMP_NO
+   		, FACILITY_NO
+   		
+   	)
+   	VALUES
+   	(
+   		SEQ_CAMP_NO.CURRVAL
+   		, #{ facilityNo }
+   	)
+   </insert>
+   
+   <insert id="insertRoom" parameterType="com.cp.campers.mypage.model.vo.Room">
+   	INSERT
+   	INTO ROOM
+   	(
+   		  ROOM_NO
+   		, ROOM_NAME
+   		, ROOM_MEMBER
+   		, ROOM_PRICE
+   		, ROOM_SIZE
+   		, ROOM_FLOOR
+   		, ROOM_PARKING
+   		, ROOM_INFO
+   		, ROOM_AMOUNT
+   		, ROOM_FORM
+   		, ROOM_COUNT
+   		, CAMP_NO
+   	)
+   	VALUES
+   	(
+   		  SEQ_ROOM_NO.NEXTVAL
+   		, #{ roomName }
+   		, #{ roomMember }
+   		, #{ roomPrice }
+   		, #{ roomSize }
+   		, #{ roomFloor }
+   		, #{ roomParking }
+   		, #{ roomInfo }
+   		, #{ roomAmount }
+   		, #{ roomForm }
+   		, #{ roomCount }
+   		, SEQ_CAMP_NO.CURRVAL
    	)
    </insert>
    
