@@ -20,6 +20,8 @@ public interface BoardMapper {
 	
 	List<Board> selectBoardList(PageInfo pi);
 	
+	List<Board> selectThumbnailList();
+	
 	int deleteBoard(int bid);
 	
 	int updateBoard(Board board);

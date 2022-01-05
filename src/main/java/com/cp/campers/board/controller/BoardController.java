@@ -49,6 +49,19 @@ public class BoardController {
 		
 		model.addAttribute("boardList", map.get("boardList"));
 		model.addAttribute("pi",map.get("pi"));
+		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+	}
+	
+	@GetMapping("/listPage")
+	public String boardListPage(Model model, int page) {
+		
+		Map<String, Object> map = boardService.selectBoardList(page);
+		
+		model.addAttribute("boardList", map.get("boardList"));
+		model.addAttribute("pi",map.get("pi"));
+		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		
+		return "/board/list";
 	}
 
 	@GetMapping("/detail")
