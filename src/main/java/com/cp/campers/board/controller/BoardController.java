@@ -41,7 +41,14 @@ public class BoardController {
 	}
 
 	@GetMapping("/list")
-	public void boardList() {
+	public void boardList(Model model) {
+		
+		int page = 1;
+		
+		Map<String, Object> map = boardService.selectBoardList(page);
+		
+		model.addAttribute("boardList", map.get("boardList"));
+		model.addAttribute("pi",map.get("pi"));
 	}
 
 	@GetMapping("/detail")
@@ -107,7 +114,7 @@ public class BoardController {
 
 				Attachment attachment = new Attachment();
 				attachment.setFileName(file.get("savedName"));
-				attachment.setFileRoute("/boardImg");
+				attachment.setFileRoute("/resources/images/uploadFiles/boardImg/");
 
 				if (i == 0)
 					attachment.setFileLevel(0);
@@ -131,4 +138,5 @@ public class BoardController {
 		return "board/list";
 	}
 
+	
 }
