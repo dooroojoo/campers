@@ -7,14 +7,16 @@
     width: 100%;
     height: 100vh;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.8);
-    /* display: none; */
+    background: rgba(0, 0, 0, 0.7);
+    /* 숨기기 */
+    z-index: -1;
+    opacity: 0;
 }
 
 /*----- 모달창 크기 고정 -----*/
 .report_modal{
     position: absolute;
-    top: calc(50vh - 365px); left: calc(50vw - 250px);
+    top: -25%; left: 50%;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -26,7 +28,28 @@
     text-align: center;
     border-radius: 12px;
     padding: 18px 0;
+    
+    /* 초기에 약간 아래에 배치 */
+    transform: translate(-50%, 50%);
 }
+
+.show .report_modal {
+    transform: translate(-50%, 46%);
+    transition: all .5s;
+}
+
+/*----- 모달 천천히 올라오기 -----*/
+.show {
+    opacity: 1;
+    z-index: 1000;
+    transition: all .5s;
+}
+
+.window {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
 
 /*----- 창닫기 -----*/
 .close_icon{
@@ -36,7 +59,7 @@
     font-size: 23px;
 }
 
-.close_icon div:hover{
+.close_icon2:hover{
     cursor: pointer;
 }
 
