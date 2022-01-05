@@ -1,5 +1,6 @@
 package com.cp.campers.board.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.cp.campers.board.model.vo.Attachment;

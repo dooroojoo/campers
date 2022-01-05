@@ -133,6 +133,7 @@
         /* 페이징 */
 .member_pages {
     margin: 10px;
+        margin-bottom: 50px;
 }
 .member_paging {
     height: 50px;
@@ -143,6 +144,7 @@
     width: 480px;
     margin: auto;
     align-items: center;
+    padding: 0 !important;
 }
 
 .member_paging a {
@@ -161,6 +163,7 @@
     width: 25px;
     height: 25px;
     color: white;
+    font-weight: bold;
 }
 .member_paging .current_page a{
     color: white;
@@ -240,10 +243,12 @@
                 <div th:each="board : ${boardList}" class="freeBoard-box" onclick="location.href='/board/detail'">
                     <div class="box-left">
                         <p th:text="${board.title}"></p>
-                        <label th:text="${board.nickname}"></label><label th:text="${board.createDate}"></label><label>좋아요 3</label><label>조회수 11</label>
+                        <label th:text="${board.nickName}"></label>
+                        <label th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm:ss')}"></label>
+                        <label>좋아요 3</label><label>조회수 11</label>
                     </div>
-                    <div class="box-right">
-                        <img src="/resources/images/board/camping7.jpg">
+                    <div class="box-right" th:if="${ board.bid == thumbnail.bid}" th:each="thumbnail : ${thumbnailList}">
+                        <img th:src="${thumbnail.fileRoute}+${thumbnail.fileName}">
                     </div>
                 </div>
             </div>
@@ -259,9 +264,9 @@
                <div class="member_pages">
                     <ul class="member_paging">
 
-                        <!-- <li><a href="/board/list?page=1">&lt;&lt;</a></li> -->
-                     <!--   
-                        <li th:if="${ pi.page > 1}"><a th:href="@{/board/list(page=${pi.page-1})}">&lt;</a></li>
+                        <li><a href="/board/listPage?page=1">&lt;&lt;</a></li>
+                     
+                        <li th:if="${ pi.page > 1}"><a th:href="@{/board/listPage(page=${pi.page-1})}">&lt;</a></li>
                         <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
                        
                             <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
@@ -269,14 +274,14 @@
                                     <a href="#" th:text="${p}"></a>
                                 </div>
                                 <div th:if="${ p != pi.page}">
-                                	<a th:href="@{/board/list(page=${p})}" th:text="${p}"></a>
+                                	<a th:href="@{/board/listPage(page=${p})}" th:text="${p}"></a>
                                 </div>
                             </li>
                       
-                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/board/list(page=${pi.page+1})}">&gt;</a></li>
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/board/listPage(page=${pi.page+1})}">&gt;</a></li>
                         <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
                         
-                        <li><a th:href="@{/board/list(page=${pi.maxPage})}">&gt;&gt;</a></li> -->
+                        <li><a th:href="@{/board/listPage(page=${pi.maxPage})}">&gt;&gt;</a></li>
                     </ul>
                 </div> 
 

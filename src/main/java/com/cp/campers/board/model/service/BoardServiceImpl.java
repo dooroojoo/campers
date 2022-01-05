@@ -38,15 +38,19 @@ public class BoardServiceImpl implements BoardService {
 
 		int listCount = boardMapper.getListCount();
 		
-		PageInfo pi = new PageInfo(page, listCount, 10, 7);
+		PageInfo pi = new PageInfo(page, listCount, 7, 10);
 		
 		pi.setStartRow(page); 
 		pi.setEndRow(pi.getStartRow());
+		
 		List<Board> boardList = boardMapper.selectBoardList(pi);
+		
+		List<Board> thumbnailList = boardMapper.selectThumbnailList();
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi); 
 		map.put("boardList", boardList);
+		map.put("thumbnailList", thumbnailList);
 
 		return map;
 	}
