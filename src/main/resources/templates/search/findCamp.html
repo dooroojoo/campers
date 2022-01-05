@@ -139,23 +139,23 @@
                   
 
                 <!-- 조회된 갯수만큼 반복문 -->
-                <div class="search-list-col" th:each="search : ${ campSearch }">
+                <div class="search-list-col" th:each="find : ${ findCamp }">
                   <div class="list-col-wrapper">
                   <div class="list-col-img">
-                    <img th:src="@{/resources/images/uploadFiles/campImg/}+${search.fileName}">
+                    <img th:src="@{/resources/images/uploadFiles/campImg/}+${find.fileName}">
                 
                   
                   <div class="list-col-text">
                     <ul>
-                      <li class="list-col-address" th:text="${search.cAddress}"></li>
-                      <li class="list-col-name" th:text="${search.cName}"></li>
-                      <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span></li>
-                      <li class="list-col-price" th:text="${search.minPrice}+'~'+${search.maxPrice}"></li>
+                      <li class="list-col-address" th:text="${find.cAddress}"></li>
+                      <li class="list-col-name" th:text="${find.cName}"></li>
+                      <li class="list-col-count">최대인원 <span th:text="${find.maxGuest}"></span></li>
+                      <li class="list-col-price" th:text="${find.minPrice}+'~'+${find.maxPrice}"></li>
                     </ul>
 
 				
                     <!-- 선택한 날짜에 예약가능할 시에 -->
-                    <!-- <div class="list-col-state" th:if="${search.rCount > 0}">
+                    <!-- <div class="list-col-state" th:if="${find.rCount > 0}">
                       <p class="list-bookable" >예약가능</p>
                     </div> -->
 
@@ -174,40 +174,40 @@
 
 
               <!-- 페이징 처리 -->
-               <div class="member_pages">
+               <!-- <div class="member_pages">
                 <ul class="member_paging">
 
-                    <!--  맨 처음으로 이동하는 버튼(<<) -->
+                     맨 처음으로 이동하는 버튼(<<)
                     <li th:if="${paging.startPage != 1}">
-                    <a th:href="@{/search/camp?nowPage=1}">&lt;&lt;</a></li>
+                    <a th:href="@{/search/find?nowPage=1}">&lt;&lt;</a></li>
                  
-                    <!-- 이전 페이지로(<) -->
+                    이전 페이지로(<)
                     <li th:if="${paging.startPage != 1}">
-                    <a th:href="@{/search/camp?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
+                    <a th:href="@{/search/find?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
                     </li>
 
-                    <!-- 최대 10개의 페이지 목록 -->
+                    최대 10개의 페이지 목록
                     <span th:each="idx : ${#numbers.sequence(paging.startPage, paging.endPage)}">
                     	<li th:switch="${idx}">
                        		 <div class="current_page" th:case="${paging.nowPage}">
                         		<b th:text="${idx}" ></b>
                         	</div>
                         	 <div class="current_page" th:case="${paging.nowPage}">
-                        	<a th:href="@{/search/camp?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" th:text="${idx}"> </a>
+                        	<a th:href="@{/search/find?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" th:text="${idx}"> </a>
                     		 </div>
                     	</li>
         			</span>
         		
-                    <!-- 다음 페이지로(>)  -->
+                    다음 페이지로(>) 
                     <li th:if="${paging.endPage != paging.lastPage}">
-                        <a th:href="@{/search/camp?nowPage=${idx}&cntPerPage=${paging.cntPerPage}">&gt;</a>
+                        <a th:href="@{/search/find?nowPage=${idx}&cntPerPage=${paging.cntPerPage}">&gt;</a>
                     </li>
 
-                    <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                    맨 끝으로 이동하는 버튼(>>)
                     <li th:if="${paging.endPage != paging.lastPage}">
-                    <a th:href="@{/search/camp?nowPage=${paging.cntPerPage}">&gt;&gt;</a></li>
+                    <a th:href="@{/search/find?nowPage=${paging.cntPerPage}">&gt;&gt;</a></li>
                 </ul>
-            </div>
+            </div> -->
 
                 </div>
             </div>
