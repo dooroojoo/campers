@@ -73,10 +73,8 @@
 	                        <input type="hidden" name="userNo" th:value="${ member.userNo }">
                     	</form>
 	                </ul>
+                    <div align="center"><p th:text="${noResult}"></p></div>
 	                
-	                <!-- <ul th:each="member : ${ memberList }" th:unless="${not #strings.isEmpty(memberList)}">
-	                	<li>조회된 회원이 없습니다.</li>
-	                </ul> -->
                 </div>
 
 

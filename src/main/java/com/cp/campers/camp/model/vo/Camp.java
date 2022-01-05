@@ -25,7 +25,7 @@ public class Camp {
 	private String checkin;
 	private String checkout;
 	private String refusal;
-	private List<Room> roomList;
 	private List<CampRecord> campRecordList;
 	private List<Review> reviewList;
+	private List<ImageFile> imgFileList;
 }

@@ -51,7 +51,7 @@
 		<result property="checkout" column="CHECKOUT"/>
 		<result property="refusal" column="REFUSAL"/>
 		<collection property="campRecordList" resultMap="campRecordResultMap"/>
-		<collection property="roomList" resultMap="roomResultMap"/>
+		<collection property="imgFileList" resultMap="imageFileResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.admin.model.vo.CampRecord" id="campRecordResultMap">
@@ -67,8 +67,13 @@
 		<result property="recordName" column="RECORD_NAME"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.mypage.model.vo.Room" id="roomResultMap">
-		<id property="roomNO" column="ROOM_NO"/>
+	
+	
+	
+	
+	
+	<resultMap type="com.cp.campers.camp.model.vo.Room" id="roomResultMap">
+		<id property="roomNo" column="ROOM_NO"/>
 		<result property="roomName" column="ROOM_NAME"/>
 		<result property="roomMember" column="ROOM_MEMBER"/>
 		<result property="roomPrice" column="ROOM_PRICE"/>
@@ -79,8 +84,18 @@
 		<result property="roomAmount" column="ROOM_AMOUNT"/>
 		<result property="roomForm" column="ROOM_FORM"/>
 		<result property="roomCount" column="ROOM_COUNT"/>
-		<result property="campNo" column="CAMP_NO "/>		
-	</resultMap>	
+		<result property="campNo" column="CAMP_NO "/>
+		<collection property="imgFileList" resultMap="imageFileResultMap"/>		
+	</resultMap>
+	
+	
+	<resultMap type="com.cp.campers.camp.model.vo.ImageFile" id="imageFileResultMap">
+		<id property="fileNo" column="FILE_NO"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileRoute" column="FILE_ROUTE"/>
+		<result property="fileStatus" column="FILE_STATUS"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+	</resultMap>
 	
 	
 	<resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="businessTypeResultMap">
@@ -217,10 +232,16 @@
 						     , R.RECORD_NAME
 						     , C.CAMP_STATUS
 						 FROM CAMP C
-						 LEFT JOIN CAMP_RECORD CR ON (C.CAMP_NO = CR.CAMP_NO)
-						 LEFT JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
+                         JOIN CAMP_RECORD CR ON (C.CAMP_NO = CR.CAMP_NO)
+						 JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
 						WHERE CAMP_STATUS IN ('Y', 'N')
-						ORDER BY CR.RECORD_DATE) A)
+                          AND (C.CAMP_NO, CR.RECORD_DATE) IN (SELECT
+                          										     C.CAMP_NO
+                          										   , MAX(CR.RECORD_DATE)
+                          										FROM CAMP_RECORD CR 
+                          										JOIN CAMP C ON(C.CAMP_NO = CR.CAMP_NO) 
+                          										GROUP BY C.CAMP_NO)
+                        ORDER BY CR.RECORD_DATE DESC) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 	</select>
    
@@ -256,18 +277,32 @@
 		      C.CAMP_NO
 		    , C.CAMP_NAME
 		    , C.USER_NO
+		    , M.USER_NO
 		    , M.USER_NAME
 		    , C.CAMP_ADDRESS
 		    , C.CAMP_PHONE
 		    , C.CAMP_INTRO
 		    , C.CAMP_PATH
+            , I.FILE_NAME
+            , I.FILE_ROUTE
 		    , C.CAMP_POLICY
 		    , C.CAMP_STATUS
 		    , C.ACCOUNT_NUM
 		    , C.BANK
 		    , C.CHECKIN
 		    , C.CHECKOUT
-            , R.ROOM_NAME
+		    FROM CAMP C
+		    JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+            JOIN CAMP_FILE CF ON(C.CAMP_NO = CF.CAMP_NO)
+            JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
+		   WHERE C.CAMP_NO = #{ campNo }
+		     AND I.FILE_STATUS = 'N'
+	</select>
+	
+	<select id="detailRoom" parameterType="_int" resultMap="roomResultMap">
+		SELECT
+			  R.ROOM_NO
+			, R.ROOM_NAME
             , R.ROOM_MEMBER
             , R.ROOM_PRICE
             , R.ROOM_SIZE
@@ -276,10 +311,13 @@
             , R.ROOM_INFO
             , R.ROOM_AMOUNT
             , R.ROOM_FORM
-		    FROM CAMP C
-		    JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
-            JOIN ROOM R ON(C.CAMP_NO = R.CAMP_NO)
-		    WHERE C.CAMP_NO = #{ campNo }
+            , I.FILE_NAME
+            , I.FILE_ROUTE
+		 FROM ROOM R
+		 JOIN ROOM_FILE RF ON(R.ROOM_NO = RF.ROOM_NO)
+		 JOIN IMAGEFILE I ON(I.FILE_NO = RF.FILE_NO)
+		WHERE R.CAMP_NO = #{ campNo }
+		  AND I.FILE_STATUS = 'N'
 	</select>
 	
 	<update id="deleteCamp" parameterType="_int">
@@ -287,4 +325,25 @@
 		   SET CAMP_STATUS = 'X'
 		 WHERE CAMP_NO = #{ campNo }
 	</update>
+	
+	<update id="refusal" parameterType="hashmap">
+		UPDATE CAMP
+		   SET REFUSAL = #{ refusal }
+		     , CAMP_STATUS = 'R'
+		 WHERE CAMP_NO = #{ campNo }
+	</update>
+	
+	<update id="enroll" parameterType="_int">
+		UPDATE CAMP
+		   SET CAMP_STATUS = 'Y'
+		 WHERE CAMP_NO = #{ campNo }
+	</update>
+	
+	<insert id="record" parameterType="_int">
+		INSERT INTO CAMP_RECORD 
+		VALUES (SEQ_CR_NO.NEXTVAL
+			  , DEFAULT
+			  , #{ campNo }
+			  , 2)
+	</insert>
 </mapper>
