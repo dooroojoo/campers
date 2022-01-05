@@ -7,9 +7,6 @@
     <!-- css -->
 	<link href="/resources/css/admin/reportModal.css" rel="stylesheet" type="text/css">
 	
-	<!-- JQuery -->
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-	
     <!-- icon -->
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
@@ -18,7 +15,7 @@
 <div class="modal_background">
     <div class="report_modal">
 
-        <div class="close_icon"><i class="fas fa-times"></i></div>
+        <div class="close_icon"><span class="close_icon2"><i class="fas fa-times"></i></span></div>
 
 
         <div class="report_content">
@@ -107,5 +104,16 @@
         </div>
     </div>
 </div>
+<script>
+    function show() {
+        document.querySelector(".modal_background").className = "modal_background show";
+    }
+
+    function close() {
+        document.querySelector(".modal_background").className = "modal_background";
+    }
+
+    document.querySelector(".close_icon2").addEventListener("click", close);
+</script>
 </body>
 </html>

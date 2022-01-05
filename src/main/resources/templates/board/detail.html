@@ -346,7 +346,7 @@
                             </div>
                             <label>3</label>
                         </div>
-                    <div class="content-right">
+                    <div class="content-right" onclick="show();">
                         <img src="/resources/images/board/report_img.png">
                     </div>
                 </div>
@@ -374,7 +374,7 @@
                             </div>
                         </div>
                         <div class="comment-right">
-                            <div class="comment-rightTop"><img src="/resources/images/board/report_img.png"></div>
+                            <div class="comment-rightTop" onclick="show();"><img src="/resources/images/board/report_img.png"></div>
                             <div class="comment-rightBottom"><label>답글</label></div>
                         </div>
                     </div>
@@ -511,7 +511,7 @@
         <div class="next-board"><img src="/resources/images/board/downArrow.png"><label class="list-label">다음글</label><label>혼자 캠핑와서 불멍중</label></div><br>
         <button class="listBtn">목록으로</button>
     </div>
-    </div>
+    	<div th:replace="admin/reportModal.html"></div>
         <div th:replace="common/footer.html"></div>
       
 </body>
