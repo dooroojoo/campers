@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cp.campers.mypage.model.dao.MypageMapper">
 		
-	<resultMap type="com.cp.campers.member.model.vo.Member" id="loginMemberResultMap">
+	<resultMap type="com.cp.campers.member.model.vo.Member" id="memberResultMap">
 		<id property="userNo" column="USER_NO"/>
 		<result property="id" column="USER_ID"/>
 		<result property="pwd" column="USER_PWD"/>
@@ -15,7 +15,19 @@
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
-	</resultMap>	
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.member.model.vo.MemberRole" id="memberRoleResultMap">
+		<id property="memberNo" column="USER_NO"/>
+		<id property="authorityCode" column="AUTHORITY_CODE"/>
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.member.model.vo.Authority" id="authorityResultMap">      <!-- 위의 association(1대 1)에서의 resultMap이랑 여기서 id랑 일치시키기 -->
+	    <id property="authorityCode" column="AUTHORITY_CODE"/>
+	    <result property="authorityName" column="AUTHORITY_NAME"/>
+	    <result property="authorityDesc" column="AUTHORITY_DESC"/>
+	</resultMap>
 		
 	<resultMap type="com.cp.campers.mypage.model.vo.Camp" id="CampResultMap">
 		<id property="campNo" column="CAMP_NO"/>
@@ -79,6 +91,37 @@
 		<result property="campNo" column="CAMP_NO"/>
 	</resultMap>
      
+   <select id="selectMember" resultType="com.cp.campers.member.model.vo.Member">
+   		SELECT *
+   		FROM MEMBER
+   </select>  
+     
+   <select id="getListCount" resultType="_int">
+   		SELECT
+		      COUNT(A.USER_NO)
+		 FROM MEMBER A
+		 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
+		 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+   </select>  
+     
+   <select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
+   	  SELECT * 
+      FROM (SELECT ROWNUM RNUM, A.*
+		      FROM (SELECT
+                          A.USER_NO,
+                          A.USER_ID, 
+                          A.USER_NAME,
+                          A.USER_PWD,
+                          A.EMAIL,
+                          A.USER_PHONE,
+                          A.NICKNAME,
+                          A.CREATE_DATE,
+                          A.STATUS
+                     FROM MEMBER A
+                     ORDER BY A.CREATE_DATE) A)                     
+	 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
+   </select>
+     
    <insert id="insertCamp" parameterType="com.cp.campers.mypage.model.vo.Camp">
    	INSERT 
    		INTO CAMP
@@ -101,7 +144,7 @@
 		(
 			SEQ_CAMP_NO.NEXTVAL
 			, #{ campName }
-			, #{ userNo }
+			, 42
 			, #{ campAddress }
 			, #{ campPhone }
 			, #{ campIntro }

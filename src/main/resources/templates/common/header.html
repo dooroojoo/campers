@@ -47,10 +47,11 @@
         </div>
         </th:block>
     
+    	<th:block sec:authorize="isAuthenticated()">
         <div class="mypage-icon">
           <a href="/mypage"><img src="/resources/images/common/header_footer/member.png"></a>
         </div>
-    
+    	</th:block>
       </div>
 
     

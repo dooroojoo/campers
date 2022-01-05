@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +26,9 @@
                 <li class="mypage_category_li"><a th:href="@{/mypage/wishcamp}">찜한캠핑장</a></li>
                 <li class="mypage_category_li"><a th:href="@{/mypage/mypage_guest_reserve}">예약내역확인</a></li>
                 <li class="mypage_category_li"><a th:href="@{/company/csCenter}">고객센터</a></li>
+                <th:block sec:authorize="hasRole('ADMIN')">
+                <li class="mypage_category_li"><a th:href="@{/mypage/mypage_camp_management}">내 숙소 관리</a></li>
+            	</th:block>
             </ul>
         </div>
 
