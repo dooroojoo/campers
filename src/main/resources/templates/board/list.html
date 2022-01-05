@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -237,70 +237,15 @@
                 </div>
             </div>
             <div class="freeBoard-content">
-                <div class="freeBoard-box" onclick="location.href='/board/detail'">
+                <div th:each="board : ${boardList}" class="freeBoard-box" onclick="location.href='/board/detail'">
                     <div class="box-left">
-                        <p>서울 근교 캠핑 장소 추천 좀 부탁드려요!</p>
-                        <label>가을캠핑</label><label>방금 전</label><label>좋아요 3</label><label>조회수 11</label>
+                        <p th:text="${board.title}"></p>
+                        <label th:text="${board.nickname}"></label><label th:text="${board.createDate}"></label><label>좋아요 3</label><label>조회수 11</label>
                     </div>
                     <div class="box-right">
                         <img src="/resources/images/board/camping7.jpg">
                     </div>
                 </div>
-                <div class="freeBoard-box">
-                    <div class="box-left">
-                        <p>카라반이 나을까요 글램핑이 나을까요?</p>
-                        <label>한라토닉</label><label>10분 전</label><label>좋아요 3</label><label>조회수 11</label>
-                    </div>
-                    <div class="box-right">
-                        <img src="/resources/images/board/camping6.jpg">
-                    </div>
-                </div>
-                <div class="freeBoard-box">
-                    <div class="box-left">
-                        <p>여기 캠핑지 어딘지 아시는분</p>
-                        <label>순두부열탕</label><label>1시간 전</label><label>좋아요 3</label><label>조회수 11</label>
-                    </div>
-                    <div class="box-right">
-                        <img src="/resources/images/board/camping5.jpg">
-                    </div>
-                </div>
-                <div class="freeBoard-box">
-                    <div class="box-left">
-                        <p>강아지 데리고 캠핑해도 될까요?</p>
-                        <label>콘치즈</label><label>5시간 전</label><label>좋아요 3</label><label>조회수 11</label>
-                    </div>
-                    <div class="box-right">
-                        <img src="/resources/images/board/camping4.jpg">
-                    </div>
-                </div>
-                <div class="freeBoard-box">
-                    <div class="box-left">
-                        <p>혼자 캠핑와서 불멍 중...</p>
-                        <label>해장라면</label><label>2일 전</label><label>좋아요 3</label><label>조회수 11</label>
-                    </div>
-                    <div class="box-right">
-                        <img src="/resources/images/board/camping3.jpg">
-                    </div>
-                </div>
-                <div class="freeBoard-box">
-                    <div class="box-left">
-                        <p>오솔길에서</p>
-                        <label>타드</label><label>6일 전</label><label>좋아요 3</label><label>조회수 11</label>
-                    </div>
-                    <div class="box-right">
-                        <img src="/resources/images/board/camping2.jpg">
-                    </div>
-                </div>
-                <div class="freeBoard-box">
-                    <div class="box-left">
-                        <p>캠핑초보도 글램핑 할 수 있나요</p>
-                        <label>혼캠핑</label><label>21-12-10</label><label>좋아요 3</label><label>조회수 11</label>
-                    </div>
-                    <div class="box-right">
-                        <img src="/resources/images/board/camping.jpg">
-                    </div>
-                </div>
-                
             </div>
             <div class="freeBoard-footer">
                 <div class="freeBoard-footerLeft">
@@ -311,101 +256,36 @@
                 </div>
             </div>
             <div class="freeBoard-pagingbar">
-                <!-- 페이징 처리 -->
-                <div class="member_pages">
+               <div class="member_pages">
                     <ul class="member_paging">
 
-
-                        <!-- 맨 처음으로 이동하는 버튼(<<) -->
-                        <li><a href="">&lt;&lt;</a></li>
+                        <!-- <li><a href="/board/list?page=1">&lt;&lt;</a></li> -->
+                     <!--   
+                        <li th:if="${ pi.page > 1}"><a th:href="@{/board/list(page=${pi.page-1})}">&lt;</a></li>
+                        <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
+                       
+                            <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                                <div class="current_page" th:if="${p==pi.page}">
+                                    <a href="#" th:text="${p}"></a>
+                                </div>
+                                <div th:if="${ p != pi.page}">
+                                	<a th:href="@{/board/list(page=${p})}" th:text="${p}"></a>
+                                </div>
+                            </li>
+                      
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/board/list(page=${pi.page+1})}">&gt;</a></li>
+                        <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
                         
-
-
-                        <!-- 이전 페이지로(<) -->
-                        <li>
-                            <c:choose>
-                                <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
-                                <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
-                            </c:choose>
-                        </li>
-                        
-
-
-                        <!-- 최대 10개의 페이지 목록 -->
-                        <!--<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">-->
-                            <li>
-                                <div class="current_page">
-                                    <a href="#">1</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">2</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">3</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">4</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">5</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">6</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">7</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">8</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">9</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="">
-                                    <a href="#">10</a>
-                                </div>
-                            </li>
-                        <!--</c:forEach>-->
-
-                        <!-- 다음 페이지로(>) -->
-                        <li>
-                            <c:choose>
-                                <c:when test=""><a href="">&gt;</a></c:when>
-                                <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
-                            </c:choose>
-                        </li>
-            
-
-
-                        <!-- 맨 끝으로 이동하는 버튼(>>) -->
-                        <li><a href="">&gt;&gt;</a></li>
+                        <li><a th:href="@{/board/list(page=${pi.maxPage})}">&gt;&gt;</a></li> -->
                     </ul>
-                </div>
+                </div> 
 
 
             </div>
             </div>
         </div>
     </div>
-        <div th:replace="common/footer.html"></div>
+    <div th:replace="common/footer.html"></div>
         
 </body>
 </html>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.PageInfo;
 
 @Mapper
 public interface BoardMapper {
@@ -17,13 +18,15 @@ public interface BoardMapper {
 	
 	void insertImageNo();
 	
-	List<Board> selectBoardList();
+	List<Board> selectBoardList(PageInfo pi);
 	
 	int deleteBoard(int bid);
 	
 	int updateBoard(Board board);
 	
 	Board boardDetail(int bid);
+
+	int getListCount();
 
 
 

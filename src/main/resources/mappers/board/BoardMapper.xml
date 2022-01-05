@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cp.campers.board.model.dao.BoardMapper">
-
+<resultMap type="com.cp.campers.board.model.vo.Board" id="boardResultMap">
+	<id property="bid" column="BID"/>
+	<result property="title" column="BTITLE"/>
+	<result property="content" column="BCONTENT"/>
+	<result property="createDate" column="CREATE_DATE"/>
+	<result property="modifyDate" column="MODIFY_DATE"/>
+	<result property="status" column="STATUS"/>
+	<result property="writer" column="WRITER"/>
+	<collection property="boardFileNoList" resultMap="boardFileNoResultMap"/>
+</resultMap>
+<resultMap type="com.cp.campers.board.model.vo.BoardFileNo" id="boardFileNoResultMap">
+	<id property="bid" column="BID"/>
+	<id property="fileNo" column="FILE_NO"/>
+	<association property="attachment" resultMap="attachmentResultMap"/>
+</resultMap>
+<resultMap type="com.cp.campers.board.model.vo.Attachment" id="attachmentResultMap">
+	<id property="fileNo" column="FILE_NO"/>
+	<result property="fileName" column="FILE_NAME"/>
+	<result property="fileRoute" column="FILE_ROUTE"/>
+	<result property="status" column="FILE_STATUS"/>
+	<result property="fileLevel" column="FILE_LEVEL"/>
+</resultMap>
 
 <insert id="insertBoard" parameterType="com.cp.campers.board.model.vo.Board">
 INSERT INTO BOARD 
@@ -34,4 +55,26 @@ INTO BOARD_FILE
 VALUES
 (SEQ_BID.CURRVAL, SEQ_FILE_NO.CURRVAL)
 </insert>
+<select id="getListCount"  resultType="_int">
+	SELECT
+			COUNT(*)
+	FROM BOARD
+	WHERE STATUS = 'N'
+</select>
+<select id="selectBoardList" resultMap="boardResultMap">
+SELECT *
+FROM (SELECT ROWNUM RNUM, A.*
+FROM (select 
+            bid, 
+            btitle, 
+            bcontent, 
+            b.modify_date, 
+            b.create_date,
+            nickname
+      from board b
+      join member m on (b.writer = m.user_no)
+      where b.status = 'N'
+ORDER BY bid DESC) A)
+where RNUM between 1 and 10
+</select>
 </mapper>
