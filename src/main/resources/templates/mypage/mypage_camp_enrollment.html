@@ -50,7 +50,7 @@
                 </tr>
                 <tr>
                     <th>사업장 형태</th>
-                    <td><input type="checkbox" value="caravan" id="caravan" name="checkcamp" checked>카라반 <input type="checkbox" value="camping" id="camping" name="checkcamp">캠핑 <input type="checkbox" value="glamping" id="glamping" name="checkcamp">글램핑</td>
+                    <td><input type="checkbox" value="1" id="caravan" name="businessType" checked>카라반 <input type="checkbox" value="2" id="camping" name="businessType">캠핑 <input type="checkbox" value="3" id="glamping" name="businessType">글램핑</td>
                 </tr>
                 <tr>
                     <th>사업자 등록증</th>
@@ -63,23 +63,23 @@
                 <tr>
                     <th>사업장 계좌번호</th>
                     <td><select class="textbox2" name="bank" placeholder="은행">
-                            <option value="1">농협</option>
-                            <option value="">신한은행</option>
-                            <option value="1">국민은행</option>
+                            <option value="농협">농협</option>
+                            <option value="신한은행">신한은행</option>
+                            <option value="국민은행">국민은행</option>
                         </select>
                         <input class="textbox" name="accountNum" type="text" placeholder="계좌번호">
                     </td>
                 </tr>
                 <tr>
                     <th>사업장 주요시설</th>
-                    <td><input type="checkbox" id="ch1" name="facilityNo" value="샤워실" checked>샤워실 <input type="checkbox" id="ch2" name="facilityNo" value="화장실">화장실 <input type="checkbox" id="ch3" name="facilityNo" value="개수대">개수대 
-                        <input type="checkbox" id="ch4" name="facilityNo" value="매점">매점 <input type="checkbox" id="ch5" name="facilityNo" value="전기">전기 <input type="checkbox" id="ch6" name="facilityNo" value="와이파이">와이파이
+                    <td><input type="checkbox" id="ch1" name="facilityNo" value="1" checked>샤워실 <input type="checkbox" id="ch2" name="facilityNo" value="2">화장실 <input type="checkbox" id="ch3" name="facilityNo" value="3">개수대 
+                        <input type="checkbox" id="ch4" name="facilityNo" value="4">매점 <input type="checkbox" id="ch5" name="facilityNo" value="5">전기 <input type="checkbox" id="ch6" name="facilityNo" value="6">와이파이
                     </td>
                 </tr>
                 <tr>
                     <th>사업장 이용시설</th>
-                    <td><input type="checkbox" id="ch01" name="facilityNo2" value="바베큐장" checked>바베큐장 <input type="checkbox" id="ch02" name="facilityNo2" value="수영장">수영장
-                        <input type="checkbox" id="ch03" name="facilityNo2" value="조식제공">조식제공 <input type="checkbox" id="ch04" name="facilityNo2" value="반려동물">반려동물
+                    <td><input type="checkbox" id="ch01" name="facilityNo" value="7" checked>바베큐장 <input type="checkbox" id="ch02" name="facilityNo" value="8">수영장
+                        <input type="checkbox" id="ch03" name="facilityNo" value="9">조식제공 <input type="checkbox" id="ch04" name="facilityNo" value="10">반려동물
                     </td>
                 </tr>
                 <tr>
@@ -186,15 +186,15 @@
                 </tr>
                 <tr>
                     <th>객실 바닥 형태</th><!-- name="roomFloor"  -->
-                    <td><input type="radio" name="1" checked>데크 <input type="radio" name="1">잔디 <input type="radio" name="1">파쇄석 </td>
+                    <td><input type="radio" name="roomFloor" value="데크" checked>데크 <input type="radio" name="roomFloor" value="잔디">잔디 <input type="radio" name="roomFloor" value="파쇄석">파쇄석 </td>
                 </tr>
                 <tr>
                     <th>객실 주차 여부</th><!-- name="roomParking"  -->
-                    <td><input type="radio" name="2" checked>텐트 옆 주차 <input type="radio" name="2">주차장 주차 <input type="radio" name="2">외부 주차</td>
+                    <td><input type="radio" name="roomParking" value="텐트 옆 주차" checked>텐트 옆 주차 <input type="radio" name="roomParking" value="주차장 주차">주차장 주차 <input type="radio" name="roomParking" value="외부 주차">외부 주차</td>
                 </tr>
                 <tr>
                     <th>객실 형태</th><!-- name="roomForm" -->
-                    <td><input type="radio" name="3" checked>카라반 <input type="radio" name="3">캠핑 <input type="radio" name="3">글램핑</td>
+                    <td><input type="radio" name="roomForm" value="카라반" checked>카라반 <input type="radio" name="roomForm" value="캠핑">캠핑 <input type="radio" name="roomForm" value="글램핑">글램핑</td>
                 </tr>
                 <tr>
                     <th>객실 수량</th>

@@ -6,12 +6,15 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.mypage.model.dao.MypageMapper;
-import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
+import com.cp.campers.mypage.model.vo.CampBusinessType;
+import com.cp.campers.mypage.model.vo.CampFacility;
+import com.cp.campers.mypage.model.vo.Room;
 
 @Service
 public class MypageServiceImpl implements MypageService{
@@ -23,13 +26,31 @@ public class MypageServiceImpl implements MypageService{
 		this.mypageMapper = mypageMapper;
 	}
 
+	/* 캠프장 등록 */
+	@Transactional
 	@Override
 	public void mypageCampEnrollment(Camp camp) {
 		
+		/* CAMP TABLE INSERT */
 		mypageMapper.insertCamp(camp);
 		
-		BusinessType businessType = new BusinessType();
-		mypageMapper.insertBusinessType(businessType);
+		/* CAMP_BUSINESS_TYPE INSERT */
+		/* 반복문으로 Integer 선택한 체크박스 businessNo 를 캠프 비즈니스 타입으로
+		 * mypageMapper에 CampBusinessType 에 businessNo 입력 */
+		for(Integer businessNo : camp.getBusinessType()) {
+			mypageMapper.insertCampBusinessType(businessNo);			
+		}
+		
+		/* CAMP_FACILITY INSERT */
+		for(Integer facilityNo : camp.getFacilityNo()) {
+			mypageMapper.insertCampFacility(facilityNo);
+		}
+		
+		/* ROOM INSERT */
+		//for(Room room : camp.getRoomList()) {
+		//	mypageMapper.insertRoom(room);
+		// }			
+		mypageMapper.insertRoom(camp.getRoom());	
 	}
 	
 	@Override

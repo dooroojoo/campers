@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cp.campers.member.model.service.MemberService;
 import com.cp.campers.member.model.vo.Member;
+import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
 import com.cp.campers.mypage.model.vo.Camp;
+import com.cp.campers.mypage.model.vo.Room;
+
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 @Controller
 @RequestMapping("/mypage")
 public class MyPageController {
@@ -80,15 +86,26 @@ public class MyPageController {
 	/* 캠핑장 등록 페이지 */
 	@GetMapping("/mypage_camp_enrollment") 
 	public String mypageCampEnrollmentForm() {
+				
 		return"mypage/mypage_camp_enrollment"; 
 	}
 	
 	/* 캠핑장 등록 입력폼 */
+	/* @AuthenticationPrincipal UserImpl user 유저 정보 가져오기 */
 	@PostMapping("/mypage_camp_enrollment")
-	public String mypageCampEnrollment(Camp camp) {
+	public String mypageCampEnrollment(Camp camp, 
+							Room room, @AuthenticationPrincipal UserImpl user) {
+		/* 유저 정보 받아오기 */
+		camp.setUserNo(user.getUserNo());
+		/* 캠프 사진 파일 */
 		camp.setCampPath("test.png");
+		/* 숙소 등록 */
+		camp.setRoom(room);
+		/* 캠프, 캠프 타입, 시설 타입, 객실 등록한 로그 파일 받아오기 */
+		log.info(camp.toString());
 		mypageService.mypageCampEnrollment(camp);
-		return "redirect:/";
+		/* 등록후 페이지 */
+		return "redirect:/mypage";
 	}	
 	
 	/* 캠핑장 해지 */
