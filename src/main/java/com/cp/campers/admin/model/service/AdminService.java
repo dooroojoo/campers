@@ -24,11 +24,18 @@ public interface AdminService {
 	Map<String, Object> findAllCamp(int page);
 	
 	// 숙소검색
-	Map<String, Object> fineCampBySearch(int page, Search search);
+	Map<String, Object> findCampBySearch(int page, Search search);
 
 	// 숙소신청상세
-	Camp detailCamp(int campNo);
+	Map<String, Object> detailCamp(int campNo);
 
 	// 숙소삭제
 	int deleteCamp(int campNo, int userNo);
+
+	// 숙소거절
+	void refusal(int campNo, int userNo, String refusal);
+
+	// 숙소등록
+	void enroll(int campNo, int userNo);
+
 }

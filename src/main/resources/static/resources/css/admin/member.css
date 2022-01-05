@@ -15,11 +15,15 @@ ul, li {
 }
 /* 회원관리 헤더 */
 .member_title{
-    padding-left: 20px;
+    padding: 20px;
     border-bottom: 1px solid black;
 }
 .member_title h2 {
+	display: inline;
     margin: 10px auto;
+}
+.member_title h2:hover {
+	cursor: pointer;
 }
 .member_list{
     min-height: 700px;
@@ -157,6 +161,7 @@ ul, li {
 }
 .admin_paging .current_page a{
     color: white;
+    font-weight: bold;
 }
 
 /* 검색 영역 */

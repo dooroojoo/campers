@@ -14,13 +14,16 @@ ul, li {
 	padding: 0;
 }
 .report_title{
-    padding-left: 20px;
+    padding: 20px;
     border-bottom: 1px solid black;
 }
 .report_title h2 {
+	display: inline;
     margin: 10px auto;
 }
-
+.report_title h2:hover {
+	cursor: pointer;
+}
 .report_list{
     min-height: 700px;
 }
@@ -118,4 +121,5 @@ ul, li {
 }
 .report_paging .current_page a{
     color: white;
+    font-weight: bold;
 }

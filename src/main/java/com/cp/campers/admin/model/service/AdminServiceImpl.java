@@ -12,6 +12,7 @@ import com.cp.campers.admin.model.dao.AdminMapper;
 import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.camp.model.vo.Camp;
+import com.cp.campers.camp.model.vo.Room;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
 
@@ -102,7 +103,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Map<String, Object> fineCampBySearch(int page, Search search) {
+	public Map<String, Object> findCampBySearch(int page, Search search) {
 		
 		// 1. 검색한 숙소개수
 		int listCount = adminMapper.getCampListCountBySearch(search);
@@ -125,11 +126,17 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Camp detailCamp(int campNo) {
+	public Map<String, Object> detailCamp(int campNo) {
 		
 		Camp camp = adminMapper.detailCamp(campNo);
 		
-		return camp;
+		List<Room> roomList = adminMapper.detailRoom(campNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("camp", camp);
+		map.put("roomList", roomList);
+		
+		return map;
 	}
 
 	@Override
@@ -138,17 +145,52 @@ public class AdminServiceImpl implements AdminService{
 		
 		int result = 0;
 		
-		int result1 = adminMapper.deleteCamp(campNo);
-		
+		// 1. 일반권한
 		MemberRole mr = new MemberRole();
 		mr.setMemberNo(userNo);
 		mr.setAuthorityCode(1);
+		int result1 = adminMapper.updateMemberRole(mr);
 		
-		int result2 = adminMapper.updateMemberRole(mr);
+		// 2. 숙소삭제
+		int result2 = adminMapper.deleteCamp(campNo);
 		
 		if(result1==1 && result2==1) result = 1;
 		
 		return result;
+	}
+
+	@Override
+	@Transactional
+	public void refusal(int campNo, int userNo, String refusal) {
+		
+		// 1. 사업자권한
+		MemberRole mr = new MemberRole();
+		mr.setMemberNo(userNo);
+		mr.setAuthorityCode(2);
+		adminMapper.updateMemberRole(mr);
+		
+		// 2. 거절
+		Map<String, Object> param = new HashMap<>();
+		param.put("refusal", refusal);
+		param.put("campNo", campNo);
+		adminMapper.refusal(param);
+	}
+
+	@Override
+	@Transactional
+	public void enroll(int campNo, int userNo) {
+		
+		// 1. 사업자권한
+		MemberRole mr = new MemberRole();
+		mr.setMemberNo(userNo);
+		mr.setAuthorityCode(2);
+		adminMapper.updateMemberRole(mr);
+		
+		// 2. 등록
+		adminMapper.enroll(campNo);
+		
+		// 3. 이력
+		adminMapper.record(campNo);
 	}
 
 }

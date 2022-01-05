@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.cp.campers.camp.model.vo.Room;
 import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
@@ -46,9 +47,21 @@ public interface AdminMapper {
 
 	// 숙소상세
 	Camp detailCamp(int campNo);
+	// 객실상세
+	List<Room> detailRoom(int campNo);
 	
 	// 숙소삭제
 	int deleteCamp(int campNo);
+
+	// 숙소거절
+	void refusal(Map<String, Object> param);
+
+	// 숙소등록
+	void enroll(int campNo);
+
+	// 등록이력
+	void record(int campNo);
+
 
 
 }

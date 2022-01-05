@@ -80,12 +80,8 @@
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">사업장 사진</span></td>
                         <td>
-                            <div class="table_div">
-                                <img src="resources/images/camp.jpg">
-                                <img src="resources/images/camp.jpg">
-                                <img src="resources/images/camp.jpg">
-                                <img src="resources/images/camp.jpg">
-                                <img src="resources/images/camp.jpg">
+                            <div class="table_div" th:each="imgfile : ${camp.imgFileList}">
+                                <img th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }">
                             </div>
                         </td>
                     </tr>
@@ -93,7 +89,7 @@
                         <td class="td_head"><span class="table_div">사업장 등록증</span></td>
                         <td>
                             <div class="table_div">
-                                <img src="/resources/images/uploadFiles/profileImg(or  다른폴더)/파일명.jpg">
+                                <!-- <img th:src="@{/resources/images/uploadFiles/businessImg/}+${camp.fileName}"> -->
                             </div>
                         </td>
                     </tr>
@@ -127,7 +123,7 @@
 
             <div class="table_title"><h3>객실</h3></div>
             <!-- 4. 신청 내용(객실) -->
-            <div class="ad_table" th:each="room : ${ camp.roomList }">
+            <div class="ad_table" th:each="room : ${ roomList }">
                 <table width="90%">
                     <colgroup>
                         <col width="20%">
@@ -188,10 +184,8 @@
                     <tr class="ad_tr">
                         <td class="td_head"><span class="table_div">객실 사진</span></td>
                         <td>
-                            <div class="table_div">
-                                <img src="resources/images/room.jpg">
-                                <img src="resources/images/room.jpg">
-                                <img src="resources/images/room.jpg">
+                            <div class="table_div" th:each="imgfile : ${room.imgFileList}">
+                                <img th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }">
                             </div>
                         </td>
                     </tr>
@@ -203,21 +197,26 @@
 
 
             <!-- 5. 버튼 영역 -->
-            <div class="">
+            <div th:if="${ camp.campStatus == 'N'}">
                 <form th:action="@{/admin/camp/refusal}" method="post">
                     <div class="ad_btnArea">
                         <div class="ad_before"><button type="button" onclick="location.href='/admin/camp'">이전</button></div>
                         <div class="ad_reject"><button type="submit">거절</button></div>
-                        <div class="ad_enroll"><button type="button" th:onclick="|location.href='@{/admin/camp/confirm(campNo=${camp.campNo})}'|">등록</button></div>
+                        <div class="ad_enroll"><button type="button" th:onclick="|location.href='@{/admin/camp/enroll(campNo=${camp.campNo}, userNo=${camp.userNo})}'|">등록</button></div>
                     </div>
                     <div class="reject_reason">
                         <div class="writeArea">
                             <textarea id="replyCont" rows="5" cols="47" style="resize:none;border:none;" maxlength="200" 
                             name="refusal" placeholder="거절 사유 작성"></textarea>
                         </div>
-                        <input type="hidden" name="campNo" th:value="${camp.campNo}"> 
+                        <input type="hidden" name="campNo" th:value="${camp.campNo}">
+                        <input type="hidden" name="userNo" th:value="${camp.userNo}"> 
                     </div>
                 </form>
+            </div>
+            
+            <div class="other" th:if="${ camp.campStatus == 'Y'}">
+            	<div class="ad_before" align="center"><button type="button" onclick="location.href='/admin/camp'">이전</button></div>
             </div>
         </div>
     </div>

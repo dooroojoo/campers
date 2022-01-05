@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cp.campers.admin.model.service.AdminService;
 import com.cp.campers.admin.model.vo.Search;
-import com.cp.campers.camp.model.vo.Camp;
 import com.cp.campers.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -74,13 +73,17 @@ public class AdminController {
 	
 	/* 회원검색 */
 	@GetMapping("member/search")
-	public String seachMember(Search search, Model model) {
+	public String searchMember(Search search, Model model) {
 	
 		int page = 1;
 		
 		Map<String, Object> map = adminService.searchMember(page, search);
 		model.addAttribute("memberList", map.get("memberList"));
 		model.addAttribute("pi", map.get("pi"));
+		
+		if (map.get("memberList").toString().equals("[]")) {
+			model.addAttribute("noResult", "검색된 회원이 없습니다.");
+		}
 		
 		return "admin/member";
 	}
@@ -128,7 +131,7 @@ public class AdminController {
 		
 		int page = 1;
 		
-		Map<String, Object> map = adminService.fineCampBySearch(page, search);
+		Map<String, Object> map = adminService.findCampBySearch(page, search);
 		
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
@@ -140,7 +143,7 @@ public class AdminController {
 	@GetMapping("camp/searchPage")
 	public String campSearchPaging(int page, Search search, Model model) {
 		
-		Map<String, Object> map = adminService.fineCampBySearch(page, search);
+		Map<String, Object> map = adminService.findCampBySearch(page, search);
 		
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
@@ -152,13 +155,10 @@ public class AdminController {
 	@GetMapping("camp/detail")
 	public String adminCampDetail(int campNo, Model model) {
 		
-		String nlString = System.getProperty("line.separator").toString();
-		
-		Camp camp = adminService.detailCamp(campNo);
-		// 강사님 여쭤보기.....
-		// log.info(camp.getCampName());
-		
-		model.addAttribute("camp", camp);
+		Map<String, Object> map = adminService.detailCamp(campNo);
+		// log.info(map.get("roomList").toString());
+		model.addAttribute("camp", map.get("camp"));
+		model.addAttribute("roomList", map.get("roomList"));
 		model.addAttribute("newReply", '\n');
 		
 		return "admin/campDetail";
@@ -166,23 +166,37 @@ public class AdminController {
 	
 	/* 숙소삭제 */
 	@GetMapping("camp/delete")
-	public String adminCampDelete(int campNo, int userNo, Model model, RedirectAttributes rttr, Locale locale) {
+	public String adminCampDelete(int campNo, int userNo, RedirectAttributes rttr, Locale locale) {
 
 		adminService.deleteCamp(campNo, userNo);
 		
-		// 일회성 저장
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteCamp", null, locale));
 		
 		return "redirect:/admin/camp";
 	}
 	
+	/* 숙소거절 */
 	@PostMapping("camp/refusal")
-	public String adminCampRefusal(String refusal, int campNo) {
-		log.info(refusal);
+	public String adminCampRefusal(int campNo, int userNo, String refusal, RedirectAttributes rttr, Locale locale) {
+		log.info("refusal : " + refusal);
+		log.info("campNo : " + campNo);
+		log.info("userNo : " + userNo);
 		
-		
+		adminService.refusal(campNo, userNo, refusal);
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("refusal", null, locale));
 		
 		return "redirect:/admin/camp";
 	}
 	
+	/* 숙소등록 */
+	@GetMapping("/camp/enroll")
+	public String adminCampEnroll(int campNo, int userNo, RedirectAttributes rttr, Locale locale) {
+		log.info("campNo : " + campNo);
+		log.info("userNo : " + userNo);
+		
+		adminService.enroll(campNo, userNo);
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("enroll", null, locale));
+		
+		return "redirect:/admin/camp";
+	}
 }

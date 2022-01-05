@@ -27,7 +27,7 @@
             <!-- 1. 숙소 관리 -->
             <div class="accomd_area">
                 <div class="accomd_title">
-                    <h2>숙소 관리</h2>
+                    <h2 onclick="location.href='/admin/camp'">숙소 관리</h2>
                 </div>
                 <div class="accomd_list">
                     <ul class="accomd_header">
@@ -52,7 +52,7 @@
                         <li class="accomd_status" th:if="${ camp.campStatus } == 'Y'">등록</li>
                         <li class="accomd_status" th:if="${ camp.campStatus } == 'N'">대기</li>
                         <li class="accomd_update" th:each="cr : ${ camp.campRecordList }">
-                            <button th:if="${ cr.recordNo } == '1'" 
+                            <button th:if="${ cr.recordNo } == '1' OR ${ cr.recordNo } == '2'" 
                             th:onclick="|location.href='@{/admin/camp/detail(campNo=${camp.campNo})}'|">보기</button>
                             <button th:if="${ cr.recordNo } == '3'" 
                             th:onclick="|location.href='@{/admin/camp/delete(campNo=${camp.campNo}, userNo=${camp.userNo})}'|">삭제</button>
