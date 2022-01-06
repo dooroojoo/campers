@@ -111,6 +111,9 @@
         .box-right {
             margin-left: auto;
         }
+        .box-right img{
+        	border: 1px solid #d1d1d1;
+        }
 
         .freeBoard-footer {
             display: flex;
@@ -205,23 +208,39 @@
     <div class="freeBoard-aside">
           
         <div>
+        <th:block sec:authorize="isAuthenticated()">
             <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+      		<a onclick="loginPlz();" class="myboard">내가 쓴 게시물</a>
+        </th:block>
         </div>
         <div>
+       	<th:block sec:authorize="isAuthenticated()">
             <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        	<a onclick="loginPlz();" class="mycomment">내가 쓴 댓글</a>
+        </th:block>
         </div>
         <div>
             <a href="/board/list" class="gotolist">목록으로</a>
         </div>
         <div>
+        <th:block sec:authorize="isAuthenticated()">
             <a href="/board/write" class="boradWrite">글쓰기</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        	<a onclick="loginPlz();" class="boradWrite">글쓰기</a>
+        </th:block>
         </div>
+       
     </div>
       <div class="freeBoard-container">
           <label class="freeBoard-label">자유게시판</label><br>
           <div class="freeBoard-header">
               <div class="place-left">
-          	<form action="/board/list/search" method="get">
+          	<form name="searchForm" action="/board/list/search" method="get">
                   <select name="searchCondition">
                       <option value="all" th:selected="${#strings.equals(param.searchCondition, 'all')}">제목+내용</option>
                       <option value="title" th:selected="${#strings.equals(param.searchCondition, 'title')}">제목</option>
@@ -232,13 +251,18 @@
                 </div>
                 <button type="submit">조회</button>
                 <div class="place-right">
-                    <select name="sort">
+                    <select name="sort" onchange="sortSubmit();">
                         <option value="desc" th:selected="${#strings.equals(param.sort, 'desc')}">최신순</option>
                         <option value="asc" th:selected="${#strings.equals(param.sort, 'asc')}">오래된순</option>
                         <option value="count" th:selected="${#strings.equals(param.sort, 'count')}">조회수순</option>
                         <option value="like" th:selected="${#strings.equals(param.sort, 'like')}">좋아요순</option>
                     </select>
           	</form>
+          	<script>
+          		function sortSubmit(){
+          			document.forms.searchForm.submit();
+          		}
+          	</script>
                 </div>
             </div>
             <div class="freeBoard-content">
@@ -256,10 +280,20 @@
             </div>
             <div class="freeBoard-footer">
                 <div class="freeBoard-footerLeft">
-                    <button>글쓰기</button>
+                <th:block sec:authorize="isAuthenticated()">
+                    <button onclick="location.href='/board/write'">글쓰기</button>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <button onclick="loginPlz();">글쓰기</button>
+                </th:block>
                 </div>
                 <div class="freeBoard-footerRight">
+                <th:block sec:authorize="isAuthenticated()">
                     <button>내글 보기</button>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <button onclick="loginPlz();">내글 보기</button>
+                </th:block>
                 </div>
             </div>
             <div class="freeBoard-pagingbar">
@@ -320,6 +354,13 @@
             </div>
         </div>
     </div>
+     <script>
+        	function loginPlz(){
+        		if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
+        			location.href="/member/login";
+        		}
+        	}
+        </script>
     <div th:replace="common/footer.html"></div>
         
 </body>
