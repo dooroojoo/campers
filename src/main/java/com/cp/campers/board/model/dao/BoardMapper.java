@@ -1,12 +1,14 @@
 package com.cp.campers.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.board.model.vo.PageInfo;
+import com.cp.campers.board.model.vo.Search;
 
 @Mapper
 public interface BoardMapper {
@@ -30,6 +32,9 @@ public interface BoardMapper {
 
 	int getListCount();
 
+	int getListCountBySearch(Search search);
+
+	List<Board> searchBoardList(Map<String, Object> param);
 
 
 }

@@ -15,10 +15,13 @@ public class Board {
 	private Date modifyDate;
 	private String status;
 	private int writer;
+	private int bcount;
+	private int blike;
 	private String nickName;
 	private int fileLevel;
 	private String fileRoute;
 	private String fileName;
+	
 	private List<BoardFileNo> boardFileNoList;
 	
 }

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cp.campers.board.model.service.BoardService;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.Search;
 import com.cp.campers.member.model.vo.UserImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +54,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/listPage")
-	public String boardListPage(Model model, int page) {
+	public String boardListPage(Model model, @RequestParam int page) {
 		
 		Map<String, Object> map = boardService.selectBoardList(page);
 		
@@ -61,7 +62,32 @@ public class BoardController {
 		model.addAttribute("pi",map.get("pi"));
 		model.addAttribute("thumbnailList", map.get("thumbnailList"));
 		
-		return "/board/list";
+		return "board/list";
+	}
+	
+	@GetMapping("/list/search")
+	public String searchBoard(Search search, Model model) {
+
+		int page = 1;
+		
+		Map<String, Object> map = boardService.searchBoardList(page, search);
+
+		model.addAttribute("boardList", map.get("boardList"));
+		model.addAttribute("pi", map.get("pi"));
+		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		
+		return "board/list";
+	}
+	@GetMapping("/list/searchPage")
+	public String searchBoardPage(Search search, Model model, int page) {
+		
+		Map<String, Object> map = boardService.searchBoardList(page, search);
+
+		model.addAttribute("boardList", map.get("boardList"));
+		model.addAttribute("pi", map.get("pi"));
+		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		
+		return "board/list";
 	}
 
 	@GetMapping("/detail")
@@ -148,7 +174,7 @@ public class BoardController {
 			}
 		}
 
-		return "board/list";
+		return "redirect:/board/list";
 	}
 
 	

@@ -51,6 +51,7 @@
 	    LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
 	    LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
     WHERE A.USER_ID = #{ userId }
+    AND STATUS = 'Y'
    </select>
    
    <insert id="insertMember" parameterType="com.cp.campers.member.model.vo.Member">
