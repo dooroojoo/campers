@@ -82,11 +82,11 @@
             <div class="reserPay_inner">
                 <div class="reserName">예약자명<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="홍길동"  name="reserName" id="" />
+                    <input type="text" placeholder="홍길동"  name="reserName" id="userName" />
                 </div>
                 <div class="phone">휴대폰 번호<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="010-1234-5678"  name="phone" id="" />
+                    <input type="text" placeholder="010-1234-5678"  name="phone" id="phone" />
                 </div>
                 <div class="request">예약 요청사항(선택)</div>
                 <div class="textbox">
@@ -99,11 +99,11 @@
             <div class="reserPay_inner">
                 <div class="account_hol">예금주<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="홍길동"  name="accountHol" id="" />
+                    <input type="text" placeholder="홍길동"  name="accountHol" id="accountHol" />
                 </div>
                 <div class="accountNum">계좌번호<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="환불 받으실 계좌번호를 입력해주세요."  name="accountNum" id="" />
+                    <input type="text" placeholder="환불 받으실 계좌번호를 입력해주세요."  name="accountNum" id="accountNum" />
                 </div>
                 <div class="bank">은행<span class="red">(*)</span></div>
                 <div class="inp_text">
@@ -187,7 +187,7 @@
                 <input type="radio" id="kakaoPay"name="payment" value="" >
                 <label class="payBox" for="kakaoPay">카카오페이</label>       
             </div>
-            <button class="goPay" id="" type="submit">결제하기</button>
+            <button class="goPay" id="" type="button" onclick="formChk()">결제하기</button>
             </form>
         </div>
     </div>
@@ -197,33 +197,94 @@
 	
 
 
+<script>
+	// 유효성 검사 
+	function formChk(){
+		 let regExp = new RegExp('pattern', 'gmi');
+		 regExp = /pattern/gmi;
+		 
+		 let selectAll = document.querySelector('#selectAll');
+		 let agreeChk1 = document.querySelector('#agreeChk1');
+		 let agreeChk2 = document.querySelector('#agreeChk2');
+		 let agreeChk3 = document.querySelector('#agreeChk3');
+		 let agreeChk4 = document.querySelector('#agreeChk4');
+		
+	     
+	     if(!check(/^[가-힣]{2,}$/, document.getElementById('userName'),
+	     "이름은 한글로 2글자 이상 입력하세요"))
+             return false;
+	     
+	     if(!check(/^\d{3}-\d{3,4}-\d{4}$/, document.getElementById('phone'), 
+         "핸드폰 번호는 -를 포함한 숫자로만 입력해주세요"))
+	    	 return false;
+	     
+	     if(!check(/^[가-힣]{2,}$/, document.getElementById('accountHol'),
+    	 "이름은 한글로 2글자 이상 입력하세요"))
+         return false;
+	     
+	     if(!check(/^[0-9]+$/, document.getElementById('accountNum'),
+    	 "계좌번호를 확인해 주세요"))
+         return false;
+	     
+	     if(!selectAll.checked || !agreeChk1.checked || !agreeChk2.checked || !agreeChk3.checked || !agreeChk4.checked) {
+	    	 alert("이용약관에 동의하셔야 합니다");
+	         return false;
+	     }
+	     
+	    // requestPay();
+	    	 
+	}
+
+	// 정규 표현식 객체, 사용자가 input태그에 입력한 태그, 그때 내가 전달할 메세지 
+    function check(regExp, input, msg){
+        // 정규 표현식 만족할 경우 true 리턴
+        if(regExp.test(input.value)) 
+        	return true;
+        // 정규 표현식 불만족할 경우 
+        alert(msg); 
+        input.value = ''; 
+        input.focus();
+        return false;
+    }
+
+</script>
+
+
+
+
 <!-- JS -->
  <script>
-    // 체크박스 체크 여부에 따른 전체체크박스 상태 
-    function checkSelectAll(checkSelectAll){
+ 
+	 // 체크박스 체크 여부에 따른 전체체크박스 체크 or 체크해제
+	 function checkSelectAll(checkSelectAll){
+	
+	     const checkboxes = document.querySelectorAll('input[name="agreeChk"]');
+	
+	     const selectAll = document.querySelector('#selectAll');
+	     
+	     const checked = document.querySelectorAll('input[name="agreeChk"]:checked');
+	
+	     if(checkboxes.length == checked.length) {
+	         selectAll.checked = true;
+	     } else {
+	         selectAll.checked = false;
+	     }
+	 }
+	 
+	   $("#selectAll").click(function(){
+	        //클릭되었으면
+	        if($("#selectAll").prop("checked")){
+	            //input태그의 name이 agreeChk인 태그들을 찾아서 checked옵션을 true로 정의
+	            $("input[name=agreeChk]").prop("checked",true);
+	            //클릭이 안되있으면
+	        }else{
+	            //input태그의 name이 agreeChk인 태그들을 찾아서 checked옵션을 false로 정의
+	            $("input[name=agreeChk]").prop("checked",false);
+	        }
+	    })
 
-        const checkboxes = document.querySelectorAll('input[name="agreeChk"]');
 
-        const selectAll = document.querySelector('#selectAll');
-        
-        const checked = document.querySelectorAll('input[name="agreeChk"]:checked');
-
-        if(checkboxes.length == checked.length) {
-            selectAll.checked = true;
-        } else {
-            selectAll.checked = false;
-        }
-    }
-    
-    // 전체 동의 시 나머지 체크박스도 체크
-    function selectAll(selectAll){
-        const checkboxes = document.querySelectorAll('input[name="agreeChk"]');
-
-        checkboxes.forEach((checkboxes) => {
-            checkboxes.checked = selectAll.checked;
-        });
-    }
-
+    // 슬라이드 다운 
     $('.checkOuter').click(function(){
         if($(this).next("pre").css("display") == "none") {
             $("pre.content").slideUp();
@@ -234,6 +295,7 @@
     });
     
     
+    // 객실 수량 
     function qtyUp(num){
 	if ($(num).parent('.inp_qty').hasClass('readOnly')) {return false;}
 	var thisVal = parseInt($(num).parents('.inp_qty').find("input").val());
@@ -249,8 +311,8 @@
         }
     }
          
- 
 </script> 
+
 
 </body>
 </html>
