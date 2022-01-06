@@ -1,8 +1,9 @@
 package com.cp.campers.camp.model.service;
 
-import com.cp.campers.camp.model.vo.Camp;
+import java.util.Map;
 
 public interface CampService {
 
-	Camp campDetail(int campNo);
+	// 숙소 상세
+	Map<String, Object> campDetail(int campNo);
 }
