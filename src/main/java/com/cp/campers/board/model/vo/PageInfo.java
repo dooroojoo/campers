@@ -113,12 +113,12 @@ public class PageInfo {
 		return endRow;
 	}
 
-	public void setStartRow(int page) {
-		this.startRow = (page - 1)*10+1;
+	public void setStartRow(int page, int boardLimit) {
+		this.startRow = (page - 1)*boardLimit+1;
 	}
 
-	public void setEndRow(int startRow) {
-		this.endRow = startRow + 10 - 1;
+	public void setEndRow(int startRow, int boardLimit) {
+		this.endRow = startRow + boardLimit - 1;
 	}
 	
 }

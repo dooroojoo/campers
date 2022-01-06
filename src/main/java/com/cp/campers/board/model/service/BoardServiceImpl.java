@@ -11,6 +11,7 @@ import com.cp.campers.board.model.dao.BoardMapper;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.board.model.vo.PageInfo;
+import com.cp.campers.board.model.vo.Search;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -38,10 +39,10 @@ public class BoardServiceImpl implements BoardService {
 
 		int listCount = boardMapper.getListCount();
 		
-		PageInfo pi = new PageInfo(page, listCount, 7, 10);
+		PageInfo pi = new PageInfo(page, listCount, 10, 7);
 		
-		pi.setStartRow(page); 
-		pi.setEndRow(pi.getStartRow());
+		pi.setStartRow(page, pi.getBoardLimit()); 
+		pi.setEndRow(pi.getStartRow(),pi.getBoardLimit() );
 		
 		List<Board> boardList = boardMapper.selectBoardList(pi);
 		
@@ -71,6 +72,32 @@ public class BoardServiceImpl implements BoardService {
 	public Board boardDetail(int bid) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Map<String, Object> searchBoardList(int page, Search search) {
+		
+		int listCount = boardMapper.getListCountBySearch(search);
+		
+		PageInfo pi = new PageInfo(page, listCount, 10, 7);
+		
+		pi.setStartRow(page, pi.getBoardLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("search", search);
+		
+		List<Board> boardList = boardMapper.searchBoardList(param);
+		
+		List<Board> thumbnailList = boardMapper.selectThumbnailList();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pi", pi);
+		map.put("boardList", boardList);
+		map.put("thumbnailList", thumbnailList);
+		
+		return map;
 	}
 
 }

@@ -221,22 +221,24 @@
           <label class="freeBoard-label">자유게시판</label><br>
           <div class="freeBoard-header">
               <div class="place-left">
-                  <select>
-                      <option>전체</option>
-                      <option>제목</option>
-                      <option>내용</option>
-                      <option>닉네임</option>
+          	<form action="/board/list/search" method="get">
+                  <select name="searchCondition">
+                      <option value="all" th:selected="${#strings.equals(param.searchCondition, 'all')}">제목+내용</option>
+                      <option value="title" th:selected="${#strings.equals(param.searchCondition, 'title')}">제목</option>
+                      <option value="content" th:selected="${#strings.equals(param.searchCondition, 'content')}">내용</option>
+                      <option value="nickname" th:selected="${#strings.equals(param.searchCondition, 'nickname')}">닉네임</option>
                     </select>
-                    <input type="text" placeholder="검색어를 입력해 주세요.">
+                    <input type="text" name="searchValue" placeholder="검색어를 입력해 주세요." th:value="${param.searchValue}">
                 </div>
-                <button>조회</button>
+                <button type="submit">조회</button>
                 <div class="place-right">
-                    <select>
-                        <option>최신순</option>
-                        <option>오래된순</option>
-                        <option>조회수순</option>
-                        <option>좋아요순</option>
+                    <select name="sort">
+                        <option value="desc" th:selected="${#strings.equals(param.sort, 'desc')}">최신순</option>
+                        <option value="asc" th:selected="${#strings.equals(param.sort, 'asc')}">오래된순</option>
+                        <option value="count" th:selected="${#strings.equals(param.sort, 'count')}">조회수순</option>
+                        <option value="like" th:selected="${#strings.equals(param.sort, 'like')}">좋아요순</option>
                     </select>
+          	</form>
                 </div>
             </div>
             <div class="freeBoard-content">
@@ -262,7 +264,9 @@
             </div>
             <div class="freeBoard-pagingbar">
                <div class="member_pages">
-                    <ul class="member_paging">
+               
+               		<!-- 그냥 페이징 -->
+                    <ul class="member_paging" th:if="${#strings.isEmpty(param.searchCondition)}">
 
                         <li><a href="/board/listPage?page=1">&lt;&lt;</a></li>
                      
@@ -283,6 +287,32 @@
                         
                         <li><a th:href="@{/board/listPage(page=${pi.maxPage})}">&gt;&gt;</a></li>
                     </ul>
+                    
+                    
+                    
+                    <!-- 검색페이징 -->
+                  
+                   <ul class="member_paging" th:unless="${#strings.isEmpty(param.searchCondition)}">
+
+                        <li><a th:href="@{/board/list/searchPage(page=1, searchCondition=${param.searchCondition}, searchValue=${param.searchValue}, sort=${param.sort})}">&lt;&lt;</a></li>
+                     
+                        <li th:if="${ pi.page > 1}"><a th:href="@{/board/list/searchPage(page=${pi.page-1}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue}, sort=${param.sort})}">&lt;</a></li>
+                        <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
+                       
+                            <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                                <div class="current_page" th:if="${p==pi.page}">
+                                    <a href="#" th:text="${p}"></a>
+                                </div>
+                                <div th:if="${ p != pi.page}">
+                                	<a th:href="@{/board/list/searchPage(page=${p}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue}, sort=${param.sort})}" th:text="${p}"></a>
+                                </div>
+                            </li>
+                      
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/board/list/searchPage(page=${pi.page+1}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue}, sort=${param.sort})}">&gt;</a></li>
+                        <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
+                        
+                        <li><a th:href="@{/board/list/searchPage(page=${pi.maxPage}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue}, sort=${param.sort})}">&gt;&gt;</a></li>
+                    </ul> 
                 </div> 
 
 

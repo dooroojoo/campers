@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.Search;
 
 public interface BoardService {
 	
@@ -19,6 +20,8 @@ public interface BoardService {
 	int updateBoard(Board board);
 	
 	Board boardDetail(int bid);
+
+	Map<String, Object> searchBoardList(int page, Search search);
 
 
 

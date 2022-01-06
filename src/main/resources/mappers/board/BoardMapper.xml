@@ -10,6 +10,8 @@
 	<result property="modifyDate" column="MODIFY_DATE"/>
 	<result property="status" column="STATUS"/>
 	<result property="writer" column="WRITER"/>
+	<result property="bcount" column="BCOUNT"/>
+	<result property="blike" column="BLIKE"/>
 	<result property="nickName" column="NICKNAME"/>
 	<result property="fileLevel" column="FILE_LEVEL"/>
 	<result property="fileRoute" column="FILE_ROUTE"/>
@@ -40,7 +42,9 @@ VALUES
 	SYSDATE,
 	SYSDATE,
 	DEFAULT,
-	#{writer}
+	#{writer},
+	DEFAULT,
+	DEFAULT
 )
 </insert>
 <insert id="insertBoardImage" parameterType="com.cp.campers.board.model.vo.Attachment">
@@ -95,5 +99,76 @@ select
     where file_level = 0
     and file_status = 'N'
     order by bid desc
+</select>
+
+<select id="getListCountBySearch" parameterType="com.cp.campers.board.model.vo.Search" resultType="_int">
+select
+		count(*)
+ 	from board b 
+    left join member m on(user_no=writer)
+where b.status = 'N'
+ <choose>
+ <when test="searchCondition == 'all'">
+ and (btitle like '%'||#{searchValue}||'%' or bcontent like '%'||#{searchValue}||'%')
+ </when>
+ <when test="searchCondition == 'title'">
+ and btitle like '%'||#{searchValue}||'%'
+ </when>
+ <when test="searchCondition == 'content'">
+ and bcontent like '%'||#{searchValue}||'%'
+ </when>
+ <when test="searchCondition == 'nickname'">
+ and nickname= #{searchValue}
+ </when>
+ </choose>
+</select>
+
+<select id="searchBoardList" parameterType="hashmap" resultMap="boardResultMap">
+SELECT *
+FROM (SELECT ROWNUM RNUM, A.*
+FROM (select 
+            bid, 
+            btitle, 
+            bcontent, 
+            b.modify_date, 
+            b.create_date,
+            nickName,
+            bcount,
+            blike
+      from board b
+      join member m on (b.writer = m.user_no)
+      where b.status = 'N'
+<choose>
+<when test="search.searchCondition == 'all'">
+and (btitle like '%'||#{search.searchValue}||'%' or bcontent like '%'||#{search.searchValue}||'%')
+</when>
+<when test="search.searchCondition == 'title'">
+and btitle like '%'||#{search.searchValue}||'%'
+</when>
+<when test="search.searchCondition == 'content'">
+and bcontent like '%'||#{search.searchValue}||'%'
+</when>
+<when test="search.searchCondition == 'nickname'">
+and nickname= #{search.searchValue}
+</when>
+</choose>
+<choose>
+<when test="search.sort == 'desc'">
+ORDER BY bid DESC) A)
+</when>
+<when test="search.sort == 'asc'">
+ORDER BY bid ASC) A)
+</when>
+<when test="search.sort == 'count'">
+ORDER BY bcount desc, bid desc) A)
+</when>
+<when test="search.sort == 'like'">
+ORDER BY blike desc, bid desc) A)
+</when>
+<otherwise>
+ORDER BY bid DESC) A)
+</otherwise>
+</choose>
+where RNUM between #{pi.startRow} and #{pi.endRow}
 </select>
 </mapper>
