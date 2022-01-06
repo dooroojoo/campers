@@ -119,7 +119,7 @@
 	</resultMap>
 	
 
-	<select id="detailCamp" parameterType="_int" resultMap="campResultMap">
+	<select id="campDetail" parameterType="_int" resultMap="campResultMap">
 		SELECT
 		      C.CAMP_NO
 		    , C.CAMP_NAME
@@ -146,7 +146,7 @@
 		     AND I.FILE_STATUS = 'N'
 	</select>
 	
-	<select id="detailRoom" parameterType="_int" resultMap="roomResultMap">
+	<select id="roomList" parameterType="_int" resultMap="roomResultMap">
 		SELECT
 			  R.ROOM_NO
 			, R.ROOM_NAME
@@ -165,7 +165,28 @@
 		 JOIN IMAGEFILE I ON(I.FILE_NO = RF.FILE_NO)
 		WHERE R.CAMP_NO = #{ campNo }
 		  AND I.FILE_STATUS = 'N'
+		  AND I.FILE_LEVEL = '1'
 	</select>
 	
+	<select id="roomDetail" parameterType="_int" resultMap="roomResultMap">
+		SELECT
+			  R.ROOM_NO
+			, R.ROOM_NAME
+            , R.ROOM_MEMBER
+            , R.ROOM_PRICE
+            , R.ROOM_SIZE
+            , R.ROOM_FLOOR
+            , R.ROOM_PARKING
+            , R.ROOM_INFO
+            , R.ROOM_AMOUNT
+            , R.ROOM_FORM
+            , I.FILE_NAME
+            , I.FILE_ROUTE
+		 FROM ROOM R
+		 JOIN ROOM_FILE RF ON(R.ROOM_NO = RF.ROOM_NO)
+		 JOIN IMAGEFILE I ON(I.FILE_NO = RF.FILE_NO)
+		WHERE R.ROOM_NO = #{ roomNo }
+		  AND I.FILE_STATUS = 'N'
+	</select>
 	
 </mapper>

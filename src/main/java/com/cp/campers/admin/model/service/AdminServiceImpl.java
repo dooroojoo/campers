@@ -34,8 +34,8 @@ public class AdminServiceImpl implements AdminService{
 		// 2. PageInfo 객체
 		PageInfo pi = new PageInfo(page, listCount, 10, 10);
 		// 3. 페이징 처리된 회원목록
-		pi.setStartRow(page);
-		pi.setEndRow(pi.getStartRow());
+		pi.setStartRow(page, pi.getUserLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getUserLimit());
 		List<Member> memberList = adminMapper.findAllMember(pi);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -70,8 +70,8 @@ public class AdminServiceImpl implements AdminService{
 		// 2. PageInfo 객체
 		PageInfo pi = new PageInfo(page, listCount, 10, 10);
 		// 3. 페이징 처리된 회원목록
-		pi.setStartRow(page);
-		pi.setEndRow(pi.getStartRow());
+		pi.setStartRow(page, pi.getUserLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getUserLimit());
 		Map<String, Object> param = new HashMap<>();
 		param.put("pi", pi);
 		param.put("search", search);
@@ -90,8 +90,8 @@ public class AdminServiceImpl implements AdminService{
 		int listCount = adminMapper.getCampListCount();
 		
 		PageInfo pi = new PageInfo(page, listCount, 10, 10);
-		pi.setStartRow(page);
-		pi.setEndRow(pi.getStartRow());
+		pi.setStartRow(page, pi.getUserLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getUserLimit());
 		
 		List<Camp> campList = adminMapper.findAllCamp(pi);
 		
@@ -109,8 +109,8 @@ public class AdminServiceImpl implements AdminService{
 		int listCount = adminMapper.getCampListCountBySearch(search);
 		// 2. PageInfo 객체생성
 		PageInfo pi = new PageInfo(page, listCount, 10, 10);
-		pi.setStartRow(page);
-		pi.setEndRow(pi.getStartRow());
+		pi.setStartRow(page, pi.getUserLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getUserLimit());
 		
 		Map<String, Object> param = new HashMap<>();
 		param.put("pi", pi);

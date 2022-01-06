@@ -88,7 +88,9 @@ hr {
     margin: 35px 0;
 }
 .ad_btnArea button {
-    margin: 0 25px;
+    margin: 0 10px;
+    padding: .4em .9em;
+    border-radius: 5px;
 }
 .ad_before button,
 .ad_reject button,
@@ -96,7 +98,6 @@ hr {
     width: 5em;
     height: 2.5em;
     border: rgb(239, 239, 239);
-    border-radius: 8px
 }
 .ad_before button:hover,
 .ad_reject button:hover,
@@ -107,11 +108,11 @@ hr {
     background: lightgray;
     color: white;
 }
-.ad_reject button { /* 거절 */
+.ad_enroll button { /* 등록 */
     background: black;
     color: white;
 }
-.ad_enroll button { /* 등록 */
+.ad_reject button { /* 거절 */
     background: white;
     color: black;
     border: 1px solid darkgray;

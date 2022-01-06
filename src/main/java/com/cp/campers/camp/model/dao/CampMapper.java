@@ -13,7 +13,10 @@ public interface CampMapper {
 	// 숙소 조회
 	Camp campDetail(int campNo);
 
+	// 객실목록 조회
+	List<Room> roomList(int campNo);
+
 	// 객실 조회
-	List<Room> detailRoom(int campNo);
+	Room roomDetail(int roomNo);
 
 }

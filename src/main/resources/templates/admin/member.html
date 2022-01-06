@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>admin member</title>
+<title>회원관리</title>
 <script>
 	const successMessage = '[[${ successMessage }]]';
 	
@@ -13,8 +13,8 @@
 
 	<!-- css -->
 	<link href="/resources/css/admin/member.css" rel="stylesheet" type="text/css">
-	<!-- css -->
-	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
+	<!-- js -->
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{/resources/js/admin/slick/slick.css}"/> -->
 
 </head>
 <body>
@@ -80,7 +80,7 @@
 
 
                 <!-- 페이징 처리 -->
-                <div class="admin_pages" th:if="${#strings.isEmpty(param.searchCondition)}">
+                <div class="admin_pages" th:if="${#strings.isEmpty(noResult)}">
                     <ul class="admin_paging">
 
 
@@ -124,7 +124,7 @@
             <!-- 2. 회원 검색 영역 -->
             <div class="search_area">
 
-                <form action="/admin/member/search" method="get">
+                <form action="/admin/member/search" name="searchForm" method="get">
                     <div class="select_wrap conditionWrap">
                         <select id="searchCondition" name="searchCondition">
                             <option value="no" th:selected="${#strings.equals(param.searchCondition, 'no')}">회원번호</option>
@@ -134,15 +134,36 @@
 
 
                     <span class="input_area">
-                        <input type="search" name="searchValue" th:value="${ param.searchValue }">
+                        <input type="text" id="searchValue" name="searchValue" th:value="${ param.searchValue }">
 					</span>
 
 
 					<button type="submit">검색</button>
 				</form>
-
+				
+				<script>
+					document.forms.searchForm.onsubmit = function(){
+						
+						let condition = document.getElementById('searchCondition');
+						condition = condition.options[condition.selectedIndex].value;
+						
+						if(condition == 'no') {
+							if(!check(/^\d{1,9}$/, document.getElementById('searchValue'), "회원번호는 숫자만 입력해주세요."))
+				                return false;
+						}		
+					}
+					
+					function check(regExp, input, msg){
+			            // 정규 표현식을 만족할 경우 true 리턴
+			            if(regExp.test(input.value)) return true;
+			            // 정규 표현식 불만족할 경우
+			            alert(msg);
+			            input.value = '';
+			            input.focus();
+			            return false;
+			        }
+				</script>
             </div>
-
         </div>
     </div>
 </body>

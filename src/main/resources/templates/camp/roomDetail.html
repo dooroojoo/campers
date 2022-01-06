@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>room detail</title>
@@ -27,36 +27,11 @@
                 <div class="swiper mySwiper1">
                     <div class="swiper-wrapper">
 
-                        <div class="swiper-slide">
-                            <div class="div-img">
-                                <img src="resources/images/camp.jpg">
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="div-img">
-                                <img src="resources/images/camp.jpg">
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="div-img">
-                                <img src="resources/images/room.jpg">
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="div-img">
-                                <img src="resources/images/camp.jpg">
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="div-img">
-                                <img src="resources/images/room.jpg">
-                            </div>
-                        </div>
-
+                        <div class="swiper-slide" th:each="imgfile : ${room.imgFileList}">
+	                        <div class="div-accomdImg">
+	                            <img th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }">
+	                        </div>
+	                    </div>
 
                     </div>
                 </div>
@@ -100,8 +75,8 @@
             </script>
 
             <div class="">
-                <div class="room_exp"><p>6인 가족형</p></div>
-                <div class="room_price"><h2>100,000</h2>원</div>
+                <div class="room_exp"><p th:text="|최대 ${ room.roomMember }(인)|"></p></div>
+                <div class="room_price"><h2 th:text="|${#numbers.formatInteger(room.roomPrice, 0, 'COMMA')}|"></h2>원</div>
             </div>
 
             <div class="room_content">  
@@ -117,10 +92,10 @@
                             <li class="parking">주차</li>
                         </ul>
                         <ul>
-                            <li class="type">카라반</li>
-                            <li class="size">20㎡</li>
-                            <li class="floor">기타</li>
-                            <li class="parking">텐트 옆 주차</li>
+                            <li class="type" th:text="${ room.roomForm }"></li>
+                            <li class="size" th:text="|${ room.roomSize }㎡|"></li>
+                            <li class="floor"  th:text="${ room.roomFloor }"></li>
+                            <li class="parking" th:text="${ room.roomParking }"></li>
                         </ul>
                     </fieldset>
                 </div>
@@ -133,10 +108,9 @@
                 <div class="room_intro">
                     <fieldset>
                         <legend><h5>객실 소개</h5></legend>
-                        <pre>
-    객실내 냉난방기 완비, 개별화장실, LED TV(IPTV), 냉장고, 개별싱크대, 가스버너,
-    취사도구(식기,후라이팬,냄비 등), 전기포트, 밥솥, 바디워시, 샴푸, 린스, 비누, 더블침대(퀸사이즈)
-                        </pre>
+                        <div class="table_div">
+                            	<p th:utext="${#strings.replace(room.roomInfo, newReply, '<br>')}"></p>
+                            </div>
                     </fieldset>
                 </div>
 
