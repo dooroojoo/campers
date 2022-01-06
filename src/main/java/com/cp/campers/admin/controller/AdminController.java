@@ -136,6 +136,10 @@ public class AdminController {
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
 		
+		if (map.get("campList").toString().equals("[]")) {
+			model.addAttribute("noResult", "검색된 숙소가 없습니다.");
+		}
+		log.info(map.get("pi").toString());
 		return "admin/camp";
 	}
 	

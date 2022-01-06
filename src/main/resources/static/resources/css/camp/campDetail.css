@@ -39,13 +39,12 @@ ul, li {
 /*----- 1. 숙소명 헤더 -----*/
 .accom_header {
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
     align-items: center;
-    margin: 15px 0;
+    margin: 0 35px 25px 35px;
 }
 .btnBefore {    /* 이전 */
     font-size: 30px;
-    margin-right: 32%;
 }
 
 .btnBefore:hover {
@@ -163,6 +162,9 @@ ul, li {
     color: rgb(155, 155, 155);
     font-size: 12px;
     padding: 10px 15px 0px 15px;
+}
+.check_io h5 {
+	margin: 0;
 }
 
 .io_date {
@@ -305,32 +307,41 @@ fieldset {
 }
 
 .checkTime_ul { /* 입퇴실 시간 */
-    line-height: 45px;
+    line-height: 10px;
 	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 	list-style: none;
     text-align: left; 
 }
 
 #checkTime_li_icon {
-    width: 55px;
+    width: 10%;
     text-align: center;
 }
 
 .checkTime_li {
-    width: 60px;
+    width: 11%;
 }
 
 .checkTime_li_io {
-    width: 70px;
+    width: 12%;
+}
+.checkTime_li h5,
+.checkTime_li_io h5 {
+	color: tomato;
 }
 
-
 .policyIcon { /* 운영 정책 안내 */
-    padding: 0 19px;
+    width: 10%;
+    text-align: center;
 }
 
 .policyArea {
-    padding-top: 20px;
+    padding-top: 10px;
+}
+#policyTxt {
+	max-width: 85%
 }
 
 
@@ -397,9 +408,9 @@ fieldset {
 .rooms_img {
     width: 100%;
     height: 70%;
-    background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+  	background-position: center;
+  	background-repeat: no-repeat;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     overflow:hidden;

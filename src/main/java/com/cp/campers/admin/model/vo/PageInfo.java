@@ -105,16 +105,16 @@ public class PageInfo {
 		return startRow;
 	}
 
-	public void setStartRow(int page) {
-		this.startRow = (page - 1) * 10 + 1;
+	public void setStartRow(int page, int userLimit) {
+		this.startRow = (page - 1) * userLimit + 1;
 	}
 
 	public int getEndRow() {
 		return endRow;
 	}
 
-	public void setEndRow(int startRow) {
-		this.endRow = startRow + 10 -1;
+	public void setEndRow(int startRow, int userLimit) {
+		this.endRow = startRow + userLimit -1;
 	}
 
 	@Override

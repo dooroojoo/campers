@@ -23,17 +23,22 @@ public class CampServiceImpl implements CampService{
 
 	/* 숙소 조회 */
 	@Override
-	public Map<String, Object> campDetail(int campNo) {
+	public Map<String, Object> campDetail(int campNo) {    
 		
 		Camp camp = campMapper.campDetail(campNo);
 		
-		List<Room> roomList = campMapper.detailRoom(campNo);
+		List<Room> roomList = campMapper.roomList(campNo);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("camp", camp);
 		map.put("roomList", roomList);
 		
 		return map;
+	}
+
+	@Override
+	public Room roomDetail(int roomNo) {
+		return campMapper.roomDetail(roomNo);
 	}
 
 	

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>admin camp detail</title>
+<title>숙소 관리</title>
 
 	<!-- css -->
 	<link href="/resources/css/admin/campDetail.css" rel="stylesheet" type="text/css">
@@ -196,18 +196,22 @@
             <hr style="border: solid 1px #dadada; margin-top: 100px;">
 
 
+
             <!-- 5. 버튼 영역 -->
             <div th:if="${ camp.campStatus == 'N'}">
-                <form th:action="@{/admin/camp/refusal}" method="post">
+                <form name="refusalForm" method="post">
                     <div class="ad_btnArea">
                         <div class="ad_before"><button type="button" onclick="location.href='/admin/camp'">이전</button></div>
-                        <div class="ad_reject"><button type="submit">거절</button></div>
-                        <div class="ad_enroll"><button type="button" th:onclick="|location.href='@{/admin/camp/enroll(campNo=${camp.campNo}, userNo=${camp.userNo})}'|">등록</button></div>
+                        <div class="ad_reject"><button type="button" th:onclick="'refusalCamp('+${camp.campNo}+', '+${camp.userNo}+')'">거절</button></div>
+                        <div class="ad_enroll">
+                        	<button type="button" 
+                        	th:onclick="|location.href='@{/admin/camp/enroll(campNo=${camp.campNo}, userNo=${camp.userNo})}'|">등록</button>
+                        </div>
                     </div>
                     <div class="reject_reason">
                         <div class="writeArea">
-                            <textarea id="replyCont" rows="5" cols="47" style="resize:none;border:none;" maxlength="200" 
-                            name="refusal" placeholder="거절 사유 작성"></textarea>
+                            <textarea name="refusal" id="replyCont" rows="5" cols="47" style="resize:none;border:none;" 
+                            maxlength="200" placeholder="거절 사유 작성"></textarea>
                         </div>
                         <input type="hidden" name="campNo" th:value="${camp.campNo}">
                         <input type="hidden" name="userNo" th:value="${camp.userNo}"> 
@@ -220,5 +224,19 @@
             </div>
         </div>
     </div>
+    
+<script>
+    function refusalCamp(campNo, userNo){
+    	
+    	let refusal = document.forms.refusalForm.refusal.value.length;
+    	
+    	if(refusal == 0){
+			alert("내용을 입력해주세요.");    		
+    	} else {
+	    	document.forms.refusalForm.action="/admin/camp/refusal";
+	    	document.forms.refusalForm.submit();
+    	}
+    }
+</script>
 </body>
 </html>

@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cp.campers.camp.model.service.CampService;
+import com.cp.campers.camp.model.vo.Room;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/camp")
 public class CampController {
@@ -28,8 +31,19 @@ public class CampController {
 		model.addAttribute("camp", map.get("camp"));
 		model.addAttribute("roomList", map.get("roomList"));
 		model.addAttribute("newReply", '\n');
-		
+		log.info(map.get("roomList").toString());
 		return "camp/campDetail";
+	}
+	
+	@GetMapping("roomDetail")
+	public String roomDetail(int roomNo, Model model) {
+		log.info("roomNo : " + roomNo);
+		
+		// Room room = campService.roomDetail(roomNo);
+		// model.addAttribute("room", room);
+		// model.addAttribute("newReply", '\n');
+		
+		return "camp/roomDetail";
 	}
 	
 }

@@ -2,29 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>camp detail</title>
+<title th:text="${camp.campName}"></title>
 
 	<!-- css -->
 	<link href="/resources/css/camp/campDetail.css" rel="stylesheet" type="text/css">
-	<!-- css -->
-	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
 	
 	<!-- icon -->
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	
 	<!-- 슬라이드 -->
 	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	
-	<!-- JQuery-->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-	crossorigin="anonymous"></script>
-	
-	<!-- 외부 폰트 -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
-
 </head>
 <body>
 <div th:replace="common/header.html"></div>
@@ -33,8 +24,11 @@
     <div class="accom_content">
         <!-- 1. 숙소 헤더 -->
         <div class="accom_header">
-            <div class="btnBefore"><i class="fas fa-chevron-left"></i></div>
+            <div class="btnBefore">
+            	<i class="fas fa-chevron-left" onclick="location.href='javascript:history.back();'"></i>
+            </div>
             <div class="accom_title"><h2 th:text="${camp.campName}"></h2></div>
+            <div></div>
         </div>
 
 
@@ -104,8 +98,9 @@
             <div class="accom_profile">
                 <div class="accom_address">
                     <span class="accom_profile_icon"><i class="far fa-map"></i></span>
-                    <span class="text_controller" id="address" style="padding: 0;" th:text="${ camp.campAddress }">
-                        <i class="far fa-copy" id="copy" onclick="clip();"></i>
+                    <span class="text_controller" id="address" style="padding: 0;">
+                    	<span th:text="${ camp.campAddress }"></span>
+                    	<span class="clipIcon"><i class="far fa-copy" id="copy" onclick="clip();"></i></span>
                     </span>
                 </div>
                 <div class="accom_phone">
@@ -131,12 +126,12 @@
 
                         <div class="rv_top">
                             <div class="check_left">
-                                <div class="check_io">체크인</div>
+                                <div class="check_io"><h5>CHECK IN</h5></div>
                                 <div class="io_date">2021.12.05</div>
                             </div>
     
                             <div class="check_right">
-                                <div class="check_io">체크아웃</div>
+                                <div class="check_io"><h5>CHECK OUT</h5></div>
                                 <div class="io_date">2021.12.07</div>
                             </div>
                         </div>
@@ -152,9 +147,7 @@
                             <div class="rv_select">
                                 <select id="roomName" name="roomName">
                                     <option checked>객실을 선택해주세요</option>
-                                    <option>감성 카라반01(오션뷰)</option>
-                                    <option>감성 카라반02(건물뷰)</option>
-                                    <option>독채형 카라반03(오션뷰)</option>
+                                    <option th:each="room : ${roomList}" th:text="${room.roomName}"></option>
                                 </select>
                             </div>
                         </div>
@@ -196,27 +189,27 @@
                         <ul class="main_icon">
                             <li class="fac1">주요 시설</li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/shower.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/shower.png">
                                 <div class="fac_msg">샤워실</div>
                             </li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/toilet.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/toilet.png">
                                 <div class="fac_msg">화장실</div>
                             </li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/water.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/water.png">
                                 <div class="fac_msg">개수대</div>
                             </li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/supermarcket.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/supermarcket.png">
                                 <div class="fac_msg">매점</div>
                             </li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/wifi.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/wifi.png">
                                 <div class="fac_msg">와이파이</div>
                             </li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/plug.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/plug.png">
                                 <div class="fac_msg">전기</div>
                             </li>
                         </ul>
@@ -228,19 +221,19 @@
                         <ul class="sub_icon">
                             <li class="fac1">부가 이용</li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/pool.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/pool.png">
                                 <div class="fac_msg">수영장</div>
                             </li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/barbecueGrill.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/barbecueGrill.png">
                                 <div class="fac_msg">바베큐그릴</div>
                             </li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/cutlery.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/cutlery.png">
                                 <div class="fac_msg">조식제공</div>
                             </li>
                             <li class="fac1">
-                                <img class="icon_img" src="resources/images/animal.png">
+                                <img class="icon_img" src="/resources/images/admin/facility/animal.png">
                                 <div class="fac_msg">반려동물</div>
                             </li>
                         </ul>
@@ -262,9 +255,9 @@
                     <div class="check_time">
                         <ul class="checkTime_ul">
                             <li id="checkTime_li_icon"><i class="far fa-calendar-alt"></i></li>
-                            <li class="checkTime_li">체크인</li>
+                            <li class="checkTime_li"><h5>CHECK IN</h5></li>
                             <li class="checkTime_li">15:00</li>
-                            <li class="checkTime_li_io">체크아웃</li>
+                            <li class="checkTime_li_io"><h5>CHECK OUT</h5></li>
                             <li class="checkTime_li_io">11:00</li>
                         </ul>
                     </div>
@@ -273,7 +266,9 @@
 
                     <div class="policyArea">
                         <div class="policyIcon"><i class="fas fa-info-circle"></i></div>
-                        <div class="text_controller"><p th:utext="${#strings.replace(camp.campPolicy, newReply, '<br>')}"></p></div>
+                        <div class="text_controller" id="policyTxt">
+                        	<p th:utext="${#strings.replace(camp.campPolicy, newReply, '<br>')}"></p>
+                        </div>
                     </div>
 
 
@@ -321,8 +316,13 @@
                 <div class="rooms_area">
                 
                     <div class="rooms_wrap" th:each="room : ${ roomList }">
-                        <div class="rooms_img" style="background-image: url(resources/images/room.jpg);" onclick="show();"></div>
-                        <div class="rooms_info" onclick="show();">
+                     <div class="rooms_img" th:each="imgfile : ${room.imgFileList}" 
+                        th:style="'background-image: url(' + @{${imgfile.fileRoute} + ${imgfile.fileName}} + ');'"  th:onclick="'show('+${room.roomNo}+')'">                        
+                        </div>
+                        	<!-- <img th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }"> -->
+                        
+                        
+                        <div class="rooms_info">
                             <div class="info_roomName" th:text="${ room.roomName }"></div>
                             <div class="info_person" th:text="|${ room.roomMember } 인|"></div>
                         </div>
@@ -459,8 +459,9 @@
 <div th:replace="camp/roomDetail.html"></div>
 
 <script>
-    function show() {
+    function show(roomNo) {
         document.querySelector(".modal_background").className = "modal_background show";
+        location.href='/camp/roomDetail?roomNo='+roomNo;
     }
 
     function close() {

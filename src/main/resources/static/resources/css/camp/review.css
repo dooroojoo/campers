@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+.review_outer {
+    width: 1000px;
+    margin: auto;
+}
+
+.review_wrap {
+    width: 980px;
+}
+
+/*----- 1. 리뷰 타이틀 -----*/
+.review_title{
+    padding: 5px 15px;
+    border-bottom: 1px solid rgb(128, 128, 128);
+}
+.review_title h3 {
+    margin: 0;
+}
+
+/*----- 2. 리뷰 작성 -----*/
+.writeArea_wrap {
+    text-align: center;
+}
+
+.writeArea_wrap h5{ /* 리뷰 쓰기 */
+    text-align: left;
+    margin: 20px 270px 0px 270px;
+}
+
+.writeArea {    /* 리뷰 작성 영역 */
+    margin: 1em auto 2.5em auto;
+    padding: .5em;
+    width: 450px;
+    border: 1px solid #dadada;
+    border-radius: 15px;
+}
+.writeArea textarea:focus {
+    outline: none;
+}
+
+/*----- 3. 리뷰 버튼 -----*/
+.btnArea button {
+    margin: 0 10px;
+    padding: .4em .9em;
+    border-radius: 5px;
+}
+
+.btnArea button:hover {
+    cursor: pointer;
+}
+
+.btnBefore { /* 이전 버튼 */
+    background-color: rgb(239, 239, 239);    ;
+    border: 1px solid rgb(239, 239, 239);
+}
+
+.btnSubmit { /* 등록 버튼 */
+    background: black;
+    color: white;
+    border: 1px solid black;
+}
