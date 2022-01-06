@@ -31,7 +31,8 @@
             </header>
         </div>
         <!--   -->
-            <form th:action="@{/mypage/mypage_camp_enrollment}" method="post">
+            <form th:action="@{/mypage/mypage_camp_enrollment}" method="post"
+            		enctype="multipart/form-data">
             <table class="mypage_camp_enrollment_table">
                 <tr class="mypage_camp_enrollment_table_header">
                     <th colspan="2">캠핑장 등록 정보 신청서</th>
@@ -54,11 +55,11 @@
                 </tr>
                 <tr>
                     <th>사업자 등록증</th>
-                    <td><input type="file"></td>
+                    <td><input multiple="multiple" type="file" name="campPath"></td>
                 </tr>
                 <tr>
                     <th>사업장 사진</th>
-                    <td><input type="file">
+                    <td><input multiple="multiple" type="file" name="fileNo">
                 </tr>
                 <tr>
                     <th>사업장 계좌번호</th>
