@@ -74,7 +74,7 @@ public class SearchController {
 								@RequestParam(value="area") String area,
 								@RequestParam(value="daterange") String daterange,
 								@RequestParam(value="quantity") String quantity,
-								@RequestParam(value="name", required=false, defaultValue="null") String name,
+								@RequestParam(value="name", required=false, defaultValue="") String name,
 								@RequestParam(value="type", required=false, defaultValue="") List<String> typeArr,
 								@RequestParam(value="facility", required=false, defaultValue="") List<String> facilityArr,
 								@RequestParam(value="floor", required=false, defaultValue="") List<String> floorArr
@@ -157,6 +157,12 @@ public class SearchController {
 		}
 		
 		
+		// 체크박스 선택 값 배열 다시 보내주기
+//		mv.addObject("typeArr", typeArr);
+//		mv.addObject("facilityArr", facilityArr);
+//		mv.addObject("floorArr", floorArr);
+		
+		mv.addObject("map", map);
 		mv.addObject("paging", pi);
 		mv.addObject("findCamp", campFindSearch);
 		mv.setViewName("search/findCamp");

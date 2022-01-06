@@ -28,10 +28,11 @@
           <!-- 검색 조건 컨텐츠 -->
         <div class="search-check">
             <div class="search-form">
-                <form class="search-camping-form" action="/search/find" method="get">
+                <form class="search-camping-form" action="/search/find"  method="get">
+                <input type="hidden" th:each="map:${map}">
                    <p>지역</p>
                    <label class="search-area search-container">
-                   <input type="text" placeholder="어디로 여행가세요?" name="area" required>
+                   <input type="text" placeholder="어디로 여행가세요?" name="area" th:value="${map.area}" required >
                     </label>
                 
                   
@@ -46,14 +47,14 @@
                     <div class="search-number-wrap">
                       <input type="search" placeholder="인원을 추가해주세요" readonly style="cursor: default;">
                       <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                    <input class="quantity" min="0" max="6" name="quantity" value="1" type="number" required>
+                    <input class="quantity" min="0" max="6" name="quantity" th:value="${map.quantity}" type="number" required>
                     <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                   </div>
                   </div>
 
                 <p>캠핑장명</p>
                    <label class="search-name search-container">
-                   <input type="text" placeholder="캠핑장 이름으로 찾아볼까요?" name="name">
+                   <input type="text" placeholder="캠핑장 이름으로 찾아볼까요?" name="name" th:value="${map.name}">
                 </label>
                    
                 <div class="search-camp-type">
@@ -220,8 +221,18 @@
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
     
-    <!-- 체크박스 값 controller로 넘겨주기 -->
- 
+    
+    <!-- 선택된 체크박스 유지하는 코드.. 일단 보류.. -->
+    <script>
+    /* $(document).ready(function(){
+    	if('${typeArr}' == "1") $("input:checkbox[class='s-type-camping']").prop("checked", true);
+    	if('${typeArr}' == "2") $("input:checkbox[class='s-type-glamping']").prop("checked", true);
+    	if('${typeArr}' == "3") $("input:checkbox[class='s-type-caravan']").prop("checked", true);
+    	console.log()
+    }); */
+    
+    </script>
+    
  	<!-- 제이쿼리 충돌 방지 코드 -->
 	<script type="text/javascript"> $.noConflict(); </script>
 

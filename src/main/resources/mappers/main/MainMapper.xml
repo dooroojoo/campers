@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cp.campers.main.model.dao.MainMapper">
+
+	<resultMap id="recommendMap" type="com.cp.campers.main.model.vo.Recommend">
+		<id property="cRNo" column="CAMP_NO" />
+		<result property="cRName" column="CAMP_NAME"/>
+		<result property="cRArea" column="CAMP_ADDRESS"/>
+		<result property="fRRoute" column="FILE_ROUTE"/>
+		<result property="fRName" column="FILE_NAME"/>
+	</resultMap>
+
+	<select id="mainSlider" resultMap="recommendMap">
+	  SELECT *
+		FROM (
+				SELECT
+					   C.CAMP_NO
+					 , C.CAMP_NAME
+					 , SUBSTR(C.CAMP_ADDRESS, 0, INSTR(C.CAMP_ADDRESS, ' ', 1, 1))
+					 , I.FILE_ROUTE
+					 , I.FILE_NAME
+				  FROM CAMP C
+				  JOIN CAMP_FILE F ON C.CAMP_NO = F.CAMP_NO
+				  JOIN IMAGEFILE I ON F.FILE_NO = I.FILE_NO
+				 WHERE C.CAMP_ADDRESS LIKE '%강원도%'
+				   AND C.CAMP_STATUS = 'Y'
+				   AND I.FILE_STATUS = 'N'
+				   AND I.FILE_LEVEL = 1
+				 ORDER BY DBMS_RANDOM.VALUE
+			 )
+	   WHERE ROWNUM &lt; 6
+	</select>
+
+
+</mapper>
