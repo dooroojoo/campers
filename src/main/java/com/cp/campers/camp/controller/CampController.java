@@ -30,15 +30,20 @@ public class CampController {
 	public String campDetail(int campNo, Model model) {
 		
 		Map<String, Object> map = campService.campDetail(campNo);
+		
 		model.addAttribute("camp", map.get("camp"));
 		model.addAttribute("roomList", map.get("roomList"));
-		// model.addAttribute("reviewList", map.get("reviewList"));
+		model.addAttribute("reviewList", map.get("reviewList"));
 		model.addAttribute("newReply", '\n');
 		
-		log.info(map.get("camp").toString());
-		// log.info(map.get("reviewList").toString());
+		log.info(map.get("reviewList").toString());
+		
+		if (map.get("reviewList").toString().equals("[]")) {
+			model.addAttribute("noResult", "아직 리뷰가 없어요!");
+		}
 		
 		return "camp/campDetail";
+		
 	}
 	
 	@GetMapping("/roomDetail/{roomNo}")
@@ -47,6 +52,14 @@ public class CampController {
 		log.info("조회 요청 roomNo : {}", roomNo);
 		
 		return campService.roomDetail(roomNo);
+	}
+	
+	@GetMapping("/reviewDelete")
+	public String reviewDelete(int rid, int campNo) {
+		
+		campService.reviewDelete(rid);
+		
+		return "redirect:/camp/detail?campNo=" + campNo;
 	}
 	
 }

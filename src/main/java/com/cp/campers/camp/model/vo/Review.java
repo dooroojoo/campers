@@ -15,4 +15,5 @@ public class Review {
 	private String status;
 	private int reserNo;
 	private int campNo;
+	private String profilePath;
 }

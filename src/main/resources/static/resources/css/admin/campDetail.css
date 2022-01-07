@@ -26,7 +26,6 @@ ul, li {
 .ad_headerArea {
     margin-bottom: 80px;
     border-bottom: 1px solid rgb(154, 154, 154);
-    
 }
 
 /* 신청 양식 테이블 */
@@ -35,6 +34,7 @@ ul, li {
 }
 .ad_headerArea>ul {
 	display: flex;
+	justify-content: space-between;
 	list-style: none;
     text-align: center;
     height: 50px;
@@ -44,11 +44,7 @@ ul, li {
     width: 15%;
 }
 .ad_headerArea .ad_id {
-    text-align: left;
-    width: 65%;
-}
-.ad_headerArea .ad_date {
-    width: 20%;
+    width: 21%;
 }
 table {
     border-spacing: 0px;

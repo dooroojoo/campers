@@ -23,5 +23,7 @@ public interface CampMapper {
 	// 객실 조회
 	Room roomDetail(int roomNo);
 
-	// 리뷰삭제
+	// 리뷰 삭제
+	void reviewDelete(int rid);
+
 }
