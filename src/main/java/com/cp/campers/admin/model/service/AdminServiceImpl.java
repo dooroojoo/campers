@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cp.campers.admin.model.dao.AdminMapper;
 import com.cp.campers.admin.model.vo.PageInfo;
+import com.cp.campers.admin.model.vo.Report;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.camp.model.vo.Camp;
 import com.cp.campers.camp.model.vo.Room;
@@ -191,6 +192,14 @@ public class AdminServiceImpl implements AdminService{
 		
 		// 3. 이력
 		adminMapper.record(campNo);
+	}
+
+	@Override
+	public int insertReport(Report report) {
+		
+		
+		
+		return adminMapper.insertReport(report);
 	}
 
 }

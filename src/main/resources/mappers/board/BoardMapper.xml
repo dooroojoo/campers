@@ -224,6 +224,7 @@ SELECT
         CCONTENT,
         MODIFY_DATE,
         REF_CID,
+        CWRITER,
         NICKNAME,
         PROFILE_PATH,
         REF_WRITER
@@ -233,6 +234,7 @@ SELECT
             R.CCONTENT,
             R.MODIFY_DATE,
             R.REF_CID,
+            R.CWRITER,
             NICKNAME,
             PROFILE_PATH,
             REF_WRITER,

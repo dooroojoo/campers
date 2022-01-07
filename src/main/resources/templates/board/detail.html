@@ -425,7 +425,7 @@ width: 60px;
 					<label th:text="${board.title}"></label>
 				</div>
 				<div class="info-right">
-					<label th:text="|조회수 ${board.bcount}|"></label> <label
+					<label th:text="|조회수 ${board.bcount}|"></label> <label id="report-board"
 						th:text="${board.nickName}"></label> <label
 						th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm:ss')}"></label>
 				</div>
@@ -442,8 +442,16 @@ width: 60px;
 						</div>
 						<label th:text="${board.blike}"></label>
 					</div>
-					<div class="content-right" onclick="show();">
-						<img src="/resources/images/board/report_img.png">
+					<div class="content-right">
+						<th:block sec:authorize="isAuthenticated()">
+							<input type="hidden" name="bid" th:value="${board.bid}">
+							<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+				            <img src="/resources/images/board/report_img.png"
+						 	th:onclick="|boardReport('${ board.writer }'); show();|">
+				        </th:block>
+				        <th:block sec:authorize="isAnonymous()">
+				      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+				        </th:block>
 					</div>
 				</div>
 			</div>
@@ -492,7 +500,7 @@ width: 60px;
 							</div>
 							<div class="comment-leftTopBottom">
 								<div class="comment-leftTop">
-									<sub th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+									<sub id="report-reply" th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 								</div>
 								<div class="comment-leftBottom">
 									<p th:text="${comment.cContent}"></p>
@@ -500,9 +508,18 @@ width: 60px;
 							</div>
 						</div>
 						<div class="comment-right">
-							<div class="comment-rightTop">
-								<img src="/resources/images/board/report_img.png">
-							</div>
+							<th:block sec:authorize="isAuthenticated()">
+								<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|replyReport('${ comment.cWriter }');|">
+									<input type="hidden" name="cid" th:value="${comment.cid}">
+									<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+						            <img src="/resources/images/board/report_img.png" onclick="show()">
+						        </div>
+					        </th:block>
+					        <th:block sec:authorize="isAnonymous()">
+						        <div class="comment-rightTop">
+						      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+								</div>
+					        </th:block>
 							<div class="comment-rightBottom">
 								<label onclick="openComment(this);">답글</label>
 							</div>
@@ -532,7 +549,7 @@ width: 60px;
 								</div>
 								<div class="comment-leftTopBottom">
 									<div class="comment-leftTop">
-										<sub th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+										<sub id="report-reply" th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 									</div>
 									<div class="comment-leftBottom">
 										<label th:text="|@${comment.refWriter}|"></label>
@@ -541,9 +558,18 @@ width: 60px;
 								</div>
 							</div>
 							<div class="comment-right">
-								<div class="comment-rightTop">
-									<img src="/resources/images/board/report_img.png">
-								</div>
+								<th:block sec:authorize="isAuthenticated()">
+									<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|replyReport(this);|">
+										<input type="hidden" name="cid" th:value="${comment.cid}">
+										<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+							            <img src="/resources/images/board/report_img.png" onclick="show()">
+							        </div>
+						        </th:block>
+						        <th:block sec:authorize="isAnonymous()">
+							        <div class="comment-rightTop">
+							      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+									</div>
+						        </th:block>
 								<div class="comment-rightBottom">
 									<label onclick="openComment(this);">답글</label>
 								</div>
@@ -616,8 +642,51 @@ width: 60px;
 				$(e).text('답글');
 			}
 		}
+		
 	</script>
+	
 	<div th:replace="admin/reportModal.html"></div>
+	
+	<script>
+	function loginPlz(){
+		if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
+			location.href="/member/login";
+		}
+	}
+	
+	function boardReport(writer){
+		
+		let nickName = $("#report-board").text();
+		let bid = $(".content-right input[name=bid]").val();
+		let victim = $(".content-right input[name=victim]").val();
+		
+		$(".writer h3").text(nickName);
+		
+		let html = '<input type="text" name="id" value="' + bid + '">' 
+				 + '<input type="text" name="victim" value="' + victim + '">'
+				 + '<input type="text" name="suspact" value="' + writer + '">';
+		
+		$(".infoArea").html(html);
+	}
+	
+	function replyReport(e){
+		
+		console.log(e);
+		
+		let nickName = $("#report-reply").text();
+		let cid = $(".content-right input[name=cid]").val();
+		let victim = $(".content-right input[name=victim]").val();
+		
+		$(".writer h3").text(nickName);
+		
+		let html = '<input type="text" name="id" value="' + cid + '">'
+				 + '<input type="text" name="victim" value="' + victim + '">'
+				 + '<input type="text" name="suspact" value="' + cWriter + '">';
+		
+		$(".infoArea").html(html);
+	}
+	</script>
+	
 	<div th:replace="common/footer.html"></div>
 
 </body>
