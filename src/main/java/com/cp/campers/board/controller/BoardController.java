@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cp.campers.board.model.service.BoardService;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.Comment;
 import com.cp.campers.board.model.vo.Search;
 import com.cp.campers.member.model.vo.UserImpl;
 
@@ -91,7 +92,44 @@ public class BoardController {
 	}
 
 	@GetMapping("/detail")
-	public void detailList() {
+	public void detailList(Model model, int bid) {
+		
+		Board board = boardService.boardDetail(bid);
+		
+		model.addAttribute(board);
+		
+		List<Comment> commentList = boardService.selectCommentList(bid);
+		
+		List<Comment> refCommentList = boardService.selectRefCommentList(bid);
+		
+		model.addAttribute(commentList);
+		model.addAttribute(refCommentList);
+		
+		log.info("refComm"+refCommentList);
+		
+	}
+	@PostMapping("/comment")
+	public String commentWrite(Model model,int bid,String reply, Comment comment, @AuthenticationPrincipal UserImpl loginUser) {
+		comment.setBid(bid);
+		comment.setCWriter(loginUser.getUserNo());
+		comment.setCContent(reply);
+		
+		boardService.insertComment(comment);
+		
+		return "redirect:/board/detail?bid="+bid;
+	}
+	@PostMapping("/refcomment")
+	public String refcommentWrite(Model model, Comment comment, @AuthenticationPrincipal UserImpl loginUser ) {
+		log.info("refWriter = "+comment.getRefWriter());
+		log.info("bid = "+comment.getBid());
+		log.info("comment="+comment.getCContent());
+		
+		comment.setCWriter(loginUser.getUserNo());
+		
+		boardService.insertRefComment(comment);
+		
+		
+		return "redirect:/board/detail?bid="+comment.getBid();
 	}
 
 	@GetMapping("/write")

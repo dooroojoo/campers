@@ -266,12 +266,12 @@
                 </div>
             </div>
             <div class="freeBoard-content">
-                <div th:each="board : ${boardList}" class="freeBoard-box" onclick="location.href='/board/detail'">
+                <div th:each="board : ${boardList}" class="freeBoard-box" th:onclick="'location.href=\''+@{/board/detail(bid=${board.bid})}+'\''">
                     <div class="box-left">
                         <p th:text="${board.title}"></p>
                         <label th:text="${board.nickName}"></label>
                         <label th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm:ss')}"></label>
-                        <label>좋아요 3</label><label>조회수 11</label>
+                        <label th:text="|좋아요 ${board.blike}|"></label><label th:text="|조회수 ${board.bcount}|"></label>
                     </div>
                     <div class="box-right" th:if="${ board.bid == thumbnail.bid}" th:each="thumbnail : ${thumbnailList}">
                         <img th:src="${thumbnail.fileRoute}+${thumbnail.fileName}">
