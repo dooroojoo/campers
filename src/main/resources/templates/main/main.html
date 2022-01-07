@@ -104,57 +104,44 @@
         </div>
         <script type="text/javascript" th:src="@{/resources/js/main/slick/slick.min.js}"></script>
 
+
+
         <div class="main-qna-txt">
          <span>
           캠퍼스 이용에 대해
           궁금하신 점이 있으신가요?
         </span>
         </div>
+        
         <div class="main-qna-img">
           <a href="company/csCenter"><img src="resources/images/main/qna.jpg"></a>
         </div>
 
+
          <!-- 포스트 형식 추천 리스트 -->
          <div class="main-list bestCamping">
-          <div class="mian-gallery-title">
-            지금 가장 인기있는 캠핑장
-          </div>
-           <div class="main-best-container">
-          <div class="main-best-content">
-            <div class="main-img-wrap">
-              <a href="#">
+         
+	          <div class="mian-gallery-title">
+	            지금 가장 인기있는 캠핑장
+	          </div>
+	          
+          <div class="main-best-container">
+         	<div class="main-best-content">
+          
+            <div class="main-img-wrap" th:each="best : ${mainBestList}">
+               <a href="#">
               <div class="main-best-img">
-              <img src="resources/images/main/list4.jpg">
-              <p class="main-best-title text">빨간단풍 가족캠핑장</p>
-              <p class="main-best-location text">전남 장성군 북하면</p>
+              <img th:src="@{${best.fRRoute}+${best.fRName}}">
+              <p class="main-best-title text" th:text="${best.cRName}"></p>
+              <p class="main-best-location text" th:text="${best.cRAddress}"></p>
             </div></a>
-          </div>
+          	</div>
 
-            <div class="main-img-wrap">
-              <a href="#">
-            <div class="main-best-img">
-              <img src="resources/images/main/list5.jpg">
-              <p class="main-best-title text">진위천 시민유원지</p>
-              <p class="main-best-location text">경기 평택시 진위면</p>
-            </div></a>
-          </div>
-
-            <div class="main-img-wrap">
-              <a href="#">
-            <div class="main-best-img">
-              <img src="resources/images/main/list6.jpg">
-              <p class="main-best-title text">제주 도깨비캠핑장</p>
-              <p class="main-best-location text">제주 제주시 애월읍</p>
-            </div></a>
           </div>
         </div>
+      </div>
         
-          </div>
-
-        </div>
-
-        
-         <!-- 포스트 형식 추천 리스트 (등록날짜 최근순으로 3개 조회)-->
+         <!-- 포스트 형식 추천 리스트 -->
          <div class="main-list bestCamping">
           <div class="mian-new-title">
             새로 생긴 신규 캠핑장
@@ -162,46 +149,26 @@
            <div class="main-best-container">
           <div class="main-best-content">
 
-            <div class="main-img-wrap">
+            <div class="main-img-wrap" th:each="mainNew : ${mainNewList}">
               <a href="#">
-            <div class="main-best-img">
-              <img src="resources/images/main/list1.jpg">
-              <p class="main-best-title text">빨간단풍 가족캠핑장</p>
-              <p class="main-best-location text">전남 장성군 북하면</p>
+              <div class="main-best-img">
+              <img th:src="@{${mainNew.fRRoute}+${mainNew.fRName}}">
+              <p class="main-best-title text" th:text="${mainNew.cRName}"></p>
+              <p class="main-best-location text" th:text="${mainNew.cRAddress}"></p>
             </div></a>
           </div>
 
-            <div class="main-img-wrap">
-              <a href="#">
-            <div class="main-best-img">
-              <img src="resources/images/main/list2.jpg">
-              <p class="main-best-title text">진위천 시민유원지</p>
-              <p class="main-best-location text">경기 평택시 진위면</p>
-            </div></a>
-          </div>
-
-            <div class="main-img-wrap">
-              <a href="#">
-            <div class="main-best-img">
-              <img src="resources/images/main/list3.jpg">
-              <p class="main-best-title text">제주 도깨비캠핑장</p>
-              <p class="main-best-location text">제주 제주시 애월읍</p>
-            </div></a>
-          </div>
-        </div>
+         
+       </div>
         
           </div>
 
         </div>
 
-
-
-
       </div>
  </div>
  
  </div>
- 
       
     <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
