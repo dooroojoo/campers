@@ -11,9 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cp.campers.main.model.service.MainService;
 import com.cp.campers.main.model.vo.Recommend;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 public class MainController {
 
@@ -29,12 +27,15 @@ public class MainController {
 		
 		// 슬라이더 캠핑장 추천 리스트
 		List<Recommend> mainSlider = mainService.mainSlider();
+		// 메인페이지 예약순 3개 리스트 조회
+		List<Recommend> mainBestList = mainService.mainBestList();
+		// 메인페이지 신규순 3개 리스트 조회
+		List<Recommend> mainNewList = mainService.mainNewList();
 		
-		for(int i=0; i<mainSlider.size(); i++) {
-			System.out.println(i);
-		}
 		
 		mv.addObject("mainSlider", mainSlider);
+		mv.addObject("mainBestList", mainBestList);
+		mv.addObject("mainNewList", mainNewList);
 		mv.setViewName("main/main");
 		
 		return mv;
