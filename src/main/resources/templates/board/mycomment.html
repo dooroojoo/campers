@@ -174,18 +174,33 @@
             
             <div class="freeBoard-aside">
           
-                 <div>
-           			 <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
-		        </div>
-		        <div>
-		            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
-		        </div>
-		        <div>
-		            <a href="/board/list" class="gotolist">목록으로</a>
-		        </div>
-		        <div>
-		            <a href="/board/write" class="boradWrite">글쓰기</a>
-		        </div>
+                <div>
+        <th:block sec:authorize="isAuthenticated()">
+            <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+      		<a onclick="loginPlz();" class="myboard">내가 쓴 게시물</a>
+        </th:block>
+        </div>
+        <div>
+       	<th:block sec:authorize="isAuthenticated()">
+            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        	<a onclick="loginPlz();" class="mycomment">내가 쓴 댓글</a>
+        </th:block>
+        </div>
+        <div>
+            <a href="/board/list" class="gotolist">목록으로</a>
+        </div>
+        <div>
+        <th:block sec:authorize="isAuthenticated()">
+            <a href="/board/write" class="boradWrite">글쓰기</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        	<a onclick="loginPlz();" class="boradWrite">글쓰기</a>
+        </th:block>
+        </div>
             </div>
         
           <div class="freeBoard-container">

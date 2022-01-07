@@ -266,7 +266,7 @@
                 </div>
             </div>
             <div class="freeBoard-content">
-                <div th:each="board : ${boardList}" class="freeBoard-box" th:onclick="'location.href=\''+@{/board/detail(bid=${board.bid})}+'\''">
+                <div th:each="board : ${boardList}" class="freeBoard-box" th:onclick="'location.href=\''+@{/board/detail(bid=${board.bid})}+'\''" >
                     <div class="box-left">
                         <p th:text="${board.title}"></p>
                         <label th:text="${board.nickName}"></label>
@@ -278,6 +278,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="freeBoard-footer">
                 <div class="freeBoard-footerLeft">
                 <th:block sec:authorize="isAuthenticated()">
@@ -333,11 +334,11 @@
                         <li th:if="${ pi.page > 1}"><a th:href="@{/board/list/searchPage(page=${pi.page-1}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue}, sort=${param.sort})}">&lt;</a></li>
                         <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
                        
-                            <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                            <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}" th:if="${p != 0}">
                                 <div class="current_page" th:if="${p==pi.page}">
                                     <a href="#" th:text="${p}"></a>
                                 </div>
-                                <div th:if="${ p != pi.page}">
+                                <div th:if="${ p != pi.page } and ${ p != 0}">
                                 	<a th:href="@{/board/list/searchPage(page=${p}, searchCondition=${param.searchCondition}, searchValue=${param.searchValue}, sort=${param.sort})}" th:text="${p}"></a>
                                 </div>
                             </li>
