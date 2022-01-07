@@ -3,6 +3,8 @@ package com.cp.campers.member.model.vo;
 import java.util.Date;
 import java.util.List;
 
+import lombok.NoArgsConstructor;
+
 public class Member {
 	
 	private int userNo;

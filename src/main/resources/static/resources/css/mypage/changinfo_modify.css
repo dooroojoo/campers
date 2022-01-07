@@ -19,7 +19,7 @@
 
 .changinfo_content_div{
     width: 600px;
-    height: 400px;
+    height: 500px;
     margin-top: 50px;
     margin-left: 40%;
     background: lightgray;
@@ -62,7 +62,7 @@
 
 .changinfo_pwdbutton{
     font-size : 0.7rem;
-    margin-left: 10px;
+    margin-left: 44px;
     background : black;
     color: white;
     font-weight: bold;
@@ -126,6 +126,16 @@
 
 .changinfo_nickname_form2{
     margin-left : 65px;
+}
+
+.id_ok{
+	color: blue;
+	display: none;
+}
+
+.id_already{
+	color: red;
+	display: none;
 }
 
 /* 푸터 */

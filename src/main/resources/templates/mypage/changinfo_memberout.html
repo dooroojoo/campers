@@ -38,9 +38,10 @@
                 회원탈퇴 버튼을 클릭해 주세요.    
             </header>        
             <div class="changinfo_privacy">
-                <form>
-                    <h4 class="check_pwd">비밀번호<input type="text" class="check_pwd_form" value=""></input></h4>
-                    <h4 class="check_pwd2">비밀번호 확인<input type="text" class="check_pwd_form2" value=""></input>
+                <form th:action="@{/mypage/changinfo_memberout}" method="post">
+                    <h4 class="check_pwd">비밀번호<input type="password" class="check_pwd_form" id="userPwd" name="pwd"></input></h4>
+                    <h4 class="check_pwd2">비밀번호 확인<input type="password" class="check_pwd_form2" id="userPwd2" name="pwd"></input>
+                    <div class="check_font" id="userPwd2_check"></div>
                     <button class="changinfoPwdModify_pwdbutton">회원탈퇴</button>
                 </form>
             </div>
@@ -50,6 +51,20 @@
     
     <!-- footer -->
     <div th:replace="common/footer.html"></div>    
+    
+    <script>
+    $('#userPwd2').blur(function(){
+		if($('#userPwd').val() != $(this).val()){
+			$('#userPwd2_check').text('비밀번호가 일치하지 않습니다');
+			$('#userPwd2_check').css('color', 'red');
+		} else {
+			$('#userPwd2_check').text('');
+		}
+	});
+	
+    
+    </script>
+    
     
 </body>
 </html>

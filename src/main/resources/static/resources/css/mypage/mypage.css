@@ -210,7 +210,7 @@ body {
     margin-left: 50%;
 }
 
-.mypage_content_1, .mypage_content_2, .mypage_content_3, .mypage_content_4{
+.mypage_content_1, .mypage_content_2, .mypage_content_4{
   width: 300px;
   height: 300px;
   border: 0px solid gray;
@@ -227,7 +227,11 @@ body {
 }
 
 .mypage_content_3{
-
+  width: 300px;
+  height: 300px;
+  border: 0px solid gray;
+  margin-top : 10rem;
+  margin-left : 50px;
 }
 
 .mypage_content_top{
@@ -277,7 +281,7 @@ body {
 .mypage_img_user{
   width : 24px;
   height : 24px;
-  padding-right : 10px;
+  padding-right : 5px;
 }
 
 .mypage_content_p{
@@ -287,9 +291,11 @@ body {
 
 .mypage_content_3_ul{
   font-weight : bold;
-  margin-top: 50px;
+  margin-top: 40px;
   list-style : none;
   line-height : 3;
+  font-size : 12px;
+  padding-left: 10px;
 }
 
 .mypage_content_4_ul{
@@ -298,3 +304,6 @@ body {
   margin-top : 20px;
 }
 
+.mypage_date{
+	
+}

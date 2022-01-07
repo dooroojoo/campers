@@ -41,7 +41,6 @@
 .wishcam_content_controller{
 	display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .wishcamp_content_1, .wishcamp_content_2, .wishcamp_content_3, .wishcamp_content_4, .wishcamp_content_5, .wishcamp_content_6, .wishcamp_content_7, .wishcamp_content_8{

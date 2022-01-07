@@ -16,8 +16,9 @@ import com.cp.campers.mypage.model.vo.Room;
 @Mapper
 public interface MypageMapper {
 	
-	public List<Member> selectMember(Member member);
-	
+	// 회원 목록
+	List<Member> findAllMember();
+		
 	/* 캠핑장 등록 */
 	void insertCamp(Camp camp);
 
@@ -25,10 +26,7 @@ public interface MypageMapper {
 	void insertBusinessType(BusinessType businessType);
 
 	// 회원수
-	int getListCount();
-	
-	// 회원목록
-	List<Member> findAllMember(PageInfo pi);
+	int getListCount();	
 
 	// 사업장 타입 등록
 	// Integer 체크박스 담기
@@ -40,6 +38,18 @@ public interface MypageMapper {
 
 	// 객실 등록
 	void insertRoom(Room room);
+
+	// 회원정보 수정
+	int changeInfoModify(Member member);
+
+	// 비밀번호 변경
+	int changeInfoPwdModify(Member member);
+	
+	// 회원 탈퇴
+	void changeInfoMemberout(Member member);
+
+	/* 닉네임 체크 */
+	int nickNameCheck(String nickName);
 	
 	// public Map<String, Object> findAllMember();
 }

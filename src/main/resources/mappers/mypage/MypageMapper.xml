@@ -14,7 +14,7 @@
 		<result property="status" column="STATUS"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
-		<collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.member.model.vo.MemberRole" id="memberRoleResultMap">
@@ -102,6 +102,14 @@
 		<id property="userNo" column="USER_NO"/>
 		<result property="campNo" column="CAMP_NO"/>
 	</resultMap>
+	
+	<resultMap type="com.cp.campers.camp.model.vo.ImageFile" id="imageFileResultMap">
+		<id property="fileNo" column="FILE_NO"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileRoute" column="FILE_ROUTE"/>
+		<result property="fileStatus" column="FILE_STATUS"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+	</resultMap>
      
    <select id="selectMember" resultType="com.cp.campers.member.model.vo.Member">
    		SELECT *
@@ -117,8 +125,20 @@
    </select>  
      
    <select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
-   	  SELECT * 
+   	  SELECT 
+   	  		 USER_NO
+   	  	   , USER_ID
+   	  	   , USER_PWD
+   	  	   , USER_NAME
+   	  	   , NICKNAME
+   	  	   , PROFILE_PATH
+   	  	   , EMAIL
+   	  	   , USER_PHONE
+   	  	   , STATUS
+   	  	   , CREATE_DATE
+   	  	   , MODIFY_DATE
       FROM MEMBER;
+     WHERE STATUS = 'Y'
    </select>
      
    <insert id="insertCamp" parameterType="com.cp.campers.mypage.model.vo.Camp">
@@ -221,4 +241,30 @@
    	)
    </insert>
    
+   <update id="changeInfoModify" parameterType="com.cp.campers.member.model.vo.Member">
+		UPDATE MEMBER
+		   SET EMAIL = #{ email }
+		     , USER_PHONE = #{ phone }
+		     , NICKNAME = #{ nickName }
+		WHERE USER_NO = #{ userNo }
+	</update>
+	
+	<update id="changeInfoPwdModify" parameterType="com.cp.campers.member.model.vo.Member">
+		UPDATE MEMBER
+		   SET USER_PWD = #{ pwd }
+		WHERE USER_NO = #{ userNo }
+	</update>
+   
+   <delete id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
+   	DELETE
+   		FROM MEMBER
+   		WHERE USER_PWD = #{ pwd }   
+   </delete>
+   
+   <select id="nickNameCheck" parameterType="String" resultType="int">
+		SELECT COUNT(NICKNAME)
+		FROM MEMBER
+		WHERE NICKNAME = #{ nickName }
+	</select>
+ 
 </mapper>
