@@ -6,139 +6,145 @@
 
 	<!-- css -->
 	<link href="/resources/css/camp/roomDetail.css" rel="stylesheet" type="text/css">
-	
+	 
 </head>
 <body>
 <div class="modal_background">
-    <div class="window">
-        <div class="room_modal">
+    <div class="room_modal" id="modal-point">
 
-            <!-- 창 닫기 -->
-            <div class="close_icon"><span class="close_icon2"><i class="fas fa-times"></i></span></div>
+        <!-- 창 닫기 -->
+        <div class="close_icon"><span class="close_icon2"><i class="fas fa-times"></i></span></div>
 
-            <!-- 1. 객실 명 -->
-            <div class="room_title">
-                <h3>독채형 카라반03 (오션뷰)</h3>
+        <!-- 1. 객실 명 -->
+        <div class="room_title">
+            <h3></h3>
+        </div>
+        
+        <!-- 2. 객실 사진 및 가격 -->
+        <!-- 2. 숙소 이미지 -->
+        <div class="slide1">
+        <div class="imageSlideArea"></div>
+<!--             <div class="swiper roomSwiper">
+                <div class="swiper-wrapper room-sp">
+
+                    <div class="swiper-slide">
+                        <div class="div-img">
+                            <img src="resources/images/camp.jpg">
+                        </div>
+                    </div>
+
+                </div>
+            </div> -->
+
+            <!-- button prev -->
+            <div class="button1">
+                <!-- If we need navigation buttons -->
+                <div class="prevBtn btn1">
+                    <div class="direction">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                </div>
             </div>
+
+            <!-- button next -->
+            <div class="button2">
+                <div class="nextBtn btn2">
+                    <div class="direction">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- swiper script -->
+        <script>
+        	// let next = $('.button1').children().attr('class');
+        	// let next = $('.button2').children().attr('class');
+
+ /*            var swiper1 = new Swiper(".roomSwiper", {
+                slidesPerView: 1,
+                spaceBetween: 50,
+
+                loop: true,
+
+                // Navigation arrows
+                navigation: {
+                    prevEl: '.btn1',
+                    nextEl: '.btn2',
+                },
+
+            }); */
             
-            <!-- 2. 객실 사진 및 가격 -->
-            <!-- 2. 숙소 이미지 -->
-            <div class="slide1">
-                <div class="swiper mySwiper1">
-                    <div class="swiper-wrapper">
+        </script>
 
-                        <div class="swiper-slide" th:each="imgfile : ${room.imgFileList}">
-	                        <div class="div-accomdImg">
-	                            <img th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }">
-	                        </div>
-	                    </div>
+        <div class="">
+            <div class="room_exp"><p></p></div>
+            <div class="room_price"><h2></h2>원</div>
+        </div>
 
-                    </div>
-                </div>
+        <div class="room_content">  
 
-                <!-- button prev -->
-                <div class="button1">
-                    <!-- If we need navigation buttons -->
-                    <div class="but1">
-                        <div class="direction">
-                            <i class="fas fa-chevron-left"></i>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- button next -->
-                <div class="button2">
-                    <div class="but2">
-                        <div class="direction">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-
+            <!-- 3. 객실 정보 -->
+            <div class="room_info">
+                <fieldset>
+                    <ul class="room_header">
+                        <li class="type">유형</li>
+                        <li class="size">크기</li>
+                        <li class="floor">바닥</li>
+                        <li class="parking">주차</li>
+                    </ul>
+                    <ul>
+                        <li class="type" id="roomForm"></li>
+                        <li class="size" id="size"></li>
+                        <li class="floor" id="floor"></li>
+                        <li class="parking" id="parking"></li>
+                    </ul>
+                </fieldset>
             </div>
 
-            <!-- swiper script -->
-            <script>
-                var swiper1 = new Swiper(".mySwiper1", {
-                    slidesPerView: 1,
-                    spaceBetween: 30,
 
-                    loop: true,
 
-                    // Navigation arrows
-                    navigation: {
-                        prevEl: '.but1',
-                        nextEl: '.but2',
-                    },
 
-                });
-            </script>
 
-            <div class="">
-                <div class="room_exp"><p th:text="|최대 ${ room.roomMember }(인)|"></p></div>
-                <div class="room_price"><h2 th:text="|${#numbers.formatInteger(room.roomPrice, 0, 'COMMA')}|"></h2>원</div>
+            <!-- 4. 객실 소개 -->
+            <div class="room_intro">
+                <fieldset>
+                    <legend><h5>객실 소개</h5></legend>
+                    <p class="roomInfo_txt"></p>
+                </fieldset>
             </div>
 
-            <div class="room_content">  
 
 
-                <!-- 3. 객실 정보 -->
-                <div class="room_info">
-                    <fieldset>
-                        <ul class="room_header">
-                            <li class="type">유형</li>
-                            <li class="size">크기</li>
-                            <li class="floor">바닥</li>
-                            <li class="parking">주차</li>
+
+
+            <!-- 5. 운영 정책 -->
+            <div class="accomd_policy">
+                <fieldset>
+                    <legend><h5>취소 환불규정</h5></legend>
+                    <div class="refund_div">
+                        <ul class="refund_header">
+                            <li class="refund_date">취소 기준일</li>
+                            <li class="refund_fees">취소 수수료</li>
+                            <li class="refund_price">환불액</li>
                         </ul>
                         <ul>
-                            <li class="type" th:text="${ room.roomForm }"></li>
-                            <li class="size" th:text="|${ room.roomSize }㎡|"></li>
-                            <li class="floor"  th:text="${ room.roomFloor }"></li>
-                            <li class="parking" th:text="${ room.roomParking }"></li>
+                            <li class="refund_date">이용일 당일</li>
+                            <li class="refund_fees">100%</li>
+                            <li class="refund_price">환불 없음</li>
                         </ul>
-                    </fieldset>
-                </div>
-
-
-
-
-
-                <!-- 4. 객실 소개 -->
-                <div class="room_intro">
-                    <fieldset>
-                        <legend><h5>객실 소개</h5></legend>
-                        <div class="table_div">
-                            	<p th:utext="${#strings.replace(room.roomInfo, newReply, '<br>')}"></p>
-                            </div>
-                    </fieldset>
-                </div>
-
-
-
-
-
-                <!-- 5. 운영 정책 -->
-                <div class="accomd_policy">
-                    <fieldset>
-                        <legend><h5>운영 정책</h5></legend>
-                        <pre>
-    애완동물은 타 객실 및 손님을 위해 입실을 절대 금하오니 양해바랍니다.
-
-    객실 내에서는 금연입니다.
-
-    화재 및 냄새로 인한 타 손님 배려 차원에서 객실 내 돼지고기, 생선, 청국장의 조리를 금하오니 
-    지정된 바비큐장을 이용하시길 부탁드립니다.
-
-    오후 10시 이후의 바비큐장 이용 및 고성방가는 타 객실손님을 위하여 금하오니 양해 바랍니다.
-
-    각 객실마다 정해진 최대수용인원(영유아포함) 초과를 금하며, 예약된 인원외 입실시에는 반드시 사전연락 해주십시오.
-                        </pre>
-                    </fieldset>
-                </div>
-
-
+                        <ul>
+                            <li class="refund_date">이용일 10일 전</li>
+                            <li class="refund_fees">50%</li>
+                            <li class="refund_price">50% 환불</li>
+                        </ul>
+                    </div>
+                </fieldset>
             </div>
+
+
         </div>
     </div>
 </div>
