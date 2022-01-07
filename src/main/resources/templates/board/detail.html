@@ -20,7 +20,7 @@
 	display: flex;
 	justify-content: center;
 	font-family: 'Noto Sans KR', sans-serif;
-	min-height: 1060px;
+	min-height: 600px;
 	/* font-weight: 900; */
 }
 
@@ -111,6 +111,8 @@
 .freeBoard-content p {
 	text-align: center;
 	margin-bottom: 80px;
+	    max-width: 800px;
+    overflow-wrap: break-word;
 }
 
 .content-img img {
@@ -231,8 +233,11 @@ width: 60px;
 	padding-bottom: 15px;
 }
 
-.comment-content:not(:last-child) {
+.comment-content {
 	border-bottom: 1px solid #e7e7e7;
+}
+.comment-content:last-child{
+	margin-bottom:40px;
 }
 
 .comment-right {
@@ -296,22 +301,26 @@ width: 60px;
 }
 
 .refComment-submit {
-	display: flex;
-	margin-left: 89%;
-	position: absolute;
-	margin-top: -6%;
+	    display: flex;
+    margin-left: 88.5%;
+    position: relative;
 }
 
 .refComment-submit sub {
-	margin-top: 8px;
-	margin-right: 5px;
+	    margin-top: -41%;
+    right: 54%;
+    position: absolute;
 }
 
 .refComment-submit button {
 	border: none;
-	border-radius: 3px;
-	padding: 3px 6px;
-	cursor: pointer;
+    border-radius: 3px;
+    padding: 3px 6px;
+    cursor: pointer;
+    position: absolute;
+    left: 53%;
+    margin-top: -50%;
+
 }
 
 .ref {
@@ -369,29 +378,46 @@ width: 60px;
 
 	<div class="freeBoard-wrap">
 
-		<div class="freeBoard-aside">
-
-
-			<div>
-				<a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
-			</div>
-			<div>
-				<a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
-			</div>
-			<div>
-				<a href="/board/list" class="gotolist">목록으로</a>
-			</div>
-			<div>
-				<a href="/board/write" class="boradWrite">글쓰기</a>
-			</div>
-		</div>
+ <div class="freeBoard-aside">
+          
+        <div>
+        <th:block sec:authorize="isAuthenticated()">
+            <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+      		<a onclick="loginPlz();" class="myboard">내가 쓴 게시물</a>
+        </th:block>
+        </div>
+        <div>
+       	<th:block sec:authorize="isAuthenticated()">
+            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        	<a onclick="loginPlz();" class="mycomment">내가 쓴 댓글</a>
+        </th:block>
+        </div>
+        <div>
+            <a href="/board/list" class="gotolist">목록으로</a>
+        </div>
+        <div>
+        <th:block sec:authorize="isAuthenticated()">
+            <a href="/board/write" class="boradWrite">글쓰기</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        	<a onclick="loginPlz();" class="boradWrite">글쓰기</a>
+        </th:block>
+        </div>
+       
+    </div>
 		<div class="freeBoard-container">
 			<div class="freeBoard-header">
 				<label class="freeBoard-label">자유게시판</label>
+				<th:block sec:authorize="isAuthenticated()">
 				<div class="place-right">
-					<button onclick="">수정</button>
-					<button onclick="">삭제</button>
+					<button th:onclick="'location.href=\''+@{/board/update(bid=${param.bid}, board=${board})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">수정</button>
+					<button th:onclick="'location.href=\''+@{/board/delete(bid=${param.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">삭제</button>
 				</div>
+				</th:block>
 			</div>
 
 			<div class="freeBoard-info">
@@ -405,8 +431,8 @@ width: 60px;
 				</div>
 			</div>
 			<div class="freeBoard-content">
-				<div class="content-img">
-					<img src="/resources/images/board/camping.jpg">
+				<div class="content-img" th:each="fileNo : ${boardFileNoList}">
+					<img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}">
 				</div>
 				<p th:text="${board.content}"></p>
 				<div class="content-option">
@@ -509,7 +535,7 @@ width: 60px;
 										<sub th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 									</div>
 									<div class="comment-leftBottom">
-										<label th:text="|@${comment.refWriter}"|></label>
+										<label th:text="|@${comment.refWriter}|"></label>
 										<p th:text="${comment.cContent}"></p>
 									</div>
 								</div>
@@ -541,16 +567,26 @@ width: 60px;
 		</div>
 	</div>
 	<div class="another-list">
-		<div class="previous-board">
+	
+		<div class="previous-board" th:onclick="'location.href=\''+@{/board/detail(bid=${prevBoard.bid})}+'\''" th:if="${prevBoard != null}">
 			<img src="/resources/images/board/upArrow.png"><label
-				class="list-label">이전글</label><label>여기 캠핑지 어딘가요?</label>
+				class="list-label">이전글</label><label th:text="${prevBoard.title}"></label>
 		</div>
-		<div class="next-board">
+		<div class="previous-board" th:unless="${prevBoard != null}">
+			<img src="/resources/images/board/upArrow.png"><label
+				class="list-label">이전글</label><label>이전글이 없습니다.</label>
+		</div>
+		
+		<div class="next-board"  th:onclick="'location.href=\''+@{/board/detail(bid=${nextBoard.bid})}+'\''" th:if="${nextBoard != null}">
 			<img src="/resources/images/board/downArrow.png"><label
-				class="list-label">다음글</label><label>혼자 캠핑와서 불멍중</label>
+				class="list-label">다음글</label><label th:text="${nextBoard.title}"></label>
+		</div>
+		<div class="next-board" th:unless="${nextBoard != null}">
+			<img src="/resources/images/board/downArrow.png"><label
+				class="list-label">다음글</label><label>다음글이 없습니다.</label>
 		</div>
 		<br>
-		<button class="listBtn">목록으로</button>
+		<button class="listBtn" onclick="location.href='/board/list'">목록으로</button>
 	</div>
 	<script>
 		$(".refComment-textarea").keyup(

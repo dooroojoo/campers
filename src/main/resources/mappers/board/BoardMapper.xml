@@ -181,7 +181,8 @@ select
             b.create_date,
             nickName,
             bcount,
-            blike
+            blike,
+            writer
       from board b
       join member m on (b.writer = m.user_no)
       where b.status = 'N'
@@ -234,14 +235,16 @@ SELECT
             R.REF_CID,
             NICKNAME,
             PROFILE_PATH,
-            REF_WRITER
+            REF_WRITER,
+            R.CREATE_DATE
             FROM REPLY R
             JOIN MEMBER M ON(M.USER_NO = R.CWRITER)
             WHERE R.STATUS = 'N'
-        ORDER BY R.CREATE_DATE DESC)
+        )
         WHERE BID = #{ bid }
     START WITH REF_CID IS NULL
 CONNECT BY PRIOR CID = REF_CID
+ORDER BY CREATE_DATE
 </select>
 
 <insert id="insertRefComment" parameterType="com.cp.campers.board.model.vo.Comment">
@@ -258,33 +261,41 @@ INSERT INTO REPLY VALUES(
 )
 </insert>
 
-<select id="selectRefCommentList" resultMap="CommentResultMap">
-SELECT
-        CID,
-        BID,
-        CCONTENT,
-        MODIFY_DATE,
-        REF_CID,
-        NICKNAME,
-        PROFILE_PATH,
-        REF_WRITER
-    FROM (SELECT
-            R.CID,
-            R.BID,
-            R.CCONTENT,
-            R.MODIFY_DATE,
-            R.REF_CID,
-            NICKNAME,
-            PROFILE_PATH,
-            REF_WRITER
-            FROM REPLY R
-            JOIN MEMBER M ON(M.USER_NO = R.CWRITER)
-            WHERE R.STATUS = 'N'
-        ORDER BY R.CREATE_DATE DESC)
-        WHERE BID = #{ bid }
-    START WITH REF_CID IS NULL
-CONNECT BY PRIOR CID = REF_CID
+<resultMap type="com.cp.campers.board.model.vo.PrevBoard" id="prevResultMap">
+	<id property="bid" column="BID"/>
+	<result property="title" column="BTITLE"/>
+</resultMap>
+
+<select id="selectPrevBoard" resultMap="prevResultMap">
+SELECT BID,
+	   BTITLE
+ FROM BOARD
+ WHERE BID = #{bid}
+ AND STATUS = 'N'
 </select>
 
+<resultMap type="com.cp.campers.board.model.vo.NextBoard" id="nextResultMap">
+	<id property="bid" column="BID"/>
+	<result property="title" column="BTITLE"/>
+</resultMap>
 
+<select id="selectNextBoard" resultMap="nextResultMap">
+SELECT BID,
+	   BTITLE
+ FROM BOARD
+ WHERE BID = #{bid}
+ AND STATUS = 'N'
+</select>
+
+<select id="selectBoardImage" resultMap="boardFileNoResultMap">
+select 
+            bid,
+            file_no,
+            file_route,
+            file_name
+      from board_file 
+      join imagefile using (file_no)
+      where bid = #{bid}
+      and file_status = 'N'
+</select>
 </mapper>

@@ -7,8 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.BoardFileNo;
 import com.cp.campers.board.model.vo.Comment;
+import com.cp.campers.board.model.vo.NextBoard;
 import com.cp.campers.board.model.vo.PageInfo;
+import com.cp.campers.board.model.vo.PrevBoard;
 import com.cp.campers.board.model.vo.Search;
 
 @Mapper
@@ -43,7 +46,10 @@ public interface BoardMapper {
 
 	void insertRefComment(Comment comment);
 
-	List<Comment> selectRefCommentList(int bid);
+	PrevBoard selectPrevBoard(int bid);
 
+	NextBoard selectNextBoard(int bid);
+
+	List<BoardFileNo> selectBoardImage(int bid);
 
 }

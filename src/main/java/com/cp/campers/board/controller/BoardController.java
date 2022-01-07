@@ -24,7 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cp.campers.board.model.service.BoardService;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.BoardFileNo;
 import com.cp.campers.board.model.vo.Comment;
+import com.cp.campers.board.model.vo.NextBoard;
+import com.cp.campers.board.model.vo.PrevBoard;
 import com.cp.campers.board.model.vo.Search;
 import com.cp.campers.member.model.vo.UserImpl;
 
@@ -73,6 +76,7 @@ public class BoardController {
 		
 		Map<String, Object> map = boardService.searchBoardList(page, search);
 
+			
 		model.addAttribute("boardList", map.get("boardList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("thumbnailList", map.get("thumbnailList"));
@@ -99,13 +103,24 @@ public class BoardController {
 		model.addAttribute(board);
 		
 		List<Comment> commentList = boardService.selectCommentList(bid);
+
+		PrevBoard prevBoard = boardService.selectPrevBoard(bid);
+
+		NextBoard nextBoard = boardService.selectNextBoard(bid);
+
+		List<BoardFileNo> boardFileNoList = boardService.selectBoardImgae(bid);
 		
-		List<Comment> refCommentList = boardService.selectRefCommentList(bid);
+		if(!boardFileNoList.toString().equals("[]")) {
+			model.addAttribute(boardFileNoList);
+		}
+		if(prevBoard != null) {
+			model.addAttribute(prevBoard);
+		}
+		if(nextBoard != null) {
+			model.addAttribute(nextBoard);
+		}
 		
 		model.addAttribute(commentList);
-		model.addAttribute(refCommentList);
-		
-		log.info("refComm"+refCommentList);
 		
 	}
 	@PostMapping("/comment")
@@ -123,7 +138,7 @@ public class BoardController {
 		log.info("refWriter = "+comment.getRefWriter());
 		log.info("bid = "+comment.getBid());
 		log.info("comment="+comment.getCContent());
-		
+		log.info("refOrigin"+comment.getRefOriginCid());
 		comment.setCWriter(loginUser.getUserNo());
 		
 		boardService.insertRefComment(comment);
