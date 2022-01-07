@@ -41,7 +41,7 @@
                     <input class="checkbox" type="checkbox" name="wishBtn">                    
                 </div>
             </div>
-            <div class="wishcamp_content_2">
+            <div class="wishcamp_content_1">
                 <div class="wcc_p">
                     <img class="campimg" src="/resources/images/mypage/007.png">
                     <p class="wishcamp_content_p">아침고요수목원</p>
@@ -51,66 +51,15 @@
                     <input class="checkbox" type="checkbox" name="wishBtn">       
                 </div>
             </div>
-            <div class="wishcamp_content_3">
-                <div class="wcc_p">
-                    <img class="campimg" src="/resources/images/mypage/007.png">
-                    <p class="wishcamp_content_p">아침고요수목원</p>
-                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
-                    <p class="phone">010 1234 5678</p>
-                    <hr class="line">
-                    <input class="checkbox" type="checkbox" name="wishBtn">                      
-                </div>
-            </div>
-            <div class="wishcamp_content_4">
-                <div class="wcc_p">
-                    <img class="campimg" src="/resources/images/mypage/007.png">
-                    <p class="wishcamp_content_p">아침고요수목원</p>
-                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
-                    <p class="phone">010 1234 5678</p>
-                    <hr class="line">
-                    <input class="checkbox" type="checkbox" name="wishBtn">                       
-                </div>
-            </div>
-            <div class="wishcamp_content_5">
-                <div class="wcc_p">
-                    <img class="campimg" src="/resources/images/mypage/007.png">
-                    <p class="wishcamp_content_p">아침고요수목원</p>
-                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
-                    <p class="phone">010 1234 5678</p>
-                    <hr class="line">
-                    <input class="checkbox" type="checkbox" name="wishBtn">             
-                </div>
-            </div>
-            <div class="wishcamp_content_6">
-                <div class="wcc_p">
-                    <img class="campimg" src="/resources/images/mypage/007.png">
-                    <p class="wishcamp_content_p">아침고요수목원</p>
-                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
-                    <p class="phone">010 1234 5678</p>
-                    <hr class="line">
-                    <input class="checkbox" type="checkbox" name="wishBtn">                 
-                </div>
-            </div>
-            <div class="wishcamp_content_7">
-                <div class="wcc_p">
-                    <img class="campimg" src="/resources/images/mypage/007.png">
-                    <p class="wishcamp_content_p">아침고요수목원</p>
-                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
-                    <p class="phone">010 1234 5678</p>
-                    <hr class="line">
-                    <input class="checkbox" type="checkbox" name="wishBtn">                
-                </div>
-            </div>
-            <div class="wishcamp_content_8">
-                <div class="wcc_p">
-                    <img class="campimg" src="/resources/images/mypage/007.png">
-                    <p class="wishcamp_content_p">아침고요수목원</p>
-                    <p class="wishcamp_content_address">강원도 > 춘천시 > 동내면</p>
-                    <p class="phone">010 1234 5678</p>
-                    <hr class="line">
-                    <input class="checkbox" type="checkbox" name="wishBtn">                     
-                </div>
-            </div>
+            <div th:each="camp : ${ campList }" class="wishcamp_content_1">
+            	<div class="wcc_p">
+            		<img class="camping" th:src="${ camp.fileNo }">
+            		<p class="wishcamp_content_p" th:text="${ camp.campName }">
+            		<p class="wishcamp_content_address" th:text="${ camp.campAddress }">
+            		<p class="phone" th:text="${ camp.campPhone }">
+            		<hr class="line">
+            		<input class="checkbox" type="checkbox" name="wishBtn">
+            	</div>
             </div>
         <div class="button_content">
             <div class="full_check"><input class="checkbox" type="checkbox" id="allCheckbox">전체 선택</div>

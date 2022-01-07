@@ -54,32 +54,53 @@ public class MypageServiceImpl implements MypageService{
 	}
 	
 	@Override
-	public List<Member> selectMember(Member member){
-		return mypageMapper.selectMember(member);
+	public List<Member> findAllMember(){
+		return mypageMapper.findAllMember();
 	}
 
+	/* 회원정보 수정 */
+	@Transactional
 	@Override
-	public Map<String, Object> findAllMember(int page) {
-		
-		// 1. 총 회원수
-		int listCount = mypageMapper.getListCount();
-		
-		PageInfo pi = new PageInfo(page, listCount, 10, 10);
-		pi.setStartRow(page);
-		pi.setEndRow(pi.getStartRow());
-		List<Member> memberList = mypageMapper.findAllMember(pi);
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("pi", pi);
-		map.put("memberList", memberList);
-				
-		return map;
+	public void changeInfoModify(Member member/*, String email, 
+			String phone, String nickName*/) {
+		/*
+		member.setEmail(member.getEmail());
+		member.setPhone(member.getPhone());
+		member.setNickName(member.getNickName());
+		*/
+		mypageMapper.changeInfoModify(member);
 	}
 
+	/* 비밀번호 변경 */
+	@Transactional
 	@Override
-	public List<Member> findMember() {
+	public void changeInfoPwdModify(Member member, String pwd) {
 		
-		return null;
+		member.setPwd(member.getPwd());
+		
+		mypageMapper.changeInfoPwdModify(member);		
 	}
+
+	/* 닉네임 체크 */
+	@Override
+	public int nickNameCheck(String nickName) {
+		int cnt = mypageMapper.nickNameCheck(nickName);
+		return cnt;
+	}
+
+	/*
+	 * @Override public Map<String, Object> findAllMember() {
+	 * 
+	 * // 1. 총 회원수 int listCount = mypageMapper.getListCount();
+	 * 
+	 * List<Member> memberList = mypageMapper.findAllMember();
+	 * 
+	 * Map<String, Object> map = new HashMap<>();
+	 * 
+	 * map.put("memberList", memberList);
+	 * 
+	 * return map; }
+	 */
+	
 	
 }

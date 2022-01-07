@@ -34,20 +34,22 @@
 		        	<input type="file" class="profileInput" name="singleFile"/>
 		            <p class="mypage_content_p">회원님을 알릴 수 있는 사진을 등록해주세요.</p>        
 	        </div>
+        
         <div class="mypage_content_2">
             <div class="mypage_content_top">찜한 캠핑장</div>
             <img class="mypage_wishlist" src="resources/images/mypage/깊은산속.jpg"><br>
             <p class="mypage_content_p">아침 고요 수목원</p>
         </div>
+        
         <div class="mypage_content_3">
             <div class="mypage_content_top">회원님 정보</div>
             <ul class="mypage_content_3_ul">
                 <li class="mypage_content_3_li">
                 <img class="mypage_img_user" src="resources/images/mypage/user.png"></src>
-                가입일 : <th:text="${ member.createDate }"></li>
+                가입일 : <label class="mypage_date" sec:authentication="principal.createDate"></label></li>
                 <li class="mypage_content_3_li">
                 <img class="mypage_img_user" src="resources/images/mypage/user.png"></src>
-                최근 로그일 : ${member.modifyDate}</li>
+                최근 로그일 : <label class="mypage_date" sec:authentication="principal.modifyDate"></li>
             </ul>
         </div>
         <div class="mypage_content_4">
