@@ -32,11 +32,13 @@
 
             <!-- 2. 작성자 -->
             <div class="writer">
-                작성자 : <h3>chuchu1226chuchu1226</h3>
+                작성자 : <h3></h3>
             </div>
 
 
-            <form action="#" method="get">
+            <form method="post" id="reportForm">
+            
+            	<div class="infoArea"></div>
 
                 <!-- 3. 신고 사유 -->
                 <div class="report_reason">
@@ -46,27 +48,27 @@
                         <ul class="report_ul">
 
                             <li>
-                                <input type="radio" id="porno" name="reason" value="prn">
+                                <input type="radio" id="porno" name="reason" value="음란/성인">
                                 <label for="porno">음란/성인</label>
                             </li>
 
                             <li>
-                                <input type="radio" id="illegal" name="reason" value="ilg">
+                                <input type="radio" id="illegal" name="reason" value="불법 정보(도박/사행성)">
                                 <label for="illegal">불법 정보(도박/사행성)</label>
                             </li>
 
                             <li>
-                                <input type="radio" id="cuss" name="reason" value="cuss">
+                                <input type="radio" id="cuss" name="reason" value="도배/욕설 메시지">
                                 <label for="cuss">도배/욕설 메시지</label>
                             </li>
 
                             <li>
-                                <input type="radio" id="invade" name="reason" value="inv">
+                                <input type="radio" id="invade" name="reason" value="개인정보 침해">
                                 <label for="invade">개인정보 침해</label>
                             </li>
 
                             <li class="etc_area">
-                                <input type="radio" id="etc" name="reason" value="etc" checked>
+                                <input type="radio" id="etc" name="reason" value="기타" checked>
                                 <label for="etc">기타</label><br>
                                 <textarea cols="25" rows="4" style="resize:none;" maxlength="50"
                                  name="content" placeholder="50자 이내 작성해주세요"></textarea>
@@ -95,25 +97,57 @@
 
                 <!-- 5. 신고 버튼 -->
                 <div class="report_button">
-                    <button type="submit">신고</button>
+                    <button type="button" id="reportBtn">신고</button>
                 </div>
 
 
             </form>
+            
+            <script>
+		    $(function(){
+		        $("#reportBtn").on('click',function(){
+		           let param = {};
+		           // {} : key와 value로 이루어진 객체 생성 
+		           param.id = $("#reportForm [name=id]").val();
+		           param.reason = $("#reportForm [name=reason]").val();
+		           param.content = $("#reportForm [name=content]").val();
+		           param.victim = $("#reportForm [name=victim]").val();
+		           param.suspact = $("#reportForm [name=suspact]").val();
+		        
+		           console.log(param);
+		           
+		           $.ajax({
+		        	   url : "/admin/report",
+		        	   data : JSON.stringify(param),
+		        	   dataType : "json",
+		        	   contentType : "application/json; charset=utf-8",
+		        	   /* data : param, [test] */
+		        	   type : "post",
+		        	   success : function(msg) {
+		        		   alert(msg);
+		        		   
+		        	   },
+		        	   error : function(e){
+		        		   console.log(e);
+			        	   }
+			           });
+			         });
+			     });
+			</script>
 
         </div>
     </div>
 </div>
 <script>
-    function show() {
-        document.querySelector(".modal_background").className = "modal_background show";
-    }
+function show() {
+    document.querySelector(".modal_background").className = "modal_background show";
+}
 
-    function close() {
-        document.querySelector(".modal_background").className = "modal_background";
-    }
+function close() {
+    document.querySelector(".modal_background").className = "modal_background";
+}
 
-    document.querySelector(".close_icon2").addEventListener("click", close);
+document.querySelector(".close_icon2").addEventListener("click", close);
 </script>
 </body>
 </html>

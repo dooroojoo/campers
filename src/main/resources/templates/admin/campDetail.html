@@ -203,7 +203,7 @@
                         <div class="ad_before"><button type="button" onclick="location.href='/admin/camp'">이전</button></div>
                         <div class="ad_reject"><button type="button" th:onclick="'refusalCamp('+${camp.campNo}+', '+${camp.userNo}+')'">거절</button></div>
                         <div class="ad_enroll">
-                        	<button type="button" 
+                        	<button type="button"
                         	th:onclick="|location.href='@{/admin/camp/enroll(campNo=${camp.campNo}, userNo=${camp.userNo})}'|">등록</button>
                         </div>
                     </div>

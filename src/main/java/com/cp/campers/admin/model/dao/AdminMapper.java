@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.cp.campers.camp.model.vo.Room;
 import com.cp.campers.admin.model.vo.PageInfo;
+import com.cp.campers.admin.model.vo.Report;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
@@ -61,6 +62,9 @@ public interface AdminMapper {
 
 	// 등록이력
 	void record(int campNo);
+
+	// 신고등록
+	int insertReport(Report report);
 
 
 
