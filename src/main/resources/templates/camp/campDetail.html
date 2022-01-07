@@ -334,9 +334,6 @@
 				 	function showRoom(roomNo){
 				 		// console.log("roomNo : " + roomNo);
 				 		
-				 		// $('.prevBtn').attr('class','prevBtn' + roomNo + ' btn1');
-				 		// $('.nextBtn').attr('class','nextBtn' + roomNo + ' btn2');
-				 		
 				 		$.ajax({
 			 				url : "/camp/roomDetail/" + roomNo,
 			 				type : "get",
@@ -410,26 +407,34 @@
                     <div class="writer_wrap">
                         <ul>
                         
-                            <li class="review_content" th:each="review : ${camp.reviewList}">
+                            <li class="review_content" th:each="review : ${reviewList}" >
                                 <div class="review_top">
                                     <div class="writer_profile">
-                                        <img class="icon_img" src="resources/images/user.png">
+                                    	<img class="icon_img" th:if="${review.profilePath != null }" th:src="${review.profilePath}">
+										<img class="icon_img" th:unless="${review.profilePath != null }" src="/resources/images/board/member_profile_navy.png">
                                     </div>
                                     <div class="writer_info">
                                         <div class="writer" th:text="${review.nickName}"></div>
                                         <div class="write_date" th:text="${ #dates.format(review.createDate, 'yy.MM.dd') }"></div>
                                     </div>
-                                    <div class="delete_a">
-                                        <a th:href="@{/camp/reviewDelete(rid=${review.rid})}">삭제하기</a>
+                                    <th:block sec:authorize="isAuthenticated()">
+                                    <div class="delete_a" th:if="${#authentication.principal.userNo} == ${ review.writer }">
+                                        <a th:onclick="'deleteRid('+${ review.rid }+', '+${ review.campNo }+')'">삭제하기</a>
                                     </div>
+                                    </th:block>
                                 </div>
-
+                                
                                 <div class="review_bottom">
                                     <div class="text_controller" th:text="${review.rcontent}"></div>
                                 </div>
                             </li>
                             
                         </ul>
+                    </div>
+                    
+                    <div align="center" th:if="${not #strings.isEmpty(noResult)}">
+                    	<img class="noReview" src="/resources/images/camp/tent.png">
+                    	<h4 th:text="${noResult}"></h4>
                     </div>
                 </div>
             </div>
@@ -518,6 +523,14 @@ function share(){
     document.execCommand("copy");
     document.body.removeChild(textarea);
     alert("URL이 복사되었습니다.")
+}
+
+function deleteRid(rid, campNo){
+	
+	if(confirm("정말로 삭제하시겠습니까?")){
+		location.href="/camp/reviewDelete?rid=" + rid + "&campNo=" + campNo;
+	}
+	
 }
 </script>
 

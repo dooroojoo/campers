@@ -330,10 +330,6 @@ fieldset {
 .checkTime_li_io {
     width: 12%;
 }
-.checkTime_li h5,
-.checkTime_li_io h5 {
-	color: tomato;
-}
 
 .policyIcon { /* 운영 정책 안내 */
     width: 10%;
@@ -517,6 +513,9 @@ fieldset {
 
 .review_bottom {
     padding: 20px 30px 20px 15px;
+}
+.noReview{
+	width: 150px;
 }
 
 /*----- top 이동 버튼 -----*/
