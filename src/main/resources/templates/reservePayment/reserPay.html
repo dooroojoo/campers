@@ -62,7 +62,7 @@
             <div class="ques_text">
                 <span class="inp_check">
                     <label class="chk1_1" for="chk1_1">1. 문의사항은 업체로 연락 부탁드립니다/미성년자 는 부모님 동반 외 예약을 받지 않음을 확인하셨나요? <span class="red">(*)</span></label>
-                    <input type="checkbox" name="chk1" id="chk1_1">
+                    <input type="checkbox" name="chk1" id="chk1">
                 </span>
             </div>
             <div class="ques_text">
@@ -73,7 +73,7 @@
                        <br>
                        <span> 취소/환불 규정 확인하셨나요?</span>  <span class="red">(*)</span>
                     </label>
-                    <input type="checkbox" name="chk1" id="chk1_1">
+                    <input type="checkbox" name="chk1" id="chk2">
                 </span>
             </div>
             <div class="title1">
@@ -107,7 +107,7 @@
                 </div>
                 <div class="bank">은행<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="환불 받으실 계좌번호의 은행을 입력해주세요"  name="bank" id="" />
+                    <input type="text" placeholder="환불 받으실 계좌번호의 은행을 입력해주세요"  name="bank" id="bank" />
                 </div>
             </div>
             <div class="title1">
@@ -208,29 +208,36 @@
 		 let agreeChk2 = document.querySelector('#agreeChk2');
 		 let agreeChk3 = document.querySelector('#agreeChk3');
 		 let agreeChk4 = document.querySelector('#agreeChk4');
-		
+		 let chk1 = document.querySelector('#chk1');
+		 let chk2 = document.querySelector('#chk2');
+		 
 	     
 	     if(!check(/^[가-힣]{2,}$/, document.getElementById('userName'),
 	     "이름은 한글로 2글자 이상 입력하세요"))
-             return false;
-	     
+             return false;   
 	     if(!check(/^\d{3}-\d{3,4}-\d{4}$/, document.getElementById('phone'), 
          "핸드폰 번호는 -를 포함한 숫자로만 입력해주세요"))
 	    	 return false;
-	     
 	     if(!check(/^[가-힣]{2,}$/, document.getElementById('accountHol'),
     	 "이름은 한글로 2글자 이상 입력하세요"))
          return false;
-	     
 	     if(!check(/^[0-9]+$/, document.getElementById('accountNum'),
     	 "계좌번호를 확인해 주세요"))
          return false;
+	     if(!check(/^[가-힣]{2,}$/, document.getElementById('bank'),
+    	 "은행명을 확인해 주세요"))
+         return false;
 	     
+	     if(!chk1.checked || !chk2.checked) {
+	    	 alert("예약자 질의응답에 체크하셔야 합니다");
+	         return false;
+	     }
 	     if(!selectAll.checked || !agreeChk1.checked || !agreeChk2.checked || !agreeChk3.checked || !agreeChk4.checked) {
 	    	 alert("이용약관에 동의하셔야 합니다");
 	         return false;
 	     }
 	     
+	    //
 	    // requestPay();
 	    	 
 	}
