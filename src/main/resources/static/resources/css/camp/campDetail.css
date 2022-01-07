@@ -273,6 +273,9 @@ fieldset {
 .accom_intro {
     margin-bottom: 80px;
 }
+.txtSet {
+	margin: 0 0 20px 0;
+}
 
 /*---- 5. 시설 및 부가 이용 -----*/
 .accom_facility {
@@ -429,10 +432,7 @@ fieldset {
     -moz-transform: scale(1.2);
     -ms-transform: scale(1.2);
     -o-transform: scale(1.2);
-}
-
-.rooms_info:hover,
-.rooms_img:hover {
+    
     cursor: pointer;
 }
 
@@ -493,15 +493,21 @@ fieldset {
     flex-direction: column;
     justify-content: space-around;
 }
-
+.writer {
+	font-size: 1.1rem;
+}
+.write_date {
+	color: #808080;
+	font-size: 14px;
+}
 .delete_a {
     margin-left: 200px;
     padding-top: 36px;
 }
 
 .delete_a a {
-    /* text-decoration: underline; */
-    color: black;
+    text-decoration: none;
+    color: rgb(192, 192, 192);
     font-size: 12px;
 }
 
@@ -510,7 +516,7 @@ fieldset {
 }
 
 .review_bottom {
-    padding: 20px 30px;
+    padding: 20px 30px 20px 15px;
 }
 
 /*----- top 이동 버튼 -----*/

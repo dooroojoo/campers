@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cp.campers.camp.model.dao.CampMapper;
 import com.cp.campers.camp.model.vo.Camp;
+import com.cp.campers.camp.model.vo.Review;
 import com.cp.campers.camp.model.vo.Room;
 
 @Service("campService")
@@ -29,9 +30,12 @@ public class CampServiceImpl implements CampService{
 		
 		List<Room> roomList = campMapper.roomList(campNo);
 		
+		// List<Review> reviewList = campMapper.reviewList(campNo);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("camp", camp);
 		map.put("roomList", roomList);
+		// map.put("reviewList", reviewList);
 		
 		return map;
 	}

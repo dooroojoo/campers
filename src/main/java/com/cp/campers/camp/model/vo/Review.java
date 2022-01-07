@@ -9,6 +9,7 @@ public class Review {
 
 	private int rid;
 	private int writer;
+	private String nickName;
 	private String rcontent;
 	private Date createDate;
 	private String status;
