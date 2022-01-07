@@ -11,7 +11,7 @@
     <link th:href="@{resources/css/common/header-footer-style.css}" rel="stylesheet">
     <link th:href="@{resources/css/main/main-style.css}" rel="stylesheet">
     <!-- 슬라이드 라이브러리 -->
-   <link rel="stylesheet" type="text/css" th:href="@{/resources/js/main/slick/slick.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/js/main/slick/slick.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/resources/js/main/slick/slick-theme.css}"/>
     <!-- 캘린더 라이브러리 -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -82,45 +82,23 @@
            </form>
 		</div>
 
-        <!-- 갤러리 형식 추천 리스트 -->
+        <!-- 슬라이드 형식 추천 리스트 -->
         <div class="main-gallery bestCamping">
           <div class="mian-gallery-title">
             캠퍼스 추천! 겨울에 가면 더 좋은 캠핑장
           </div>
             <div class="main-slider">
               <div class="prev" id="main-arrow"><img src="resources/images/main/prev.png"></div>
-              <div class="main-slide-wrapper">
               
+              <div class="main-slide-wrapper">
                 <!-- 이미지는 추천할 캠핑장명(코드)으로 썸네일/상세페이지 링크 조회해오기 -->
                 <div class="slide-container" th:each="slide : ${mainSlider}">
                 <div class="main-slide" id="slide"><a href="#">
-                  <img th:src="|${slide.fRroute}+${slide.fRName}|"></a></div>
-                  <div class="slide-text" th:text="|${slide.cRArea} / ${slide.cRName}|"></div>
+                  <img th:src="@{${slide.fRRoute}+${slide.fRName}}"></a></div>
+                  <div class="slide-text" th:text="${slide.cRName}"></div>
                 </div>
-                
-                <!--  아래 코드는 db 가져오면 반복문으로 처리할 예정 -->
-
-                <div class="slide-container">
-                  <div class="main-slide" id="slide2"><a href="#">
-                    <img src="resources/images/main/list2.jpg"></a></div>
-                    <div class="slide-text"  id="slide-text2"></div>
-                  </div>
-                  <div class="slide-container">
-                    <div class="main-slide" id="slide3"><a href="#">
-                      <img src="resources/images/main/list3.jpg"></a></div>
-                      <div class="slide-text"  id="slide-text3"></div>
-                    </div>
-                    <div class="slide-container">
-                      <div class="main-slide" id="slide4"><a href="#">
-                        <img src="resources/images/main/list4.jpg"></a></div>
-                        <div class="slide-text"  id="slide-text4"></div>
-                      </div>
-                      <div class="slide-container">
-                        <div class="main-slide" id="slide5"><a href="#">
-                          <img src="resources/images/main/list5.jpg"></a></div>
-                          <div class="slide-text"  id="slide-text5"></div>
-                        </div>
               </div>
+              
               <div class="next" id="main-arrow"><img src="resources/images/main/next.png"></div>
             </div>
         </div>
