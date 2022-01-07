@@ -5,7 +5,6 @@
 	<resultMap id="recommendMap" type="com.cp.campers.main.model.vo.Recommend">
 		<id property="cRNo" column="CAMP_NO" />
 		<result property="cRName" column="CAMP_NAME"/>
-		<result property="cRArea" column="CAMP_ADDRESS"/>
 		<result property="fRRoute" column="FILE_ROUTE"/>
 		<result property="fRName" column="FILE_NAME"/>
 	</resultMap>
@@ -16,7 +15,6 @@
 				SELECT
 					   C.CAMP_NO
 					 , C.CAMP_NAME
-					 , SUBSTR(C.CAMP_ADDRESS, 0, INSTR(C.CAMP_ADDRESS, ' ', 1, 1))
 					 , I.FILE_ROUTE
 					 , I.FILE_NAME
 				  FROM CAMP C
