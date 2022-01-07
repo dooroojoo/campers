@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cp.campers.board.model.dao.BoardMapper;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.Comment;
 import com.cp.campers.board.model.vo.PageInfo;
 import com.cp.campers.board.model.vo.Search;
 
@@ -70,8 +71,10 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Board boardDetail(int bid) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Board board = boardMapper.boardDetail(bid);
+		
+		return board;
 	}
 
 	@Override
@@ -99,5 +102,30 @@ public class BoardServiceImpl implements BoardService {
 		
 		return map;
 	}
+
+	@Override
+	public void insertComment(Comment comment) {
+		
+		boardMapper.insertComment(comment);
+		
+	}
+
+	@Override
+	public List<Comment> selectCommentList(int bid) {
+		return boardMapper.selectCommentList(bid);
+	}
+
+	@Override
+	public void insertRefComment(Comment comment) {
+		boardMapper.insertRefComment(comment);
+		
+	}
+
+	@Override
+	public List<Comment> selectRefCommentList(int bid) {
+		
+		return boardMapper.selectRefCommentList(bid);
+	}
+
 
 }

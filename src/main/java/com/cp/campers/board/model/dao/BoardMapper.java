@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.Comment;
 import com.cp.campers.board.model.vo.PageInfo;
 import com.cp.campers.board.model.vo.Search;
 
@@ -35,6 +36,14 @@ public interface BoardMapper {
 	int getListCountBySearch(Search search);
 
 	List<Board> searchBoardList(Map<String, Object> param);
+
+	void insertComment(Comment comment);
+
+	List<Comment> selectCommentList(int bid);
+
+	void insertRefComment(Comment comment);
+
+	List<Comment> selectRefCommentList(int bid);
 
 
 }

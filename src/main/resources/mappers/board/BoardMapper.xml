@@ -96,9 +96,9 @@ select
     from board
     join board_file using(bid)
     join imagefile using(file_no)
-    where file_level = 0
-    and file_status = 'N'
-    order by bid desc
+  where file_level = 0
+  and file_status = 'N'
+  order by bid desc
 </select>
 
 <select id="getListCountBySearch" parameterType="com.cp.campers.board.model.vo.Search" resultType="_int">
@@ -138,37 +138,153 @@ FROM (select
       from board b
       join member m on (b.writer = m.user_no)
       where b.status = 'N'
-<choose>
-<when test="search.searchCondition == 'all'">
-and (btitle like '%'||#{search.searchValue}||'%' or bcontent like '%'||#{search.searchValue}||'%')
-</when>
-<when test="search.searchCondition == 'title'">
-and btitle like '%'||#{search.searchValue}||'%'
-</when>
-<when test="search.searchCondition == 'content'">
-and bcontent like '%'||#{search.searchValue}||'%'
-</when>
-<when test="search.searchCondition == 'nickname'">
-and nickname= #{search.searchValue}
-</when>
-</choose>
-<choose>
-<when test="search.sort == 'desc'">
-ORDER BY bid DESC) A)
-</when>
-<when test="search.sort == 'asc'">
-ORDER BY bid ASC) A)
-</when>
-<when test="search.sort == 'count'">
-ORDER BY bcount desc, bid desc) A)
-</when>
-<when test="search.sort == 'like'">
-ORDER BY blike desc, bid desc) A)
-</when>
-<otherwise>
-ORDER BY bid DESC) A)
-</otherwise>
-</choose>
-where RNUM between #{pi.startRow} and #{pi.endRow}
+		<choose>
+			<when test="search.searchCondition == 'all' and search.searchValue != null">
+			and (btitle like '%'||#{search.searchValue}||'%' or bcontent like '%'||#{search.searchValue}||'%')
+			</when>
+			<when test="search.searchCondition == 'title' and search.searchValue != null">
+			and btitle like '%'||#{search.searchValue}||'%'
+			</when>
+			<when test="search.searchCondition == 'content' and search.searchValue != null">
+			and bcontent like '%'||#{search.searchValue}||'%'
+			</when>
+			<when test="search.searchCondition == 'nickname' and search.searchValue != null">
+			and nickname= #{search.searchValue}
+			</when>
+		</choose>
+		<choose>
+			<when test="search.sort == 'desc'">
+			ORDER BY bid DESC) A)
+			</when>
+			<when test="search.sort == 'asc'">
+			ORDER BY bid ASC) A)
+			</when>
+			<when test="search.sort == 'count'">
+			ORDER BY bcount desc, bid desc) A)
+			</when>
+			<when test="search.sort == 'like'">
+			ORDER BY blike desc, bid desc) A)
+			</when>
+			<otherwise>
+			ORDER BY bid DESC) A)
+			</otherwise>
+		</choose>
+		where RNUM between #{pi.startRow} and #{pi.endRow}
 </select>
+
+<select id="boardDetail" resultMap="boardResultMap" parameterType="_int">
+select 
+            bid, 
+            btitle, 
+            bcontent, 
+            b.modify_date, 
+            b.create_date,
+            nickName,
+            bcount,
+            blike
+      from board b
+      join member m on (b.writer = m.user_no)
+      where b.status = 'N'
+      and bid = #{bid}
+</select>
+
+<insert id="insertComment">
+INSERT INTO REPLY VALUES(
+	SEQ_CID.NEXTVAL,
+	#{bid},
+	#{cContent},
+	SYSDATE,
+	SYSDATE,
+	DEFAULT,
+	NULL,
+	#{cWriter},
+	NULL
+)
+</insert>
+
+<resultMap id="CommentResultMap" type="com.cp.campers.board.model.vo.Comment">
+	<id property="cid" column="CID"/>
+	<result property="bid" column="BID"/>
+	<result property="cContent" column="CCONTENT"/>
+	<result property="createDate" column="CREATE_DATE"/>
+	<result property="modifyDate" column="MODIFY_DATE"/>
+	<result property="status" column="STATUS"/>
+	<result property="refCid" column="REF_CID"/>
+	<result property="cWriter" column="CWRITER"/>
+	<result property="refWriter" column="REF_WRITER"/>
+	<result property="nickName" column="NICKNAME"/>
+	<result property="profilePath" column="PROFILE_PATH"/>
+</resultMap>
+
+<select id="selectCommentList" resultMap="CommentResultMap">
+SELECT
+        CID,
+        BID,
+        CCONTENT,
+        MODIFY_DATE,
+        REF_CID,
+        NICKNAME,
+        PROFILE_PATH,
+        REF_WRITER
+    FROM (SELECT
+            R.CID,
+            R.BID,
+            R.CCONTENT,
+            R.MODIFY_DATE,
+            R.REF_CID,
+            NICKNAME,
+            PROFILE_PATH,
+            REF_WRITER
+            FROM REPLY R
+            JOIN MEMBER M ON(M.USER_NO = R.CWRITER)
+            WHERE R.STATUS = 'N'
+        ORDER BY R.CREATE_DATE DESC)
+        WHERE BID = #{ bid }
+    START WITH REF_CID IS NULL
+CONNECT BY PRIOR CID = REF_CID
+</select>
+
+<insert id="insertRefComment" parameterType="com.cp.campers.board.model.vo.Comment">
+INSERT INTO REPLY VALUES(
+	SEQ_CID.NEXTVAL,
+	#{bid},
+	#{cContent},
+	SYSDATE,
+	SYSDATE,
+	DEFAULT,
+	#{refCid},
+	#{cWriter},
+	#{refWriter}
+)
+</insert>
+
+<select id="selectRefCommentList" resultMap="CommentResultMap">
+SELECT
+        CID,
+        BID,
+        CCONTENT,
+        MODIFY_DATE,
+        REF_CID,
+        NICKNAME,
+        PROFILE_PATH,
+        REF_WRITER
+    FROM (SELECT
+            R.CID,
+            R.BID,
+            R.CCONTENT,
+            R.MODIFY_DATE,
+            R.REF_CID,
+            NICKNAME,
+            PROFILE_PATH,
+            REF_WRITER
+            FROM REPLY R
+            JOIN MEMBER M ON(M.USER_NO = R.CWRITER)
+            WHERE R.STATUS = 'N'
+        ORDER BY R.CREATE_DATE DESC)
+        WHERE BID = #{ bid }
+    START WITH REF_CID IS NULL
+CONNECT BY PRIOR CID = REF_CID
+</select>
+
+
 </mapper>
