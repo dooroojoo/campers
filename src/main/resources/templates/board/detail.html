@@ -442,17 +442,21 @@ width: 60px;
 						</div>
 						<label th:text="${board.blike}"></label>
 					</div>
-					<div class="content-right">
-						<th:block sec:authorize="isAuthenticated()">
-							<input type="hidden" name="bid" th:value="${board.bid}">
+					<th:block sec:authorize="isAuthenticated()">
+						<div class="content-right" th:id="'board-div'+${board.bid}" th:onclick="|report(this);|">
+							<input type="hidden" name="id" th:value="${board.bid}">
+							<input type="hidden" name="nickName" th:value="${board.nickName}">
 							<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
-				            <img src="/resources/images/board/report_img.png"
-						 	th:onclick="|boardReport('${ board.writer }'); show();|">
-				        </th:block>
-				        <th:block sec:authorize="isAnonymous()">
+							<input type="hidden" name="suspect" th:value="${board.writer}">
+							<input type="hidden" name="reportType" value="board">
+				            <img src="/resources/images/board/report_img.png" onclick="show()">
+				        </div>
+			        </th:block>
+			        <th:block sec:authorize="isAnonymous()">
+				        <div class="content-right">
 				      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
-				        </th:block>
-					</div>
+						</div>
+			        </th:block>
 				</div>
 			</div>
 			<div class="freeBoard-comment">
@@ -509,9 +513,12 @@ width: 60px;
 						</div>
 						<div class="comment-right">
 							<th:block sec:authorize="isAuthenticated()">
-								<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|replyReport('${ comment.cWriter }');|">
-									<input type="hidden" name="cid" th:value="${comment.cid}">
+								<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
+									<input type="hidden" name="id" th:value="${comment.cid}">
+									<input type="hidden" name="nickName" th:value="${comment.nickName}">
 									<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+									<input type="hidden" name="suspect" th:value="${comment.cWriter}">
+									<input type="hidden" name="reportType" value="reply">
 						            <img src="/resources/images/board/report_img.png" onclick="show()">
 						        </div>
 					        </th:block>
@@ -559,9 +566,12 @@ width: 60px;
 							</div>
 							<div class="comment-right">
 								<th:block sec:authorize="isAuthenticated()">
-									<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|replyReport(this);|">
-										<input type="hidden" name="cid" th:value="${comment.cid}">
+									<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
+										<input type="hidden" name="id" th:value="${comment.cid}">
+										<input type="hidden" name="nickName" th:value="${comment.nickName}">
 										<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+										<input type="hidden" name="suspect" th:value="${comment.cWriter}">
+										<input type="hidden" name="reportType" value="reply">
 							            <img src="/resources/images/board/report_img.png" onclick="show()">
 							        </div>
 						        </th:block>
@@ -653,35 +663,21 @@ width: 60px;
 			location.href="/member/login";
 		}
 	}
-	
-	function boardReport(writer){
+
+	function report(e){
 		
-		let nickName = $("#report-board").text();
-		let bid = $(".content-right input[name=bid]").val();
-		let victim = $(".content-right input[name=victim]").val();
-		
-		$(".writer h3").text(nickName);
-		
-		let html = '<input type="text" name="id" value="' + bid + '">' 
-				 + '<input type="text" name="victim" value="' + victim + '">'
-				 + '<input type="text" name="suspact" value="' + writer + '">';
-		
-		$(".infoArea").html(html);
-	}
-	
-	function replyReport(e){
-		
-		console.log(e);
-		
-		let nickName = $("#report-reply").text();
-		let cid = $(".content-right input[name=cid]").val();
-		let victim = $(".content-right input[name=victim]").val();
+		let nickName = $(e).find("input[name=nickName]").val();
+		let id = $(e).find("input[name=id]").val();
+		let victim = $(e).find("input[name=victim]").val();
+		let suspect = $(e).find("input[name=suspect]").val();
+		let reportType = $(e).find("input[name=reportType]").val();
 		
 		$(".writer h3").text(nickName);
 		
-		let html = '<input type="text" name="id" value="' + cid + '">'
-				 + '<input type="text" name="victim" value="' + victim + '">'
-				 + '<input type="text" name="suspact" value="' + cWriter + '">';
+		let html = '<input type="hidden" name="id" value="' + id + '">'
+				 + '<input type="hidden" name="victim" value="' + victim + '">'
+				 + '<input type="hidden" name="suspect" value="' + suspect + '">'
+				 + '<input type="hidden" name="reportType" value="' + reportType + '">';
 		
 		$(".infoArea").html(html);
 	}

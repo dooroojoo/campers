@@ -88,7 +88,7 @@
                     <div class="report_img">
                         <img src="/resources/images/admin/report/icon-warning.png">
                     </div>
-                    <p>허위 신고 시 서비스 이용에 제한이 될 수 있습니다.</p>
+                    <p>허위 신고일 경우 서비스의 이용제한 등 불이익을 받을 수 있으니 <br> 신중하게 판단하신 후 신고해주세요.</p>
                 </div>
 
 
@@ -106,15 +106,17 @@
             <script>
 		    $(function(){
 		        $("#reportBtn").on('click',function(){
-		           let param = {};
-		           // {} : key와 value로 이루어진 객체 생성 
-		           param.id = $("#reportForm [name=id]").val();
-		           param.reason = $("#reportForm [name=reason]").val();
-		           param.content = $("#reportForm [name=content]").val();
-		           param.victim = $("#reportForm [name=victim]").val();
-		           param.suspact = $("#reportForm [name=suspact]").val();
-		        
-		           console.log(param);
+		        	
+					let param = {};
+					// {} : key와 value로 이루어진 객체 생성 
+					param.id = $("#reportForm [name=id]").val();
+					param.reason = $("#reportForm [name=reason]:checked").val();
+					param.content = $("#reportForm [name=content]").val();
+					param.victim = $("#reportForm [name=victim]").val();
+					param.suspect = $("#reportForm [name=suspect]").val();
+					param.reportType = $("#reportForm [name=reportType]").val();
+					
+					console.log(param);
 		           
 		           $.ajax({
 		        	   url : "/admin/report",
