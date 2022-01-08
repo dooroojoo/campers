@@ -19,4 +19,6 @@ public class Comment {
 	private String nickName;
 	private String profilePath;
 	private int refOriginCid;
+	private String title;
+	
 }

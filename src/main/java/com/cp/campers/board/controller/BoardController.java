@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,31 +98,53 @@ public class BoardController {
 	}
 
 	@GetMapping("/detail")
-	public void detailList(Model model, int bid) {
+	public String detailList(Model model, int bid, HttpServletRequest request, HttpServletResponse response) {
 		
+		Cookie[] cookies = request.getCookies();
+		
+		String bcount = "";
+		
+		if(cookies != null && cookies.length >0) {
+			for(Cookie c: cookies) {
+				
+				log.info(c.getName());
+				if(c.getName().equals("bcount")) {
+					bcount = c.getValue();
+				}
+			}
+		}
+		if(bcount.indexOf("|"+bid+"|")==-1) {
+			
+			Cookie newBcount = new Cookie("bcount", bcount+"|"+bid+"|");
+			
+			response.addCookie(newBcount);
+			
+			int result = boardService.increaseCount(bid);
+			
+			if(result>0) {
+				log.info("조회수 증가 성공");
+			}else {
+				log.info("조회수 증가 실패");
+			}
+		}
 		Board board = boardService.boardDetail(bid);
 		
 		model.addAttribute(board);
 		
+		log.info(board.getPrevTitle());
+		log.info(board.getNextTitle());
+		
 		List<Comment> commentList = boardService.selectCommentList(bid);
-
-		PrevBoard prevBoard = boardService.selectPrevBoard(bid);
-
-		NextBoard nextBoard = boardService.selectNextBoard(bid);
 
 		List<BoardFileNo> boardFileNoList = boardService.selectBoardImgae(bid);
 		
 		if(!boardFileNoList.toString().equals("[]")) {
 			model.addAttribute(boardFileNoList);
 		}
-		if(prevBoard != null) {
-			model.addAttribute(prevBoard);
-		}
-		if(nextBoard != null) {
-			model.addAttribute(nextBoard);
-		}
-		
+	
 		model.addAttribute(commentList);
+		
+		return "board/detail";
 		
 	}
 	@PostMapping("/comment")
@@ -138,7 +162,8 @@ public class BoardController {
 		log.info("refWriter = "+comment.getRefWriter());
 		log.info("bid = "+comment.getBid());
 		log.info("comment="+comment.getCContent());
-		log.info("refOrigin"+comment.getRefOriginCid());
+		log.info("ref"+comment.getRefCid());
+		
 		comment.setCWriter(loginUser.getUserNo());
 		
 		boardService.insertRefComment(comment);
@@ -152,11 +177,87 @@ public class BoardController {
 	}
 
 	@GetMapping("/mycomment")
-	public void myCommentList() {
+	public void myCommentList(Model model,@AuthenticationPrincipal UserImpl loginUser) {
+		
+		int writer = loginUser.getUserNo();
+		
+		int page = 1;
+		
+		Map<String, Object> map = boardService.selectMyCommentList(writer,page);
+		
+		log.info("commentMap"+map);
+		
+		model.addAttribute("myCommentList", map.get("myCommentList"));
+		model.addAttribute("pi", map.get("pi"));
+		
+	}
+	@GetMapping("/mycommentPage")
+	public String myCommentListPage(Model model,@AuthenticationPrincipal UserImpl loginUser, int page) {
+		
+		int writer = loginUser.getUserNo();
+		
+		Map<String, Object> map = boardService.selectMyCommentList(writer,page);
+		
+		log.info("commentMap"+map);
+		
+		model.addAttribute("myCommentList", map.get("myCommentList"));
+		model.addAttribute("pi", map.get("pi"));
+		
+		return "/board/mycomment";
 	}
 
 	@GetMapping("/myboard")
-	public void myBoardList() {
+	public void myBoardList(Model model,@AuthenticationPrincipal UserImpl loginUser) {
+
+		int writer = loginUser.getUserNo();
+		
+		int page = 1;
+		
+		Map<String, Object> map = boardService.selectMyBoardList(writer,page);
+		
+		model.addAttribute("boardList",map.get("boardList"));
+		model.addAttribute("pi",map.get("pi"));
+		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		
+	}
+
+	@GetMapping("/myboardPage")
+	public String myBoardPageList(Model model,@AuthenticationPrincipal UserImpl loginUser,int page) {
+
+		int writer = loginUser.getUserNo();
+		
+		log.info("page="+page);
+		
+		Map<String, Object> map = boardService.selectMyBoardList(writer,page);
+		
+		model.addAttribute("boardList",map.get("boardList"));
+		model.addAttribute("pi",map.get("pi"));
+		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		
+		return "/board/myboard";
+	}
+	
+	@GetMapping("/update")
+	public String boardUpdate(Model model, int bid) {
+		
+		Board board = boardService.selectBoardUpdate(bid);
+		log.info("board="+board);
+		if(board != null) {
+			model.addAttribute(board);
+			
+		}
+	
+		return "board/update";
+	}
+	
+	@GetMapping("/delete")
+	public String boardDelete(Model model, int bid) {
+		
+		boardService.deleteBoard(bid);
+		
+		
+		return "redirect:/board/list";
+		
 	}
 
 	@PostMapping("/write")
@@ -172,6 +273,7 @@ public class BoardController {
 		if (!mkdir.exists())
 			mkdir.mkdir();
 
+		int bid = 0;
 		List<Map<String, String>> files = new ArrayList<>();
 
 		List<MultipartFile> imageList = new ArrayList<>();
@@ -216,6 +318,7 @@ public class BoardController {
 				boardService.insertBoardImage(attachment);
 
 			}
+			bid = boardService.selectBid();
 
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
@@ -227,7 +330,7 @@ public class BoardController {
 			}
 		}
 
-		return "redirect:/board/list";
+		return "redirect:/board/detail?bid="+bid;
 	}
 
 	

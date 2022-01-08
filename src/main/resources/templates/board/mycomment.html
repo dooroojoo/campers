@@ -208,166 +208,57 @@
               
           
               <div class="freeBoard-content">
-                  <div class="freeBoard-box">
+                  <div class="freeBoard-box" th:each="board : ${myCommentList}"  th:onclick="'location.href=\''+@{/board/detail(bid=${board.bid})}+'\''" >
                       <div class="box-left">
-                          <p>가평인 것 같은데요..</p>
-                          <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
+                          <p th:text="${board.cContent}"></p>
+                          <label th:text="|원글제목 : ${board.title}|"></label>
                         </div>
-                        <div class="box-right">
-                            방금 전
+                        <div class="box-right"  th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm')}">
                         </div>
                     </div>
-                    <div class="freeBoard-box">
-                        <div class="box-left">
-                            <p>가평인 것 같은데요..</p>
-                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
-                          </div>
-                          <div class="box-right">
-                              방금 전
-                          </div>
-                      </div>
-                      <div class="freeBoard-box">
-                        <div class="box-left">
-                            <p>가평인 것 같은데요..</p>
-                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
-                          </div>
-                          <div class="box-right">
-                              방금 전
-                          </div>
-                      </div>
-                      <div class="freeBoard-box">
-                        <div class="box-left">
-                            <p>가평인 것 같은데요..</p>
-                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
-                          </div>
-                          <div class="box-right">
-                              방금 전
-                          </div>
-                      </div>
-                      <div class="freeBoard-box">
-                        <div class="box-left">
-                            <p>가평인 것 같은데요..</p>
-                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
-                          </div>
-                          <div class="box-right">
-                              방금 전
-                          </div>
-                      </div>
-                      <div class="freeBoard-box">
-                        <div class="box-left">
-                            <p>가평인 것 같은데요..</p>
-                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
-                          </div>
-                          <div class="box-right">
-                              방금 전
-                          </div>
-                      </div>
-                      <div class="freeBoard-box">
-                        <div class="box-left">
-                            <p>가평인 것 같은데요..</p>
-                            <label>원글 제목 : 여기 캠핑지 어딘지 아시는 분</label>
-                          </div>
-                          <div class="box-right">
-                              방금 전
-                          </div>
-                      </div>
                 </div>
                 <div class="freeBoard-footer">
-                    <div class="freeBoard-footerLeft">
-                        <button>글쓰기</button>
-                    </div>
-                    <div class="freeBoard-footerRight">
-                        <button>내글 보기</button>
-                    </div>
+                   <div class="freeBoard-footerLeft">
+                <th:block sec:authorize="isAuthenticated()">
+                    <button onclick="location.href='/board/write'">글쓰기</button>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <button onclick="loginPlz();">글쓰기</button>
+                </th:block>
+                </div>
+                <div class="freeBoard-footerRight">
+                <th:block sec:authorize="isAuthenticated()">
+                    <button onclick="location.href='/board/myboard'">내글 보기</button>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <button onclick="loginPlz();">내글 보기</button>
+                </th:block>
+                </div>
                 </div>
                 <div class="freeBoard-pagingbar">
                     <!-- 페이징 처리 -->
                     <div class="member_pages">
                         <ul class="member_paging">
-                            
-                            
-                            <!-- 맨 처음으로 이동하는 버튼(<<) -->
-                            <li><a href="">&lt;&lt;</a></li>
-                            
-                            
-                            
-                            <!-- 이전 페이지로(<) -->
-                            <li>
-                                <c:choose>
-                                    <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
-                                    <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
-                                </c:choose>
+
+                        <li><a href="/board/mycommentPage?page=1">&lt;&lt;</a></li>
+                     
+                        <li th:if="${ pi.page > 1}"><a th:href="@{/board/mycommentPage(page=${pi.page-1})}">&lt;</a></li>
+                        <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
+                       
+                            <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                                <div class="current_page" th:if="${p==pi.page}">
+                                    <a href="#" th:text="${p}"></a>
+                                </div>
+                                <div th:if="${ p != pi.page}">
+                                	<a th:href="@{/board/mycommentPage(page=${p})}" th:text="${p}"></a>
+                                </div>
                             </li>
-                            
-                            
-                            
-                            <!-- 최대 10개의 페이지 목록 -->
-                            <!--<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">-->
-                                <li>
-                                    <div class="current_page">
-                                        <a href="#">1</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">2</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">3</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">4</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">5</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">6</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">7</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">8</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">9</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="">
-                                        <a href="#">10</a>
-                                    </div>
-                                </li>
-                                <!--</c:forEach>-->
-                                
-                                <!-- 다음 페이지로(>) -->
-                                <li>
-                                    <c:choose>
-                                        <c:when test=""><a href="">&gt;</a></c:when>
-                                        <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
-                                    </c:choose>
-                                </li>
-                                
-                                
-                                
-                                <!-- 맨 끝으로 이동하는 버튼(>>) -->
-                                <li><a href="">&gt;&gt;</a></li>
-                            </ul>
+                      
+                        <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/board/mycommentPage(page=${pi.page+1})}">&gt;</a></li>
+                        <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
+                        
+                        <li><a th:href="@{/board/mycommentPage(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                    </ul>
                         </div>
                         
                         

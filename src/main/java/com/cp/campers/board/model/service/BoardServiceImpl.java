@@ -17,6 +17,9 @@ import com.cp.campers.board.model.vo.PageInfo;
 import com.cp.campers.board.model.vo.PrevBoard;
 import com.cp.campers.board.model.vo.Search;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class BoardServiceImpl implements BoardService {
 
@@ -61,14 +64,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int deleteBoard(int bid) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteBoard(int bid) {
+		boardMapper.deleteBoard(bid);
 	}
 
 	@Override
 	public int updateBoard(Board board) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -125,20 +126,70 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public PrevBoard selectPrevBoard(int bid) {
-		bid = bid-1;
-		return boardMapper.selectPrevBoard(bid);
-	}
-
-	@Override
-	public NextBoard selectNextBoard(int bid) {
-		bid = bid+1;
-		return boardMapper.selectNextBoard(bid);
-	}
-
-	@Override
 	public List<BoardFileNo> selectBoardImgae(int bid) {
 		return boardMapper.selectBoardImage(bid);
+	}
+
+	@Override
+	public int selectBid() {
+		return boardMapper.selectBid();
+	}
+
+	@Override
+	public Board selectBoardUpdate(int bid) {
+		return boardMapper.selectBoardUpdate(bid);
+	}
+
+	@Override
+	public int increaseCount(int bid) {
+		return boardMapper.increaseCount(bid);
+	}
+
+	@Override
+	public Map<String, Object> selectMyCommentList(int writer, int page) {
+		int listCount = boardMapper.getListCountMyComment(writer);
+		
+		PageInfo pi = new PageInfo(page,listCount, 10, 7);
+		pi.setStartRow(page, pi.getBoardLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("writer", writer);
+		
+		List<Comment> myCommentList = boardMapper.selectMyCommentList(param);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("myCommentList", myCommentList);
+		map.put("pi", pi);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> selectMyBoardList(int writer, int page) {
+        int listCount = boardMapper.getListCountMyBoard(writer);
+        
+        log.info(listCount+"");
+		
+		PageInfo pi = new PageInfo(page,listCount, 10, 7);
+		pi.setStartRow(page, pi.getBoardLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
+
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("writer", writer);
+		
+		List<Board> boardList = boardMapper.selectMyBoardList(param);
+		
+		List<Board> thumbnailList = boardMapper.selectThumbnailList();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pi", pi);
+		map.put("boardList", boardList);
+		map.put("thumbnailList", thumbnailList);
+		
+		return map;
 	}
 
 

@@ -22,6 +22,11 @@ public class Board {
 	private String fileRoute;
 	private String fileName;
 	
+	private int prevId;
+	private String prevTitle;
+	private int nextId;
+	private String nextTitle;
+	
 	private List<BoardFileNo> boardFileNoList;
 	
 }

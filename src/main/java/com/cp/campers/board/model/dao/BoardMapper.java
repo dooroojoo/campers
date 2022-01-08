@@ -28,7 +28,7 @@ public interface BoardMapper {
 	
 	List<Board> selectThumbnailList();
 	
-	int deleteBoard(int bid);
+	void deleteBoard(int bid);
 	
 	int updateBoard(Board board);
 	
@@ -51,5 +51,19 @@ public interface BoardMapper {
 	NextBoard selectNextBoard(int bid);
 
 	List<BoardFileNo> selectBoardImage(int bid);
+
+	int selectBid();
+
+	Board selectBoardUpdate(int bid);
+
+	int increaseCount(int bid);
+
+	int getListCountMyComment(int writer);
+
+	int getListCountMyBoard(int writer);
+
+	List<Board> selectMyBoardList(Map<String, Object> param);
+
+	List<Comment> selectMyCommentList(Map<String, Object> param);
 
 }
