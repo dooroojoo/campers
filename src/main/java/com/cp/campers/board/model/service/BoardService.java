@@ -19,7 +19,7 @@ public interface BoardService {
 	
 	Map<String, Object> selectBoardList(int page);
 	
-	int deleteBoard(int bid);
+	void deleteBoard(int bid);
 	
 	int updateBoard(Board board);
 	
@@ -33,11 +33,18 @@ public interface BoardService {
 
 	void insertRefComment(Comment comment);
 
-	PrevBoard selectPrevBoard(int bid);
-
-	NextBoard selectNextBoard(int bid);
-
 	List<BoardFileNo> selectBoardImgae(int bid);
+
+	int selectBid();
+
+	Board selectBoardUpdate(int bid);
+
+	int increaseCount(int bid);
+
+	Map<String, Object> selectMyCommentList(int writer, int page);
+
+	Map<String, Object> selectMyBoardList(int writer, int page);
+
 
 
 

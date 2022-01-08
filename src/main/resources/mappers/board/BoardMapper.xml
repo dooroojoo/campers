@@ -16,6 +16,10 @@
 	<result property="fileLevel" column="FILE_LEVEL"/>
 	<result property="fileRoute" column="FILE_ROUTE"/>
 	<result property="fileName" column="FILE_NAME"/>
+	<result property="prevId" column="PREVID"/>
+	<result property="prevTitle" column="PREVTITLE"/>
+	<result property="nextId" column="NEXTID"/>
+	<result property="nextTitle" column="NEXTTITLE"/>
 	<collection property="boardFileNoList" resultMap="boardFileNoResultMap"/>
 </resultMap>
 <resultMap type="com.cp.campers.board.model.vo.BoardFileNo" id="boardFileNoResultMap">
@@ -44,7 +48,11 @@ VALUES
 	DEFAULT,
 	#{writer},
 	DEFAULT,
-	DEFAULT
+	DEFAULT,
+	null,
+	null,
+	null,
+	null
 )
 </insert>
 <insert id="insertBoardImage" parameterType="com.cp.campers.board.model.vo.Attachment">
@@ -80,7 +88,9 @@ FROM (select
             bcontent, 
             b.modify_date, 
             b.create_date,
-            nickName
+            nickName,
+            bcount,
+            blike
       from board b
       join member m on (b.writer = m.user_no)
       where b.status = 'N'
@@ -173,7 +183,9 @@ FROM (select
 </select>
 
 <select id="boardDetail" resultMap="boardResultMap" parameterType="_int">
-select 
+select a.*
+from (
+    select
             bid, 
             btitle, 
             bcontent, 
@@ -182,11 +194,16 @@ select
             nickName,
             bcount,
             blike,
-            writer
-      from board b
-      join member m on (b.writer = m.user_no)
-      where b.status = 'N'
-      and bid = #{bid}
+            writer,
+           LAG(bid, 1,0) OVER(ORDER BY bid) nextId,
+           LAG(btitle, 1,0) OVER(ORDER BY bid) nextTitle,
+           LEAD(bid,1,0) OVER(ORDER BY bid) prevId,
+           LEAD(btitle,1,0) OVER(ORDER BY bid) prevTitle
+  from board b
+  join member m on (b.writer = m.user_no)
+  where b.status = 'N'
+)a
+where a.bid = #{bid}
 </select>
 
 <insert id="insertComment">
@@ -199,7 +216,8 @@ INSERT INTO REPLY VALUES(
 	DEFAULT,
 	NULL,
 	#{cWriter},
-	NULL
+	NULL,
+	SEQ_CID.CURRVAL
 )
 </insert>
 
@@ -215,6 +233,8 @@ INSERT INTO REPLY VALUES(
 	<result property="refWriter" column="REF_WRITER"/>
 	<result property="nickName" column="NICKNAME"/>
 	<result property="profilePath" column="PROFILE_PATH"/>
+	<result property="refOriginCid" column="REF_ORIGIN_CID"/>
+	<result property="title" column="BTITLE"/>
 </resultMap>
 
 <select id="selectCommentList" resultMap="CommentResultMap">
@@ -227,8 +247,10 @@ SELECT
         CWRITER,
         NICKNAME,
         PROFILE_PATH,
-        REF_WRITER
-    FROM (SELECT
+        REF_WRITER,
+        REF_ORIGIN_CID
+    FROM (
+    	SELECT
             R.CID,
             R.BID,
             R.CCONTENT,
@@ -238,7 +260,8 @@ SELECT
             NICKNAME,
             PROFILE_PATH,
             REF_WRITER,
-            R.CREATE_DATE
+            R.CREATE_DATE,
+            REF_ORIGIN_CID
             FROM REPLY R
             JOIN MEMBER M ON(M.USER_NO = R.CWRITER)
             WHERE R.STATUS = 'N'
@@ -246,7 +269,6 @@ SELECT
         WHERE BID = #{ bid }
     START WITH REF_CID IS NULL
 CONNECT BY PRIOR CID = REF_CID
-ORDER BY CREATE_DATE
 </select>
 
 <insert id="insertRefComment" parameterType="com.cp.campers.board.model.vo.Comment">
@@ -259,35 +281,11 @@ INSERT INTO REPLY VALUES(
 	DEFAULT,
 	#{refCid},
 	#{cWriter},
-	#{refWriter}
+	#{refWriter},
+	NULL
 )
 </insert>
 
-<resultMap type="com.cp.campers.board.model.vo.PrevBoard" id="prevResultMap">
-	<id property="bid" column="BID"/>
-	<result property="title" column="BTITLE"/>
-</resultMap>
-
-<select id="selectPrevBoard" resultMap="prevResultMap">
-SELECT BID,
-	   BTITLE
- FROM BOARD
- WHERE BID = #{bid}
- AND STATUS = 'N'
-</select>
-
-<resultMap type="com.cp.campers.board.model.vo.NextBoard" id="nextResultMap">
-	<id property="bid" column="BID"/>
-	<result property="title" column="BTITLE"/>
-</resultMap>
-
-<select id="selectNextBoard" resultMap="nextResultMap">
-SELECT BID,
-	   BTITLE
- FROM BOARD
- WHERE BID = #{bid}
- AND STATUS = 'N'
-</select>
 
 <select id="selectBoardImage" resultMap="boardFileNoResultMap">
 select 
@@ -299,5 +297,87 @@ select
       join imagefile using (file_no)
       where bid = #{bid}
       and file_status = 'N'
+</select>
+
+<select id="selectBid" resultType="int">
+select seq_bid.currval from dual
+</select>
+
+<select id="selectBoardUpdate" resultMap="boardResultMap">
+select 
+            bid, 
+            btitle, 
+            bcontent, 
+            b.modify_date, 
+            b.create_date,
+            bcount,
+            blike,
+            writer
+      from board b
+      where b.status = 'N'
+      and bid = #{bid}
+</select>
+
+<update id="deleteBoard" parameterType="_int">
+update board
+   set status = 'Y'
+ where bid = #{bid}
+</update>
+
+<update id="increaseCount" parameterType="_int">
+update board
+   set bcount = bcount+1
+ where bid = #{bid}
+</update>
+
+<select id="getListCountMyComment" resultType="int">
+select count(*)
+from reply
+where cwriter = #{writer}
+and status ='N'
+</select>
+
+<select id="selectMyCommentList" resultMap="CommentResultMap">
+SELECT *
+FROM (SELECT ROWNUM RNUM, A.*
+FROM (select 
+           cid,
+           bid,
+           ccontent,
+           c.create_date,
+           btitle,
+           nickname
+      from reply c
+      join member m on (c.cwriter = m.user_no)
+      join board b using (bid)
+      where c.status = 'N'
+      and cwriter = #{writer}
+      ORDER BY cid DESC) A)
+where RNUM between #{pi.startRow} and #{pi.endRow}
+</select>
+<select id="selectMyBoardList"  parameterType="hashmap" resultMap="boardResultMap">
+SELECT *
+FROM (SELECT ROWNUM RNUM, A.*
+FROM (select 
+            bid, 
+            btitle, 
+            bcontent, 
+            b.modify_date, 
+            b.create_date,
+            nickName,
+            bcount,
+            blike
+      from board b
+      join member m on (b.writer = m.user_no)
+      where b.status = 'N'
+      and writer = #{ writer }
+      ORDER BY bid DESC) A)
+where RNUM between #{pi.startRow} and #{pi.endRow}
+</select>
+<select id="getListCountMyBoard" resultType="int">
+select count(*)
+from board
+where writer = #{writer}
+and status ='N'
 </select>
 </mapper>

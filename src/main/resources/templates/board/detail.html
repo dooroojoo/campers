@@ -152,6 +152,7 @@
 
 .comment-header {
 	margin-top: 15px;
+	
 }
 
 .comment-header label {
@@ -414,11 +415,18 @@ width: 60px;
 				<label class="freeBoard-label">자유게시판</label>
 				<th:block sec:authorize="isAuthenticated()">
 				<div class="place-right">
-					<button th:onclick="'location.href=\''+@{/board/update(bid=${param.bid}, board=${board})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">수정</button>
-					<button th:onclick="'location.href=\''+@{/board/delete(bid=${param.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">삭제</button>
+					<button th:onclick="'location.href=\''+@{/board/update(bid=${param.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">수정</button>
+					<button th:onclick="doYouWantDelete([[${param.bid}]])" th:if="${#authentication.principal.userNo} == ${board.writer}">삭제</button>
 				</div>
 				</th:block>
 			</div>
+			<script>
+				function doYouWantDelete(bid){
+					if(confirm('게시물을 삭제하시겠습니까?')){
+						location.href="/board/delete?bid="+bid;
+					}
+				}
+			</script>
 
 			<div class="freeBoard-info">
 				<div class="info-left">
@@ -496,7 +504,6 @@ width: 60px;
 				<div>
 				<div class="comment-content" th:each="comment : ${ commentList }">
 					<div class="comment-box" th:if="${ comment.refCid == 0}">
-
 						<div class="comment-left">
 							<div class="user-profile">
 								<img class="haveProfile" th:if="${comment.profilePath != null }" th:src="${comment.profilePath}">
@@ -528,13 +535,14 @@ width: 60px;
 								</div>
 					        </th:block>
 							<div class="comment-rightBottom">
-								<label onclick="openComment(this);">답글</label>
+								<label th:onclick="|javascript:openComment(this)|">답글</label>
+								<div></div>
 							</div>
 						</div>
 					</div>
 					<!-- 숨겨진 답글창 -->
 					<div class="refComment-writer" hidden>
-					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.cid},refWriter=${comment.nickName})}" method="post">
+					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refOriginCid},refWriter=${comment.nickName})}" method="post">
 							<div class="refComment-textarea" contenteditable="true"></div>
 							<textarea name="cContent"  class="realTextarea" hidden></textarea>
 							<div class="refComment-submit">
@@ -581,13 +589,13 @@ width: 60px;
 									</div>
 						        </th:block>
 								<div class="comment-rightBottom">
-									<label onclick="openComment(this);">답글</label>
+									<label th:onclick="openComment(this);">답글</label>
 								</div>
 							</div>
 						</div>
 						<!-- 대댓글의 답글창 -->
 						<div class="refComment-writer" hidden>
-					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.cid},refWriter=${comment.nickName})}" method="post">
+					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refCid}, refWriter=${comment.nickName})}" method="post">
 							<div class="refComment-textarea" contenteditable="true"></div>
 							<textarea name="cContent"  class="realTextarea" hidden></textarea>
 							<div class="refComment-submit">
@@ -604,20 +612,20 @@ width: 60px;
 	</div>
 	<div class="another-list">
 	
-		<div class="previous-board" th:onclick="'location.href=\''+@{/board/detail(bid=${prevBoard.bid})}+'\''" th:if="${prevBoard != null}">
+		<div class="previous-board" th:onclick="'location.href=\''+@{/board/detail(bid=${board.prevId})}+'\''" th:if="${board.prevId != 0}">
 			<img src="/resources/images/board/upArrow.png"><label
-				class="list-label">이전글</label><label th:text="${prevBoard.title}"></label>
+				class="list-label">이전글</label><label th:text="${board.prevTitle}"></label>
 		</div>
-		<div class="previous-board" th:unless="${prevBoard != null}">
+		<div class="previous-board" th:unless="${board.prevId != 0}">
 			<img src="/resources/images/board/upArrow.png"><label
 				class="list-label">이전글</label><label>이전글이 없습니다.</label>
 		</div>
 		
-		<div class="next-board"  th:onclick="'location.href=\''+@{/board/detail(bid=${nextBoard.bid})}+'\''" th:if="${nextBoard != null}">
+		<div class="next-board"  th:onclick="'location.href=\''+@{/board/detail(bid=${board.nextId})}+'\''" th:if="${board.nextId != 0}">
 			<img src="/resources/images/board/downArrow.png"><label
-				class="list-label">다음글</label><label th:text="${nextBoard.title}"></label>
+				class="list-label">다음글</label><label th:text="${board.nextTitle}"></label>
 		</div>
-		<div class="next-board" th:unless="${nextBoard != null}">
+		<div class="next-board" th:unless="${board.nextId != 0}">
 			<img src="/resources/images/board/downArrow.png"><label
 				class="list-label">다음글</label><label>다음글이 없습니다.</label>
 		</div>
@@ -639,12 +647,18 @@ width: 60px;
 					}
 
 				})
-
+	
+	</script>
+				
+	<script>
+				
 		function openComment(e) {
 
 			if ($(e).parentsUntil("comment-box").next().attr("hidden")) {
 				$(e).text('답글접기');
 				$(e).parentsUntil("comment-box").next().removeAttr("hidden");
+				$(e).next().html(html);
+				
 
 			} else {
 				$(e).parentsUntil("comment-box").next(".refComment-writer")

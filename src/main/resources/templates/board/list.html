@@ -270,7 +270,7 @@
                     <div class="box-left">
                         <p th:text="${board.title}"></p>
                         <label th:text="${board.nickName}"></label>
-                        <label th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm:ss')}"></label>
+                        <label th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm')}"></label>
                         <label th:text="|좋아요 ${board.blike}|"></label><label th:text="|조회수 ${board.bcount}|"></label>
                     </div>
                     <div class="box-right" th:if="${ board.bid == thumbnail.bid}" th:each="thumbnail : ${thumbnailList}">
@@ -290,7 +290,7 @@
                 </div>
                 <div class="freeBoard-footerRight">
                 <th:block sec:authorize="isAuthenticated()">
-                    <button>내글 보기</button>
+                    <button onclick="location.href='/board/myboard'">내글 보기</button>
                 </th:block>
                 <th:block sec:authorize="isAnonymous()">
                     <button onclick="loginPlz();">내글 보기</button>
