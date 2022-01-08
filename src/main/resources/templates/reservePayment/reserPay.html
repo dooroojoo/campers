@@ -26,7 +26,7 @@
     <div class="reserPay_Outer">
         <div class="reserPay_Wrap">
             <div class="reser_tit">텐타우스*라바력셔리글램핑</div>
-         <form action="/reserPay/insert" method="post">
+         <form  method="post">
          <input type="hidden" name="roomNo" value="1"><!-- 가데이터  -->
          <input type="hidden" name="checkIn" value="1/4">
          <input type="hidden" name="checkOut" value="1/7">
@@ -50,7 +50,7 @@
                         <button type="button" onclick="qtyDown(this)" title="수량감소">
                             <span>-</span>
                         </button>
-                        <input type="text" name="roomQua" title="객실개수" value="1">
+                        <input type="text" name="roomQua" title="객실개수" value="1" id="roomQua">
                         <button type="button" onclick="qtyUp(this)" title="수량추가">
                             <span>+</span>
                         </button>
@@ -84,7 +84,7 @@
             <div class="reserPay_inner">
                 <div class="reserName">예약자명<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="홍길동"  name="reserName" id="userName" />
+                    <input type="text" placeholder="홍길동"  name="reserName" id="reserName" />
                 </div>
                 <div class="phone">휴대폰 번호<span class="red">(*)</span></div>
                 <div class="inp_text">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="request">예약 요청사항(선택)</div>
                 <div class="textbox">
-                    <textarea placeholder="예약 요청사항을 입력해주세요." name="request"></textarea>
+                    <textarea placeholder="예약 요청사항을 입력해주세요." name="request" id="requeset"></textarea>
                 </div>
             </div>
             <div class="title1">
@@ -116,7 +116,7 @@
                 <span>주의사항 및 약관동의</span>
             </div>
             <div class="checkboxMargin">
-                <input type='checkbox' id='selectAll' value='selectall'onclick='selectAll(this)'/>
+                <input type='checkbox' id='selectAll' value='selectAll'/>
                 <label class="agreeText" for="selectAll">전체 이용약관에 동의합니다.</label>
                 <br>
                 <input type='checkbox' id="agreeChk1" name='agreeChk' value='' onclick='checkSelectAll()'/>
@@ -184,9 +184,9 @@
                 <span>결제방법</span>
             </div>
             <div class="marginPay">
-                <input type="radio" id="card" name="payment" value="" checked>
+                <input type="radio" id="card" name="payment" value="card" checked>
                 <label class="payBox" for="card">신용카드</label>
-                <input type="radio" id="kakaoPay"name="payment" value="" >
+                <input type="radio" id="kakaoPay"name="payment" value="kakaoPay" >
                 <label class="payBox" for="kakaoPay">카카오페이</label>       
             </div>
             <button class="goPay" id="" type="button" onclick="formChk()">결제하기</button>
@@ -197,111 +197,6 @@
 	
 		<div th:include="common/footer.html"></div>
 	
-
-
-<script>
-	// 유효성 검사 
-	function formChk(){
-		 let regExp = new RegExp('pattern', 'gmi');
-		 regExp = /pattern/gmi;
-		 
-		 let selectAll = document.querySelector('#selectAll');
-		 let agreeChk1 = document.querySelector('#agreeChk1');
-		 let agreeChk2 = document.querySelector('#agreeChk2');
-		 let agreeChk3 = document.querySelector('#agreeChk3');
-		 let agreeChk4 = document.querySelector('#agreeChk4');
-		 let chk1 = document.querySelector('#chk1');
-		 let chk2 = document.querySelector('#chk2');
-		 
-	     
-	     if(!check(/^[가-힣]{2,}$/, document.getElementById('userName'),
-	     "이름은 한글로 2글자 이상 입력하세요"))
-             return false;   
-	     if(!check(/^\d{3}-\d{3,4}-\d{4}$/, document.getElementById('phone'), 
-         "핸드폰 번호는 -를 포함한 숫자로만 입력해주세요"))
-	    	 return false;
-	     if(!check(/^[가-힣]{2,}$/, document.getElementById('accountHol'),
-    	 "이름은 한글로 2글자 이상 입력하세요"))
-         return false;
-	     if(!check(/^[0-9]+$/, document.getElementById('accountNum'),
-    	 "계좌번호를 확인해 주세요"))
-         return false;
-	     if(!check(/^[가-힣]{2,}$/, document.getElementById('bank'),
-    	 "은행명을 확인해 주세요"))
-         return false;
-	     
-	     if(!chk1.checked || !chk2.checked) {
-	    	 alert("예약자 질의응답에 체크하셔야 합니다");
-	         return false;
-	     }
-	     if(!selectAll.checked || !agreeChk1.checked || !agreeChk2.checked || !agreeChk3.checked || !agreeChk4.checked) {
-	    	 alert("이용약관에 동의하셔야 합니다");
-	         return false;
-	     }
-	     
-	    //
-	    // requestPay();
-	    	 
-	}
-
-	// 정규 표현식 객체, 사용자가 input태그에 입력한 태그, 그때 내가 전달할 메세지 
-    function check(regExp, input, msg){
-        // 정규 표현식 만족할 경우 true 리턴
-        if(regExp.test(input.value)) 
-        	return true;
-        // 정규 표현식 불만족할 경우 
-        alert(msg); 
-        input.value = ''; 
-        input.focus();
-        return false;
-    }
-
-</script>
-
-<!-- 아임포트 연동 - 결제 -->
-<script>
-	var IMP = window.IMP; // 생략 가능
-	IMP.init("imp21661729"); // 예: imp00000000
-	
-	function requestPay() {
-	      // IMP.request_pay(param, callback) 결제창 호출
-			IMP.request_pay({
-			    pg : 'html5_inicis',
-			    pay_method : 'card', //생략 가능
-			    merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
-			    name : '객실 결제', //주문명:결제테스트
-			    amount : 14000, // 가격
-			    buyer_name : $('#userName').val(),  //구매자 이름
-			    buyer_tel : '010-1234-5678',
-			    buyer_postcode : '123-456'
-			}, function(rsp) {
-			    if ( rsp.success ) {
-			    	$.ajax({
-			    		url : '/reserPay/insert',
-			    		
-			    		
-			    			
-			    	});
-			        // 예약 관련 insert
-			        
-			        
-			        // 결제 관련 insert
-			        rsp.imp_uid; // 아임포트 고유 결제번호
-			        rsp.paid_amount;  // 결제 금액
-			        rsp.pay_method   // 결제수단
-			        
-			    } 
-	
-			    
-			    
-			});
-	    }
-
-</script>
-
-
-
-
 <!-- JS -->
  <script>
  
@@ -362,6 +257,130 @@
     }
          
 </script> 
+
+
+
+<script>
+	// 유효성 검사 
+	function formChk(){
+		 let regExp = new RegExp('pattern', 'gmi');
+		 regExp = /pattern/gmi;
+		 
+		 let selectAll = document.querySelector('#selectAll');
+		 let agreeChk1 = document.querySelector('#agreeChk1');
+		 let agreeChk2 = document.querySelector('#agreeChk2');
+		 let agreeChk3 = document.querySelector('#agreeChk3');
+		 let agreeChk4 = document.querySelector('#agreeChk4');
+		 let chk1 = document.querySelector('#chk1');
+		 let chk2 = document.querySelector('#chk2');
+		 
+	     
+	     if(!check(/^[가-힣]{2,}$/, document.getElementById('reserName'),
+	     "이름은 한글로 2글자 이상 입력하세요"))
+             return false;   
+	     if(!check(/^\d{3}-\d{3,4}-\d{4}$/, document.getElementById('phone'), 
+         "핸드폰 번호는 -를 포함한 숫자로만 입력해주세요"))
+	    	 return false;
+	     if(!check(/^[가-힣]{2,}$/, document.getElementById('accountHol'),
+    	 "이름은 한글로 2글자 이상 입력하세요"))
+         return false;
+	     if(!check(/^[0-9]+$/, document.getElementById('accountNum'),
+    	 "계좌번호를 확인해 주세요"))
+         return false;
+	     if(!check(/^[가-힣]{2,}$/, document.getElementById('bank'),
+    	 "은행명을 확인해 주세요"))
+         return false;
+	     
+	     if(!chk1.checked || !chk2.checked) {
+	    	 alert("예약자 질의응답에 체크하셔야 합니다");
+	         return false;
+	     }
+	     if(!selectAll.checked || !agreeChk1.checked || !agreeChk2.checked || !agreeChk3.checked || !agreeChk4.checked) {
+	    	 alert("이용약관에 동의하셔야 합니다");
+	         return false;
+	     }
+	     
+	     if($('#card').is(':checked') == true ) {
+		     requestPay();
+	     } else {
+	    	 
+	     }
+	}
+
+	// 정규 표현식 객체, 사용자가 input태그에 입력한 태그, 그때 내가 전달할 메세지 
+    function check(regExp, input, msg){
+        // 정규 표현식 만족할 경우 true 리턴
+        if(regExp.test(input.value)) 
+        	return true;
+        // 정규 표현식 불만족할 경우 
+        alert(msg); 
+        input.value = ''; 
+        input.focus();
+        return false;
+    }
+
+</script>
+
+<!-- 아임포트 연동 - 결제 -->
+<script>
+	var IMP = window.IMP; // 생략 가능
+	IMP.init("imp21661729"); // 예: imp00000000
+	
+	function requestPay() {
+	      // IMP.request_pay(param, callback) 결제창 호출
+			IMP.request_pay({
+			    pg : 'html5_inicis',
+			    pay_method : 'card', //생략 가능
+			    merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+			    name : '객실 결제', // 주문명:결제테스트
+			    amount : 1, // 가격
+			    buyer_name : $("#reserName").val(),  //구매자 이름
+			    buyer_tel : $("#phone").val(), // 구매자 휴대폰 번호 
+			    buyer_postcode : '123-456'
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			    	alert('결제성공');
+			  /*   	$.ajax({
+			    		url : '/reserPay/insert',
+			    		data : {
+			    			// 예약 insert :
+			    		    //  예약자명, 휴대폰번호, 요청사항, 입실일, 퇴실일, 환불계좌번호, 예금주, 은행, 예약객실수량, 객실번호 
+			    			"reserName" : $('reserName').val(),
+			    			"phone" : $("phone").val(),
+			    			"requeset" : $("requeset").val(),
+			    			"checkIn" : "2022년1월22일", //임시
+			    			"checkOut" : "2022년1월25일", //임시
+			    			"accountNum" : $("accountNum").val(),
+			    			"accountHol" : $("accountHol").val(),
+			    			"bank" : $("bank").val(),
+			    			"roomQua" : $("roomQua").val(),
+			    			"roomNo" : 1, // 임시  //"roomNo" : $("roomNo").val()
+			    			// 결제 insert : 
+			    			// 결제번호(NEXTVAL) 또는  rsp.imp_uid; - 아임포트 고유 결제번호
+			    			// , 결제금액, 결제일(SYSDATE), 결제수단, 예약번호(fk - CURRVAL)
+			    			"payAmount" : 14000, //임시     // rsp.paid_amount;  - 결제 금액
+			    			"payKind" : rsp.pay_method, // 결제수단
+			    		},
+			    		dataType : "json",
+			    		type : "post",
+			    		sucess : function(result) {
+			    			if(result == 'success') {
+			    				alert("결제가 완료되었습니다.")
+			    				location.href="/main";
+			    			}
+			    		},
+			    		error : function(e){
+							console.log(e);
+						}	
+			    	}); */
+			    } 
+			});
+	    }
+</script>
+
+
+
+
 
 
 </body>
