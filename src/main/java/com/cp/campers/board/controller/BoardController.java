@@ -260,6 +260,14 @@ public class BoardController {
 		
 	}
 
+	@GetMapping("/comment/delete")
+	public String commentDelete(int cid, int bid) {
+		
+		boardService.commentDelete(cid);
+	
+		return "redirect:/board/detail?bid="+bid;
+	}
+	
 	@PostMapping("/write")
 	public String insertBoard(@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
 			@RequestParam MultipartFile[] images, HttpServletRequest request, Board board,

@@ -248,7 +248,8 @@ SELECT
         NICKNAME,
         PROFILE_PATH,
         REF_WRITER,
-        REF_ORIGIN_CID
+        REF_ORIGIN_CID,
+        STATUS
     FROM (
     	SELECT
             R.CID,
@@ -261,10 +262,10 @@ SELECT
             PROFILE_PATH,
             REF_WRITER,
             R.CREATE_DATE,
-            REF_ORIGIN_CID
+            REF_ORIGIN_CID,
+            R.STATUS
             FROM REPLY R
             JOIN MEMBER M ON(M.USER_NO = R.CWRITER)
-            WHERE R.STATUS = 'N'
         )
         WHERE BID = #{ bid }
     START WITH REF_CID IS NULL
@@ -380,4 +381,10 @@ from board
 where writer = #{writer}
 and status ='N'
 </select>
+<update id="commentDelete">
+update reply
+   set status = 'Y'
+ where cid = #{cid}
+</update>
+
 </mapper>

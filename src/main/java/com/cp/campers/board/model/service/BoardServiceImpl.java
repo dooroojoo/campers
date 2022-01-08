@@ -192,5 +192,11 @@ public class BoardServiceImpl implements BoardService {
 		return map;
 	}
 
+	@Override
+	public void commentDelete(int cid) {
+		boardMapper.commentDelete(cid);
+		
+	}
+
 
 }
