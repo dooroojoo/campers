@@ -100,21 +100,16 @@ public class AdminController {
 	
 	@PostMapping("report")
 	@ResponseBody
-	public Map<String, String> isertReport(@RequestBody Report report) {
+	public Map<String, String> insertReport(@RequestBody Report report) {
 		
 		log.info("입력 요청 report : {}", report);
 		
-		String msg = adminService.insertReport(report) > 0 ? "신고가 완료되었습니다 !" : "신고가 실패되었습니다 !";
+		String msg = adminService.insertReport(report) > 0 ? "신고 처리가 완료되었습니다 !" : "신고 처리가 실패되었습니다 !";
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("msg", msg);
 		
 		return map;
-	}
-	
-	@GetMapping("report/modal")
-	public String reportModal() {
-		return "admin/reportModal";
 	}
 	
 	/* 숙소목록 */

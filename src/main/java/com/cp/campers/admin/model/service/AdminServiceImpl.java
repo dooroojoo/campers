@@ -195,11 +195,25 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
+	@Transactional
 	public int insertReport(Report report) {
+		int result = 0;
 		
+		// 1. 신고 처리 => 기타일 경우 신고 내용을 담음
+		if(report.getReason().equals("기타")) {
+			report.setReason("[기타] : " + report.getContent());
+		}
 		
+		int rnum1 = adminMapper.insertReport(report);
 		
-		return adminMapper.insertReport(report);
+		// 2. 게시물/댓글 구분해서 인서트
+		int rnum2 = adminMapper.insertReportByType(report.getId());
+		
+		if(rnum1 != 0 && rnum2 != 0) {
+			result = 1;
+		}
+		
+		return result;
 	}
 
 }

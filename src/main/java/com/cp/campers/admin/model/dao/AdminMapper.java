@@ -66,6 +66,9 @@ public interface AdminMapper {
 	// 신고등록
 	int insertReport(Report report);
 
+	// 게시물/댓글 신고등록
+	int insertReportByType(int id);
+
 
 
 }

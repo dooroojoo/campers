@@ -119,7 +119,15 @@
 	</resultMap>
 	
 
-	
+	<resultMap type="com.cp.campers.admin.model.vo.Report" id="reportResultMap">
+		<id property="rNo" column="REPORT_NO"/>
+		<result property="reason" column="REPORT_REASON"/>
+		<result property="reportDate" column="REPORT_DATE"/>
+		<result property="reportType" column="REPORT_TYPE"/>
+		<result property="victim" column="VICTIM"/>
+		<result property="suspect" column="SUSPECT"/>
+		<result property="reportStatus" column="REPORT_STATUS"/>
+	</resultMap>
 	
 	
    
@@ -201,6 +209,19 @@
 						 </choose>) A)
 		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
 	</select>
+	
+<!-- 	<insert id="inssertReport" parameterType="">
+		INSERT INTO REPORT 
+		VALUES (SEQ_REPORT_NO.NEXTVAL
+                         , #{ reason }
+                         , DEFAULT
+                         , #{ reportType }
+                         , #{ victim }
+                         , #{ suspect }
+                         , DEFAULT)
+	</insert> -->
+	
+	<insert id="insertReportByType"></insert>
    
 	<select id="getCampListCount" resultType="_int">
    		SELECT COUNT(CAMP_NO)
@@ -352,4 +373,5 @@
 			  , #{ campNo }
 			  , 2)
 	</insert>
+	
 </mapper>
