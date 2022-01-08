@@ -148,6 +148,8 @@
             box-shadow: rgb(0 0 0 / 8%) 10px 10px 6px;
             position: fixed;
             left: 76%;
+            	background: white;
+  			z-index: 10000;
 
         }
         .boradWrite{
@@ -200,8 +202,8 @@
               <label class="freeBoard-label">자유게시판</label><label class="freeBoard-label-small">수정하기</label><br>
               <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
                 <div class="freeBoard-content">
-                    <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요." maxlength="40" required><br>
-                    <textarea class="writeContent" name="content" placeholder="내용을 입력하세요." required maxlength="3000"></textarea>
+                    <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요." maxlength="40" required th:value="${board.title}"><br>
+                    <textarea th:text="${board.content}" class="writeContent" name="content" placeholder="내용을 입력하세요." required maxlength="3000"></textarea>
                     <br><input type="file" class="imageinput image1" name="images"  accept="image/*" hidden>
                     <input type="file" class="imageinput image2" name="images"  accept="image/*" hidden>
                     <input type="file" class="imageinput image3" name="images"  accept="image/*" hidden>
@@ -215,8 +217,8 @@
                 </div>
                 <div class="freeBoard-footer">
                     <div class="freeBoard-footerLeft">
-                        <button onclick="location.href='/board/list'">취소</button>
-                        <button class="">사진첨부</button><label class="photoLimit"> 사진은 최대 3장까지 첨부 가능합니다.</label>
+                        <button type="reset" onclick="location.href='/board/list'">취소</button>
+                        <label class="photoLimit"> 사진은 최대 3장까지 첨부 가능합니다.</label>
                     </div>
                     <div class="freeBoard-footerRight">
                         <button type="submit">등록</button>

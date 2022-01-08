@@ -45,6 +45,8 @@ public interface BoardService {
 
 	Map<String, Object> selectMyBoardList(int writer, int page);
 
+	void commentDelete(int cid);
+
 
 
 

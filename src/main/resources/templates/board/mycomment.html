@@ -120,6 +120,8 @@
             box-shadow: rgb(0 0 0 / 8%) 10px 10px 6px;
             position: fixed;
             left: 76%;
+            	background: white;
+  			z-index: 10000;
 
         }
 
@@ -213,7 +215,7 @@
                           <p th:text="${board.cContent}"></p>
                           <label th:text="|원글제목 : ${board.title}|"></label>
                         </div>
-                        <div class="box-right"  th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm')}">
+                        <div class="box-right"  th:text="${#dates.format(board.createDate,'yyyy년 MM월 dd일 hh:mm')}">
                         </div>
                     </div>
                 </div>
@@ -266,6 +268,13 @@
                 </div>
             </div>
         </div>
+        <script>
+	function loginPlz(){
+		if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
+			location.href="/member/login";
+		}
+	}
+	</script>
         <div th:replace="common/footer.html"></div> 
        
 </body>

@@ -71,6 +71,8 @@
 	box-shadow: rgb(0 0 0/ 8%) 10px 10px 6px;
 	position: fixed;
 	left: 80%;
+		background: white;
+  			z-index: 10000;
 }
 
 .freeBoard-aside a {
@@ -225,7 +227,7 @@ width: 60px;
 
 .comment-leftTop sub {
 	color: grey;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 
 .comment-box, .refcomment-box {
@@ -435,7 +437,7 @@ width: 60px;
 				<div class="info-right">
 					<label th:text="|조회수 ${board.bcount}|"></label> <label id="report-board"
 						th:text="${board.nickName}"></label> <label
-						th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm:ss')}"></label>
+						th:text="${#dates.format(board.createDate,'yyyy년 M월 dd일 hh:mm:ss')}"></label>
 				</div>
 			</div>
 			<div class="freeBoard-content">
@@ -478,7 +480,12 @@ width: 60px;
 							<div class="sub_div">
 							<sub style="color: grey;">0/300</sub>
 							</div>
-							<button type="submit">등록</button>
+								<th:block sec:authorize="isAuthenticated()">
+								<button type="submit">등록</button>
+							    </th:block>
+							    <th:block sec:authorize="isAnonymous()">
+							    <button type="reset" onclick="loginPlz();">등록</button>
+							    </th:block>
 						</div>
 					</form>
 				</div>
@@ -511,10 +518,17 @@ width: 60px;
 							</div>
 							<div class="comment-leftTopBottom">
 								<div class="comment-leftTop">
-									<sub id="report-reply" th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+									<sub id="report-reply" th:text="${comment.nickName}"></sub>
+									<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+									<th:block sec:authorize="isAuthenticated()">
+									<sub th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
+									</th:block>
 								</div>
-								<div class="comment-leftBottom">
+								<div class="comment-leftBottom" th:if="${comment.status} == 'N'">
 									<p th:text="${comment.cContent}"></p>
+								</div>
+								<div class="comment-leftBottom" th:if="${comment.status} == 'Y'">
+									<p>삭제된 댓글입니다.</p>
 								</div>
 							</div>
 						</div>
@@ -547,7 +561,12 @@ width: 60px;
 							<textarea name="cContent"  class="realTextarea" hidden></textarea>
 							<div class="refComment-submit">
 								<sub style="color: grey;">0/300</sub>
+								<th:block sec:authorize="isAuthenticated()">
 								<button type="submit">등록</button>
+							    </th:block>
+							    <th:block sec:authorize="isAnonymous()">
+							    <button type="reset" onclick="loginPlz();">등록</button>
+							    </th:block>
 							</div>
 					</form>
 						</div>
@@ -555,7 +574,7 @@ width: 60px;
 					<div class="refComment"  th:unless="${comment.refCid == 0 }">
 						<div class="refcomment-box" >
 
-							<div class="comment-left ref">
+							<div class="comment-left ref" >
 								<div class="user-profile">
 									<img class="refImg" style="width: 20px;"
 										src="/resources/images/board/right-arrow.png">
@@ -564,14 +583,23 @@ width: 60px;
 								</div>
 								<div class="comment-leftTopBottom">
 									<div class="comment-leftTop">
-										<sub id="report-reply" th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+										<sub id="report-reply" th:text="${comment.nickName}"></sub>
+										<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+										<th:block sec:authorize="isAuthenticated()">
+										<sub th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
+										</th:block>
 									</div>
-									<div class="comment-leftBottom">
+									<div class="comment-leftBottom" th:if="${comment.status}=='N'">
 										<label th:text="|@${comment.refWriter}|"></label>
 										<p th:text="${comment.cContent}"></p>
 									</div>
+									<div class="comment-leftBottom" th:if="${comment.status}=='Y'">
+										<label th:text="|@${comment.refWriter}|"></label>
+										<p>삭제된 댓글입니다.</p>
+									</div>
 								</div>
 							</div>
+							
 							<div class="comment-right">
 								<th:block sec:authorize="isAuthenticated()">
 									<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
@@ -600,7 +628,12 @@ width: 60px;
 							<textarea name="cContent"  class="realTextarea" hidden></textarea>
 							<div class="refComment-submit">
 								<sub style="color: grey;">0/300</sub>
+								<th:block sec:authorize="isAuthenticated()">
 								<button type="submit">등록</button>
+							    </th:block>
+							    <th:block sec:authorize="isAnonymous()">
+							    <button  type="reset" onclick="loginPlz();">등록</button>
+							    </th:block>
 							</div>
 					</form>
 						</div>

@@ -66,4 +66,6 @@ public interface BoardMapper {
 
 	List<Comment> selectMyCommentList(Map<String, Object> param);
 
+	void commentDelete(int cid);
+
 }

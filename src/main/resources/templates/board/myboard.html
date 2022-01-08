@@ -120,6 +120,8 @@
             box-shadow: rgb(0 0 0 / 8%) 10px 10px 6px;
             position: fixed;
             left: 76%;
+            	background: white;
+  			z-index: 10000;
 
         }
 
@@ -268,6 +270,13 @@
                     </div>
                 </div>
             </div>
+            <script>
+	function loginPlz(){
+		if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
+			location.href="/member/login";
+		}
+	}
+	</script>
            <div th:replace="common/footer.html"></div>
         
 </body>
