@@ -1,5 +1,6 @@
 package com.cp.campers.admin.controller;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -9,11 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cp.campers.admin.model.service.AdminService;
+import com.cp.campers.admin.model.vo.Report;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
 
@@ -94,9 +98,18 @@ public class AdminController {
 		return "admin/report";
 	}
 	
-	@GetMapping("report/modal")
-	public String reportModal() {
-		return "admin/reportModal";
+	@PostMapping("report")
+	@ResponseBody
+	public Map<String, String> insertReport(@RequestBody Report report) {
+		
+		log.info("입력 요청 report : {}", report);
+		
+		String msg = adminService.insertReport(report) > 0 ? "신고 처리가 완료되었습니다 !" : "신고 처리가 실패되었습니다 !";
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("msg", msg);
+		
+		return map;
 	}
 	
 	/* 숙소목록 */

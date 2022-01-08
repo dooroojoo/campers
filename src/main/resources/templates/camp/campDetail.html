@@ -11,6 +11,7 @@
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="/resources/js/camp/room.js"></script>
 	
 	<!-- 슬라이드 -->
 	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
@@ -35,7 +36,7 @@
 
         <!-- 2. 숙소 이미지 -->
         <div class="slide_accomd">
-            <div class="swiper_acconmd mySwiper1">
+            <div class="swiper_acconmd campSwiper">
                 <div class="swiper-wrapper">
 
                     <div class="swiper-slide" th:each="imgfile : ${camp.imgFileList}">
@@ -52,7 +53,7 @@
             <!-- button prev -->
             <div class="accomd_button1">
                 <!-- If we need navigation buttons -->
-                <div class="but1">
+                <div class="campBtn1">
                     <div class="direction">
                         <i class="fas fa-chevron-left"></i>
                     </div>
@@ -61,7 +62,7 @@
 
             <!-- button next -->
             <div class="accomd_button2">
-                <div class="but2">
+                <div class="campBtn2">
                     <div class="direction">
                         <i class="fas fa-chevron-right"></i>
                     </div>
@@ -72,7 +73,7 @@
 
         <!-- swiper script -->
         <script>
-            var swiper1 = new Swiper(".mySwiper1", {
+            var swiper1 = new Swiper(".campSwiper", {
                 slidesPerView: 1,
                 spaceBetween: 30,
 
@@ -80,8 +81,8 @@
 
                 // Navigation arrows
                 navigation: {
-                    prevEl: '.but1',
-                    nextEl: '.but2',
+                    prevEl: '.campBtn1',
+                    nextEl: '.campBtn2',
                 },
 
             });
@@ -173,7 +174,7 @@
             <div class="accom_intro">
                 <fieldset>
                     <legend><h4 class="camp_title">숙박 소개</h4></legend>
-                    <div class="text_controller"><p th:utext="${#strings.replace(camp.campIntro, newReply, '<br>')}"></p></div>
+                    <div class="text_controller"><p class="txtSet" th:utext="${#strings.replace(camp.campIntro, newReply, '<br>')}"></p></div>
                 </fieldset>
             </div>
 
@@ -267,7 +268,7 @@
                     <div class="policyArea">
                         <div class="policyIcon"><i class="fas fa-info-circle"></i></div>
                         <div class="text_controller" id="policyTxt">
-                        	<p th:utext="${#strings.replace(camp.campPolicy, newReply, '<br>')}"></p>
+                        	<p class="txtSet" th:utext="${#strings.replace(camp.campPolicy, newReply, '<br>')}"></p>
                         </div>
                     </div>
 
@@ -308,18 +309,17 @@
 
 
             <!-- 8. 객실 목록 -->
-            <div class="rooms_list">
-                <div class="rooms_title">
-                    <h4>ROOMS</h4>
-                </div>
+            <div class="rooms_list" id="room-point">
+                <div class="rooms_title"><h4>ROOMS</h4></div>
 
                 <div class="rooms_area">
                 
-                    <div class="rooms_wrap" th:each="room : ${ roomList }">
-                     <div class="rooms_img" th:each="imgfile : ${room.imgFileList}" 
-                        th:style="'background-image: url(' + @{${imgfile.fileRoute} + ${imgfile.fileName}} + ');'"  th:onclick="'show('+${room.roomNo}+')'">                        
+                    <div class="rooms_wrap" id="rooms_wrap" th:each="room : ${ roomList }">
+                     <div th:id="'rooms_img'+${room.roomNo}" class="rooms_img" th:each="imgfile : ${room.imgFileList}" 
+                        th:style="'background-image: url(' + @{${imgfile.fileRoute} + ${imgfile.fileName}} + ');'" 
+                        th:onclick="|showRoom('${ room.roomNo }'); show();|">
+                        <input type="hidden" name="roomNo" th:value="${ room.roomNo }">                      
                         </div>
-                        	<!-- <img th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }"> -->
                         
                         
                         <div class="rooms_info">
@@ -330,7 +330,70 @@
                     
                 </div>
 
-                
+				<script>
+				 	function showRoom(roomNo){
+				 		// console.log("roomNo : " + roomNo);
+				 		
+				 		$.ajax({
+			 				url : "/camp/roomDetail/" + roomNo,
+			 				type : "get",
+			 				dataType : "json",
+			 				success : function(data) {
+			 					
+			 					$(".room_title h3").text(data.roomName);
+			 					
+			 					let str = `<div class="swiper roomSwiper">
+			 		                <div class="swiper-wrapper room-sp">`;
+			 		                
+			                    for(let index in data.imgFileList) {
+			                    	str += '<div class="swiper-slide"><div class="div-img"><img src="' 
+			                    			 + data.imgFileList[index].fileRoute
+			                    			 + data.imgFileList[index].fileName
+			                    			 + '"></div></div>';
+			                    }
+			                    
+			                    str += "</div></div>"
+			                    
+		                    	$(".imageSlideArea").html(str);
+		                    	
+		                    	   const swiper1 = new Swiper(".roomSwiper", {
+		                               slidesPerView: 1,
+		                               spaceBetween: 30,
+
+		                               loop: true,
+
+		                               // Navigation arrows
+		                               navigation: {
+		                                   prevEl: '.btn1',
+		                                   nextEl: '.btn2',
+		                               },
+
+		                           });
+		                    	
+		                    	$(".room_exp p").text(data.roomMember + "(인)");
+		                    	
+		                    	let roomPrice = data.roomPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+		                    	
+		                    	$(".room_price h2").html(roomPrice);
+		                    	
+		                    	$("#roomForm").text(data.roomForm);
+		                    	
+		                    	$("#size").text(data.roomSize+"㎡");
+		                    	
+		                    	$("#floor").text(data.roomFloor);
+		                    	
+		                    	$("#parking").text(data.roomParking);
+		                    	
+		                    	let roomInfo = data.roomInfo.replace(/(?:\r\n|\r|\n)/g, "<br>");
+		                    	$(".roomInfo_txt").html(roomInfo);
+			 				},
+			 				error : function(e){
+			 					console.log(e);
+			 				}
+			 			});
+				 		
+				 	}
+				 </script>
             </div>
 
 
@@ -338,119 +401,46 @@
             <!-- 9. 리뷰 -->
             <div class="review_list">
 
-
-                <div class="review_title">
-                    <h4>REVIEW</h4>
-                </div>
-
-
+                <div class="review_title"><h4>REVIEW</h4></div>
 
                 <div class="review_area">
-
                     <div class="writer_wrap">
                         <ul>
-
-
-                            <li class="review_content">
+                        
+                            <li class="review_content" th:each="review : ${reviewList}" >
                                 <div class="review_top">
                                     <div class="writer_profile">
-                                        <img class="icon_img" src="resources/images/user.png">
+                                    	<img class="icon_img" th:if="${review.profilePath != null }" th:src="${review.profilePath}">
+										<img class="icon_img" th:unless="${review.profilePath != null }" src="/resources/images/board/member_profile_navy.png">
                                     </div>
                                     <div class="writer_info">
-                                        <div class="writer">chuchu1226</div>
-                                        <div class="write_date">21.01.21</div>
+                                        <div class="writer" th:text="${review.nickName}"></div>
+                                        <div class="write_date" th:text="${ #dates.format(review.createDate, 'yy.MM.dd') }"></div>
                                     </div>
-                                    <div class="delete_a">
-                                        <a onclick="">삭제하기</a>
+                                    <th:block sec:authorize="isAuthenticated()">
+                                    <div class="delete_a" th:if="${#authentication.principal.userNo} == ${ review.writer }">
+                                        <a th:onclick="'deleteRid('+${ review.rid }+', '+${ review.campNo }+')'">삭제하기</a>
                                     </div>
-                                </div>
-
-                                <div class="review_bottom">
-                                    <div class="text_controller">캠핑장도 깨끗하고 사장님도 친절해서 좋아요!! ㅎㅎ 잘 놀다 갑니다 캠핑장도 깨끗하고 사장님도 친절해서 좋아요!! ㅎㅎ 잘 놀다 갑니다 캠핑장도 깨끗하고 사장님도 친절해서 좋아요!! ㅎㅎ 잘 놀다 갑니다</div>
-                                </div>
-                            </li>
-
-
-
-                            <li class="review_content">
-                                <div class="review_top">
-                                    <div class="writer_profile">
-                                        <img class="icon_img" src="resources/images/user.png">
-                                    </div>
-                                    <div class="writer_info">
-                                        <div class="writer">byeollim</div>
-                                        <div class="write_date">21.09.26</div>
-                                    </div>
-
-                                    <div class="delete_a">
-                                        <a onclick="">삭제하기</a>
-                                    </div>
+                                    </th:block>
                                 </div>
                                 
-
                                 <div class="review_bottom">
-                                    <div class="text_controller">사장님이 친절해서 좋아요! 근데 수압이 약해서 아쉬웠어요 ㅎㅎ....</div>
+                                    <div class="text_controller" th:text="${review.rcontent}"></div>
                                 </div>
                             </li>
-
-
+                            
                         </ul>
                     </div>
-
-
-
+                    
+                    <div align="center" th:if="${not #strings.isEmpty(noResult)}">
+                    	<img class="noReview" src="/resources/images/camp/tent.png">
+                    	<h4 th:text="${noResult}"></h4>
+                    </div>
                 </div>
             </div>
+            
 
             <a href="#" id="moveA">TOP</a>
-
-            <script>
-                $("#moveA").click(function() {	/* 천천히 올라가기 */
-                    $('html, body').animate({
-                        scrollTop : 0
-                    }, 600);
-                    return false;
-                });
-                
-                var scrollBottom = $(document).height() - $(window).height() - $(window).scrollTop() - 130;
-				 console.log(scrollBottom);
-                $(function() {	/* 스크롤 600 멀어지면 보이기 */
-                    $(window).scroll(function() {
-                        if ($(this).scrollTop() > 550) {
-                            $('#moveA').fadeIn();
-                        } else {
-                            $('#moveA').fadeOut();
-                        }
-                    });
-                });
-
-                function clip(){
-                    var address = '';
-                    var textarea = document.createElement("textarea");
-                    document.body.appendChild(textarea);
-                    address = window.document.querySelector('#address').textContent;
-                    // console.log(document.querySelector('#address').textContent);
-                    // url = window.document.location.href;
-                    textarea.value = address;
-                    textarea.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(textarea);
-                    alert("주소가 복사되었습니다.")
-                }
-                
-                function share(){
-                    var url = '';
-                    var textarea = document.createElement("textarea");
-                    document.body.appendChild(textarea);
-                    // console.log(document.querySelector('#share').textContent);
-                    url = window.document.location.href;
-                    textarea.value = url;
-                    textarea.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(textarea);
-                    alert("URL이 복사되었습니다.")
-                }
-            </script>
 
         </div>
     </div>
@@ -459,16 +449,89 @@
 <div th:replace="camp/roomDetail.html"></div>
 
 <script>
-    function show(roomNo) {
-        document.querySelector(".modal_background").className = "modal_background show";
-        location.href='/camp/roomDetail?roomNo='+roomNo;
-    }
+document.querySelector(".close_icon2").addEventListener("click", close);
+    
+function show(){
+	$(".modal_background").fadeIn();
+	$(".modal_background").fadeIn("slow");
+	$(".modal_background").fadeIn(3000);
+	 	    
+	let offset = $("#modal-point").offset();
 
-    function close() {
-        document.querySelector(".modal_background").className = "modal_background";
-    }
+    $('html, body').animate({
+    	scrollTop : offset.top
+    }, 500);
+    return false;
+}
+    
+function close() {
+	$(".modal_background").fadeOut();
+    $(".modal_background").fadeOut("slow");
+    $(".modal_background").fadeOut(3000);
+    // $('.btn1').attr('class', 'prevBtn btn1');
+	// $('.btn2').attr('class', 'nextBtn btn2');
+    
+	let offset = $("#room-point").offset();
 
-    document.querySelector(".close_icon2").addEventListener("click", close);
+    $('html, body').animate({
+    	scrollTop : offset.top
+    }, 500);
+    return false;
+}
+
+$("#moveA").click(function() {	/* 천천히 올라가기 */
+	$('html, body').animate({
+	        scrollTop : 0
+	    }, 600);
+	    return false;
+	});
+                
+var scrollBottom = $(document).height() - $(window).height() - $(window).scrollTop() - 130;
+
+$(function(){	/* 스크롤 600 멀어지면 보이기 */
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 550) {
+            $('#moveA').fadeIn();
+        } else {
+            $('#moveA').fadeOut();
+        }
+    });
+});
+
+function clip(){
+    var address = '';
+    var textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    address = window.document.querySelector('#address').textContent;
+    // console.log(document.querySelector('#address').textContent);
+    // url = window.document.location.href;
+    textarea.value = address;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("주소가 복사되었습니다.")
+}
+
+function share(){
+    var url = '';
+    var textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    // console.log(document.querySelector('#share').textContent);
+    url = window.document.location.href;
+    textarea.value = url;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("URL이 복사되었습니다.")
+}
+
+function deleteRid(rid, campNo){
+	
+	if(confirm("정말로 삭제하시겠습니까?")){
+		location.href="/camp/reviewDelete?rid=" + rid + "&campNo=" + campNo;
+	}
+	
+}
 </script>
 
 <div th:replace="common/footer.html"></div>

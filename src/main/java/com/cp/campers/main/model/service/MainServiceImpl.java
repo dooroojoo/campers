@@ -23,4 +23,14 @@ public class MainServiceImpl implements MainService {
 		return mainMapper.mainSlider();
 	}
 
+	@Override
+	public List<Recommend> mainBestList() {
+		return mainMapper.mainBestList();
+	}
+
+	@Override
+	public List<Recommend> mainNewList() {
+		return mainMapper.mainNewList();
+	}
+
 }

@@ -20,7 +20,7 @@
 	display: flex;
 	justify-content: center;
 	font-family: 'Noto Sans KR', sans-serif;
-	min-height: 1060px;
+	min-height: 600px;
 	/* font-weight: 900; */
 }
 
@@ -111,6 +111,8 @@
 .freeBoard-content p {
 	text-align: center;
 	margin-bottom: 80px;
+	    max-width: 800px;
+    overflow-wrap: break-word;
 }
 
 .content-img img {
@@ -231,8 +233,11 @@ width: 60px;
 	padding-bottom: 15px;
 }
 
-.comment-content:not(:last-child) {
+.comment-content {
 	border-bottom: 1px solid #e7e7e7;
+}
+.comment-content:last-child{
+	margin-bottom:40px;
 }
 
 .comment-right {
@@ -296,22 +301,26 @@ width: 60px;
 }
 
 .refComment-submit {
-	display: flex;
-	margin-left: 89%;
-	position: absolute;
-	margin-top: -6%;
+	    display: flex;
+    margin-left: 88.5%;
+    position: relative;
 }
 
 .refComment-submit sub {
-	margin-top: 8px;
-	margin-right: 5px;
+	    margin-top: -41%;
+    right: 54%;
+    position: absolute;
 }
 
 .refComment-submit button {
 	border: none;
-	border-radius: 3px;
-	padding: 3px 6px;
-	cursor: pointer;
+    border-radius: 3px;
+    padding: 3px 6px;
+    cursor: pointer;
+    position: absolute;
+    left: 53%;
+    margin-top: -50%;
+
 }
 
 .ref {
@@ -369,29 +378,46 @@ width: 60px;
 
 	<div class="freeBoard-wrap">
 
-		<div class="freeBoard-aside">
-
-
-			<div>
-				<a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
-			</div>
-			<div>
-				<a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
-			</div>
-			<div>
-				<a href="/board/list" class="gotolist">목록으로</a>
-			</div>
-			<div>
-				<a href="/board/write" class="boradWrite">글쓰기</a>
-			</div>
-		</div>
+ <div class="freeBoard-aside">
+          
+        <div>
+        <th:block sec:authorize="isAuthenticated()">
+            <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+      		<a onclick="loginPlz();" class="myboard">내가 쓴 게시물</a>
+        </th:block>
+        </div>
+        <div>
+       	<th:block sec:authorize="isAuthenticated()">
+            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        	<a onclick="loginPlz();" class="mycomment">내가 쓴 댓글</a>
+        </th:block>
+        </div>
+        <div>
+            <a href="/board/list" class="gotolist">목록으로</a>
+        </div>
+        <div>
+        <th:block sec:authorize="isAuthenticated()">
+            <a href="/board/write" class="boradWrite">글쓰기</a>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        	<a onclick="loginPlz();" class="boradWrite">글쓰기</a>
+        </th:block>
+        </div>
+       
+    </div>
 		<div class="freeBoard-container">
 			<div class="freeBoard-header">
 				<label class="freeBoard-label">자유게시판</label>
+				<th:block sec:authorize="isAuthenticated()">
 				<div class="place-right">
-					<button onclick="">수정</button>
-					<button onclick="">삭제</button>
+					<button th:onclick="'location.href=\''+@{/board/update(bid=${param.bid}, board=${board})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">수정</button>
+					<button th:onclick="'location.href=\''+@{/board/delete(bid=${param.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">삭제</button>
 				</div>
+				</th:block>
 			</div>
 
 			<div class="freeBoard-info">
@@ -399,14 +425,14 @@ width: 60px;
 					<label th:text="${board.title}"></label>
 				</div>
 				<div class="info-right">
-					<label th:text="|조회수 ${board.bcount}|"></label> <label
+					<label th:text="|조회수 ${board.bcount}|"></label> <label id="report-board"
 						th:text="${board.nickName}"></label> <label
 						th:text="${#dates.format(board.createDate,'yyyy-MM-dd hh:mm:ss')}"></label>
 				</div>
 			</div>
 			<div class="freeBoard-content">
-				<div class="content-img">
-					<img src="/resources/images/board/camping.jpg">
+				<div class="content-img" th:each="fileNo : ${boardFileNoList}">
+					<img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}">
 				</div>
 				<p th:text="${board.content}"></p>
 				<div class="content-option">
@@ -416,9 +442,21 @@ width: 60px;
 						</div>
 						<label th:text="${board.blike}"></label>
 					</div>
-					<div class="content-right" onclick="show();">
-						<img src="/resources/images/board/report_img.png">
-					</div>
+					<th:block sec:authorize="isAuthenticated()">
+						<div class="content-right" th:id="'board-div'+${board.bid}" th:onclick="|report(this);|">
+							<input type="hidden" name="id" th:value="${board.bid}">
+							<input type="hidden" name="nickName" th:value="${board.nickName}">
+							<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+							<input type="hidden" name="suspect" th:value="${board.writer}">
+							<input type="hidden" name="reportType" value="board">
+				            <img src="/resources/images/board/report_img.png" onclick="show()">
+				        </div>
+			        </th:block>
+			        <th:block sec:authorize="isAnonymous()">
+				        <div class="content-right">
+				      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+						</div>
+			        </th:block>
 				</div>
 			</div>
 			<div class="freeBoard-comment">
@@ -466,7 +504,7 @@ width: 60px;
 							</div>
 							<div class="comment-leftTopBottom">
 								<div class="comment-leftTop">
-									<sub th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+									<sub id="report-reply" th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 								</div>
 								<div class="comment-leftBottom">
 									<p th:text="${comment.cContent}"></p>
@@ -474,9 +512,21 @@ width: 60px;
 							</div>
 						</div>
 						<div class="comment-right">
-							<div class="comment-rightTop">
-								<img src="/resources/images/board/report_img.png">
-							</div>
+							<th:block sec:authorize="isAuthenticated()">
+								<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
+									<input type="hidden" name="id" th:value="${comment.cid}">
+									<input type="hidden" name="nickName" th:value="${comment.nickName}">
+									<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+									<input type="hidden" name="suspect" th:value="${comment.cWriter}">
+									<input type="hidden" name="reportType" value="reply">
+						            <img src="/resources/images/board/report_img.png" onclick="show()">
+						        </div>
+					        </th:block>
+					        <th:block sec:authorize="isAnonymous()">
+						        <div class="comment-rightTop">
+						      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+								</div>
+					        </th:block>
 							<div class="comment-rightBottom">
 								<label onclick="openComment(this);">답글</label>
 							</div>
@@ -506,18 +556,30 @@ width: 60px;
 								</div>
 								<div class="comment-leftTopBottom">
 									<div class="comment-leftTop">
-										<sub th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+										<sub id="report-reply" th:text="${comment.nickName}"></sub><sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 									</div>
 									<div class="comment-leftBottom">
-										<label th:text="|@${comment.refWriter}"|></label>
+										<label th:text="|@${comment.refWriter}|"></label>
 										<p th:text="${comment.cContent}"></p>
 									</div>
 								</div>
 							</div>
 							<div class="comment-right">
-								<div class="comment-rightTop">
-									<img src="/resources/images/board/report_img.png">
-								</div>
+								<th:block sec:authorize="isAuthenticated()">
+									<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
+										<input type="hidden" name="id" th:value="${comment.cid}">
+										<input type="hidden" name="nickName" th:value="${comment.nickName}">
+										<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+										<input type="hidden" name="suspect" th:value="${comment.cWriter}">
+										<input type="hidden" name="reportType" value="reply">
+							            <img src="/resources/images/board/report_img.png" onclick="show()">
+							        </div>
+						        </th:block>
+						        <th:block sec:authorize="isAnonymous()">
+							        <div class="comment-rightTop">
+							      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+									</div>
+						        </th:block>
 								<div class="comment-rightBottom">
 									<label onclick="openComment(this);">답글</label>
 								</div>
@@ -541,16 +603,26 @@ width: 60px;
 		</div>
 	</div>
 	<div class="another-list">
-		<div class="previous-board">
+	
+		<div class="previous-board" th:onclick="'location.href=\''+@{/board/detail(bid=${prevBoard.bid})}+'\''" th:if="${prevBoard != null}">
 			<img src="/resources/images/board/upArrow.png"><label
-				class="list-label">이전글</label><label>여기 캠핑지 어딘가요?</label>
+				class="list-label">이전글</label><label th:text="${prevBoard.title}"></label>
 		</div>
-		<div class="next-board">
+		<div class="previous-board" th:unless="${prevBoard != null}">
+			<img src="/resources/images/board/upArrow.png"><label
+				class="list-label">이전글</label><label>이전글이 없습니다.</label>
+		</div>
+		
+		<div class="next-board"  th:onclick="'location.href=\''+@{/board/detail(bid=${nextBoard.bid})}+'\''" th:if="${nextBoard != null}">
 			<img src="/resources/images/board/downArrow.png"><label
-				class="list-label">다음글</label><label>혼자 캠핑와서 불멍중</label>
+				class="list-label">다음글</label><label th:text="${nextBoard.title}"></label>
+		</div>
+		<div class="next-board" th:unless="${nextBoard != null}">
+			<img src="/resources/images/board/downArrow.png"><label
+				class="list-label">다음글</label><label>다음글이 없습니다.</label>
 		</div>
 		<br>
-		<button class="listBtn">목록으로</button>
+		<button class="listBtn" onclick="location.href='/board/list'">목록으로</button>
 	</div>
 	<script>
 		$(".refComment-textarea").keyup(
@@ -580,8 +652,37 @@ width: 60px;
 				$(e).text('답글');
 			}
 		}
+		
 	</script>
+	
 	<div th:replace="admin/reportModal.html"></div>
+	
+	<script>
+	function loginPlz(){
+		if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
+			location.href="/member/login";
+		}
+	}
+
+	function report(e){
+		
+		let nickName = $(e).find("input[name=nickName]").val();
+		let id = $(e).find("input[name=id]").val();
+		let victim = $(e).find("input[name=victim]").val();
+		let suspect = $(e).find("input[name=suspect]").val();
+		let reportType = $(e).find("input[name=reportType]").val();
+		
+		$(".writer h3").text(nickName);
+		
+		let html = '<input type="hidden" name="id" value="' + id + '">'
+				 + '<input type="hidden" name="victim" value="' + victim + '">'
+				 + '<input type="hidden" name="suspect" value="' + suspect + '">'
+				 + '<input type="hidden" name="reportType" value="' + reportType + '">';
+		
+		$(".infoArea").html(html);
+	}
+	</script>
+	
 	<div th:replace="common/footer.html"></div>
 
 </body>

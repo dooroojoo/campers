@@ -118,6 +118,18 @@
 		<result property="fileNo" column="FILE_NO"/>
 	</resultMap>
 	
+	<resultMap type="com.cp.campers.camp.model.vo.Review" id="reviewResultMap">
+		<id property="rid" column="REVIEW_NO"/>
+		<result property="writer" column="USER_NO"/>
+		<result property="nickName" column="NICKNAME"/>
+		<result property="rcontent" column="RCONTENT"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="status" column="STATUS"/>
+		<result property="reserNo" column="RESER_NO"/>
+		<result property="campNo" column="CAMP_NO"/>
+		<result property="profilePath" column="PROFILE_PATH"/>
+	</resultMap>
+	
 
 	<select id="campDetail" parameterType="_int" resultMap="campResultMap">
 		SELECT
@@ -188,5 +200,39 @@
 		WHERE R.ROOM_NO = #{ roomNo }
 		  AND I.FILE_STATUS = 'N'
 	</select>
+	
+	<select id="reviewList" parameterType="_int" resultMap="reviewResultMap">
+		SELECT
+			  REVIEW_NO
+            , USER_NO
+            , NICKNAME
+            , RCONTENT
+            , R.CREATE_DATE
+            , R.STATUS
+            , RESER_NO
+            , CAMP_NO
+            , PROFILE_PATH
+         FROM REVIEW R
+         JOIN MEMBER M USING(USER_NO)
+        WHERE CAMP_NO = #{ campNo }
+          AND R.STATUS = 'N'
+	</select>
+	
+	<insert id="insertReview">
+		INSERT INTO REVIEW 
+		VALUES (SEQ_REVIEW_NO.NEXTVAL
+              , #{ userNo }
+              , #{ rcontent }
+              , DEFAULT
+              , DEFAULT
+              , #{ reserNo }
+              , #{ campNo })
+	</insert>
+	
+	<update id="reviewDelete" parameterType="_int">
+		 UPDATE REVIEW
+		    SET STATUS = 'Y'
+		  WHERE REVIEW_NO = #{ rid }
+	</update>
 	
 </mapper>

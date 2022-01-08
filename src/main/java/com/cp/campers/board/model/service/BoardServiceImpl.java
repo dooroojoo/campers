@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import com.cp.campers.board.model.dao.BoardMapper;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.board.model.vo.BoardFileNo;
 import com.cp.campers.board.model.vo.Comment;
+import com.cp.campers.board.model.vo.NextBoard;
 import com.cp.campers.board.model.vo.PageInfo;
+import com.cp.campers.board.model.vo.PrevBoard;
 import com.cp.campers.board.model.vo.Search;
 
 @Service
@@ -122,9 +125,20 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Comment> selectRefCommentList(int bid) {
-		
-		return boardMapper.selectRefCommentList(bid);
+	public PrevBoard selectPrevBoard(int bid) {
+		bid = bid-1;
+		return boardMapper.selectPrevBoard(bid);
+	}
+
+	@Override
+	public NextBoard selectNextBoard(int bid) {
+		bid = bid+1;
+		return boardMapper.selectNextBoard(bid);
+	}
+
+	@Override
+	public List<BoardFileNo> selectBoardImgae(int bid) {
+		return boardMapper.selectBoardImage(bid);
 	}
 
 

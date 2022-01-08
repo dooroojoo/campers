@@ -6,9 +6,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cp.campers.camp.model.dao.CampMapper;
 import com.cp.campers.camp.model.vo.Camp;
+import com.cp.campers.camp.model.vo.Review;
 import com.cp.campers.camp.model.vo.Room;
 
 @Service("campService")
@@ -29,9 +31,12 @@ public class CampServiceImpl implements CampService{
 		
 		List<Room> roomList = campMapper.roomList(campNo);
 		
+		List<Review> reviewList = campMapper.reviewList(campNo);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("camp", camp);
 		map.put("roomList", roomList);
+		map.put("reviewList", reviewList);
 		
 		return map;
 	}
@@ -39,6 +44,12 @@ public class CampServiceImpl implements CampService{
 	@Override
 	public Room roomDetail(int roomNo) {
 		return campMapper.roomDetail(roomNo);
+	}
+
+	@Override
+	@Transactional
+	public void reviewDelete(int rid) {
+		campMapper.reviewDelete(rid);
 	}
 
 	

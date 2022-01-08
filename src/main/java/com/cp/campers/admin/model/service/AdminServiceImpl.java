@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cp.campers.admin.model.dao.AdminMapper;
 import com.cp.campers.admin.model.vo.PageInfo;
+import com.cp.campers.admin.model.vo.Report;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.camp.model.vo.Camp;
 import com.cp.campers.camp.model.vo.Room;
@@ -191,6 +192,28 @@ public class AdminServiceImpl implements AdminService{
 		
 		// 3. 이력
 		adminMapper.record(campNo);
+	}
+
+	@Override
+	@Transactional
+	public int insertReport(Report report) {
+		int result = 0;
+		
+		// 1. 신고 처리 => 기타일 경우 신고 내용을 담음
+		if(report.getReason().equals("기타")) {
+			report.setReason("[기타] : " + report.getContent());
+		}
+		
+		int rnum1 = adminMapper.insertReport(report);
+		
+		// 2. 게시물/댓글 구분해서 인서트
+		int rnum2 = adminMapper.insertReportByType(report.getId());
+		
+		if(rnum1 != 0 && rnum2 != 0) {
+			result = 1;
+		}
+		
+		return result;
 	}
 
 }
