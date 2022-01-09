@@ -48,6 +48,9 @@
 		<collection property="BusinessType" resultMap="BusinessTypeResultMap"/>
 		<collection property="CampFacility" resultMap="CampFacilityResultMap"/>
 		<collection property="Facility" resultMap="FacilityResultMap"/>
+		<collection property="imgFileList" resultMap="imageFileResultMap"/>
+		<collection property="CampFile" resultMap="CampFileResultMap"/>
+		<collection property="RoomFile" resultMap="RoomFileResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="BusinessTypeResultMap">
@@ -207,6 +210,38 @@
    	)
    </insert>
    
+   <!-- 캠핑장 사진 -->
+   <insert id="CampFileResultMap">
+   INSERT
+   	INTO CAMP_FILE
+   	(
+   		  CAMP_NO
+   		, FILE_NO
+   		
+   	)
+   	VALUES
+   	(
+   		SEQ_CAMP_NO.CURRVAL
+   		, #{ fileNo }
+   	)
+   </insert>
+   
+   <!-- 숙소 사진 -->
+   <insert id="RoomFileResultMap">
+   	INSERT
+   	INTO ROOM_FILE
+   	(
+   		  CAMP_NO
+   		, FILE_NO
+   		
+   	)
+   	VALUES
+   	(
+   		SEQ_CAMP_NO.CURRVAL
+   		, #{ fileNo }
+   	)
+   </insert>
+   
    <insert id="insertRoom" parameterType="com.cp.campers.mypage.model.vo.Room">
    	INSERT
    	INTO ROOM
@@ -254,17 +289,26 @@
 		   SET USER_PWD = #{ pwd }
 		WHERE USER_NO = #{ userNo }
 	</update>
-   
-   <delete id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
-   	DELETE
-   		FROM MEMBER
-   		WHERE USER_PWD = #{ pwd }   
-   </delete>
-   
+      
    <select id="nickNameCheck" parameterType="String" resultType="int">
 		SELECT COUNT(NICKNAME)
 		FROM MEMBER
 		WHERE NICKNAME = #{ nickName }
 	</select>
+	
+	<update id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
+		UPDATE MEMBER
+		   SET STATUS = 'N'
+		 WHERE USER_ID = #{ id }
+		   AND USER_PWD = #{ pwd }  
+	</update>
+ 
+ 	<!-- 
+ 	<delete id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
+   	DELETE
+   		FROM MEMBER
+   		WHERE USER_PWD = #{ pwd }   
+   </delete>
+    -->
  
 </mapper>

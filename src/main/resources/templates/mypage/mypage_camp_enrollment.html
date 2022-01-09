@@ -62,11 +62,22 @@
                 </tr>
                 <tr>
                     <th>사업자 등록증</th>
-                    <td><input multiple="multiple" type="file" name="campPath"></td>
+                    <!-- campPath : 'org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile' to required type 
+                    				'java.lang.String' for property 'campPath'; nested exception is java.lang.IllegalStateException: Cannot convert value of type 
+                    				'org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile' to required type 
+                    				'java.lang.String' for property 'campPath': no matching editors or conversion strategy found]
+                    	 mulitFiles : There was an unexpected error (type=Internal Server Error, status=500).
+									  begin -1, end 0, length 0
+									  java.lang.StringIndexOutOfBoundsException: begin -1, end 0, length 0
+                    	 file : There was an unexpected error (type=Bad Request, status=400).
+								Required request part 'multiFiles' is not present
+								org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'multiFiles' is not present 
+                    -->
+                    <td><input type="file" name="singleFile"></td>
                 </tr>
                 <tr>
                     <th>사업장 사진</th>
-                    <td><input multiple="multiple" type="file" name="fileNo">
+                    <td><input type="file" name="campMultiFiles" multiple>
                 </tr>
                 <tr>
                     <th>사업장 계좌번호</th>
@@ -190,7 +201,7 @@
                 </tr>
                 <tr>
                     <th>객실 사진</th>
-                    <td><input type="file"></td>
+                    <td><input type="file" name="roomMultiFiles" multiple>
                 </tr>
                 <tr>
                     <th>객실 바닥 형태</th><!-- name="roomFloor"  -->
@@ -209,17 +220,68 @@
                     <td><input class="textbox2" name="roomAmount" type="number" placeholder="1"></td>
                 </tr>
             </table>
-            <div class="room_plus">
+               
+        <div class="clon_table" style="display:none;">
+        	<table class="mypage_camp_enrollment_table">
+        		<tr>
+                    <th>객실 최대인원</th>
+                    <td><input class="textbox" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 이름(호수)</th>
+                    <td><input class="textbox" name="roomName" type="text" placeholder="객실 이름을 입력해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 가격</th>
+                    <td><input class="textbox" name="roomPrice" type="text" placeholder="객실 가격을 입력해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 크기</th>
+                    <td><input class="textbox" name="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 소개</th>
+                    <td><input class="textbox" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."></td>
+                </tr>
+                <tr>
+                    <th>객실 사진</th>
+                    <td><input type="file" name="roomMultiFiles" multiple>
+                </tr>
+                <tr>
+                    <th>객실 바닥 형태</th><!-- name="roomFloor"  -->
+                    <td><input type="radio" name="roomFloor" value="데크" checked>데크 <input type="radio" name="roomFloor" value="잔디">잔디 <input type="radio" name="roomFloor" value="파쇄석">파쇄석 </td>
+                </tr>
+                <tr>
+                    <th>객실 주차 여부</th><!-- name="roomParking"  -->
+                    <td><input type="radio" name="roomParking" value="텐트 옆 주차" checked>텐트 옆 주차 <input type="radio" name="roomParking" value="주차장 주차">주차장 주차 <input type="radio" name="roomParking" value="외부 주차">외부 주차</td>
+                </tr>
+                <tr>
+                    <th>객실 형태</th><!-- name="roomForm" -->
+                    <td><input type="radio" name="roomForm" value="카라반" checked>카라반 <input type="radio" name="roomForm" value="캠핑">캠핑 <input type="radio" name="roomForm" value="글램핑">글램핑</td>
+                </tr>
+                <tr>
+                    <th>객실 수량</th>
+                    <td><input class="textbox2" name="roomAmount" type="number" placeholder="1"></td>
+                </tr>
+        	</table>
+        </div>
+        	<div class="room_plus">
                 <button type="button" id="room_plus_button" class="room_plus_button"><img class="room_plus_img" src="/resources/images/mypage/plus.png">객실 추가하기</button>
             </div>
             <div class="camp_plus">
                 <input class="camp_plus_button" type="submit" value="캠핑장 등록하기">
-            </div>    
+            </div> 
             </form>
         </div>
     </div>
     <!-- footer -->
     <div th:replace="common/footer.html"></div>
+    
+    <script>
+    $("#room_plus_button").on("click", function(e){
+    	$(".clon_table").clone().appendTo(".room_plus");
+    })    
+    </script>
     
     <!-- <script>
     	$("#enrollForm input[type=button]").on("click", function(){

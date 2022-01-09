@@ -26,10 +26,20 @@ public class Camp {
 	/* 한 캠프는 여러 사업장 형태를 가질 수 있음 - BUSINESS_TYPE 조인한 결과 값 */
 	private List<Integer> businessType; // 보유 사업장 형태 목록
 	/* CampFacility 연결 */
+	
 	/* 한 캠프는 여러 시설을 가질 수 있음 - CAMP_FACILITY*/
-	private List<Integer> facilityNo;
+	private List<Integer> facilityNo; // 사업장 시설 목록
 	/* Room 연결 
 	 * 한개 말고 다수 일시 List로 변경
 	 * List<Room> roomList;*/
 	private Room room;
+	
+	/* CampFile 연결 */
+	private CampFile campFile;
+	
+	/* RoomFile 연결 */
+	private RoomFile roomFile;
+	
+	/* ImageFile 연결 */
+	private List<ImageFile> imageFileList;
 }
