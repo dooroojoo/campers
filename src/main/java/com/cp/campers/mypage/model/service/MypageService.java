@@ -25,6 +25,9 @@ public interface MypageService{
 	/* 닉네임 체크 */
 	int nickNameCheck(String nickName);
 
+	/* 회원 탈퇴 */
+	void changeInfoMemberout(Member member);
+
 	// 회원목록
 	//Map<String, Object> findAllMember();
 }

@@ -15,6 +15,8 @@ import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.CampBusinessType;
 import com.cp.campers.mypage.model.vo.CampFacility;
 import com.cp.campers.mypage.model.vo.Room;
+import com.cp.campers.mypage.model.vo.RoomFile;
+import com.cp.campers.mypage.model.vo.CampFile;
 
 @Service
 public class MypageServiceImpl implements MypageService{
@@ -51,6 +53,12 @@ public class MypageServiceImpl implements MypageService{
 		//	mypageMapper.insertRoom(room);
 		// }			
 		mypageMapper.insertRoom(camp.getRoom());	
+		
+		/* CAMP_FILE INSERT */
+		mypageMapper.insertCampFile(camp.getCampFile());
+		
+		/* ROOM_FILE INSERT */
+		mypageMapper.insertRoomFile(camp.getRoomFile());
 	}
 	
 	@Override
@@ -86,6 +94,13 @@ public class MypageServiceImpl implements MypageService{
 	public int nickNameCheck(String nickName) {
 		int cnt = mypageMapper.nickNameCheck(nickName);
 		return cnt;
+	}
+
+	/* 회원 탈퇴 */
+	@Override
+	public void changeInfoMemberout(Member member) {
+	
+		mypageMapper.changeInfoMemberout(member);		
 	}
 
 	/*
