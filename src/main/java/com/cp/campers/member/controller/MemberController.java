@@ -50,27 +50,39 @@ public class MemberController {
 	      
 	      /* 파일을 저장할 경로 */
 		 //String filePath = "C:\\Users\\calls\\git\\campers\\src\\main\\resources\\static\\resources\\images\\uploadFiles\\profileImg";
-	      
-		 String filePath = uploadFilesPath + "/profileImg";
 		 
-	      File mkdir = new File(filePath);
-	      if(!mkdir.exists()) mkdir.mkdir();
+		
+		 String email1 = request.getParameter("email1");
+		 String email2 = request.getParameter("email2");
+		 String email3 = request.getParameter("email3");
+		 
+		 if(email2.equals("direct")) {
+			 member.setEmail(email1+"@"+email3);
+		 }else {
+			 member.setEmail(email1+"@"+email2);
+		 }
+		
+		 
+		 String phone1 = request.getParameter("phone1");
+		 String phone2 = request.getParameter("phone2");
+		 String phone3 = request.getParameter("phone3");
+		 
+		 member.setPhone(phone1+"-"+phone2+"-"+phone3);
 	      
 	      /* 파일명 확인 */
-	      String originFileName = singleFile.getOriginalFilename();
-
-	      String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		 log.info("size"+singleFile.getSize());
+	      if(singleFile.getSize() != 0) {
+	    	  String filePath = uploadFilesPath + "/profileImg";
+	    	  
+	    	  File mkdir = new File(filePath);
+	    	  if(!mkdir.exists()) mkdir.mkdir();
+	    	  
+		      String originFileName = singleFile.getOriginalFilename();
+	
+		      String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		      
+		      String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
 	      
-	      String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
-	      
-	      String email1 = request.getParameter("email1");
-	      String email2 = request.getParameter("email2");
-	      String phone1 = request.getParameter("phone1");
-	      String phone2 = request.getParameter("phone2");
-	      String phone3 = request.getParameter("phone3");
-	      
-	      member.setEmail(email1+"@"+email2);
-	      member.setPhone(phone1+"-"+phone2+"-"+phone3);
 	      try {
 	         singleFile.transferTo(new File(filePath + "/" + savedName));
 	         member.setProfilePath("/resources/images/uploadFiles/profileImg/"+savedName);
@@ -78,7 +90,10 @@ public class MemberController {
 	      } catch (IllegalStateException | IOException e) {
 	         e.printStackTrace();
 	      }
-	      log.info("root = "+request.getSession().getServletContext().getRealPath("/"));
+	      }else {
+	    	  member.setProfilePath("null");
+	    	  memberService.signUp(member);
+	      }
 	      
 		 return "redirect:/";
 	 }

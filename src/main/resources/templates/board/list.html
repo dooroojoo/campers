@@ -17,7 +17,7 @@
             display: flex;
             justify-content: center;
             font-family: 'Noto Sans KR', sans-serif;
-            min-height: 1060px;
+            min-height: 600px;
             /* font-weight: 900; */
         }
         .freeBoard-header {
@@ -197,6 +197,9 @@
         	color: black;
         	text-decoration: none;	
         }
+        .freeBoard-aside a:hover {
+	color: rgb(231, 111, 82);
+}
         .gotolist{
             border-bottom: 2px solid grey;
         }
@@ -267,7 +270,7 @@
           	</script>
                 </div>
             </div>
-            <div class="freeBoard-content">
+            <div class="freeBoard-content" >
                 <div th:each="board : ${boardList}" class="freeBoard-box" th:onclick="'location.href=\''+@{/board/detail(bid=${board.bid})}+'\''" >
                     <div class="box-left">
                         <p th:text="${board.title}"></p>
@@ -278,6 +281,9 @@
                     <div class="box-right" th:if="${ board.bid == thumbnail.bid}" th:each="thumbnail : ${thumbnailList}">
                         <img th:src="${thumbnail.fileRoute}+${thumbnail.fileName}">
                     </div>
+                </div>
+                <div th:if="${message}!=null" style="border:1px solid lightgrey; border-top:1px solid black;">
+               		<h3 style="text-align:center; margin:30px auto; color:grey;" th:text="${message}"></h3>
                 </div>
             </div>
             

@@ -76,7 +76,12 @@
 			, #{ pwd }
 			, #{ userName }
 			, #{ nickName }
+			<if test="profilePath != 'null'">
 			, #{ profilePath }
+			</if>
+			<if test="profilePath == 'null'">
+			, null
+			</if>
 			, #{ email }
 			, #{ phone }
 			, DEFAULT

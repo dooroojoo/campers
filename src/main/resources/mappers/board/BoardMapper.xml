@@ -387,4 +387,25 @@ update reply
  where cid = #{cid}
 </update>
 
+<insert id="boardLikeUp" parameterType="hashmap">
+insert into board_like values(#{bid}, #{userNo})
+</insert>
+
+<select id="selectLikeCount" resultType="String">
+select count(*)
+from board_like
+where bid = #{bid}
+</select>
+
+<select id="selectLikedBid" resultType="String">
+select bid
+from board_like
+where user_no = #{userNo}
+and bid = #{bid}
+</select>
+<delete id="boardLikeDown"  parameterType="hashmap">
+delete from board_like
+where bid = #{bid}
+and user_no = #{userNo}
+</delete>
 </mapper>

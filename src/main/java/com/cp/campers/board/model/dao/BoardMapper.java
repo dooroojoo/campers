@@ -68,4 +68,13 @@ public interface BoardMapper {
 
 	void commentDelete(int cid);
 
+	void boardLikeUp(Map<String, Object> param);
+
+	String selectLikeCount(Object object);
+
+	String selectLikedBid(Map<String, Object> bidAndUserNo);
+
+	void boardLikeDown(Map<String, Object> param);
+
+
 }

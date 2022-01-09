@@ -47,6 +47,14 @@ public interface BoardService {
 
 	void commentDelete(int cid);
 
+	String boardLikeUp(Map<String, Object> param);
+
+	String selectLikedBid(Map<String, Object> bidAndUserNo);
+
+	String selectLikeCount(int bid);
+
+	String boardLikeDown(Map<String, Object> param);
+
 
 
 
