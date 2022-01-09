@@ -175,40 +175,41 @@
 
 
               <!-- 페이징 처리 -->
-               <!-- <div class="member_pages">
+                <div class="member_pages">
                 <ul class="member_paging">
 
-                     맨 처음으로 이동하는 버튼(<<)
-                    <li th:if="${paging.startPage != 1}">
-                    <a th:href="@{/search/find?nowPage=1}">&lt;&lt;</a></li>
+                     <!--  맨 처음으로 이동하는 버튼(<<) -->
+                   <li><a th:href="@{/search/find?page=1}">&lt;&lt;</a></li>
                  
-                    이전 페이지로(<)
-                    <li th:if="${paging.startPage != 1}">
-                    <a th:href="@{/search/find?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
+                    <!-- 이전 페이지로(<)  -->
+                    <li th:if="${pi.page > 1}">
+                    <a th:href="@{/search/find(page=${pi.page - 1 })}">&lt;</a>
                     </li>
+                    <li th:unless="${pi.page > 1}">
+                    <a th:href="#">&lt;</a>
 
-                    최대 10개의 페이지 목록
-                    <span th:each="idx : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-                    	<li th:switch="${idx}">
-                       		 <div class="current_page" th:case="${paging.nowPage}">
-                        		<b th:text="${idx}" ></b>
+                   <!-- 최대 10개의 페이지 목록 --> 
+                    <span th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
+                    	<li th:switch="${p}">
+                       		 <div class="current_page" th:case="${pi.page}">
+                        		<b th:text="${p}"></b>
                         	</div>
-                        	 <div class="current_page" th:case="${paging.nowPage}">
-                        	<a th:href="@{/search/find?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" th:text="${idx}"> </a>
+                        	 <div class="current_page" th:case="${pi.page}">
+                        	<a th:href="@{/search/find(page=${p})}" th:text="${p}"> </a>
                     		 </div>
                     	</li>
         			</span>
         		
-                    다음 페이지로(>) 
-                    <li th:if="${paging.endPage != paging.lastPage}">
-                        <a th:href="@{/search/find?nowPage=${idx}&cntPerPage=${paging.cntPerPage}">&gt;</a>
+                   <!--  다음 페이지로(>) --> 
+                    <li th:if="${pi.page < pi.maxPage}">
+                        <a th:href="@{/search/find(page=${pi.page + 1})}">&gt;</a>
                     </li>
 
-                    맨 끝으로 이동하는 버튼(>>)
-                    <li th:if="${paging.endPage != paging.lastPage}">
-                    <a th:href="@{/search/find?nowPage=${paging.cntPerPage}">&gt;&gt;</a></li>
+                    <!-- 맨 끝으로 이동하는 버튼(>>) -->
+                   <li>
+                    <a th:href="@{/search/find(page=${pi.maxPage})}">&gt;&gt;</a></li>
                 </ul>
-            </div> -->
+            </div>
 
                 </div>
             </div>

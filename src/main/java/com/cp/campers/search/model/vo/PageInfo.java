@@ -2,105 +2,130 @@ package com.cp.campers.search.model.vo;
 
 public class PageInfo {
 
-		// 현재페이지, 시작페이지, 끝페이지, 게시글 총 갯수, 페이지당 글 갯수, 마지막페이지, SQL쿼리에 쓸 start, end
-		private int nowPage, startPage, endPage, total, cntPerPage, lastPage, start, end;
-		private int cntPage = 10;
+	private int page;			// 요청하는 페이지
+	private int listCount;		// 전체 게시글 수
+	private int pageLimit;		// 하단에 보여질 페이지 목록 수
+	private int campLimit;		// 한 페이지에 보여질 게시글 최대 수
+	private int maxPage;		// 전체 페이지에서 가장 마지막 페이지
+	private int startPage;		// 하단에 보여질 페이지 목록 시작 값
+	private int endPage;		// 하단에 보여질 페이지 목록 끝 값
+	private int startRow;
+	private int endRow;
+	
+	
+	// 페이징 처리 계산에 필요한 값을 받아 start, end, maxPage 계산하여 값 설정하기
+	public PageInfo(int page, int listCount, int pageLimit, int campLimit) {
+		this.page = page;
+		this.listCount = listCount;
+		this.pageLimit = pageLimit;
+		this.campLimit = campLimit;
 		
-		public PageInfo() {
-		}
+		// * maxPage : 전체 페이지에서 가장 마지막 페이지
+		// 게시글 갯수가 105개면 페이지 수는 자투리 5개까지 한 페이지로 생각해서 11페이지가 필요함
+		// 전체 게시글 수 / 한 페이지에 보여질 개수 결과를 올림 처리
+		this.maxPage = (int)(Math.ceil((double)listCount / campLimit));
 		
-		public PageInfo(int total, int nowPage, int cntPerPage) {
-			setNowPage(nowPage);
-			setCntPerPage(cntPerPage);
-			setTotal(total);
-			calcLastPage(getTotal(), getCntPerPage());
-			calcStartEndPage(getNowPage(), cntPage);
-			calcStartEnd(getNowPage(), getCntPerPage());
-		}
+		// * startPage : 하단에 보여질 페이지 목록 시작 값
+		// 요청 page에서 pageLimit만큼을 나누고 다시 곱한 뒤 1을 더함
+		// 5 / 10 * 10 + 1 => 1
+		// 15 / 10 * 10 + 1 => 11
+		// 25 / 10 * 10 + 1 => 21
+		// 10, 20, 30, .. 의 경우 나누었을 때 몫이 하나 더 늘어남
+		// 이름 방지하기 위해 page - 1을 함
+		this.startPage = (page - 1) / pageLimit * pageLimit + 1;
 		
-		// 제일 마지막 페이지 계산
-		public void calcLastPage(int total, int cntPerPage) {
-			setLastPage((int) Math.ceil((double)total / (double)cntPerPage));
-		}
+		// * endPage : 하단에 보여질 페이지 목록 끝 값
+		this.endPage = startPage + pageLimit - 1;
 		
-		// 시작, 끝 페이지 계산
-		public void calcStartEndPage(int nowPage, int cntPage) {
-			setEndPage(((int)Math.ceil((double)nowPage / (double)cntPage)) * cntPage);
-			if (getLastPage() < getEndPage()) {
-				setEndPage(getLastPage());
-			}
-			
-			setStartPage(getEndPage() - cntPage + 1);
-			if (getStartPage() < 1) {
-				setStartPage(1);
-			}
-		}
+		// 마지막 페이지 수가 총 페이지 수보다 클 수 없으므로
+		if(this.maxPage < this.endPage)
+			this.endPage = this.maxPage;
 		
-		// DB 쿼리에서 사용할 start, end값 계산
-		public void calcStartEnd(int nowPage, int cntPerPage) {
-			setEnd(nowPage * cntPerPage);
-			setStart(getEnd() - cntPerPage + 1);
-		}
-		
-		
-		public int getNowPage() {
-			return nowPage;
-		}
-		public void setNowPage(int nowPage) {
-			this.nowPage = nowPage;
-		}
-		public int getStartPage() {
-			return startPage;
-		}
-		public void setStartPage(int startPage) {
-			this.startPage = startPage;
-		}
-		public int getEndPage() {
-			return endPage;
-		}
-		public void setEndPage(int endPage) {
-			this.endPage = endPage;
-		}
-		public int getTotal() {
-			return total;
-		}
-		public void setTotal(int total) {
-			this.total = total;
-		}
-		public int getCntPerPage() {
-			return cntPerPage;
-		}
-		public void setCntPerPage(int cntPerPage) {
-			this.cntPerPage = cntPerPage;
-		}
-		public int getLastPage() {
-			return lastPage;
-		}
-		public void setLastPage(int lastPage) {
-			this.lastPage = lastPage;
-		}
-		public int getStart() {
-			return start;
-		}
-		public void setStart(int start) {
-			this.start = start;
-		}
-		public int getEnd() {
-			return end;
-		}
-		public void setEnd(int end) {
-			this.end = end;
-		}	
-		public int setCntPage() {
-			return cntPage;
-		}
-		public void getCntPage(int cntPage) {
-			this.cntPage = cntPage;
-		}
-		@Override
-		public String toString() {
-			return "PagingVO [nowPage=" + nowPage + ", startPage=" + startPage + ", endPage=" + endPage + ", total=" + total
-					+ ", cntPerPage=" + cntPerPage + ", lastPage=" + lastPage + ", start=" + start + ", end=" + end
-					+ ", cntPage=" + cntPage + "]";
-		}
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getListCount() {
+		return listCount;
+	}
+
+	public void setListCount(int listCount) {
+		this.listCount = listCount;
+	}
+
+	public int getPageLimit() {
+		return pageLimit;
+	}
+
+	public void setPageLimit(int pageLimit) {
+		this.pageLimit = pageLimit;
+	}
+
+	public int getCampLimit() {
+		return campLimit;
+	}
+
+	public void setCampLimit(int campLimit) {
+		this.campLimit = campLimit;
+	}
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	
+	public int getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(int startRow, int campLimit) {
+		this.startRow = (page - 1) * campLimit + 1;
+	}
+
+	public int getEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(int endRow, int campLimit) {
+		this.endRow = startRow + campLimit -1;
+	}
+
+	@Override
+	public String toString() {
+		return "PageInfo [page=" + page + ", listCount=" + listCount + ", pageLimit=" + pageLimit + ", campLimit="
+				+ campLimit + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage=" + endPage
+				+ ", startRow=" + startRow + ", endRow=" + endRow + "]";
+	}
+
+	
+	
+	
+	
+	
 	}

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,33 +34,20 @@ public class SearchController {
 	
 	// 캠핑장검색 페이지 이동 시 전체 목록 조회
 	@GetMapping("camp")
-	public ModelAndView searchCamp(ModelAndView mv, PageInfo pi,
-								@RequestParam(value="nowPage", required=false) String nowPage,
-								@RequestParam(value="cntPerPage", required=false) String cntPerPage) {
+	public ModelAndView searchCamp(ModelAndView mv,
+								@RequestParam(value="page", required=false) String page) {
 		
-		int total = searchService.campListCount();
-		if(nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "10";
-		}else if (nowPage == null) {
-			nowPage = "1";
-		}else if(cntPerPage == null) {
-			cntPerPage = "10";
-		}
-		pi = new PageInfo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		int nowPage = 1;
 		
-		
-		List<SearchCamp> campAllSearch = searchService.campAllSearch(pi);
-		
-		
-		if(campAllSearch.size() == 0) {
-			mv.addObject("searchSize", "검색된 결과가 없습니다.");
-		} else {
-			mv.addObject("searchSize", campAllSearch.size()+"개의 결과가 조회되었습니다.");
+		if(page != null) {
+			nowPage = Integer.parseInt(page);
 		}
 		
-		mv.addObject("paging", pi);
-		mv.addObject("campSearch", campAllSearch);
+		Map<String, Object> map = searchService.campAllSearch(nowPage);
+		
+		mv.addObject("pi", map.get("pi"));
+		mv.addObject("campSearch", map.get("campAllList"));
+		mv.addObject("searchSize", map.get("searchSize"));
 		mv.setViewName("search/searchCamp");
 		
 		return mv;
@@ -184,7 +172,7 @@ public class SearchController {
 		
 		
 		// 아직 페이징 처리 적용안함
-		int total = searchService.campListCount();
+		// int total = searchService.campListCount();
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "10";
@@ -193,7 +181,6 @@ public class SearchController {
 		}else if(cntPerPage == null) {
 			cntPerPage = "10";
 		}
-		pi = new PageInfo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		
 		
 		
