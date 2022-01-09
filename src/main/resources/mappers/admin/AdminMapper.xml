@@ -435,4 +435,10 @@
 		 WHERE RNUM BETWEEN ${startRow} AND ${endRow}
 	</select>
 	
+	<update id="completeReport" parameterType="_int">
+		UPDATE REPORT
+		   SET REPORT_STATUS = 'Y'
+		 WHERE REPORT_NO = #{rNo}
+	</update>
+	
 </mapper>
