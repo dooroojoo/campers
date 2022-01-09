@@ -418,7 +418,7 @@
                                         <div class="write_date" th:text="${ #dates.format(review.createDate, 'yy.MM.dd') }"></div>
                                     </div>
                                     <th:block sec:authorize="isAuthenticated()">
-                                    <div class="delete_a" th:if="${#authentication.principal.userNo} == ${ review.writer }">
+                                    <div class="delete_a" th:if="${#authentication.principal.userNo} == ${ review.writer } OR ${#authorization.expression('hasRole(''ADMIN'')')}">
                                         <a th:onclick="'deleteRid('+${ review.rid }+', '+${ review.campNo }+')'">삭제하기</a>
                                     </div>
                                     </th:block>

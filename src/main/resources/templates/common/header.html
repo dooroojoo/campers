@@ -49,14 +49,16 @@
     
     	<th:block sec:authorize="isAuthenticated()">
         <div class="mypage-icon">
-			<th:block sec:authorize="hasRole('MEMBER')">
-			   <a href="/mypage"><img src="/resources/images/common/header_footer/member.png"></a>
+        
+			<th:block sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
+				<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" href="/admin/member">
+					<img src="/resources/images/common/header_footer/member.png">
+				</a>
+				<a th:unless="${#authorization.expression('hasRole(''ADMIN'')')}" href="/mypage">
+					<img src="/resources/images/common/header_footer/member.png">
+				</a>
 			</th:block>
         
-			<th:block sec:authorize="hasRole('ADMIN')">
-		      <a href="/admin/member"><img src="/resources/images/common/header_footer/member.png"></a>
-			</th:block>
-          
         </div>
     	</th:block>
       </div>
