@@ -63,7 +63,7 @@
                         <li class="report_type" th:if="${#strings.equals(report.reportType, 'board')}">게시판</li>
                         <li class="report_type" th:if="${#strings.equals(report.reportType, 'reply')}">댓글</li>
                         <li class="report_update">
-                        	<button type="button" onclick="">완료</button>
+                        	<button type="button" th:onclick="|location.href='@{/admin/report/complete(rNo=${report.rNo})}'|">완료</button>
                         </li>
                     </ul>
 
