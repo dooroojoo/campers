@@ -199,4 +199,29 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	@Override
+	public String boardLikeUp(Map<String, Object> param) {
+		boardMapper.boardLikeUp(param);
+		return boardMapper.selectLikeCount(param.get("bid"));
+	}
+
+	@Override
+	public String selectLikedBid(Map<String, Object> bidAndUserNo) {
+		
+		return boardMapper.selectLikedBid(bidAndUserNo);
+	}
+
+	@Override
+	public String selectLikeCount(int bid) {
+		
+		return boardMapper.selectLikeCount(bid);
+	}
+
+	@Override
+	public String boardLikeDown(Map<String, Object> param) {
+		boardMapper.boardLikeDown(param);
+		return boardMapper.selectLikeCount(param.get("bid"));
+	}
+
+
 }

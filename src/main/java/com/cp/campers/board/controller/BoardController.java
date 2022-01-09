@@ -18,9 +18,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cp.campers.board.model.service.BoardService;
@@ -28,8 +30,6 @@ import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.board.model.vo.BoardFileNo;
 import com.cp.campers.board.model.vo.Comment;
-import com.cp.campers.board.model.vo.NextBoard;
-import com.cp.campers.board.model.vo.PrevBoard;
 import com.cp.campers.board.model.vo.Search;
 import com.cp.campers.member.model.vo.UserImpl;
 
@@ -83,6 +83,10 @@ public class BoardController {
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("thumbnailList", map.get("thumbnailList"));
 		
+		if(map.get("boardList").toString().equals("[]")) {
+			model.addAttribute("message","'"+search.getSearchValue()+"' 검색결과가 없습니다.");
+		}
+		
 		return "board/list";
 	}
 	@GetMapping("/list/searchPage")
@@ -98,7 +102,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/detail")
-	public String detailList(Model model, int bid, HttpServletRequest request, HttpServletResponse response) {
+	public String detailList(Model model, int bid, HttpServletRequest request, HttpServletResponse response, @AuthenticationPrincipal UserImpl loginUser) {
 		
 		Cookie[] cookies = request.getCookies();
 		
@@ -143,6 +147,19 @@ public class BoardController {
 		}
 	
 		model.addAttribute(commentList);
+		
+		Map<String, Object> bidAndUserNo = new HashMap<>();
+		bidAndUserNo.put("bid", bid);
+		
+		if(loginUser != null) {
+			
+			bidAndUserNo.put("userNo", loginUser.getUserNo());
+			String likedBid = boardService.selectLikedBid(bidAndUserNo);
+			model.addAttribute("likedBid", likedBid);
+		}
+		
+		String likeCounts = boardService.selectLikeCount(bid);
+		model.addAttribute("likeCounts",likeCounts);
 		
 		return "board/detail";
 		
@@ -340,6 +357,36 @@ public class BoardController {
 
 		return "redirect:/board/detail?bid="+bid;
 	}
-
+	
+	 @GetMapping("/likeUp/{bid}") 
+	 @ResponseBody
+	 public String boardLikeUp(@PathVariable int bid, @AuthenticationPrincipal UserImpl loginUser){
+		 
+		 Map<String, Object> param = new HashMap<>(); 
+		 param.put("bid", bid);
+		 param.put("userNo", loginUser.getUserNo()); 
+		 
+		 log.info("bid="+bid);
+		 log.info("userNo"+loginUser.getUserNo());
+		 
+		 String count = boardService.boardLikeUp(param);
+		 
+		 log.info("count="+count);
+		 
+		 return count;
+		 
+	 }
+	 
+	 @GetMapping("/likeDown/{bid}")
+	 @ResponseBody
+	 public String boardLikeDown(@PathVariable int bid, @AuthenticationPrincipal UserImpl loginUser) {
+		 Map<String, Object> param = new HashMap<>(); 
+		 param.put("bid", bid);
+		 param.put("userNo", loginUser.getUserNo()); 
+		 
+		 String count = boardService.boardLikeDown(param);
+		 
+		 return count;
+	 }
 	
 }

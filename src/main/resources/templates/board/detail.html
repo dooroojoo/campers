@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <title>detail</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,6 +80,10 @@
 	color: rgb(65, 65, 65);
 }
 
+.freeBoard-aside a:hover {
+	color: rgb(231, 111, 82);
+}
+
 .gotolist {
 	border-bottom: 2px solid rgb(126, 126, 126);
 }
@@ -140,8 +145,9 @@
 }
 
 .content-left label {
-	margin-top: 6px;
-	margin-left: 3px;
+margin-top: 6px;
+    margin-left: 40px;
+    color: grey;
 }
 
 .content-right img {
@@ -374,6 +380,30 @@ width: 60px;
     bottom: 0%;
     right: 5px;
 }
+.hover:hover {
+	background-color: #fbfbfb;
+}
+.heart {
+	position: absolute;
+    left: -34px;
+    top: -35px;
+  width: 100px;
+  height: 100px;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+}
+.is-active {
+  transition-duration: 1s;
+  background-position: -2800px 0;
+}
+
+.placement {
+	position: relative;
+}
+
 </style>
 </head>
 <body>
@@ -445,13 +475,75 @@ width: 60px;
 					<img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}">
 				</div>
 				<p th:text="${board.content}"></p>
+				
 				<div class="content-option">
-					<div class="content-left">
-						<div>
-							<img src="/resources/images/board/heart.png">
-						</div>
-						<label th:text="${board.blike}"></label>
-					</div>
+						<th:block sec:authorize="isAuthenticated()" >
+							<div class="content-left">
+								<div class="placement">
+						        <div class="heart likeUp" th:if="${likedBid} == null"></div>
+						        <div class="heart likeDown is-active" th:unless="${likedBid} == null"></div>
+						    	</div>
+								<label class="likeCount" th:text="${likeCounts}"></label>
+								<input class="hiddenBid" type="hidden" th:value="${board.bid}">
+								<input class="hiddenUseNo" type="hidden" th:value="${#authentication.principal.userNo}">
+							</div>
+						</th:block>
+						<th:block sec:authorize="isAnonymous()">
+							<div class="content-left">
+								<div class="placement">
+						        <div class="heart" onclick="loginPlz();"></div>
+						    	</div>
+								<label class="likeCount" th:text="${likeCounts}"></label>
+								<input class="hiddenBid" type="hidden" th:value="${board.bid}">
+							</div>
+						</th:block>
+					<script>
+				
+						$(document).on("click",".likeUp",function(){
+							$(this).attr('class','heart likeDown is-active');
+						   	let bid = $(".hiddenBid").val();
+						    console.log(bid);
+						    
+						    $.ajax({
+						    	url : "/board/likeUp/"+bid,
+						    	dataType : "json",
+					            contentType : "application/json; charset=utf-8",
+						    	type : "get",
+						    	success : function(data){
+						    		console.log("count"+data);
+						    		$(".likeCount").text(data);
+						    	},
+						    	error: function(e){
+						    		console.log(e);
+						    	}
+						    })
+						    
+						    
+						  });
+						
+					
+					</script>
+					<script>
+					$(document).on("click",".likeDown",function(){
+							$(this).attr('class','heart likeUp');
+						   	let bid = $(".hiddenBid").val();
+						    console.log(bid);
+						    
+						    $.ajax({
+						    	url : "/board/likeDown/"+bid,
+						    	dataType : "json",
+					            contentType : "application/json; charset=utf-8",
+						    	type : "get",
+						    	success : function(data){
+						    		console.log("count"+data);
+						    		$(".likeCount").text(data);
+						    	},
+						    	error: function(e){
+						    		console.log(e);
+						    	}
+						    })
+						})
+					</script>
 					<th:block sec:authorize="isAuthenticated()">
 						<div class="content-right" th:id="'board-div'+${board.bid}" th:onclick="|report(this);|">
 							<input type="hidden" name="id" th:value="${board.bid}">
@@ -478,7 +570,7 @@ width: 60px;
 								style="width: 739px; height: 100px;"></div>
 							<textarea name="reply" class="realTextarea" hidden></textarea>
 							<div class="sub_div">
-							<sub style="color: grey;">0/300</sub>
+							<sub style="color: grey;">0/250</sub>
 							</div>
 								<th:block sec:authorize="isAuthenticated()">
 								<button type="submit">등록</button>
@@ -494,12 +586,12 @@ width: 60px;
 						function() {
 							$(this).next().text($(this).text());
 							$(this).next().next().find("sub").html(
-									$(this).text().length + "/300");
+									$(this).text().length + "/250");
 
-							if ($(this).text().length > 300) {
+							if ($(this).text().length > 249) {
 
-								$(this).text($(this).text().substr(0, 300));
-								alert("300자 이하로 입력 가능합니다.")
+								$(this).text($(this).text().substr(0, 249));
+								alert("250자 이하로 입력 가능합니다.")
 								$(this).blur();
 							}
 
@@ -508,7 +600,7 @@ width: 60px;
 
 
 				<!--댓글-->
-				<div>
+				<div th:if="${commentList} != null">
 				<div class="comment-content" th:each="comment : ${ commentList }">
 					<div class="comment-box" th:if="${ comment.refCid == 0}">
 						<div class="comment-left">
@@ -521,7 +613,7 @@ width: 60px;
 									<sub id="report-reply" th:text="${comment.nickName}"></sub>
 									<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 									<th:block sec:authorize="isAuthenticated()">
-									<sub th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
+									<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
 									</th:block>
 								</div>
 								<div class="comment-leftBottom" th:if="${comment.status} == 'N'">
@@ -560,7 +652,7 @@ width: 60px;
 							<div class="refComment-textarea" contenteditable="true"></div>
 							<textarea name="cContent"  class="realTextarea" hidden></textarea>
 							<div class="refComment-submit">
-								<sub style="color: grey;">0/300</sub>
+								<sub style="color: grey;">0/250</sub>
 								<th:block sec:authorize="isAuthenticated()">
 								<button type="submit">등록</button>
 							    </th:block>
@@ -586,7 +678,7 @@ width: 60px;
 										<sub id="report-reply" th:text="${comment.nickName}"></sub>
 										<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 										<th:block sec:authorize="isAuthenticated()">
-										<sub th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
+										<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
 										</th:block>
 									</div>
 									<div class="comment-leftBottom" th:if="${comment.status}=='N'">
@@ -627,7 +719,7 @@ width: 60px;
 							<div class="refComment-textarea" contenteditable="true"></div>
 							<textarea name="cContent"  class="realTextarea" hidden></textarea>
 							<div class="refComment-submit">
-								<sub style="color: grey;">0/300</sub>
+								<sub style="color: grey;">0/250</sub>
 								<th:block sec:authorize="isAuthenticated()">
 								<button type="submit">등록</button>
 							    </th:block>
@@ -640,23 +732,28 @@ width: 60px;
 					</div>
 				</div>
 				</div>
+				<div th:unless="${commentList} != null">
+					<div>
+						<p style="text-align:center; color:grey;">댓글이 없습니다.</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div class="another-list">
 	
-		<div class="previous-board" th:onclick="'location.href=\''+@{/board/detail(bid=${board.prevId})}+'\''" th:if="${board.prevId != 0}">
-			<img src="/resources/images/board/upArrow.png"><label
-				class="list-label">이전글</label><label th:text="${board.prevTitle}"></label>
+		<div style="cursor: pointer;" class="previous-board hover" th:onclick="'location.href=\''+@{/board/detail(bid=${board.prevId})}+'\''" th:if="${board.prevId != 0}">
+			<img src="/resources/images/board/upArrow.png"><label style="cursor: pointer"
+				class="list-label">이전글</label><label th:text="${board.prevTitle}" style="cursor: pointer"></label>
 		</div>
 		<div class="previous-board" th:unless="${board.prevId != 0}">
 			<img src="/resources/images/board/upArrow.png"><label
 				class="list-label">이전글</label><label>이전글이 없습니다.</label>
 		</div>
 		
-		<div class="next-board"  th:onclick="'location.href=\''+@{/board/detail(bid=${board.nextId})}+'\''" th:if="${board.nextId != 0}">
-			<img src="/resources/images/board/downArrow.png"><label
-				class="list-label">다음글</label><label th:text="${board.nextTitle}"></label>
+		<div style="cursor: pointer" class="next-board hover"  th:onclick="'location.href=\''+@{/board/detail(bid=${board.nextId})}+'\''" th:if="${board.nextId != 0}">
+			<img src="/resources/images/board/downArrow.png"><label style="cursor: pointer"
+				class="list-label">다음글</label><label style="cursor: pointer" th:text="${board.nextTitle}"></label>
 		</div>
 		<div class="next-board" th:unless="${board.nextId != 0}">
 			<img src="/resources/images/board/downArrow.png"><label
@@ -670,12 +767,12 @@ width: 60px;
 				function() {
 					$(this).next().text($(this).text());
 					$(this).next().next().find("sub").html(
-							$(this).text().length + "/300");
+							$(this).text().length + "/250");
 
-					if ($(this).text().length > 300) {
+					if ($(this).text().length > 249) {
 
-						$(this).text($(this).text().substr(0, 300));
-						alert("300자 이하로 입력 가능합니다.")
+						$(this).text($(this).text().substr(0, 249));
+						alert("250자 이하로 입력 가능합니다.")
 						$(this).blur();
 					}
 
