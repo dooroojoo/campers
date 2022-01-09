@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cp.campers.search.model.dao.SearchMapper;
+import com.cp.campers.search.model.vo.FindCamp;
 import com.cp.campers.search.model.vo.PageInfo;
 import com.cp.campers.search.model.vo.SearchCamp;
 
@@ -56,18 +57,36 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public int campListCount() {
-		return searchMapper.campListCount();
+	public Map<String, Object> campFindSearch(FindCamp fc, int nowPage) {
+
+		// 페이지 전체 개수 조회
+		int listCount = searchMapper.campFindCount(fc);
+
+		// 2. PageInfo 객체 만들기
+		PageInfo pi = new PageInfo(nowPage, listCount, 10, 5);
+		pi.setStartRow(nowPage, pi.getCampLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getCampLimit());
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("fc", fc);
+		map.put("pi", pi);
+		
+		// 페이징 처리 된 게시글 목록 조회
+		List<SearchCamp> campFindSearch = searchMapper.campFindSearch(map);
+
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		if(listCount == 0) {
+			returnMap.put("searchSize", "검색된 결과가 없습니다.");
+		} else {
+			returnMap.put("searchSize", listCount+1+"개의 캠핑장이 조회되었습니다.");
+		}
+		
+		returnMap.put("campFindSearch", campFindSearch);
+		returnMap.put("pi", pi);
+		
+		return returnMap;
 	}
 
-	//@Override
-	//public int campFindCount(HashMap<String, Object> map) {
-	//	return searchMapper.campFindCount(map);
-	//}
-
-	@Override
-	public List<SearchCamp> campFindSearch(PageInfo pi, HashMap<String, Object> map) {
-		return searchMapper.campFindSearch(pi, map);
-	}
 
 }

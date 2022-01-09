@@ -29,10 +29,10 @@
         <div class="search-check">
             <div class="search-form">
                 <form class="search-camping-form" action="/search/find"  method="get">
-                <input type="hidden" th:each="map:${map}">
+                <input type="hidden" th:each="fc:${fc}">
                    <p>지역</p>
                    <label class="search-area search-container">
-                   <input type="text" placeholder="어디로 여행가세요?" name="area" th:value="${map.area}" required >
+                   <input type="text" placeholder="어디로 여행가세요?" name="area" th:value="${fc.sArea}" required >
                     </label>
                 
                   
@@ -47,14 +47,14 @@
                     <div class="search-number-wrap">
                       <input type="search" placeholder="인원을 추가해주세요" readonly style="cursor: default;">
                       <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                    <input class="quantity" min="0" max="6" name="quantity" th:value="${map.quantity}" type="number" required>
+                    <input class="quantity" min="0" max="6" name="quantity" th:value="${fc.sGuest}" type="number" required>
                     <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                   </div>
                   </div>
 
                 <p>캠핑장명</p>
                    <label class="search-name search-container">
-                   <input type="text" placeholder="캠핑장 이름으로 찾아볼까요?" name="name" th:value="${map.name}">
+                   <input type="text" placeholder="캠핑장 이름으로 찾아볼까요?" name="name" th:value="${fc.sName}">
                 </label>
                    
                 <div class="search-camp-type">
@@ -121,7 +121,7 @@
             </div>
 
             <div class="search-submit">
-              <input type="submit" value="검색하기">
+              <input type="button" value="검색하기" onclick="ajax();">
             </div>
             </form>
             </div>
@@ -140,7 +140,7 @@
                   
 
                 <!-- 조회된 갯수만큼 반복문 -->
-                <div class="search-list-col" th:each="find : ${ findCamp }">
+                <div class="search-list-col" th:each="find : ${campFindSearch}">
                   <div class="list-col-wrapper">
                   <div class="list-col-img">
                     <img th:src="@{/resources/images/uploadFiles/campImg/}+${find.fileName}">
@@ -179,36 +179,38 @@
                 <ul class="member_paging">
 
                      <!--  맨 처음으로 이동하는 버튼(<<) -->
-                   <li><a th:href="@{/search/find?page=1}">&lt;&lt;</a></li>
-                 
+                   <li><a href="/search/camp?page=1">&lt;&lt;</a></li>
+                   
                     <!-- 이전 페이지로(<)  -->
                     <li th:if="${pi.page > 1}">
-                    <a th:href="@{/search/find(page=${pi.page - 1 })}">&lt;</a>
+                    <a th:href="@{/search/camp(page=${pi.page - 1 })}">&lt;</a>
                     </li>
                     <li th:unless="${pi.page > 1}">
-                    <a th:href="#">&lt;</a>
+                    <a href="#">&lt;</a>
 
                    <!-- 최대 10개의 페이지 목록 --> 
-                    <span th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
-                    	<li th:switch="${p}">
-                       		 <div class="current_page" th:case="${pi.page}">
-                        		<b th:text="${p}"></b>
-                        	</div>
-                        	 <div class="current_page" th:case="${pi.page}">
-                        	<a th:href="@{/search/find(page=${p})}" th:text="${p}"> </a>
-                    		 </div>
-                    	</li>
-        			</span>
+                     <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                            <div class="current_page" th:if="${ p == pi.page }">
+                                <a href="#" th:text="${p}"></a>
+                            </div>
+                            <div th:if="${ p != pi.page }">
+                                <a th:href="@{/search/camp(page=${p})}" th:text="${p}"></a>
+                            </div>
+                        </li>
         		
                    <!--  다음 페이지로(>) --> 
                     <li th:if="${pi.page < pi.maxPage}">
-                        <a th:href="@{/search/find(page=${pi.page + 1})}">&gt;</a>
+                        <a th:href="@{/search/camp(page=${pi.page + 1})}">&gt;</a>
                     </li>
 
                     <!-- 맨 끝으로 이동하는 버튼(>>) -->
                    <li>
-                    <a th:href="@{/search/find(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                    <a th:href="@{/search/camp(page=${pi.maxPage})}">&gt;&gt;</a></li>
                 </ul>
+                
+                <form id="actionForm" action="/search/find" method="get">
+						<input type="hidden" name="page" value ="${pi.page}">
+				</form>
             </div>
 
                 </div>
@@ -225,13 +227,19 @@
     
     <!-- 선택된 체크박스 유지하는 코드.. 일단 보류.. -->
     <script>
-    /* $(document).ready(function(){
-    	if('${typeArr}' == "1") $("input:checkbox[class='s-type-camping']").prop("checked", true);
-    	if('${typeArr}' == "2") $("input:checkbox[class='s-type-glamping']").prop("checked", true);
-    	if('${typeArr}' == "3") $("input:checkbox[class='s-type-caravan']").prop("checked", true);
-    	console.log()
-    }); */
-    
+    function ajax(){
+	    $.ajax({
+			url : "/search/find",
+			type : "get",
+			data : $('form').serialize(),
+			success : function(json){
+				console.log(data);
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	}
     </script>
     
  	<!-- 제이쿼리 충돌 방지 코드 -->

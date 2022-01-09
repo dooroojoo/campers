@@ -120,7 +120,7 @@
             </div>
 
             <div class="search-submit">
-              <input type="submit" value="검색하기">
+              <input type="submit" value="검색하기" onclick="ajax();">
             </div>
             </form>
             </div>
@@ -175,6 +175,9 @@
 
               <!-- 페이징 처리 -->
                 <div class="member_pages">
+                 <form id="actionForm" action="/search/find" method="get">
+						<input type="hidden" name="page" value ="${pi.page}">
+				</form>
                 <ul class="member_paging">
 
                      <!--  맨 처음으로 이동하는 버튼(<<) -->
@@ -220,7 +223,21 @@
     <div th:replace="common/footer.html"></div>
     
     <!-- 체크박스 값 controller로 넘겨주기 -->
- 
+	 <script>
+	function ajax(){
+	    $.ajax({
+			url : "/search/find",
+			type : "get",
+			data : $('form').serialize(),
+			success : function(json){
+				console.log(data);
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	}
+	    </script>
  	<!-- 제이쿼리 충돌 방지 코드 -->
 	<script type="text/javascript"> $.noConflict(); </script>
 
