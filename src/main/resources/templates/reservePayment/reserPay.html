@@ -26,7 +26,7 @@
     <div class="reserPay_Outer">
         <div class="reserPay_Wrap">
             <div class="reser_tit">텐타우스*라바력셔리글램핑</div>
-         <form  method="post">
+         <form  id="reserPayForm" method="post">
          <input type="hidden" name="roomNo" value="1"><!-- 가데이터  -->
          <input type="hidden" name="checkIn" value="1/4">
          <input type="hidden" name="checkOut" value="1/7">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="request">예약 요청사항(선택)</div>
                 <div class="textbox">
-                    <textarea placeholder="예약 요청사항을 입력해주세요." name="request" id="requeset"></textarea>
+                    <textarea placeholder="예약 요청사항을 입력해주세요." name="request" id="request"></textarea>
                 </div>
             </div>
             <div class="title1">
@@ -334,46 +334,50 @@
 			    pay_method : 'card', //생략 가능
 			    merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
 			    name : '객실 결제', // 주문명:결제테스트
-			    amount : 1, // 가격
+			    amount : 10, // 가격
 			    buyer_name : $("#reserName").val(),  //구매자 이름
 			    buyer_tel : $("#phone").val(), // 구매자 휴대폰 번호 
 			    buyer_postcode : '123-456'
 			}, function(rsp) {
 			    if ( rsp.success ) {
-			    	alert('결제성공');
-			  /*   	$.ajax({
+			     	$.ajax({
 			    		url : '/reserPay/insert',
 			    		data : {
-			    			// 예약 insert :
-			    		    //  예약자명, 휴대폰번호, 요청사항, 입실일, 퇴실일, 환불계좌번호, 예금주, 은행, 예약객실수량, 객실번호 
-			    			"reserName" : $('reserName').val(),
-			    			"phone" : $("phone").val(),
-			    			"requeset" : $("requeset").val(),
+			    			"reserName" : $('#reserName').val(),
+			    			"phone" : $("#phone").val(),
+			    			"request" : $("#request").val(),
 			    			"checkIn" : "2022년1월22일", //임시
 			    			"checkOut" : "2022년1월25일", //임시
-			    			"accountNum" : $("accountNum").val(),
-			    			"accountHol" : $("accountHol").val(),
-			    			"bank" : $("bank").val(),
-			    			"roomQua" : $("roomQua").val(),
+			    			"accountNum" : $("#accountNum").val(),
+			    			"accountHol" : $("#accountHol").val(),
+			    			"bank" : $("#bank").val(),
+			    			"roomQua" : $("#roomQua").val(),
 			    			"roomNo" : 1, // 임시  //"roomNo" : $("roomNo").val()
 			    			// 결제 insert : 
 			    			// 결제번호(NEXTVAL) 또는  rsp.imp_uid; - 아임포트 고유 결제번호
-			    			// , 결제금액, 결제일(SYSDATE), 결제수단, 예약번호(fk - CURRVAL)
-			    			"payAmount" : 14000, //임시     // rsp.paid_amount;  - 결제 금액
-			    			"payKind" : rsp.pay_method, // 결제수단
+			    			"payAmount" : rsp.paid_amount,    //- 결제 금액
+			    			"payKind" : rsp.pay_method        // 결제수단
 			    		},
 			    		dataType : "json",
 			    		type : "post",
-			    		sucess : function(result) {
-			    			if(result == 'success') {
-			    				alert("결제가 완료되었습니다.")
-			    				location.href="/main";
-			    			}
-			    		},
+		    		    success : function(result){
+		                   console.log(result);
+		                   alert(result.msg);
+		                   
+		                   $("#reserPayForm")[0].reset(); /* 입력값 지우기 */
+		                   
+		                   location.href="/main"
+		                },
 			    		error : function(e){
 							console.log(e);
 						}	
-			    	}); */
+			    	}); 
+			    } else{
+			    	//결제 시작 페이지로 리디렉션되기 전에 오류가 난 경우
+			        var msg = '오류로 인하여 결제가 시작되지 못하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+
+			        alert(msg);
 			    } 
 			});
 	    }
