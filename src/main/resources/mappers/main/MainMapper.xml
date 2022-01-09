@@ -36,13 +36,17 @@
 
 	<select id="mainBestList" resultMap="recommendMap">
 		SELECT 
-			   *
+          CAMP_NO
+		, CAMP_NAME
+		, SUBSTR(CAMP_ADDRESS, 0, INSTR(CAMP_ADDRESS, ' ', 1, 2)) AS "CAMP_ADDRESS"
+		, FILE_ROUTE
+        , FILE_NAME
 		FROM (
 				SELECT
-					   COUNT(E.ROOM_NO)
-					 , C.CAMP_NO
+                       E.ROOM_NO
+                     , C.CAMP_NO
 			   		 , C.CAMP_NAME
-			    	 , SUBSTR(C.CAMP_ADDRESS, 0, INSTR(C.CAMP_ADDRESS, ' ', 1, 2)) AS "CAMP_ADDRESS"
+			    	 , C.CAMP_ADDRESS
 			  		 , G.FILE_ROUTE
 			  		 , G.FILE_NAME
 				  FROM CAMP C
@@ -53,15 +57,20 @@
 				 WHERE C.CAMP_STATUS = 'Y'
 				   AND G.FILE_STATUS = 'N'
 				   AND G.FILE_LEVEL = 1
-				 GROUP BY E.ROOM_NO
-				     , C.CAMP_NO
+				 GROUP BY E.ROOM_NO 
+                     , C.CAMP_NO
 			   		 , C.CAMP_NAME
 			    	 , C.CAMP_ADDRESS
 			  		 , G.FILE_ROUTE
 			  		 , G.FILE_NAME
-				 ORDER BY COUNT(E.ROOM_NO) DESC
 			)
-		 WHERE ROWNUM &lt; 4
+        WHERE ROWNUM &lt; 4
+         GROUP BY    CAMP_NO
+                   , CAMP_NAME
+                   , CAMP_ADDRESS
+                   , FILE_ROUTE
+                   , FILE_NAME
+         ORDER BY 1 DESC
 	</select>
 	
 	
