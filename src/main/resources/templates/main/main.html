@@ -91,9 +91,9 @@
               <div class="prev" id="main-arrow"><img src="resources/images/main/prev.png"></div>
               
               <div class="main-slide-wrapper">
-                <!-- 이미지는 추천할 캠핑장명(코드)으로 썸네일/상세페이지 링크 조회해오기 -->
                 <div class="slide-container" th:each="slide : ${mainSlider}">
-                <div class="main-slide" id="slide"><a href="#">
+                <div class="main-slide" id="slide">
+                <a th:href="@{/camp/detail?(campNo=${slide.cRNo})}">
                   <img th:src="@{${slide.fRRoute}+${slide.fRName}}"></a></div>
                   <div class="slide-text" th:text="${slide.cRName}"></div>
                 </div>
@@ -129,7 +129,7 @@
          	<div class="main-best-content">
           
             <div class="main-img-wrap" th:each="best : ${mainBestList}">
-               <a href="#">
+               <a th:href="@{/camp/detail?(campNo=${best.cRNo})}">
               <div class="main-best-img">
               <img th:src="@{${best.fRRoute}+${best.fRName}}">
               <p class="main-best-title text" th:text="${best.cRName}"></p>
@@ -150,7 +150,7 @@
           <div class="main-best-content">
 
             <div class="main-img-wrap" th:each="mainNew : ${mainNewList}">
-              <a href="#">
+			<a th:href="@{/camp/detail?(campNo=${mainNew.cRNo})}">
               <div class="main-best-img">
               <img th:src="@{${mainNew.fRRoute}+${mainNew.fRName}}">
               <p class="main-best-title text" th:text="${mainNew.cRName}"></p>
