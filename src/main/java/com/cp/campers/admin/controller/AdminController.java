@@ -93,6 +93,21 @@ public class AdminController {
 		return "admin/member";
 	}
 	
+	/* 회원검색 + 페이징 */
+	@GetMapping("member/searchPage")
+	public String searchMemberPaging(int page, Search search, Model model) {
+	
+		Map<String, Object> map = adminService.searchMember(page, search);
+		model.addAttribute("memberList", map.get("memberList"));
+		model.addAttribute("pi", map.get("pi"));
+		
+		if (map.get("memberList").toString().equals("[]")) {
+			model.addAttribute("noResult", "검색된 회원이 없습니다.");
+		}
+		
+		return "admin/member";
+	}
+	
 	/* 신고목록 */
 	@GetMapping("report")
 	public String adminReport(Model model) {
@@ -104,6 +119,10 @@ public class AdminController {
 		
 		model.addAttribute("reportList", map.get("reportList"));
 		model.addAttribute("pi", map.get("pi"));
+		
+		if (map.get("reportList").toString().equals("[]")) {
+			model.addAttribute("noResult", "처리되지 않은 신고가 없습니다.");
+		}
 		
 		return "admin/report";
 	}

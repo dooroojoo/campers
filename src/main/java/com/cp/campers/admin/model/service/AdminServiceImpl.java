@@ -201,7 +201,7 @@ public class AdminServiceImpl implements AdminService{
 		
 		// 1. 신고 처리 => 기타일 경우 신고 내용을 담음
 		if(report.getReason().equals("기타")) {
-			report.setReason("[기타] : " + report.getContent());
+			report.setReason("[기타] " + report.getContent());
 		}
 		
 		int rnum1 = adminMapper.insertReport(report);

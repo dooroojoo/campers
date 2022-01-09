@@ -13,8 +13,14 @@ public class Report {
 	private Date reportDate;
 	private String reportType;
 	private int victim;
+	private String vicId;
+	private String vicNickName;
 	private int suspect;
+	private String susId;
+	private String susNickName;
 	private String reportStatus;
+	private int bid;
+	private String deleteStatus;
 	
 //	REPORT_NO	NUMBER
 //	REPORT_REASON	VARCHAR2(100 BYTE)

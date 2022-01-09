@@ -38,6 +38,7 @@
 		<id property="campNo" column="CAMP_NO"/>
 		<result property="campName" column="CAMP_NAME"/>
 		<result property="userNo" column="USER_NO"/>
+		<result property="userId" column="USER_ID"/>
 		<result property="userName" column="USER_NAME"/>
 		<result property="campAddress" column="CAMP_ADDRESS"/>
 		<result property="campPhone" column="CAMP_PHONE"/>
@@ -125,8 +126,16 @@
 		<result property="reportDate" column="REPORT_DATE"/>
 		<result property="reportType" column="REPORT_TYPE"/>
 		<result property="victim" column="VICTIM"/>
+		<result property="vicId" column="VIC_ID"/>
+		<result property="vicNickName" column="VIC_NICKNAME"/>
 		<result property="suspect" column="SUSPECT"/>
+		<result property="susId" column="SUS_ID"/>
+		<result property="susNickName" column="SUS_NICKNAME"/>
 		<result property="reportStatus" column="REPORT_STATUS"/>
+		<result property="bid" column="BID1"/>
+		<result property="bid" column="BID2"/>
+		<result property="deleteStatus" column="STATUS_B"/>
+		<result property="deleteStatus" column="STATUS_C"/>
 	</resultMap>
 	
 	
@@ -257,12 +266,14 @@
 			      FROM (SELECT
 						       C.CAMP_NO
 						     , C.USER_NO
+						     , M.USER_ID
 						     , CR.RECORD_DATE
 						     , C.CAMP_NAME
 						     , CR.RECORD_NO
 						     , R.RECORD_NAME
 						     , C.CAMP_STATUS
 						 FROM CAMP C
+						 JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
                          JOIN CAMP_RECORD CR ON (C.CAMP_NO = CR.CAMP_NO)
 						 JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
 						WHERE CAMP_STATUS IN ('Y', 'N')
@@ -282,12 +293,14 @@
 			      FROM (SELECT
 						       C.CAMP_NO
 						     , C.USER_NO
+						     , M.USER_ID
 						     , CR.RECORD_DATE
 						     , C.CAMP_NAME
 						     , CR.RECORD_NO
 						     , R.RECORD_NAME
 						     , C.CAMP_STATUS
 						 FROM CAMP C
+						 JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
                          JOIN CAMP_RECORD CR ON (C.CAMP_NO = CR.CAMP_NO)
 						 JOIN RECORD R ON (CR.RECORD_NO = R.RECORD_NO)
 						WHERE CAMP_STATUS IN ('Y', 'N')
@@ -395,15 +408,30 @@
 		SELECT * 
 	      FROM (SELECT ROWNUM RNUM, A.*
 			      FROM (SELECT
-                              REPORT_NO
-                            , VICTIM
-                            , SUSPECT
-                            , REPORT_REASON
-                            , REPORT_DATE
-                            , REPORT_TYPE
-                        FROM REPORT
-                        WHERE REPORT_STATUS = 'N'
-	                    ORDER BY REPORT_DATE DESC) A)
+						      R.REPORT_NO
+						    , VICTIM
+						    , M1.USER_ID VIC_ID
+						    , M1.NICKNAME VIC_NICKNAME
+						    , SUSPECT
+						    , M2.USER_ID SUS_ID
+						    , M2.NICKNAME SUS_NICKNAME
+						    , REPORT_REASON
+						    , REPORT_DATE
+						    , REPORT_TYPE
+                            , BR.BID BID1
+                            , RP.BID BID2
+                            , B2.STATUS STATUS_B
+                            , RP.STATUS STATUS_C
+						FROM REPORT R
+						JOIN MEMBER M1 ON(M1.USER_NO = VICTIM)
+						JOIN MEMBER M2 ON(M2.USER_NO = SUSPECT)
+                        LEFT JOIN C_REPORT CR ON(R.REPORT_NO = CR.REPORT_NO)
+                        LEFT JOIN B_REPORT BR ON(R.REPORT_NO = BR.REPORT_NO)
+                        LEFT JOIN REPLY RP USING(CID)
+                        LEFT JOIN BOARD B1 ON(B1.BID = RP.BID)
+                        LEFT JOIN BOARD B2 ON(B2.BID = BR.BID)
+						WHERE REPORT_STATUS = 'N'
+						ORDER BY REPORT_DATE DESC) A)
 		 WHERE RNUM BETWEEN ${startRow} AND ${endRow}
 	</select>
 	

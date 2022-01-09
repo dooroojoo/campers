@@ -418,7 +418,7 @@ width: 60px;
 				<th:block sec:authorize="isAuthenticated()">
 				<div class="place-right">
 					<button th:onclick="'location.href=\''+@{/board/update(bid=${param.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">수정</button>
-					<button th:onclick="doYouWantDelete([[${param.bid}]])" th:if="${#authentication.principal.userNo} == ${board.writer}">삭제</button>
+					<button th:onclick="doYouWantDelete([[${param.bid}]])" th:if="${#authentication.principal.userNo} == ${board.writer} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</button>
 				</div>
 				</th:block>
 			</div>
