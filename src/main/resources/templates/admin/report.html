@@ -27,9 +27,11 @@
 
 
                     <ul class="report_header">
-                        <li class="report_pk">신고번호</li>
-                        <li class="report_reporter">신고자(닉네임)</li>
+                        <li class="report_pk">번호</li>
+                        <li class="report_reporter">신고자</li>
+                        <li class="report_reporter">신고자닉네임</li>
                         <li class="report_id">피신고자</li>
+                        <li class="report_id">피신고자<br>닉네임</li>
                         <li class="report_reason">신고사유</li>
                         <li class="report_date">신고일</li>
                         <li class="report_type">구분</li>
@@ -37,19 +39,35 @@
                     </ul>
 
 
-                    <ul class="report_header" th:each="report : ${reportList}">
+                    <ul th:each="report : ${reportList}">
                         <li class="report_pk" th:text="${report.rNo}"></li>
-                        <li class="report_reporter">user05</li>
-                        <li class="report_id" onclick="">user01</li>
-                        <li class="report_reason" th:text="${report.reason}" onclick=""></li>
-                        <li class="report_date" th:text="${#dates.format(report.reportDate, 'yyyy-MM-dd') }"
-                         th:title="${#dates.format(report.reportDate, 'yyyy-MM-dd hh:mm:ss')}"></li>
+                        <li class="report_reporter">
+                        	<div th:text="${report.vicId}"></div>
+                        </li>
+                        <li class="report_reporter">
+                        	<div th:text="${report.vicNickName}"></div>
+                        </li>
+                        <li class="report_id" th:onclick="|location.href='@{/admin/member/search(searchCondition='no', searchValue=${report.suspect})}'|">
+                        	<div th:text="${report.susId}"></div>
+                        </li>
+                        <li class="reporter_nickname">
+                        	<div th:text="${report.susNickName}"></div>
+                        </li>
+                        <li class="report_reason" th:if="${report.deleteStatus}=='N'">
+                        	<div th:text="${report.reason}" th:onclick="|location.href='@{/board/detail(bid=${report.bid})}'|"></div>
+                        </li>
+                        <li class="delete" th:if="${report.deleteStatus}=='Y'">
+                        	<div th:text="${report.reason}"></div>
+                        </li>
+                        <li class="report_date" th:text="${#dates.format(report.reportDate, 'yy-MM-dd') }" th:title="${#dates.format(report.reportDate, 'yyyy-MM-dd hh:mm:ss')}"></li>
                         <li class="report_type" th:if="${#strings.equals(report.reportType, 'board')}">게시판</li>
                         <li class="report_type" th:if="${#strings.equals(report.reportType, 'reply')}">댓글</li>
-                        <li class="report_update"><button type="submit">완료</button></li>
+                        <li class="report_update">
+                        	<button type="button" onclick="">완료</button>
+                        </li>
                     </ul>
 
-
+					<div align="center"><p th:text="${noResult}"></p></div>
                 </div>
 
 

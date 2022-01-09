@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
 .admin_outer {
-    width: 1000px;
+    width: 1080px;
     margin: auto;
 }
 
 .admin_wrap {
-    width: 980px;
+    width: 1080px;
 }
 
 ul, li {
@@ -39,26 +39,33 @@ ul, li {
     min-height: 60px;
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
 	list-style: none;
     text-align: center;
     border-bottom: 1px solid rgb(213, 213, 213);
 }
 .report_header{
     min-height: 60px;
-    /* flex에서 수직 정렬 */
-    align-items: center;
+}
+.report_header .report_id:hover,
+.report_header .report_reason:hover {
+    cursor: default;
+    text-decoration: none;
 }
 .report_list .report_pk {
-    width: 10%;
+    width: 9%;
 }
 .report_list .report_id {
-    width: 10%;
+    width: 12%;
 }
 .report_list .report_reporter {
-    width: 10%;
+    width: 12%;
+}
+.report_list .reporter_nickname {
+    width: 12%;
 }
 .report_list .report_reason {
-    width: 40%;
+    width: 36%;
 }
 .report_list .report_date {
     width: 10%;
@@ -67,9 +74,13 @@ ul, li {
     width: 10%;
 }
 .report_list .report_update {
-    width: 10%;
+    width: 9%;
 }
 
+.report_list .delete {
+    width: 36%;
+    text-decoration: line-through;
+}
 
 .report_id:hover,
 .report_reason:hover {

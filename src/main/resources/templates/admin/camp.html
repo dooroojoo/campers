@@ -41,7 +41,7 @@
                     </ul>
                     <ul class="accomd_header" th:each="camp : ${ campList }">
                         <li class="accomd_pk" th:text="${ camp.campNo }"></li>
-                        <li class="accomd_id" th:text="${ camp.userNo }"></li>
+                        <li class="accomd_id" th:text="${ camp.userId }"></li>
                         <li class="accomd_date" th:each="cr : ${ camp.campRecordList }">
                         	<span th:text="${ #dates.format(cr.recordDate, 'yyyy-MM-dd') }"></span>
                         </li>

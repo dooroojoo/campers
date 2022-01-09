@@ -13,6 +13,7 @@ public class Camp {
 	private int campNo;
 	private String campName;
 	private int userNo;
+	private String userId;
 	private String userName;
 	private String campAddress;
 	private String campPhone;
