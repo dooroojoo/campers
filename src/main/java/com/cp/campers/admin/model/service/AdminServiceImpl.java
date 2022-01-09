@@ -207,13 +207,40 @@ public class AdminServiceImpl implements AdminService{
 		int rnum1 = adminMapper.insertReport(report);
 		
 		// 2. 게시물/댓글 구분해서 인서트
-		int rnum2 = adminMapper.insertReportByType(report.getId());
+		int rnum2 = 0;
+		
+		if(report.getReportType().equals("board")) {
+			rnum2 = adminMapper.insertReportByBoard(report.getId());
+		} else {
+			rnum2 = adminMapper.insertReportByReply(report.getId());
+		}
+		
+		
 		
 		if(rnum1 != 0 && rnum2 != 0) {
 			result = 1;
 		}
 		
 		return result;
+	}
+
+	@Override
+	public Map<String, Object> findAllReport(int page) {
+		
+		// 1. 총 신고수
+		int listCount = adminMapper.getReportCount();
+		// 2. PageInfo 객체
+		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		// 3. 페이징 처리된 신고목록
+		pi.setStartRow(page, pi.getUserLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getUserLimit());
+		List<Report> reportList = adminMapper.findAllReport(pi);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pi", pi);
+		map.put("reportList", reportList);
+		
+		return map;
 	}
 
 }

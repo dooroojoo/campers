@@ -1,6 +1,7 @@
 package com.cp.campers.admin.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -94,10 +95,34 @@ public class AdminController {
 	
 	/* 신고목록 */
 	@GetMapping("report")
-	public String adminReport() {
+	public String adminReport(Model model) {
+		int page = 1;
+		
+		Map<String, Object> map = adminService.findAllReport(page);
+		
+		log.info("조회 요청 report : {}", map.get("reportList"));
+		
+		model.addAttribute("reportList", map.get("reportList"));
+		model.addAttribute("pi", map.get("pi"));
+		
 		return "admin/report";
 	}
 	
+	/* 신고목록 + 페이징처리*/
+	@GetMapping("reportPage")
+	public String adminReportPage(int page, Model model) {
+		
+		Map<String, Object> map = adminService.findAllReport(page);
+		
+		log.info("조회 요청 report : {}", map.get("reportList"));
+		
+		model.addAttribute("reportList", map.get("reportList"));
+		model.addAttribute("pi", map.get("pi"));
+		
+		return "admin/report";
+	}
+	
+	/* 신고등록 ajax */
 	@PostMapping("report")
 	@ResponseBody
 	public Map<String, String> insertReport(@RequestBody Report report) {
