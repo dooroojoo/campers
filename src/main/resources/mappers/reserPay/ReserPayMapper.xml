@@ -16,7 +16,7 @@
 		<result property="roomNo" column="ROOM_NO"/>
 	</resultMap>
 	
-	<insert id="insertReserPay" parameterType="com.cp.campers.reservePayment.model.vo.ReserveInfo">
+	<insert id="insertReserve" parameterType="com.cp.campers.reservePayment.model.vo.ReserveInfo">
 		INSERT 
 		  INTO RESERVE
 		   (
@@ -51,6 +51,28 @@
 		   	, 1 <!-- 임시값. 예약하기 버튼 눌렀을 때 숙소번호 reservePay.html로 가져와서 결제하기 클릭 시 hidden으로 같이 넘기기  --> 
 		   )
 	</insert>
+	
+	
+	<insert id="insertPayment" parameterType="com.cp.campers.reservePayment.model.vo.PaymentInfo">
+		INSERT 
+		  INTO PAYMENT
+		   (
+		  	  PAY_NO
+		  	, PAY_AMOUNT 
+		  	, PAY_DATE
+		  	, PAY_KIND
+		  	, RESER_NO
+		   )
+		   VALUES
+		   (
+		      SEQ_PAY_NO.NEXTVAL
+		   	, #{ payAmount }
+		   	, SYSDATE
+		   	, #{ payKind }
+		   	, SEQ_RESER_NO.CURRVAL
+		   )
+	</insert>
+	
 
 
 
