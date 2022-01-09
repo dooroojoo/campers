@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cp.campers.search.model.service.SearchService;
+import com.cp.campers.search.model.vo.FindCamp;
 import com.cp.campers.search.model.vo.PageInfo;
 import com.cp.campers.search.model.vo.SearchCamp;
 
@@ -56,9 +58,9 @@ public class SearchController {
 	
 	// 캠핑장검색 페이지에서 조건 검색 조회
 	@GetMapping("find")
-	public ModelAndView findCamp(ModelAndView mv, PageInfo pi,
-								@RequestParam(value="nowPage", required=false) String nowPage,
-								@RequestParam(value="cntPerPage", required=false) String cntPerPage,
+	@ResponseBody
+	public ModelAndView findCamp(ModelAndView mv, FindCamp fc,
+								@RequestParam(value="page", required=false, defaultValue="1") String page,
 								@RequestParam(value="area") String area,
 								@RequestParam(value="daterange") String daterange,
 								@RequestParam(value="quantity") String quantity,
@@ -67,52 +69,19 @@ public class SearchController {
 								@RequestParam(value="facility", required=false, defaultValue="") List<String> facilityArr,
 								@RequestParam(value="floor", required=false, defaultValue="") List<String> floorArr
 										) throws ParseException {
-	
-		String type="";
-		String facility="";
-		String floor="";
 		
-		for(int i=0; i<typeArr.size(); i++) {
-			if(typeArr.size() > 1 && i < typeArr.size()-1) {
-				type += typeArr.get(i) + "|";
-			} else {
-				type += typeArr.get(i);
-			}
+		int nowPage = 1;
+		
+		if(page != null) {
+			nowPage = Integer.parseInt(page);
 		}
 		
-		for(int i=0; i<facilityArr.size(); i++) {
-			if(facilityArr.size() > 1 && i < facilityArr.size()-1) {
-				facility += facilityArr.get(i) + "|";
-			} else {
-				facility += facilityArr.get(i);
-			}
-		}
-		
-		for(int i=0; i<floorArr.size(); i++) {
-			if(floorArr.size() > 1 && i < floorArr.size()-1 ) {
-				floor += floorArr.get(i) + "|";
-			}else {
-				floor += floorArr.get(i);
-			}
-		}
 		
 		log.info(area);
 		log.info(daterange);
 		log.info(quantity);
 		log.info(name);
-		log.info(type);
-		log.info(facility);
-		log.info(floor);
-		
-		
-		if(nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "10";
-		}else if (nowPage == null) {
-			nowPage = "1";
-		}else if(cntPerPage == null) {
-			cntPerPage = "10";
-		}
+		log.info(page);
 		
 		// String -> Date로 변환
 		String inDate = daterange.substring(0,9);
@@ -121,38 +90,21 @@ public class SearchController {
 		Date checkIn = formatter.parse(inDate);
 		Date checkOut = formatter.parse(outDate);
 		
+		fc.setsName(name);
+		fc.setsArea(area);
+		fc.setsIn(checkIn);
+		fc.setsOut(checkOut);
+		fc.setsGuest(quantity);
+		fc.setsFaci(facilityArr);
+		fc.setsFloor(floorArr);
+		fc.setsType(typeArr);
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = searchService.campFindSearch(fc, nowPage);
 		
-		map.put("area", area);
-		map.put("name", name);
-		map.put("checkIn", checkIn);
-		map.put("checkOut", checkOut);
-		map.put("quantity", quantity);
-		map.put("facility", facility);
-		map.put("floor", floor);
-		map.put("type", type);
-		
-		// int total = searchService.campFindCount(map);
-		// pi = new PageInfo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		
-		List<SearchCamp> campFindSearch = searchService.campFindSearch(pi, map);
-		
-		if(campFindSearch.size() == 0) {
-			mv.addObject("searchSize", "검색된 결과가 없습니다.");
-		} else {
-			mv.addObject("searchSize", campFindSearch.size()+"개의 결과가 조회되었습니다.");
-		}
-		
-		
-		// 체크박스 선택 값 배열 다시 보내주기
-//		mv.addObject("typeArr", typeArr);
-//		mv.addObject("facilityArr", facilityArr);
-//		mv.addObject("floorArr", floorArr);
-		
-		mv.addObject("map", map);
-		mv.addObject("paging", pi);
-		mv.addObject("findCamp", campFindSearch);
+		mv.addObject("campFindSearch", map.get("campFindSearch"));
+		mv.addObject("searchSize", map.get("searchSize"));
+		mv.addObject("pi", map.get("pi"));
+		//mv.addObject("fc", fc);
 		mv.setViewName("search/findCamp");
 		
 		return mv;
