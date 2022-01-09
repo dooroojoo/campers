@@ -232,7 +232,9 @@ public class AdminController {
 	public String adminCampDetail(int campNo, Model model) {
 		
 		Map<String, Object> map = adminService.detailCamp(campNo);
-		// log.info(map.get("roomList").toString());
+		
+		log.info("조회 요청 camp : {}", map.get("camp"));
+		
 		model.addAttribute("camp", map.get("camp"));
 		model.addAttribute("roomList", map.get("roomList"));
 		model.addAttribute("newReply", '\n');
