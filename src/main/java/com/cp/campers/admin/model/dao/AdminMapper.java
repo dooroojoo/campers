@@ -34,8 +34,23 @@ public interface AdminMapper {
 	// 회원검색
 	List<Member> searchMember(Map<String, Object> param);
 
+	// 신고등록
+	int insertReport(Report report);
+	
+	// 게시물신고
+	int insertReportByBoard(int id);
+	
+	// 댓글신고
+	int insertReportByReply(int id);
+	
+	// 신고수
+	int getReportCount();
+	
 	// 숙소개수
 	int getCampListCount();
+	
+	// 신고목록
+	List<Report> findAllReport(PageInfo pi);
 
 	// 숙소목록
 	List<Camp> findAllCamp(PageInfo pi);
@@ -62,13 +77,5 @@ public interface AdminMapper {
 
 	// 등록이력
 	void record(int campNo);
-
-	// 신고등록
-	int insertReport(Report report);
-
-	// 게시물/댓글 신고등록
-	int insertReportByType(int id);
-
-
 
 }

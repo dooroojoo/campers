@@ -12,15 +12,15 @@ public class Report {
 	private String content;
 	private Date reportDate;
 	private String reportType;
-	private int victim;			// 신고자
-	private int suspect;		// 피신고자
+	private int victim;
+	private int suspect;
 	private String reportStatus;
 	
 //	REPORT_NO	NUMBER
 //	REPORT_REASON	VARCHAR2(100 BYTE)
 //	REPORT_DATE	DATE
 //	REPORT_TYPE	VARCHAR2(10 BYTE)
-//	VICTIM	NUMBER
-//	SUSPECT	NUMBER
+//	VICTIM	신고자
+//	SUSPECT	피신고자
 //	REPORT_STATUS	VARCHAR2(1 BYTE)
 }

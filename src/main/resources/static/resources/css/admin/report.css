@@ -89,10 +89,10 @@ ul, li {
 }
 
 /* 페이징 */
-.report_pages {
+.admin_pages {
     margin: 10px;
 }
-.report_paging {
+.admin_paging {
     height: 50px;
     display: flex;
     justify-content: center;
@@ -102,16 +102,16 @@ ul, li {
     margin: auto;
     align-items: center;
 }
-.report_paging a {
+.admin_paging a {
     text-decoration: none;
     color: black;
     display: block;
     text-align: center;
 }
-.report_paging li{
+.admin_paging li{
     width: 45px;
 }
-.report_paging .current_page {
+.admin_paging .current_page {
     background-color: black;
     border-radius: 100%;
     margin: 17px auto;
@@ -119,7 +119,7 @@ ul, li {
     height: 25px;
     color: white;
 }
-.report_paging .current_page a{
+.admin_paging .current_page a{
     color: white;
     font-weight: bold;
 }

@@ -210,7 +210,7 @@
 		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
 	</select>
 	
-<!-- 	<insert id="inssertReport" parameterType="">
+	<insert id="insertReport" parameterType="com.cp.campers.admin.model.vo.Report">
 		INSERT INTO REPORT 
 		VALUES (SEQ_REPORT_NO.NEXTVAL
                          , #{ reason }
@@ -219,9 +219,19 @@
                          , #{ victim }
                          , #{ suspect }
                          , DEFAULT)
-	</insert> -->
+	</insert>
 	
-	<insert id="insertReportByType"></insert>
+	<insert id="insertReportByBoard" parameterType="_int">
+		INSERT INTO B_REPORT 
+		VALUES(#{ id }
+             , SEQ_REPORT_NO.CURRVAL)
+	</insert>
+	
+	<insert id="insertReportByReply" parameterType="_int">
+		INSERT INTO C_REPORT 
+		VALUES(#{ id }
+             , SEQ_REPORT_NO.CURRVAL)
+	</insert>
    
 	<select id="getCampListCount" resultType="_int">
    		SELECT COUNT(CAMP_NO)
@@ -373,5 +383,28 @@
 			  , #{ campNo }
 			  , 2)
 	</insert>
+	
+	<select id="getReportCount" resultType="_int">
+   		SELECT
+		      COUNT(REPORT_NO)
+		 FROM REPORT
+		WHERE REPORT_STATUS = 'N'
+	</select>
+	
+	<select id="findAllReport" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="reportResultMap">
+		SELECT * 
+	      FROM (SELECT ROWNUM RNUM, A.*
+			      FROM (SELECT
+                              REPORT_NO
+                            , VICTIM
+                            , SUSPECT
+                            , REPORT_REASON
+                            , REPORT_DATE
+                            , REPORT_TYPE
+                        FROM REPORT
+                        WHERE REPORT_STATUS = 'N'
+	                    ORDER BY REPORT_DATE DESC) A)
+		 WHERE RNUM BETWEEN ${startRow} AND ${endRow}
+	</select>
 	
 </mapper>

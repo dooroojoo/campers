@@ -1,5 +1,6 @@
 package com.cp.campers.admin.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public interface AdminService {
 	int insertReport(Report report);
 	
 	// 신고목록
-	
+	Map<String, Object> findAllReport(int page);
 	
 	// 숙소목록
 	Map<String, Object> findAllCamp(int page);
@@ -44,6 +45,8 @@ public interface AdminService {
 
 	// 숙소등록
 	void enroll(int campNo, int userNo);
+
+
 
 
 

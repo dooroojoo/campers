@@ -116,7 +116,21 @@
 					param.suspect = $("#reportForm [name=suspect]").val();
 					param.reportType = $("#reportForm [name=reportType]").val();
 					
-					console.log(param);
+					console.log(param.content.length);
+					
+					let etc = "기타";
+					
+					if(param.reason == etc && param.content.length == 0) {
+						alert("신고 내용을 입력해주세요.");
+						$("#reportForm")[0].reset();
+						return false;
+					}
+					
+					if(param.reason != etc && param.content.length != 0) {
+						alert("기타로 선택 후 신고 내용을 작성해주세요.");
+						$("#reportForm")[0].reset();
+						return false;
+					}
 		           
 		           $.ajax({
 		        	   url : "/admin/report",
@@ -125,9 +139,13 @@
 		        	   contentType : "application/json; charset=utf-8",
 		        	   /* data : param, [test] */
 		        	   type : "post",
-		        	   success : function(msg) {
-		        		   alert(msg);
+		        	   success : function(data) {
 		        		   
+		        		   alert(data.msg);
+		        		   
+		        		   $("#reportForm")[0].reset();
+		        		   
+		        		   close();
 		        	   },
 		        	   error : function(e){
 		        		   console.log(e);
