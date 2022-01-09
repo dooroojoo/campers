@@ -243,4 +243,10 @@ public class AdminServiceImpl implements AdminService{
 		return map;
 	}
 
+	@Override
+	@Transactional
+	public int completeReport(int rNo) {
+		return adminMapper.completeReport(rNo);
+	}
+
 }

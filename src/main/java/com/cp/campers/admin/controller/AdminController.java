@@ -156,6 +156,21 @@ public class AdminController {
 		return map;
 	}
 	
+	/* 신고상태 변경 */
+	@GetMapping("report/complete")
+	public String completeReport(int rNo, RedirectAttributes rttr, Locale locale) {
+		
+		log.info("입력 요청 report : {}", rNo);
+		
+		int result = adminService.completeReport(rNo);
+		
+		if(result == 1) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("completeReport", null, locale));
+		}
+		
+		return "redirect:/admin/report";
+	}
+	
 	/* 숙소목록 */
 	@GetMapping("camp")
 	public String adminCamp(Model model) {

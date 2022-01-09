@@ -46,11 +46,14 @@ public interface AdminMapper {
 	// 신고수
 	int getReportCount();
 	
-	// 숙소개수
-	int getCampListCount();
-	
 	// 신고목록
 	List<Report> findAllReport(PageInfo pi);
+	
+	// 신고상태변경
+	int completeReport(int rNo);
+	
+	// 숙소개수
+	int getCampListCount();
 
 	// 숙소목록
 	List<Camp> findAllCamp(PageInfo pi);
