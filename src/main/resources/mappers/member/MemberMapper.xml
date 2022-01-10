@@ -83,7 +83,12 @@
 			, null
 			</if>
 			, #{ email }
+			<if test="phone != 'null'">
 			, #{ phone }
+			</if>
+			<if test="phone == 'null'">
+			, null
+			</if>
 			, DEFAULT
 			, SYSDATE
 			, SYSDATE
@@ -104,4 +109,25 @@
 	    , #{ authorityCode }
 	)
    </insert>
+   <select id="selectUserId" resultType="string">
+    SELECT USER_ID
+	FROM MEMBER
+	WHERE USER_NAME = #{userName}
+	AND USER_PHONE = #{phone}
+   </select>
+   
+   <select id="readUser" resultMap="loginMemberResultMap" parameterType="com.cp.campers.member.model.vo.Member">
+   	SELECT USER_ID,USER_PWD,EMAIL
+	FROM MEMBER
+	WHERE USER_ID = #{id}
+	AND EMAIL = #{email}
+   </select>
+   
+   <update id="modifyPw" parameterType="com.cp.campers.member.model.vo.Member">
+   UPDATE MEMBER
+   SET USER_PWD = #{pwd}
+   WHERE USER_ID = #{id}
+   </update>
+   
+   
 </mapper>

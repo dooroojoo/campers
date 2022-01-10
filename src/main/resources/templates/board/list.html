@@ -316,11 +316,11 @@
                         <li th:if="${ pi.page > 1}"><a th:href="@{/board/listPage(page=${pi.page-1})}">&lt;</a></li>
                         <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
                        
-                            <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                            <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}" th:if="${p != 0}">
                                 <div class="current_page" th:if="${p==pi.page}">
                                     <a href="#" th:text="${p}"></a>
                                 </div>
-                                <div th:if="${ p != pi.page}">
+                                <div th:if="${ p != pi.page} and ${ p != 0}">
                                 	<a th:href="@{/board/listPage(page=${p})}" th:text="${p}"></a>
                                 </div>
                             </li>

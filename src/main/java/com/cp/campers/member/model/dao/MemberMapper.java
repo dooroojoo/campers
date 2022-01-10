@@ -13,4 +13,10 @@ public interface MemberMapper {
 	void insertMember(Member member);
 	
 	void insertMemberRole(MemberRole memberRole);
+
+	String selectUserId(Member member);
+
+	void modifyPw(Member user);
+
+	Member readUser(Member member);
 }

@@ -6,18 +6,35 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cp.campers.member.model.service.MemberService;
+import com.cp.campers.member.model.vo.KakaoProfile;
 import com.cp.campers.member.model.vo.Member;
+import com.cp.campers.member.model.vo.OAuthToken;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,11 +43,17 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberController {
 
+	@Value("${cos.key}")
+	private String cosKey;
+	
 	private MemberService memberService;
 	
+	private AuthenticationManager authenticationManager;
+	
 	 @Autowired
-	   public MemberController(MemberService memberService) {
+	   public MemberController(MemberService memberService,AuthenticationManager authenticationManager) {
 	      this.memberService = memberService;
+	      this.authenticationManager = authenticationManager;
 	 }
 	 
 	 @GetMapping("/login")
@@ -38,6 +61,103 @@ public class MemberController {
 		 return "member/login";
 	 }
 	 
+	 @GetMapping("/login/kakao")
+	 public String kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
+		 
+		 // POST방식으로 key=value 데이터를 요청 (카카오쪽으로)
+		 RestTemplate rt = new RestTemplate();
+		 
+		 // HttpHeader 오브젝트 생성
+		 HttpHeaders headers = new HttpHeaders();
+		 headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		 
+		 // HttpBody 오브젝트 생성
+		 MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		 params.add("grant_type","authorization_code");
+		 params.add("client_id", "dad02eb2ea641fad46611f516cc28cbf");
+		 params.add("redirect_uri", "http://localhost:8081/member/login/kakao");
+		 params.add("code", code);
+		 
+		 // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+		 HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
+				 new HttpEntity<>(params,headers);
+		 
+		 // Http요청하기 - Post 방식으로 - 그리고 response변수의 응답 받음
+		 ResponseEntity<String> response = rt.exchange(
+				 "https://kauth.kakao.com/oauth/token",
+				 HttpMethod.POST,
+				 kakaoTokenRequest,
+				 String.class
+		 );
+		 
+		 // Gson, Json Simple, ObjectMapper
+		 ObjectMapper ObjectMapper = new ObjectMapper();
+		 OAuthToken oauthToken = null;
+		 try {
+			 oauthToken = ObjectMapper.readValue(response.getBody(), OAuthToken.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		 
+		 System.out.println("카카오 엑세스 토큰 : "+oauthToken.getAccess_token());
+		 
+		 RestTemplate rt2 = new RestTemplate();
+				 
+		 // HttpHeader 오브젝트 생성
+		 HttpHeaders headers2 = new HttpHeaders();
+		 headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
+		 headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		 
+		 // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+		 HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 =
+				 new HttpEntity<>(headers2);
+		 
+		 // Http요청하기 - Post 방식으로 - 그리고 response변수의 응답 받음
+		 ResponseEntity<String> response2 = rt2.exchange(
+				 "https://kapi.kakao.com/v2/user/me",
+				 HttpMethod.POST,
+				 kakaoProfileRequest2,
+				 String.class
+		 );
+		 
+		 ObjectMapper ObjectMapper2 = new ObjectMapper();
+		 KakaoProfile kakaoProfile = null;
+		 try {
+			kakaoProfile = ObjectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		 UUID garbagePassword = UUID.randomUUID();
+		 
+		 Member kakaoMember = new Member();
+		 kakaoMember.setId(kakaoProfile.getKakao_account().getEmail().substring(0, 5)+"_"+kakaoProfile.getId());
+		 kakaoMember.setPwd(cosKey);
+		 kakaoMember.setEmail(kakaoProfile.getKakao_account().getEmail());
+		 kakaoMember.setNickName(kakaoProfile.getKakao_account().getProfile().getNickname());
+		 kakaoMember.setUserName(kakaoProfile.getKakao_account().getProfile().getNickname());	
+		 kakaoMember.setProfilePath(kakaoProfile.getKakao_account().getProfile().getProfile_image_url());
+		 kakaoMember.setPhone("null");
+		 
+		 Member originMember = memberService.findUserByUserId(kakaoMember.getId());
+		 
+		 if(originMember == null) {
+			 System.out.println("기존회원이 아닙니다");
+			 memberService.signUp(kakaoMember);
+		 }
+		 Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getId(), cosKey));
+		 SecurityContextHolder.getContext().setAuthentication(authentication);
+		 
+		 return "redirect:/";
+	 }
 	 
 	 @GetMapping("/signup")
 	 public String signUpForm() {
@@ -96,6 +216,22 @@ public class MemberController {
 	      }
 	      
 		 return "redirect:/";
+	 }
+	 
+	 @PostMapping("/idFind")
+	 @ResponseBody
+	 public String selectUserId(Member member) {
+		 log.info(member.getUserName(), member.getPhone());
+		 
+		 return memberService.selectUserId(member);
+		 
+	 }
+	 @PostMapping("/pwdFind")
+	 @ResponseBody
+	 public String updateUserPwd(Member member) throws Exception {
+		  log.info(member.getId(), member.getEmail());
+		  
+		  return memberService.findPwd(member);
 	 }
 	
 }
