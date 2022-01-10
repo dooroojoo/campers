@@ -5,7 +5,7 @@ server:
 # oracle driver config
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
+    driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
     username: campers
     password: campers
@@ -27,4 +27,5 @@ logging:
 #logging level (package level - 지역설정)
 custom:
   path:
-    upload-images: 'C:\Users\81461\Documents\GitHub\campers\campers\src\main\resources\uploadFiles/'
+    #upload-images: 'D:/6__Framework/2_spring/boot_workspace/campers/src/main/resources/uploadFiles/'
+    upload-images: 'C:/Users/OrzSaSin/git/campers/src/main/resources/uploadFiles/'

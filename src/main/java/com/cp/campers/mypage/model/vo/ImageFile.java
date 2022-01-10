@@ -11,6 +11,4 @@ public class ImageFile {
 	private String fileStatus;
 	private String fileLevel;
 	
-	private CampFile campFile;
-	private RoomFile roomFile;
 }

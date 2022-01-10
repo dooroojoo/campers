@@ -28,6 +28,9 @@ public interface MypageService{
 	/* 회원 탈퇴 */
 	void changeInfoMemberout(Member member);
 
+	/* 게시판 목록*/
+	Map<String, Object> selectBoardList(int page);
+
 	// 회원목록
 	//Map<String, Object> findAllMember();
 }

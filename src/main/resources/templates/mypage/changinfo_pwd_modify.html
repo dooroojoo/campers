@@ -66,6 +66,7 @@
     <!-- footer -->
     <div th:replace="common/footer.html"></div>       
     
+    <!-- 
     <script>
 	 	// 비밀번호 정규식
 		var pwJ = /^[A-Za-z0-9]{4,12}$/;
@@ -101,9 +102,10 @@
 		}
 		}); */
     </script>
-    
+     -->
+     
     <script>
-		function checkPwd(){
+		$("#updatePwdBtn").on('click', function(){
 			const userPwd = document.getElementById('userPwd');
 			const newPwd = document.getElementById('newPwd');
 			const newPwd2 = document.getElementById('newPwd2');
@@ -120,7 +122,7 @@
 	            return false;
 	        }	         
 	        return true;
-		}
+		});
 	</script>	
 
 </body>

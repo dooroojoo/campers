@@ -24,11 +24,22 @@
             <ul class="mypage_category_ul">
                 <li class="mypage_category_li"><a th:href="@{/mypage/changinfo}">회원정보수정</a></li>
                 <li class="mypage_category_li"><a th:href="@{/mypage/wishcamp}">찜한캠핑장</a></li>
-                <li class="mypage_category_li"><a th:href="@{/mypage/mypage_guest_reserve}">예약내역확인</a></li>
+                
+                <!-- 로그인 한 회원 -->
+                <th:block sec:authorize="hasRole('MEMBER')">
+	                <li class="mypage_category_li"><a th:href="@{/mypage/mypage_guest_reserve}">예약내역확인</a></li>
+                </th:block>
+                
+                <!-- 사업자 회원 -->
+                <th:block sec:authorize="hasRole('BUISNESS')">
+                	<li class="mypage_category_li"><a th:href="@{/mypage/mypage_host_reserve}">예약내역확인</a></li>
+                </th:block> 
+                
                 <li class="mypage_category_li"><a th:href="@{/company/csCenter}">고객센터</a></li>
+                
                 <!-- 사업자 권한을 가지고 있는 경우만 보임 사업자코드 '2', 관리자코드 '3' ? '사업자' ? -->
-                <th:block sec:authorize="hasAnyRole('2, 3')">
-                <li class="mypage_category_li"><a th:href="@{/mypage/mypage_camp_management}">내 숙소 관리</a></li>
+                <th:block sec:authorize="hasRole('BUISNESS')">
+                	<li class="mypage_category_li"><a th:href="@{/mypage/mypage_camp_management}">내 숙소 관리</a></li>
             	</th:block>
             </ul>
         </div>

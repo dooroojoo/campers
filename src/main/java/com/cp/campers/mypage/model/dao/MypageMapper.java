@@ -1,11 +1,11 @@
 package com.cp.campers.mypage.model.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.cp.campers.admin.model.vo.PageInfo;
+import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.camp.model.vo.ImageFile;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.mypage.model.vo.BusinessType;
@@ -44,9 +44,10 @@ public interface MypageMapper {
 	
 	// 캠핑장 사진 파일 등록
 	void insertCampFile(CampFile campFile);
+	//void insertCampFile(Integer fileNo);
 	
 	// 숙소 사진 파일 등록
-	void insertRoomFile(RoomFile roomFile);
+	//void insertRoomFile(RoomFile roomFile);
 	
 	// 회원정보 수정
 	int changeInfoModify(Member member);
@@ -59,6 +60,10 @@ public interface MypageMapper {
 
 	/* 닉네임 체크 */
 	int nickNameCheck(String nickName);
+
+	List<Board> selectBoardList(PageInfo pi);
+
+	List<Board> selectThumbnailList();
 	
 	// public Map<String, Object> findAllMember();
 }

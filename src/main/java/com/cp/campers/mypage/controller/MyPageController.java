@@ -53,12 +53,22 @@ public class MyPageController {
 	
 	 /* 회원 목록 */
 	 @GetMapping("mypage")
-	 public ModelAndView mypageMember(ModelAndView mv) {
+	 public ModelAndView mypageMember(ModelAndView mv, Model model) {
 				
 		List<Member> memberList = mypageService.findAllMember();
 		
 		mv.addObject("memberList", memberList);
 		mv.setViewName("/mypage");
+		
+		/* board */
+		int page = 1;
+		
+		Map<String, Object> map = mypageService.selectBoardList(page);
+		
+		model.addAttribute("boardList", map.get("boardList"));
+		model.addAttribute("pi",map.get("pi"));
+		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		
 		/*
 		 * Map<String, Object> map = mypageService.findAllMember(page);
 		 * 
@@ -108,11 +118,16 @@ public class MyPageController {
 	/* 닉네임 중복 체크 */
 	@PostMapping("/nickName")
 	@ResponseBody
-	public int nickNameCheck(@RequestParam("nickName") String nickName) {
+	public String nickNameCheck(@RequestParam("nickName") String nickName) {
 		log.info(nickName);
 		int cnt = mypageService.nickNameCheck(nickName);
 		
-		return cnt;
+		if(cnt != 0) {
+			return "fail";
+		} else {
+			return "success";
+		}
+		
 	}
 	
 	/* 회원 정보 수정 */
@@ -126,11 +141,12 @@ public class MyPageController {
 	@ResponseBody
 	public String changeInfoModify(Member member, @AuthenticationPrincipal UserImpl user, /*String email, 
 			String phone, String nickName,*/ RedirectAttributes rttr, Locale locale) {
+		/*
 		member.setUserNo(user.getUserNo());
 		member.setEmail(user.getEmail());
 		member.setPhone(user.getPhone());
 		member.setNickName(user.getNickName());
-		
+		*/
 		/* changeInfoModify update */
 		mypageService.changeInfoModify(member/*, email, phone, nickName*/);
 		
@@ -138,7 +154,7 @@ public class MyPageController {
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoModify", null, locale));
 		
 		/* 로그 확인 */
-		//log.info(member.toString());
+		// log.info(member.toString());
 		
 		/* 리다이렉트 */
 		return"redirect:/mypage/changinfo"; 
@@ -182,8 +198,7 @@ public class MyPageController {
 		/* 유저 정보 받아오기 */
 		camp.setUserNo(user.getUserNo());
 				
-		/*---------------------------- 사업장등록증 -------------------------*/
-		
+		/* ------------------------사업장등록증-------------------------------- *
 		log.info(uploadFilesPath);
 		
 		/* 사업자등록증 파일을 저장할 경로 */				
@@ -196,8 +211,6 @@ public class MyPageController {
 		/* 사업장 등록증 파일명 확인*/
 	    String originFileName = singleFile.getOriginalFilename();
 	    /* 확장자 분리 */
-	    
-	    
 	    String ext = originFileName.substring(originFileName.lastIndexOf("."));	      
 	    /* 파일명 변경 처리 */
 	    String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
@@ -210,13 +223,19 @@ public class MyPageController {
 			camp.setCampPath("/resources/images/uploadFiles/businessImg/"+savedName);
 			//camp.setCampPath(filePath + "/businessImg");
 			//camp.setCampPath(filePath);
-			mypageService.mypageCampEnrollment(camp);
+			
+			/* 오류 이유!!! */
+			//mypageService.mypageCampEnrollment(camp);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
-		}		
- 		
-		/* --------------------------- 사업장 ------------------------------*/
-						
+		}
+		log.info("root = "+request.getSession().getServletContext().getRealPath("/"));
+ 		/*-------------------------------------------------------------------------*/		
+		
+		/* --------------------------- 사업장 사진 ------------------------------*/
+		/* 멀티파일 아직 해결 못함 
+		 * 사업장 사진, 객실 사진 주석처리 하면 사업장등록증 까진 insert 가능. */
+		
 		/* 사업장 사진을 저장할 경로 */
 		String campFilePath = uploadFilesPath + "campImg";
 		/* 해당 파일 경로 존재 여부 확인하여 없을 경우 make directory */
@@ -250,9 +269,13 @@ public class MyPageController {
 				String originFileName2 = campMultiFiles.get(i).getOriginalFilename();
 				String ext2 = originFileName2.substring(originFileName2.lastIndexOf("."));
 				String savedName2 = UUID.randomUUID().toString().replace("-", "") + ext2;
+				/* 주소 전송 참고
+				 * camp.setCampPath("/resources/images/uploadFiles/businessImg/"+savedName);
+				 * */
 				camp.setCampFile(campFile);
+				
 				//camp.setCampFile("/resources/images/uploadFiles/campImg/" + savedName2);
-				mypageService.mypageCampEnrollment(camp);
+				// mypageService.mypageCampEnrollment(camp);
 			} 
 			
 		} catch (IllegalStateException | IOException e) {
@@ -263,9 +286,9 @@ public class MyPageController {
 					new File(file2.get(campFilePath) + "/" + file2.get("savedName")).delete();
 				}				
 		}	
-	    
+	   
 		/* --------------------------- 객실 ------------------------------*/
-						
+		
 		/* 객실 사진을 저장할 경로 */
 		String roomFilePath = uploadFilesPath + "roomImg";
 		/* 해당 파일 경로 존재 여부 확인하여 없을 경우 make directory */
@@ -311,17 +334,20 @@ public class MyPageController {
 					Map<String, String> file3 = files3.get(i);
 					new File(file3.get(roomFilePath) + "/" + file3.get("savedName")).delete();
 				}				
-		}		
+		}
+		
+		
 		
 		/* 캠프 사진 파일 */
 		//camp.setCampPath("filePath");
 		
 		/* 숙소 등록 */
 		camp.setRoom(room);
+		log.info(room.toString());
 		/* 숙소 사진 등록 */
-		camp.setCampFile(campFile);
+		//camp.setCampFile(campFile);
 		/* 객실 사진 등록 */
-		camp.setRoomFile(roomFile);
+		//camp.setRoomFile(roomFile);
 		/* 캠프, 캠프 타입, 시설 타입, 객실 등록한 로그 파일 받아오기 */
 		log.info(camp.toString());
 		mypageService.mypageCampEnrollment(camp);

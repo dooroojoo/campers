@@ -54,8 +54,8 @@
         </div>
         <div class="mypage_content_4">
             <div class="mypage_content_top">내가 등록한 게시물</div>
-            <ul class="mypage_content_4_ul">
-                <li class="mypage_content_4_li">아직 등록된 게시물이 없습니다.</li>
+            <ul class="mypage_content_4_ul" th:each="board : ${ boardList }">
+                <li class="mypage_content_4_li" th:text="${ board.title }"></li>
             </ul>    
         </div>
       </div>
