@@ -24,12 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ReserPayController {
 
 	private ReserPayService reserPayService;
-	private MessageSource messageSource;
 	
 	@Autowired
-	public ReserPayController(ReserPayService reserPayService, MessageSource messageSource) {
+	public ReserPayController(ReserPayService reserPayService) {
 		this.reserPayService = reserPayService;
-		this.messageSource = messageSource;
 	}
 	
 	
