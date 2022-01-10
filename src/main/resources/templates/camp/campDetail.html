@@ -110,7 +110,7 @@
                 </div>
                 <div class="accom_type">
                     <span class="accom_profile_icon"><i class="fas fa-info-circle"></i></span>
-                    <span class="text_controller">카라반&nbsp;|&nbsp;캠핑장</span>
+                    <span class="text_controller" th:each="bt : ${camp.businessTypeList}" th:text="|${bt.bType}  |"></span>
                 </div>
                 <div>
                     <span class="accom_profile_icon"><i class="fas fa-share-alt"></i></span>
@@ -189,29 +189,31 @@
                     <div class="facility">
                         <ul class="main_icon">
                             <li class="fac1">주요 시설</li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/shower.png">
-                                <div class="fac_msg">샤워실</div>
-                            </li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/toilet.png">
-                                <div class="fac_msg">화장실</div>
-                            </li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/water.png">
-                                <div class="fac_msg">개수대</div>
-                            </li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/supermarcket.png">
-                                <div class="fac_msg">매점</div>
-                            </li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/wifi.png">
-                                <div class="fac_msg">와이파이</div>
-                            </li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/plug.png">
-                                <div class="fac_msg">전기</div>
+                            <li class="fac1" th:each="facility : ${camp.facilityList}" th:if="${facility.fType} == '1'">
+	                            <div th:if="${facility.fNo} == '1'">
+	                            	<img class="icon_img" src="/resources/images/admin/facility/shower.png">
+	                                <div class="fac_msg">샤워실</div>
+	                            </div>
+	                            <div th:if="${facility.fNo} == '2'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/toilet.png">
+	                                <div class="fac_msg">화장실</div>
+	                            </div>
+	                            <div th:if="${facility.fNo} == '3'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/water.png">
+	                                <div class="fac_msg">개수대</div>
+	                            </div>
+	                            <div th:if="${facility.fNo} == '4'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/supermarcket.png">
+	                                <div class="fac_msg">매점</div>
+	                            </div>
+	                            <div th:if="${facility.fNo} == '5'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/wifi.png">
+	                                <div class="fac_msg">와이파이</div>
+	                            </div>
+	                            <div th:if="${facility.fNo} == '6'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/plug.png">
+	                                <div class="fac_msg">전기</div>
+	                            </div>
                             </li>
                         </ul>
                     </div>
@@ -221,21 +223,23 @@
                     <div>
                         <ul class="sub_icon">
                             <li class="fac1">부가 이용</li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/pool.png">
-                                <div class="fac_msg">수영장</div>
-                            </li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/barbecueGrill.png">
-                                <div class="fac_msg">바베큐그릴</div>
-                            </li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/cutlery.png">
-                                <div class="fac_msg">조식제공</div>
-                            </li>
-                            <li class="fac1">
-                                <img class="icon_img" src="/resources/images/admin/facility/animal.png">
-                                <div class="fac_msg">반려동물</div>
+                            <li class="fac1" th:each="facility : ${camp.facilityList}" th:if="${facility.fType} == '2'">
+	                            <div th:if="${facility.fNo} == '7'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/pool.png">
+	                                <div class="fac_msg">수영장</div>
+	                            </div>
+	                            <div th:if="${facility.fNo} == '8'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/barbecueGrill.png">
+	                                <div class="fac_msg">바베큐그릴</div>
+	                            </div>
+	                            <div th:if="${facility.fNo} == '9'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/cutlery.png">
+	                                <div class="fac_msg">조식제공</div>
+	                            </div>
+	                            <div th:if="${facility.fNo} == '10'">
+	                                <img class="icon_img" src="/resources/images/admin/facility/animal.png">
+	                                <div class="fac_msg">반려동물</div>
+	                            </div>
                             </li>
                         </ul>
                     </div>

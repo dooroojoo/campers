@@ -103,6 +103,7 @@ hr {
 .ad_before button { /* 이전 */
     background: lightgray;
     color: white;
+    border-radius: 5px;
 }
 .ad_enroll button { /* 등록 */
     background: black;

@@ -27,6 +27,7 @@ public class Camp {
 	private String checkout;
 	private String refusal;
 	private List<CampRecord> campRecordList;
-	private List<Review> reviewList;
 	private List<ImageFile> imgFileList;
+	private List<BusinessType> businessTypeList;			// 사업장 형태
+	private List<Facility> facilityList;		// 사업장 시설
 }
