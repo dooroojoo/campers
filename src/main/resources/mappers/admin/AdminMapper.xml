@@ -125,8 +125,8 @@
 		<result property="reportStatus" column="REPORT_STATUS"/>
 		<result property="bid" column="BID1"/>
 		<result property="bid" column="BID2"/>
-		<result property="deleteStatus" column="STATUS_B"/>
-		<result property="deleteStatus" column="STATUS_C"/>
+		<result property="deleteStatus" column="STATUS1"/>
+		<result property="deleteStatus" column="STATUS2"/>
 	</resultMap>
 
 	<insert id="insertReport" parameterType="com.cp.campers.admin.model.vo.Report">
@@ -175,8 +175,8 @@
 						    , REPORT_TYPE
                             , BR.BID BID1
                             , RP.BID BID2
-                            , B2.STATUS STATUS_B
-                            , RP.STATUS STATUS_C
+                            , B1.STATUS STATUS1
+                            , B2.STATUS STATUS2
 						FROM REPORT R
 						JOIN MEMBER M1 ON(M1.USER_NO = VICTIM)
 						JOIN MEMBER M2 ON(M2.USER_NO = SUSPECT)
@@ -216,6 +216,8 @@
 		<result property="refusal" column="REFUSAL"/>
 		<collection property="campRecordList" resultMap="campRecordResultMap"/>
 		<collection property="imgFileList" resultMap="imageFileResultMap"/>
+		<collection property="businessTypeList" resultMap="businessTypeResultMap"/>
+		<collection property="facilityList" resultMap="facilityResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.admin.model.vo.CampRecord" id="campRecordResultMap">
@@ -257,25 +259,15 @@
 		<result property="fileLevel" column="FILE_LEVEL"/>
 	</resultMap>
 	
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="businessTypeResultMap">
-		<id property="businessNo" column="BUSINESS_NO"/>
-		<result property="businessType" column="BUSINESS_TYPE"/>
+	<resultMap type="com.cp.campers.camp.model.vo.BusinessType" id="businessTypeResultMap">
+		<id property="bNo" column="BUSINESS_NO"/>
+		<result property="bType" column="BUSINESS_TYPE"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.mypage.model.vo.CampBusinessType" id="campBusinessTypeResultMap">
-		<id property="campNo" column="CAMP_NO"/>
-		<result property="businessNo" column="BUSINESS_NO"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.CampFacility" id="campFacilityResultMap">
-		<id property="campNo" column="CAMP_NO"/>
-		<result property="FacilityNo" column="FACILITY_NO"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.CampFile" id="campFileResultMap">
-		<id property="campNo" column="CAMP_NO"/>
-		<result property="fileNo" column="FILE_NO"/>
+	<resultMap type="com.cp.campers.camp.model.vo.Facility" id="facilityResultMap">
+		<id property="fNo" column="FACILITY_NO"/>
+		<result property="fName" column="FACILITY_NAME"/>
+		<result property="fType" column="FACILITY_TYPE"/>
 	</resultMap>
 	
 	<select id="getCampListCount" resultType="_int">
@@ -369,6 +361,7 @@
 		    , C.CAMP_PHONE
 		    , C.CAMP_INTRO
 		    , C.CAMP_PATH
+		    , I.FILE_NO
             , I.FILE_NAME
             , I.FILE_ROUTE
 		    , C.CAMP_POLICY
@@ -377,11 +370,20 @@
 		    , C.BANK
 		    , C.CHECKIN
 		    , C.CHECKOUT
+            , CBT.BUSINESS_NO
+            , BT.BUSINESS_TYPE
+            , CFT.FACILITY_NO
+            , F.FACILITY_NAME
+            , F.FACILITY_TYPE
 		    FROM CAMP C
-		    JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
-            JOIN CAMP_FILE CF ON(C.CAMP_NO = CF.CAMP_NO)
-            JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
-		   WHERE C.CAMP_NO = #{ campNo }
+		    LEFT JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+            LEFT JOIN CAMP_FILE CF ON(C.CAMP_NO = CF.CAMP_NO)
+            LEFT JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
+            LEFT JOIN CAMP_BUSINESS_TYPE CBT ON(C.CAMP_NO = CBT.CAMP_NO)
+            LEFT JOIN BUSINESS_TYPE BT ON(BT.BUSINESS_NO = CBT.BUSINESS_NO)
+            LEFT JOIN CAMP_FACILITY CFT ON(C.CAMP_NO = CFT.CAMP_NO)
+            LEFT JOIN FACILITY F ON(CFT.FACILITY_NO = F.FACILITY_NO)
+		   WHERE C.CAMP_NO = #{campNo}
 		     AND I.FILE_STATUS = 'N'
 	</select>
 	
