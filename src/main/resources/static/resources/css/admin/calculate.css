@@ -57,10 +57,10 @@ ul, li {
     width: 13%;
 }
 .calculate_list .account_num {
-    width: 15%;
+    width: 25%;
 }
 .calculate_list .bank {
-    width: 35%;
+    width: 15%;
 }
 .calculate_list .sales_amount {
     width: 10%;
@@ -78,7 +78,7 @@ ul, li {
 
 /* 버튼 */
 .calculate button {
-    width: 4em;
+    width: 5em;
     height: 2.3em;
     border: rgb(239, 239, 239);
     border-radius: 8px

@@ -282,5 +282,12 @@ public class AdminController {
 		
 		return "redirect:/admin/camp";
 	}
+	
+	/*정산 관리 페이지 */
+	@GetMapping("/calculate")
+	public String calcurateList(Model model) {
+		
+		return "admin/calculate";
+	}
 
 }
