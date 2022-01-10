@@ -46,5 +46,7 @@ public interface AdminService {
 
 	// 숙소등록
 	void enroll(int campNo, int userNo);
+	
+
 
 }

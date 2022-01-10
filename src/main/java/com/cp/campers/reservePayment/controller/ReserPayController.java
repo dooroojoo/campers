@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ReserPayController {
 
 	private ReserPayService reserPayService;
-	private MessageSource messageSource;
 	
 	@Autowired
-	public ReserPayController(ReserPayService reserPayService, MessageSource messageSource) {
+	public ReserPayController(ReserPayService reserPayService) {
 		this.reserPayService = reserPayService;
-		this.messageSource = messageSource;
 	}
 	
 	
@@ -37,6 +36,7 @@ public class ReserPayController {
 		return "reservePayment/reserPay";
 	}
 	
+	/* 예약 및 결제 insert */
 	@ResponseBody
 	@PostMapping("/reserPay/insert")
 	public Map<String, String> insertReserPay(@ModelAttribute ReserveInfo reserveInfo, 
@@ -51,4 +51,6 @@ public class ReserPayController {
 	      
 	    return map;
 	}
+	
+	
 }
