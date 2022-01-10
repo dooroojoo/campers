@@ -80,5 +80,6 @@ public interface AdminMapper {
 
 	// 등록이력
 	void record(int campNo);
+	
 
 }
