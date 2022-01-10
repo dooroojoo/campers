@@ -52,11 +52,5 @@ public class ReserPayController {
 	    return map;
 	}
 	
-	@GetMapping("/calculate")
-	public String calcurateList(Model model) {
-		
-		return "admin/calculate";
-	}
-
 	
 }
