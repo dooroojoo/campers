@@ -28,5 +28,7 @@ public interface SearchMapper {
 	// 캠핑장 검색페이지에서 조건 검색 조회
 	List<SearchCamp> campFindSearch(Map<String, Object> map);
 
+
+
 	
 }

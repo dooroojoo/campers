@@ -60,13 +60,13 @@
                   <p>숙소유형</p>
                   <div class="camp-type-btn">
                    <label class="search-type">
-                      <input type="checkbox" class="s-type-camping" name="type" value="1"><span class="search-style">캠핑</span>
+                     <input type="checkbox" class="s-type-camping" name="type" value="캠핑"><span class="search-style">캠핑</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-glamping" name="type" value="2"><span class="search-style">글램핑</span>
+                      <input type="checkbox" class="s-type-glamping" name="type" value="글램핑"><span class="search-style">글램핑</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="type" value="3"><span class="search-style">카라반</span>
+                      <input type="checkbox" class="s-type-caravan" name="type" value="카라반"><span class="search-style">카라반</span>
                     </label>
                   </div>
                 </div>
@@ -84,7 +84,7 @@
                       <input type="checkbox" class="s-type-caravan" name="facility" value="반려동물"><span>반려동물</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="조식"><span>조식제공</span>
+                      <input type="checkbox" class="s-type-caravan" name="facility" value="조식제공"><span>조식제공</span>
                     </label>
                     <label class="search-type">
                       <input type="checkbox" class="s-type-caravan" name="facility" value="매점"><span class="search-style">매점</span>
@@ -120,7 +120,7 @@
             </div>
 
             <div class="search-submit">
-              <input type="submit" value="검색하기" onclick="ajax();">
+              <input type="submit" value="검색하기">
             </div>
             </form>
             </div>
@@ -175,9 +175,7 @@
 
               <!-- 페이징 처리 -->
                 <div class="member_pages">
-                 <form id="actionForm" action="/search/find" method="get">
-						<input type="hidden" name="page" value ="${pi.page}">
-				</form>
+                
                 <ul class="member_paging">
 
                      <!--  맨 처음으로 이동하는 버튼(<<) -->
@@ -222,22 +220,7 @@
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
     
-    <!-- 체크박스 값 controller로 넘겨주기 -->
-	 <script>
-	function ajax(){
-	    $.ajax({
-			url : "/search/find",
-			type : "get",
-			data : $('form').serialize(),
-			success : function(json){
-				console.log(data);
-			},
-			error : function(e){
-				console.log(e);
-			}
-		});
-	}
-	    </script>
+  
  	<!-- 제이쿼리 충돌 방지 코드 -->
 	<script type="text/javascript"> $.noConflict(); </script>
 
