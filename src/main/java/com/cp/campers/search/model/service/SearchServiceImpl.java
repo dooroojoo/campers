@@ -58,9 +58,10 @@ public class SearchServiceImpl implements SearchService{
 
 	@Override
 	public Map<String, Object> campFindSearch(FindCamp fc, int nowPage) {
-
-		// 페이지 전체 개수 조회
+		
+		// 검색된 캠핑장 개수 조회
 		int listCount = searchMapper.campFindCount(fc);
+		System.out.println(listCount);
 
 		// 2. PageInfo 객체 만들기
 		PageInfo pi = new PageInfo(nowPage, listCount, 10, 5);
@@ -68,8 +69,8 @@ public class SearchServiceImpl implements SearchService{
 		pi.setEndRow(pi.getStartRow(), pi.getCampLimit());
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("fc", fc);
 		map.put("pi", pi);
+		map.put("fc", fc);
 		
 		// 페이징 처리 된 게시글 목록 조회
 		List<SearchCamp> campFindSearch = searchMapper.campFindSearch(map);
@@ -77,10 +78,11 @@ public class SearchServiceImpl implements SearchService{
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		if(listCount == 0) {
-			returnMap.put("searchSize", "검색된 결과가 없습니다.");
+			returnMap.put("searchSize", "검색된 캠핑장이 없습니다.");
 		} else {
 			returnMap.put("searchSize", listCount+1+"개의 캠핑장이 조회되었습니다.");
 		}
+		
 		
 		returnMap.put("campFindSearch", campFindSearch);
 		returnMap.put("pi", pi);
