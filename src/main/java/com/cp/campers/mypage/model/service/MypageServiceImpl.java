@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cp.campers.admin.model.vo.PageInfo;
+import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.mypage.model.dao.MypageMapper;
 import com.cp.campers.mypage.model.vo.Camp;
@@ -55,10 +56,13 @@ public class MypageServiceImpl implements MypageService{
 		mypageMapper.insertRoom(camp.getRoom());	
 		
 		/* CAMP_FILE INSERT */
-		mypageMapper.insertCampFile(camp.getCampFile());
+		//mypageMapper.insertCampFile(camp.getCampFile());
+		//for(Integer fileNo : camp.getCampFile()) {
+		//	mypageMapper.insertCampFile(fileNo);
+		//}
 		
 		/* ROOM_FILE INSERT */
-		mypageMapper.insertRoomFile(camp.getRoomFile());
+		//mypageMapper.insertRoomFile(camp.getRoomFile());
 	}
 	
 	@Override
@@ -71,11 +75,11 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public void changeInfoModify(Member member/*, String email, 
 			String phone, String nickName*/) {
-		/*
+		
 		member.setEmail(member.getEmail());
 		member.setPhone(member.getPhone());
 		member.setNickName(member.getNickName());
-		*/
+				
 		mypageMapper.changeInfoModify(member);
 	}
 
@@ -101,6 +105,24 @@ public class MypageServiceImpl implements MypageService{
 	public void changeInfoMemberout(Member member) {
 	
 		mypageMapper.changeInfoMemberout(member);		
+	}
+
+	@Override
+	public Map<String, Object> selectBoardList(int page) {
+		int listCount = mypageMapper.getListCount();
+		
+		PageInfo pi = new PageInfo(page, listCount, 10, 7);
+				
+		List<Board> boardList = mypageMapper.selectBoardList(pi);
+		
+		List<Board> thumbnailList = mypageMapper.selectThumbnailList();
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("pi", pi); 
+		map.put("boardList", boardList);
+		map.put("thumbnailList", thumbnailList);
+
+		return map;
 	}
 
 	/*

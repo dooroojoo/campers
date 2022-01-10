@@ -2,6 +2,7 @@ package com.cp.campers.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -40,6 +41,15 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
+				/* "/mypage/**" 요청은 인증이 되어야 함 */
+				.antMatchers("/mypage/**").authenticated()
+				/* 로그인 한 회원만 */
+				//.antMatchers(HttpMethod.GET, "/mypage/**").hasAnyRole("ADMIN", "MEMBER", "BUISNESS")
+				/* 사업자 권한이 있는 사람만 */
+				//.antMatchers(HttpMethod.POST, "/mypage/**").hasRole("BUISNESS")
+				/* "/admin/**"의 요청은 ROLE_ADMIN 권한을 가진 사람에게만 허용 */
+				//.antMatchers("/admin/**").hasRole("ADMIN")
+				/* 그 외의 요청은 모두 허가함 - 게스트 사용자도 접근 가능 */
 				.anyRequest().permitAll()
 			.and()
 				.formLogin() //로그인 설정

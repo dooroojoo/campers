@@ -55,13 +55,15 @@
                     <h4 class="changinfo_email">이메일(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_email_form2" id="email" name="email" required placeholder="이메일"></input></h4>
                     <div class="check_font" id="email_check"></div>
                     
-                    <h4 class="changinfo_phone">전화번호(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_phone_form2" id="phone" name="phone" required placeholder="전화번호"></input></h4>
+                    <h4 class="changinfo_phone">전화번호(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_phone_form2" id="phone" name="phone" maxlength="11" required placeholder="전화번호"></input></h4>
                     <div class="check_font" id="phone_check"></div>
                     
-                    <h4 class="changinfo_nickname">닉네임<input type="text" class="changinfo_nickname_form2" id="nickName" name="nickName" placeholder="닉네임" oninput="checkNickName"></input></h4>
+                    <h4 class="changinfo_nickname">닉네임<input type="text" class="changinfo_nickname_form2" id="nickName" name="nickName" placeholder="닉네임" maxlength="8" oninput="checkNickName"></input><button type="button" class="changinfo_pwdbutton" name="nickNameCheck_btn" id="nickNameCheck">중복확인</button></h4>
+                     
                     <span class="id_ok">사용 가능한 닉네임 입니다.</span>
                     <span class="id_already">사용 불가능한 닉네임 입니다.</span>
-                    <!-- <div class="check_font" id="nickName_check"></div> -->
+                    
+                    <div class="check_font" id="nickName_check"></div>
                     <br>
                     
                     <button type="submit" id="submit" class="changeinfo_changebutton">수정완료</button>
@@ -121,9 +123,36 @@
 				console.log(nameJ.test($(this).val()));
 				$("#nickName_check").text('');
 			} else {
-				$('#nickName_check').text('한글, 영어, 숫자 3~8 자만 사용할 수 있습니다.');
+				$('#nickName_check').text('한글, 영어, 숫자 2~8 자만 사용할 수 있습니다.');
 				$('#nickName_check').css('color', 'red');
 			}
+		});
+		
+		$("#submit").on('click', function(){
+			if(changinfo_modify_form.email.value == ""){
+				alert("이메일을 입력하지 않았습니다")
+				changinfo_modify_form.email.focus();
+				return false;
+			}
+			
+			if(changinfo_modify_form.phone.value == ""){
+				alert("휴대폰 번호를 입력하지 않았습니다")
+				changinfo_modify_form.phone.focus();
+				return false;
+			}
+
+			/*
+			if(changinfo_modify_form.nickName.value == ""){
+				alert("닉네임을 입력하지 않았습니다")
+				changinfo_modify_form.nickName.focus();
+				return false;
+			}
+			
+			if(changinfo_modify_form.nickNameCheck_btn == ""){
+				alert("중복")
+			}
+			*/
+			return true;
 		});
 		/*
 		$("#nickName").keyup(function(){
@@ -134,32 +163,83 @@
 		});
 		*/		
     </script>
+    
     <!-- 
     <script>
-    function checkNickName(){
-		
-		var nickName = $("#nickName").val();
-		
-		$.ajax({
-			url : "mypage/nickName",
-			dataType : "json",
+    $('.changinfo_nickname_form2').on("propertychange change keyup paste input", function(){
+    	
+    	console.log("keyup 테스트");
+    	
+    	var nickName = $('.changinfo_nickname_form2').val();
+    	
+	    $.ajax({
+			url : "/mypage/nickName",
 			type : "post",
-			data: {nickName:nickName},
-			success:function(cnt){ 	//컨트롤러에서 넘어온 cnt값을 받는다 
-                if(cnt != 1){ 		//cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
-                    $('.id_ok').css("display","inline-block"); 
-                    $('.id_already').css("display", "none");
-                } else { 			// cnt가 1일 경우 -> 이미 존재하는 아이디
-                    $('.id_already').css("display","inline-block");
-                    $('.id_ok').css("display", "none");
-                }
-			},
-			error: function(e){
-				console.log(e);
-			}
-		});
-	};
+			data : { nickName : nickName.val() },
+			success : function(result){
+				if(result != 'fail'){
+					$('.id_ok').css("display", "inline-block");
+					$('.id_already').css("display", "none");					
+				} else {
+					$('.id_already').css("display", "inline-block");
+					$('.id_ok').css("display", "none");
+				}
+			}	
+    });		
     </script>
      -->
+     
+    
+    <script>
+		function validate(){
+			return true;
+		}
+	
+		$("#nickNameCheck").on('click', function(){
+			
+			var nickName = $("[name=nickName]");
+			var isUsable = false;
+						
+			if(!nickName || nickName.val().length < 2){
+				alert("닉네임은 최소 2자리 이상, 8글자 이하여야 합니다.");
+				nickName.focus();
+			} else {
+				$.ajax({
+					url : "/mypage/nickName",
+					type : "post",
+					data : { nickName : nickName.val() },
+					success : function(result){
+						console.log(result);
+						if(result == "fail"){
+							alert("사용할 수 없는 닉네임 입니다.");
+							nickName.focus();
+						} else {
+							if(confirm("사용 가능한 닉네임 입니다. 사용하시겠습니까?")){
+								nickName.attr('readonly', true);
+								isUsable = true;
+							} else {
+								nickName.attr('readonly', false);
+								nickName.focus();
+								isUsable = false;
+							}
+						}
+						
+						/*
+						if(isUsable){
+							$("#submit").removeAttr("disabled");
+						} else {
+							$("#submit").attr("disabled", true);
+						}
+						*/
+					},
+					error : function(e){
+						console.log(e);
+					}
+				});
+			}			
+		});		
+	</script>
+     
+    
 </body>
 </html>

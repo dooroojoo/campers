@@ -218,10 +218,12 @@
                 <tr>
                     <th>객실 수량</th>
                     <td><input class="textbox2" name="roomAmount" type="number" placeholder="1"></td>
-                </tr>
+                </tr>                
+                <tbody></tbody>
             </table>
-               
-        <div class="clon_table" style="display:none;">
+        
+        <!--        
+        <div class="clon_table">
         	<table class="mypage_camp_enrollment_table">
         		<tr>
                     <th>객실 최대인원</th>
@@ -248,15 +250,15 @@
                     <td><input type="file" name="roomMultiFiles" multiple>
                 </tr>
                 <tr>
-                    <th>객실 바닥 형태</th><!-- name="roomFloor"  -->
+                    <th>객실 바닥 형태</th>
                     <td><input type="radio" name="roomFloor" value="데크" checked>데크 <input type="radio" name="roomFloor" value="잔디">잔디 <input type="radio" name="roomFloor" value="파쇄석">파쇄석 </td>
                 </tr>
                 <tr>
-                    <th>객실 주차 여부</th><!-- name="roomParking"  -->
+                    <th>객실 주차 여부</th>
                     <td><input type="radio" name="roomParking" value="텐트 옆 주차" checked>텐트 옆 주차 <input type="radio" name="roomParking" value="주차장 주차">주차장 주차 <input type="radio" name="roomParking" value="외부 주차">외부 주차</td>
                 </tr>
                 <tr>
-                    <th>객실 형태</th><!-- name="roomForm" -->
+                    <th>객실 형태</th>
                     <td><input type="radio" name="roomForm" value="카라반" checked>카라반 <input type="radio" name="roomForm" value="캠핑">캠핑 <input type="radio" name="roomForm" value="글램핑">글램핑</td>
                 </tr>
                 <tr>
@@ -265,6 +267,7 @@
                 </tr>
         	</table>
         </div>
+         -->
         	<div class="room_plus">
                 <button type="button" id="room_plus_button" class="room_plus_button"><img class="room_plus_img" src="/resources/images/mypage/plus.png">객실 추가하기</button>
             </div>
@@ -279,8 +282,21 @@
     
     <script>
     $("#room_plus_button").on("click", function(e){
-    	$(".clon_table").clone().appendTo(".room_plus");
-    })    
+    	//$(".clon_table").clone().appendTo(".room_plus");
+		$(".mypage_camp_enrollment_table > tbody:last").append
+		("<tr><th><hr width='100%' color='lightgray'></th><td><hr width='100%' color='lightgray'></td></tr>" +
+		"<tr><th>객실 최대인원</th><td><input class='textbox' name='roomMember' type='text' placeholder='객실 최대인원을 입력해주세요.'></td></tr>" +
+		"<tr><th>객실 이름(호수)</th><td><input class='textbox' name='roomName' type='text' placeholder='객실 이름을 입력해주세요.'></td></tr>" +
+		"<tr><th>객실 가격</th><td><input class='textbox' name='roomPrice' type='text' placeholder='객실 가격을 입력해주세요.'></td></tr>" +
+		"<tr><th>객실 크기</th><td><input class='textbox' name='roomSize' type='text' placeholder='㎡ 기준(평수) 수치를 입력 해주세요.'></td></tr>" +
+		"<tr><th>객실 소개</th><td><input class='textbox' name='roomInfo' type='text' placeholder='객실 소개 및 구비물품 을 입력해주세요.'></td></tr>" +
+		"<tr><th>객실 사진</th><td><input type='file' name='roomMultiFiles' multiple></tr>" +
+		"<tr><th>객실 바닥 형태</th><td><input type='radio' name='roomFloor' value='데크' checked>데크 <input type='radio' name='roomFloor' value='잔디'>잔디 <input type='radio' name='roomFloor' value='파쇄석'>파쇄석 </td></tr>" +
+		"<tr><th>객실 주차 여부</th><td><input type='radio' name='roomParking' value='텐트 옆 주차' checked>텐트 옆 주차 <input type='radio' name='roomParking' value='주차장 주차'>주차장 주차 <input type='radio' name='roomParking' value='외부 주차'>외부 주차</td></tr>" +
+		"<tr><th>객실 형태</th><td><input type='radio' name='roomForm' value='카라반' checked>카라반 <input type='radio' name='roomForm' value='캠핑'>캠핑 <input type='radio' name='roomForm' value='글램핑'>글램핑</td></tr>" +
+		"<tr><th>객실 수량</th><td><input class='textbox2' name='roomAmount' type='number' placeholder='1'></td></tr>"
+		);   
+    });
     </script>
     
     <!-- <script>
