@@ -81,5 +81,13 @@ public interface AdminMapper {
 	// 등록이력
 	void record(int campNo);
 	
+	void recordToEnroll(int campNo);
+	
+	// 신규이력
+	void recordToNew(int campNo);
+	
+	// 해지이력
+	void recordToDelete(int campNo);
+
 
 }

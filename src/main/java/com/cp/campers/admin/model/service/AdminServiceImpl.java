@@ -191,7 +191,7 @@ public class AdminServiceImpl implements AdminService{
 		adminMapper.enroll(campNo);
 		
 		// 3. 이력
-		adminMapper.record(campNo);
+		adminMapper.recordToEnroll(campNo);
 	}
 
 	@Override
