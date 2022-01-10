@@ -141,6 +141,8 @@ public class AdminController {
 		return "admin/report";
 	}
 	
+	
+	
 	/* 신고등록 ajax */
 	@PostMapping("report")
 	@ResponseBody
@@ -277,4 +279,5 @@ public class AdminController {
 		
 		return "redirect:/admin/camp";
 	}
+
 }

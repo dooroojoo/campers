@@ -79,6 +79,8 @@ public interface AdminMapper {
 	void enroll(int campNo);
 
 	// 등록이력
+	void record(int campNo);
+	
 	void recordToEnroll(int campNo);
 	
 	// 신규이력
@@ -86,5 +88,6 @@ public interface AdminMapper {
 	
 	// 해지이력
 	void recordToDelete(int campNo);
+
 
 }
