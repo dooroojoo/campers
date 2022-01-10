@@ -613,7 +613,8 @@ width: 60px;
 									<sub id="report-reply" th:text="${comment.nickName}"></sub>
 									<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 									<th:block sec:authorize="isAuthenticated()">
-									<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
+									<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" 
+									th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
 									</th:block>
 								</div>
 								<div class="comment-leftBottom" th:if="${comment.status} == 'N'">
@@ -678,7 +679,8 @@ width: 60px;
 										<sub id="report-reply" th:text="${comment.nickName}"></sub>
 										<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 										<th:block sec:authorize="isAuthenticated()">
-										<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
+										<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" 
+										th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
 										</th:block>
 									</div>
 									<div class="comment-leftBottom" th:if="${comment.status}=='N'">
