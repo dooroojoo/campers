@@ -500,6 +500,7 @@ width: 60px;
 					<script>
 				
 						$(document).on("click",".likeUp",function(){
+							
 							$(this).attr('class','heart likeDown is-active');
 						   	let bid = $(".hiddenBid").val();
 						    console.log(bid);
@@ -568,12 +569,12 @@ width: 60px;
 						<div class="comment-write">
 							<div class="comment-textarea" contenteditable="true"
 								style="width: 739px; height: 100px;"></div>
-							<textarea name="reply" class="realTextarea" hidden></textarea>
+							<textarea name="reply" class="realTextarea" hidden required></textarea>
 							<div class="sub_div">
 							<sub style="color: grey;">0/250</sub>
 							</div>
 								<th:block sec:authorize="isAuthenticated()">
-								<button type="submit">등록</button>
+								<button type="submit" style="cursor: pointer;">등록</button>
 							    </th:block>
 							    <th:block sec:authorize="isAnonymous()">
 							    <button type="reset" onclick="loginPlz();">등록</button>
@@ -613,7 +614,8 @@ width: 60px;
 									<sub id="report-reply" th:text="${comment.nickName}"></sub>
 									<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 									<th:block sec:authorize="isAuthenticated()">
-									<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
+									<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" 
+									th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
 									</th:block>
 								</div>
 								<div class="comment-leftBottom" th:if="${comment.status} == 'N'">
@@ -650,11 +652,11 @@ width: 60px;
 					<div class="refComment-writer" hidden>
 					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refOriginCid},refWriter=${comment.nickName})}" method="post">
 							<div class="refComment-textarea" contenteditable="true"></div>
-							<textarea name="cContent"  class="realTextarea" hidden></textarea>
+							<textarea name="cContent"  class="realTextarea" hidden required></textarea>
 							<div class="refComment-submit">
 								<sub style="color: grey;">0/250</sub>
 								<th:block sec:authorize="isAuthenticated()">
-								<button type="submit">등록</button>
+								<button type="submit"  style="cursor: pointer;">등록</button>
 							    </th:block>
 							    <th:block sec:authorize="isAnonymous()">
 							    <button type="reset" onclick="loginPlz();">등록</button>
@@ -678,7 +680,8 @@ width: 60px;
 										<sub id="report-reply" th:text="${comment.nickName}"></sub>
 										<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 										<th:block sec:authorize="isAuthenticated()">
-										<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${comment.cWriter}">삭제</sub>
+										<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" 
+										th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
 										</th:block>
 									</div>
 									<div class="comment-leftBottom" th:if="${comment.status}=='N'">
@@ -717,11 +720,11 @@ width: 60px;
 						<div class="refComment-writer" hidden>
 					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refCid}, refWriter=${comment.nickName})}" method="post">
 							<div class="refComment-textarea" contenteditable="true"></div>
-							<textarea name="cContent"  class="realTextarea" hidden></textarea>
+							<textarea name="cContent"  class="realTextarea" hidden required></textarea>
 							<div class="refComment-submit">
 								<sub style="color: grey;">0/250</sub>
 								<th:block sec:authorize="isAuthenticated()">
-								<button type="submit">등록</button>
+								<button type="submit"  style="cursor: pointer;">등록</button>
 							    </th:block>
 							    <th:block sec:authorize="isAnonymous()">
 							    <button  type="reset" onclick="loginPlz();">등록</button>

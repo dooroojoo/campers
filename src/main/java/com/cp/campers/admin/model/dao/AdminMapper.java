@@ -66,6 +66,7 @@ public interface AdminMapper {
 
 	// 숙소상세
 	Camp detailCamp(int campNo);
+	
 	// 객실상세
 	List<Room> detailRoom(int campNo);
 	
@@ -78,7 +79,14 @@ public interface AdminMapper {
 	// 숙소등록
 	void enroll(int campNo);
 
-	// 등록이력
-	void record(int campNo);
+	// 등록이력	
+	void recordToEnroll(int campNo);
+	
+	// 신규이력
+	void recordToNew(int campNo);
+	
+	// 해지이력
+	void recordToDelete(int campNo);
+
 
 }

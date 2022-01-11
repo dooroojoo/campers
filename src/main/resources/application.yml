@@ -27,5 +27,5 @@ logging:
 #logging level (package level - 지역설정)
 custom:
   path:
-    #upload-images: 'D:/6__Framework/2_spring/boot_workspace/campers/src/main/resources/uploadFiles/'
-    upload-images: 'C:/Users/OrzSaSin/git/campers/src/main/resources/uploadFiles/'
+    upload-images: 'C:/Users/lace2/git/campers/src/main/resources/uploadFiles/'
+    #upload-images: 'C:/Users/OrzSaSin/git/campers/src/main/resources/uploadFiles/'

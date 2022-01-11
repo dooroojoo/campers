@@ -28,7 +28,7 @@
           <!-- 검색 조건 컨텐츠 -->
         <div class="search-check">
             <div class="search-form">
-                <form class="search-camping-form" action="/search/find"  method="get">
+                <form class="search-camping-form" action="/search/find" method="get">
                 <input type="hidden" th:each="fc:${fc}">
                    <p>지역</p>
                    <label class="search-area search-container">
@@ -61,13 +61,13 @@
                   <p>숙소유형</p>
                   <div class="camp-type-btn">
                    <label class="search-type">
-                      <input type="checkbox" class="s-type-camping" name="type" value="1"><span class="search-style">캠핑</span>
+                      <input type="checkbox" class="s-type-camping" name="type" value="캠핑"><span class="search-style">캠핑</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-glamping" name="type" value="2"><span class="search-style">글램핑</span>
+                      <input type="checkbox" class="s-type-glamping" name="type" value="글램핑"><span class="search-style">글램핑</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="type" value="3"><span class="search-style">카라반</span>
+                      <input type="checkbox" class="s-type-caravan" name="type" value="카라반"><span class="search-style">카라반</span>
                     </label>
                   </div>
                 </div>
@@ -75,7 +75,7 @@
                 <div class="search-convenient-type">
                   <p>주요시설</p>
                   <div class="camp-type-btn">
-                   <label class="search-type">
+                  <label class="search-type">
                       <input type="checkbox" class="s-type-camping" name="facility" value="수영장"><span class="search-style">수영장</span>
                     </label>
                     <label class="search-type">
@@ -85,7 +85,7 @@
                       <input type="checkbox" class="s-type-caravan" name="facility" value="반려동물"><span>반려동물</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="조식"><span>조식제공</span>
+                      <input type="checkbox" class="s-type-caravan" name="facility" value="조식제공"><span>조식제공</span>
                     </label>
                     <label class="search-type">
                       <input type="checkbox" class="s-type-caravan" name="facility" value="매점"><span class="search-style">매점</span>
@@ -121,7 +121,7 @@
             </div>
 
             <div class="search-submit">
-              <input type="button" value="검색하기" onclick="ajax();">
+              <input type="submit" value="검색하기">
             </div>
             </form>
             </div>
@@ -132,8 +132,6 @@
             <div class="search-contents">
               <div class="search-list-top">
 
-				
-                <!-- 아래 코드는 submit 버튼 눌렀을 때에만 나타나게 -->
                 <div class="list-top-text">
                  <p th:text="${ searchSize }"></p>
                   </div>
@@ -150,10 +148,9 @@
                     <ul>
                       <li class="list-col-address" th:text="${find.cAddress}"></li>
                       <li class="list-col-name" th:text="${find.cName}"></li>
-                      <li class="list-col-count">최대인원 <span th:text="${find.maxGuest}"></span></li>
+                      <li class="list-col-count">최대인원 <span th:text="${find.maxGuest}"></span> 인</li>
                       <li class="list-col-price" th:text="${find.minPrice}+'~'+${find.maxPrice}"></li>
                     </ul>
-
 				
                     <!-- 선택한 날짜에 예약가능할 시에 -->
                     <!-- <div class="list-col-state" th:if="${find.rCount > 0}">
@@ -179,11 +176,11 @@
                 <ul class="member_paging">
 
                      <!--  맨 처음으로 이동하는 버튼(<<) -->
-                   <li><a href="/search/camp?page=1">&lt;&lt;</a></li>
+                   <li><a href="/search/find?page=1">&lt;&lt;</a></li>
                    
                     <!-- 이전 페이지로(<)  -->
                     <li th:if="${pi.page > 1}">
-                    <a th:href="@{/search/camp(page=${pi.page - 1 })}">&lt;</a>
+                    <a th:href="@{/search/find(page=${pi.page - 1 })}">&lt;</a>
                     </li>
                     <li th:unless="${pi.page > 1}">
                     <a href="#">&lt;</a>
@@ -194,23 +191,20 @@
                                 <a href="#" th:text="${p}"></a>
                             </div>
                             <div th:if="${ p != pi.page }">
-                                <a th:href="@{/search/camp(page=${p})}" th:text="${p}"></a>
+                                <a th:href="@{/search/find(page=${p})}" th:text="${p}"></a>
                             </div>
                         </li>
         		
                    <!--  다음 페이지로(>) --> 
                     <li th:if="${pi.page < pi.maxPage}">
-                        <a th:href="@{/search/camp(page=${pi.page + 1})}">&gt;</a>
+                        <a th:href="@{/search/find(page=${pi.page + 1})}">&gt;</a>
                     </li>
 
                     <!-- 맨 끝으로 이동하는 버튼(>>) -->
                    <li>
-                    <a th:href="@{/search/camp(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                    <a th:href="@{/search/find(page=${pi.maxPage})}">&gt;&gt;</a></li>
                 </ul>
-                
-                <form id="actionForm" action="/search/find" method="get">
-						<input type="hidden" name="page" value ="${pi.page}">
-				</form>
+               
             </div>
 
                 </div>
@@ -224,23 +218,6 @@
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
     
-    
-    <!-- 선택된 체크박스 유지하는 코드.. 일단 보류.. -->
-    <script>
-    function ajax(){
-	    $.ajax({
-			url : "/search/find",
-			type : "get",
-			data : $('form').serialize(),
-			success : function(json){
-				console.log(data);
-			},
-			error : function(e){
-				console.log(e);
-			}
-		});
-	}
-    </script>
     
  	<!-- 제이쿼리 충돌 방지 코드 -->
 	<script type="text/javascript"> $.noConflict(); </script>

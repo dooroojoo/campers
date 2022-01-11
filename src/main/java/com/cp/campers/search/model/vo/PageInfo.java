@@ -105,7 +105,7 @@ public class PageInfo {
 	}
 
 	public void setStartRow(int startRow, int campLimit) {
-		this.startRow = (page - 1) * campLimit + 1;
+		this.startRow = (page - 1 ) * campLimit + 1;
 	}
 
 	public int getEndRow() {

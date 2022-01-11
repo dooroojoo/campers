@@ -2,9 +2,12 @@ package com.cp.campers.search.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cp.campers.search.model.service.SearchService;
@@ -58,16 +60,15 @@ public class SearchController {
 	
 	// 캠핑장검색 페이지에서 조건 검색 조회
 	@GetMapping("find")
-	@ResponseBody
-	public ModelAndView findCamp(ModelAndView mv, FindCamp fc,
+	public ModelAndView findCamp(ModelAndView mv,
 								@RequestParam(value="page", required=false, defaultValue="1") String page,
 								@RequestParam(value="area") String area,
 								@RequestParam(value="daterange") String daterange,
 								@RequestParam(value="quantity") String quantity,
 								@RequestParam(value="name", required=false, defaultValue="") String name,
-								@RequestParam(value="type", required=false, defaultValue="") List<String> typeArr,
-								@RequestParam(value="facility", required=false, defaultValue="") List<String> facilityArr,
-								@RequestParam(value="floor", required=false, defaultValue="") List<String> floorArr
+								@RequestParam(value="type", required=false, defaultValue="null") List<String> typeArr,
+								@RequestParam(value="facility", required=false, defaultValue="null") List<String> facilityArr,
+								@RequestParam(value="floor", required=false, defaultValue="null") List<String> floorArr
 										) throws ParseException {
 		
 		int nowPage = 1;
@@ -77,40 +78,52 @@ public class SearchController {
 		}
 		
 		
+		String type =String.join(", ", typeArr);
+		String facility =String.join(", ", facilityArr);
+		String floor =String.join(", ", floorArr);
+		
 		log.info(area);
 		log.info(daterange);
 		log.info(quantity);
 		log.info(name);
 		log.info(page);
+		log.info(type);
+		log.info(facility);
+		log.info(floor);
+		
 		
 		// String -> Date로 변환
-		String inDate = daterange.substring(0,9);
-		String outDate = daterange.substring(13,22);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date checkIn = formatter.parse(inDate);
-		Date checkOut = formatter.parse(outDate);
+		String inDate = daterange.substring(0,10);
+		String outDate = daterange.substring(13,23);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+		LocalDate checkIn = LocalDate.parse(inDate, formatter);
+		LocalDate checkOut = LocalDate.parse(outDate, formatter);
+
 		
+		FindCamp fc = new FindCamp();
 		fc.setsName(name);
 		fc.setsArea(area);
 		fc.setsIn(checkIn);
 		fc.setsOut(checkOut);
 		fc.setsGuest(quantity);
-		fc.setsFaci(facilityArr);
-		fc.setsFloor(floorArr);
-		fc.setsType(typeArr);
+		fc.setsFaci(facility);
+		fc.setsFloor(floor);
+		fc.setsType(type);
+		
 		
 		Map<String, Object> map = searchService.campFindSearch(fc, nowPage);
+		
 		
 		mv.addObject("campFindSearch", map.get("campFindSearch"));
 		mv.addObject("searchSize", map.get("searchSize"));
 		mv.addObject("pi", map.get("pi"));
-		//mv.addObject("fc", fc);
+		mv.addObject("fc", fc);
 		mv.setViewName("search/findCamp");
 		
 		return mv;
 	}
 
-	
+
 	// 메인페이지 캠핑장 검색 기능
 	@GetMapping("main")
 	public ModelAndView mainSearch( PageInfo pi, ModelAndView mv,
@@ -123,18 +136,6 @@ public class SearchController {
 							 ) throws ParseException {
 		
 		
-		// 아직 페이징 처리 적용안함
-		// int total = searchService.campListCount();
-		if(nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "10";
-		}else if (nowPage == null) {
-			nowPage = "1";
-		}else if(cntPerPage == null) {
-			cntPerPage = "10";
-		}
-		
-		
 		
 		// String 날짜로 변환
 		String inDate = date.substring(0,9);
@@ -143,21 +144,12 @@ public class SearchController {
 		Date checkIn = formatter.parse(inDate);
 		Date checkOut = formatter.parse(outDate);
 		
-		String type ="";
-		for(int i=0; i<typeArr.size(); i++) {
-			if(typeArr.size() > 1 && i < typeArr.size()-1 ) {
-				type += typeArr.get(i) + "|";
-			} else {
-				type += typeArr.get(i);
-			}
-		}
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("area", area);
 		map.put("checkIn", checkIn);
 		map.put("checkOut", checkOut);
 		map.put("guest", guest);
-		map.put("type", type);
 		
 		List<SearchCamp> mainSearch = searchService.mainSearch(map);
 		
