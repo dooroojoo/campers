@@ -38,6 +38,8 @@
                   
                    <p>날짜</p>
                    <label class="search-date search-container">
+                   <input type="hidden" class="find-in-date" th:value="${fc.sIn}">
+                   <input type="hidden" class="find-out-date" th:value="${fc.sOut}">
                     <input type="text" id="main-date-check" class="area-text" name="daterange" required>
                    </label>
 
@@ -45,6 +47,7 @@
                    <p>인원</p>
                   <div class="search-number-input">
                     <div class="search-number-wrap">
+                    <input type="hidden" class="find-guest" th:value="${fc.sGuest}">
                       <input type="search" placeholder="인원을 추가해주세요" readonly style="cursor: default;">
                       <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
                     <input class="quantity" min="0" max="6" name="quantity" th:value="${fc.sGuest}" type="number" required>
@@ -139,15 +142,16 @@
 
                 <!-- 조회된 갯수만큼 반복문 -->
                 <div class="search-list-col" th:each="find : ${campFindSearch}">
+                 <input type="hidden" id="campNo" th:value="${find.cNo}">
                   <div class="list-col-wrapper">
                   <div class="list-col-img">
-                    <img th:src="@{/resources/images/uploadFiles/campImg/}+${find.fileName}">
-                
+                    <img class="listImg" th:src="@{/resources/images/uploadFiles/campImg/}+${find.fileName}" style="cursor:pointer">
+                 
                   
                   <div class="list-col-text">
                     <ul>
                       <li class="list-col-address" th:text="${find.cAddress}"></li>
-                      <li class="list-col-name" th:text="${find.cName}"></li>
+                      <li class="list-col-name" th:text="${find.cName}" style="cursor:pointer"></li></a>
                       <li class="list-col-count">최대인원 <span th:text="${find.maxGuest}"></span>인</li>
                       <li class="list-col-price" th:text="${find.minPrice}+'~'+${find.maxPrice}"></li>
                     </ul>
@@ -217,6 +221,23 @@
     
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
+    
+    <!-- 캠핑장 이미지&이름 클릭 시 상세페이지로 값 전달하면서 이동 -->
+     <script>
+     $(function(){
+    	 let dateIn = $('.find-in-date').val();
+    	 let dateOut = $('.find-out-date').val();
+    	 let guest = $('.find-guest').val();
+     	 let cNo = $('#campNo').val();
+     	
+    	    $('.listImg').click(function(){
+    	    	location.href="/camp/detail?campNo="+cNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest;
+    	    });
+    	    $('.list-col-name').click(function(){
+    	    	location.href="/camp/detail?campNo="+cNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest;
+    	    });
+    });
+    </script>
     
     
  	<!-- 제이쿼리 충돌 방지 코드 -->

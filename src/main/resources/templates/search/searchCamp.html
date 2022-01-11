@@ -140,17 +140,16 @@
 
                 <!-- 조회된 갯수만큼 반복문 -->
                 <div class="search-list-col" th:each="search : ${ campSearch }">
+                <input type="hidden" id="campNo" th:value="${search.cNo}">
                   <div class="list-col-wrapper">
                   <div class="list-col-img">
-                  <a th:href="@{/camp/detail?(campNo=${search.cNo})}">
-                    <img th:src="@{/resources/images/uploadFiles/campImg/}+${search.fileName}"></a>
+                    <img class="listImg" th:src="@{/resources/images/uploadFiles/campImg/}+${search.fileName}" style="cursor:pointer">
                 
                   
                   <div class="list-col-text">
                     <ul>
                       <li class="list-col-address" th:text="${search.cAddress}"></li>
-                      <a th:href="@{/camp/detail?(campNo=${search.cNo})}">
-                      <li class="list-col-name" th:text="${search.cName}"></li></a>
+                      <li class="list-col-name" style="cursor:pointer" th:text="${search.cName}"></li>
                       <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span>인</li>
                       <li class="list-col-price"><span th:text="${search.minPrice}+'~'+${search.maxPrice}"></span>원</li>
                     </ul>
@@ -221,7 +220,25 @@
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
     
-  
+    <!-- 캠핑장 이미지&이름 클릭 시 상세페이지로 값 전달하면서 이동 / 검색안하고 들어가서 기본 값으로 넘겨줌 -->
+     <script>
+     $(function(){
+    	 let date = $('.area-text').val();
+    	 let dateIn = date.substring(0, 10);
+    	 let dateOut = date.substring(13, 23);
+    	 let guest = $('.quantity').val();
+     	 let cNo = $('#campNo').val();
+     	
+    	    $('.listImg').click(function(){
+    	    	location.href="/camp/detail?campNo="+cNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest;
+    	    });
+    	    $('.list-col-name').click(function(){
+    	    	location.href="/camp/detail?campNo="+cNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest;
+    	    });
+    });
+    </script>
+    
+    
  	<!-- 제이쿼리 충돌 방지 코드 -->
 	<script type="text/javascript"> $.noConflict(); </script>
 
