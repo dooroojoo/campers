@@ -142,18 +142,19 @@
                 <div class="search-list-col" th:each="search : ${ campSearch }">
                   <div class="list-col-wrapper">
                   <div class="list-col-img">
-                    <img th:src="@{/resources/images/uploadFiles/campImg/}+${search.fileName}">
+                  <a th:href="@{/camp/detail?(campNo=${search.cNo})}">
+                    <img th:src="@{/resources/images/uploadFiles/campImg/}+${search.fileName}"></a>
                 
                   
                   <div class="list-col-text">
                     <ul>
                       <li class="list-col-address" th:text="${search.cAddress}"></li>
-                      <li class="list-col-name" th:text="${search.cName}"></li>
-                      <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span></li>
-                      <li class="list-col-price" th:text="${search.minPrice}+'~'+${search.maxPrice}"></li>
+                      <a th:href="@{/camp/detail?(campNo=${search.cNo})}">
+                      <li class="list-col-name" th:text="${search.cName}"></li></a>
+                      <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span>인</li>
+                      <li class="list-col-price"><span th:text="${search.minPrice}+'~'+${search.maxPrice}"></span>원</li>
                     </ul>
 
-				
                     <!-- 선택한 날짜에 예약가능할 시에 -->
                     <!-- <div class="list-col-state" th:if="${search.rCount > 0}">
                       <p class="list-bookable" >예약가능</p>
