@@ -29,10 +29,13 @@
         <div class="mypage_content_1">
             <div class="mypage_content_top">캐릭터 등록</div>
 	            <div class="image_area">
-		            <img class="mypage_character" src="resources/images/mypage/007.png"><br>
+		            <img class="mypage_character" src="/resources/images/uploadFiles/profileImg/62ff8cb417354f9ba8ec84e8ee834444.jpg"><br>
+		            <!-- 
+		            <img class="mypage_character" src="sec:authentication='principal.profilePath'"><br>
+		             -->
 	        	</div>
 		        	<input type="file" class="profileInput" name="singleFile"/>
-		            <p class="mypage_content_p">회원님을 알릴 수 있는 사진을 등록해주세요.</p>        
+		            <p class="mypage_content_p2">회원님을 알릴 수 있는 사진을 등록해주세요.</p>        
 	        </div>
         
         <div class="mypage_content_2">
@@ -44,18 +47,18 @@
         <div class="mypage_content_3">
             <div class="mypage_content_top">회원님 정보</div>
             <ul class="mypage_content_3_ul">
-                <li class="mypage_content_3_li">
-                <img class="mypage_img_user" src="resources/images/mypage/user.png"></src>
+                <li class="mypage_content_3_li">                
+                <img class="mypage_img_user" src="/resources/images/mypage/user.png"/>
                 가입일 : <label class="mypage_date" sec:authentication="principal.createDate"></label></li>
                 <li class="mypage_content_3_li">
-                <img class="mypage_img_user" src="resources/images/mypage/user.png"></src>
+                <img class="mypage_img_user" src="/resources/images/mypage/user.png"></src>
                 최근 로그일 : <label class="mypage_date" sec:authentication="principal.modifyDate"></li>
             </ul>
         </div>
         <div class="mypage_content_4">
             <div class="mypage_content_top">내가 등록한 게시물</div>
-            <ul class="mypage_content_4_ul" th:each="board : ${boardList}">
-                <li class="mypage_content_4_li" th:text="${board.btitle}"></li>
+            <ul class="mypage_content_4_ul" th:each="board : ${ boardList }">
+                <li class="mypage_content_4_li" th:text="${ board.title }"></li>
             </ul>    
         </div>
       </div>
@@ -79,6 +82,6 @@
     	})
     })
     </script>
-    
+       
 </body>
 </html>

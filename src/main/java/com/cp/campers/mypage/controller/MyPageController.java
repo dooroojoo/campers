@@ -53,10 +53,14 @@ public class MyPageController {
 	
 	 /* 회원 목록 */
 	 @GetMapping("")
-	 public ModelAndView mypageMember(ModelAndView mv,@AuthenticationPrincipal UserImpl loginUser, Model model) {
-				
+	 public ModelAndView mypageMember(Member member, Board board, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+		
+		member.setUserNo(user.getUserNo());
+		board.setWriter(user.getUserNo());
+		
 		List<Member> memberList = mypageService.findAllMember();
 		List<Board> boardList = mypageService.findAllBoard();
+		
 		
 		mv.addObject("memberList", memberList);
 		mv.addObject("boardList", boardList);
@@ -78,13 +82,12 @@ public class MyPageController {
 		*/		
 		
 		return mv;
-	 }
-	 	 	 
-	 
+	 }	 
 	
 	/* 회원 정보 */
 	@GetMapping("/changinfo") 
 	public String changeInfo(@AuthenticationPrincipal UserImpl user, Model model) {
+				
 		model.addAttribute("user", user.getUserNo());
 		return"mypage/changinfo"; 
 	}
@@ -134,13 +137,7 @@ public class MyPageController {
 	public String changeInfoModify() {
 		return"mypage/changinfo_modify"; 
 	}
-	
-	/* 회원 비밀번호 변경 */
-	@GetMapping("/changinfo/changinfo_modify/changinfo_pwd_modify") 
-	public String changeInfoPwdModify() {
-		return"mypage/changinfo_pwd_modify"; 
-	}
-	
+		
 	/* 회원 정보 수정 폼 */
 	@PostMapping("/changinfo/changinfo_modify/update") /*String email, String phone, String nickName,*/
 	public String changeInfoModify(Member member, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, Locale locale) {
@@ -173,6 +170,12 @@ public class MyPageController {
 		// 리다이렉트
 		return "redirect:/mypage/changinfo"; 
 	}		
+	
+	/* 회원 비밀번호 변경 */
+	@GetMapping("/changinfo/changinfo_modify/changinfo_pwd_modify") 
+	public String changeInfoPwdModify() {
+		return"mypage/changinfo_pwd_modify"; 
+	}
 	
 	/* 회원 비밀번호 변경 입력 폼 */
 	@PostMapping("/changinfo/changinfo_modify/changinfo_pwd_modify")
@@ -372,7 +375,7 @@ public class MyPageController {
 				}				
 		}
 		
-		
+		/*----------------------------- 아직...------------------------------*/
 		
 		/* 캠프 사진 파일 */
 		//camp.setCampPath("filePath");
