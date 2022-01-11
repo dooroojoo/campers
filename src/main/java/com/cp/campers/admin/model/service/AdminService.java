@@ -46,6 +46,9 @@ public interface AdminService {
 
 	// 숙소등록
 	void enroll(int campNo, int userNo);
+
+	// 정산관리목록
+	//Map<String, Object> calculateList(int page);
 	
 
 

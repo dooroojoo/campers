@@ -284,10 +284,19 @@ public class AdminController {
 	}
 	
 	/*정산 관리 페이지 */
-	@GetMapping("/calculate")
-	public String calcurateList(Model model) {
-		
-		return "admin/calculate";
-	}
+//	@GetMapping("/calculate")
+//	public String calcurateList(Model model) {
+//		
+//		int page = 1;
+//		
+//		// 페이징과 관련 된 데이터, 조회 된 calculateList를 map에 담아 리턴 
+//		Map<String, Object> map = adminService.calculateList(page);
+//		
+//		model.addAttribute("pi", map.get("pi"));
+//		model.addAttribute("calculateList", map.get("calculateList"));
+//		
+//		
+//		return "admin/calculate";
+//	}
 
 }
