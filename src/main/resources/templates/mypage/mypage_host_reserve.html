@@ -24,12 +24,12 @@
     <!-- category -->
 	<div th:replace="mypage/mypage_category.html"></div>
         <div>
-            <table class="mypage_host_reserve_table">
         <div class="mypage_host_reserve">
             <header class="mypage_host_reserve_header">
                 <h1 class="mypage_host_reserve_h1">사업자 예약내역 확인</h1>
             </header>
-        </div>
+        </div> <!-- th:each="reserve : ${ reserveList }"  -->
+            <table class="mypage_host_reserve_table">
                 <tr class="mypage_host_reserve_table_header">
                     <th class="mypage_host_reserve_table_header_no">NO</th>
                     <th class="mypage_host_reserve_table_header_camp">예약 캠핑장</th>
@@ -38,15 +38,23 @@
                     <th class="mypage_host_reserve_table_header_date">예약 날짜</th>
                     <th class="mypage_host_reserve_table_header_status">예약 상태</th>
                 </tr>
+                <!-- 
                 <tr>
                     <th class="mypage_host_reserve_table_body"></th>
-                    <th class="mypage_host_reserve_table_body"><img class="mypage_host_reserve_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
-                    <th class="mypage_host_reserve_table_body"><p class="guest_name">김광중</p><small class="guest_phone">010-1234-5678</small></th>
+                    <th class="mypage_host_reserve_table_body">
+                    	<img class="mypage_host_reserve_table_img" th:src="${ camp.fileNo }">
+                    	<p class="camp_name" th:text="${ camp.campName }"></p></th>
+                    <th class="mypage_host_reserve_table_body">
+                    	<p class="guest_name" th:text="${ reserve.reserName }"></p>
+                    	<small class="guest_phone" th:text="${ reserve.phone }"></small></th>
                     <th class="mypage_host_reserve_table_body"></th>
-                    <th class="mypage_host_reserve_table_body"><p class="camp_date">2021.12.01(수) ~ 2021.12.02(목)</p>
-                        <small class="camp_room">아침고요수목원 101번 캠핑장</small></th>
-                    <th class="mypage_host_reserve_table_body2"><input class="mypage_host_reserve_button" type="button" value="입금완료"></th>
+                    <th class="mypage_host_reserve_table_body">
+                    	<p class="camp_date" th:text="${ reserve.checkIn }"></p> ~ <p class="camp_date" th:text="${ reserve.checkOut }"></p>
+                        <small class="camp_room" th:text="${ camp.campAddress }"></small></th>
+                    <th class="mypage_host_reserve_table_body2">
+                    	<input class="mypage_host_reserve_button" type="button" value="입금완료"></th>
                 </tr>
+                 -->
                 <tr>
                     <th class="mypage_host_reserve_table_body"></th>
                     <th class="mypage_host_reserve_table_body"><img class="mypage_host_reserve_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>

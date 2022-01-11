@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cp.campers.camp.model.vo.ImageFile;
+import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
@@ -52,38 +52,35 @@ public class MyPageController {
 	 }
 	
 	 /* 회원 목록 */
-	 @GetMapping("mypage")
-	 public ModelAndView mypageMember(ModelAndView mv, Model model) {
+	 @GetMapping("")
+	 public ModelAndView mypageMember(ModelAndView mv,@AuthenticationPrincipal UserImpl loginUser, Model model) {
 				
 		List<Member> memberList = mypageService.findAllMember();
+		List<Board> boardList = mypageService.findAllBoard();
 		
 		mv.addObject("memberList", memberList);
-		mv.setViewName("/mypage");
-		
-		/* board */
-		int page = 1;
-		
-		Map<String, Object> map = mypageService.selectBoardList(page);
-		
-		model.addAttribute("boardList", map.get("boardList"));
-		model.addAttribute("pi",map.get("pi"));
-		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		mv.addObject("boardList", boardList);
+		mv.setViewName("/mypage/mypage");
 		
 		/*
-		 * Map<String, Object> map = mypageService.findAllMember(page);
-		 * 
-		 * mv.addObject("memberList", map.get("memberList")); mv.addObject("pi",
-		 * map.get("pi"));
-		 */
-		 
-		 return mv;
+		// board
+		int writer = loginUser.getUserNo();
+		
+		log.info("page="+page);
+		
+		//int page = 1;
+		
+		Map<String, Object> map = mypageService.selectMyBoardList(writer,page);
+		
+		model.addAttribute("boardList",map.get("boardList"));
+		model.addAttribute("pi",map.get("pi"));
+		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		*/		
+		
+		return mv;
 	 }
 	 	 	 
-	 /* 마이페이지 */
-	@GetMapping("")
-	public String myPage() {
-		return "mypage/mypage";
-	}	
+	 
 	
 	/* 회원 정보 */
 	@GetMapping("/changinfo") 
@@ -107,12 +104,14 @@ public class MyPageController {
 		member.setId(user.getId());
 		member.setPwd(user.getPwd());
 		member.setStatus(user.getStatus());
+				
+		// log.info("유저 아이디 : ", user);
 		
 		mypageService.changeInfoMemberout(member);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoMemberout", null, locale));
 		
-		return "redirect:/";
+		return "mypage/changinfo";
 	}
 	
 	/* 닉네임 중복 체크 */
@@ -136,41 +135,50 @@ public class MyPageController {
 		return"mypage/changinfo_modify"; 
 	}
 	
-	/* 회원 정보 수정 폼 */
-	@PostMapping("/changinfo/changinfo_modify") 
-	@ResponseBody
-	public String changeInfoModify(Member member, @AuthenticationPrincipal UserImpl user, /*String email, 
-			String phone, String nickName,*/ RedirectAttributes rttr, Locale locale) {
-		/*
-		member.setUserNo(user.getUserNo());
-		member.setEmail(user.getEmail());
-		member.setPhone(user.getPhone());
-		member.setNickName(user.getNickName());
-		*/
-		/* changeInfoModify update */
-		mypageService.changeInfoModify(member/*, email, phone, nickName*/);
-		
-		/* 메세지 */
-		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoModify", null, locale));
-		
-		/* 로그 확인 */
-		// log.info(member.toString());
-		
-		/* 리다이렉트 */
-		return"redirect:/mypage/changinfo"; 
-	}	
-	
 	/* 회원 비밀번호 변경 */
 	@GetMapping("/changinfo/changinfo_modify/changinfo_pwd_modify") 
 	public String changeInfoPwdModify() {
 		return"mypage/changinfo_pwd_modify"; 
 	}
 	
+	/* 회원 정보 수정 폼 */
+	@PostMapping("/changinfo/changinfo_modify/update") /*String email, String phone, String nickName,*/
+	public String changeInfoModify(Member member, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, Locale locale) {
+		
+		// 유저 정보 가져오기
+		member.setUserNo(user.getUserNo());
+		
+		mypageService.changeInfoModify(member);
+		
+		
+		/*
+		member.setEmail(user.getEmail());
+		member.setPhone(user.getPhone());
+		member.setNickName(user.getNickName());
+		
+		// changeInfoModify update 
+		// , email, phone, nickName
+		String msg = mypageService.changeInfoModify(member);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("msg", msg);
+		
+		// 로그 확인
+		// log.info(member.toString());
+		*/
+		
+		// 메세지		
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoModify", null, locale));
+		
+		// 리다이렉트
+		return "redirect:/mypage/changinfo"; 
+	}		
+	
 	/* 회원 비밀번호 변경 입력 폼 */
 	@PostMapping("/changinfo/changinfo_modify/changinfo_pwd_modify")
-	public String changeInfoPwdModify(Member member, String pwd, RedirectAttributes rttr, Locale locale) {
+	public String changeInfoPwdModify(Member member, RedirectAttributes rttr, Locale locale) {
 		
-		mypageService.changeInfoPwdModify(member, pwd);
+		mypageService.changeInfoPwdModify(member);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoPwdModify", null, locale));
 		
@@ -181,7 +189,35 @@ public class MyPageController {
 	@GetMapping("/mypage_camp_enrollment") 
 	public String mypageCampEnrollmentForm() {
 				
-		return"mypage/mypage_camp_enrollment"; 
+		return "mypage/mypage_camp_enrollment"; 
+	}
+	
+	@GetMapping("/mypage_camp_enrollment_room")
+	public String mypage_camp_enrollment_roomForm() {
+		return "mypage/mypage_camp_enrollment_room";
+	}
+	
+	/* 숙소 등록 */
+	@PostMapping("/mypage_camp_enrollment_room")
+	public String mypage_camp_enrollment_room(Camp camp, Room room, @AuthenticationPrincipal UserImpl user,
+			@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
+			@RequestParam List<MultipartFile> roomMultiFiles,
+			HttpServletRequest request, RedirectAttributes rttr, Locale locale) {
+		
+	camp.setUserNo(user.getUserNo());
+	
+	/* 숙소 등록 */
+	camp.setRoom(room);
+	
+	/* 캠프, 캠프 타입, 시설 타입, 객실 등록한 로그 파일 받아오기 */
+	log.info(camp.toString());
+	mypageService.mypage_camp_enrollment_room(camp);
+	
+	/* 숙소 등록 메세지 */
+	rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
+	
+		
+		return "redirect:/mypage/mypage_camp_management";
 	}
 	
 	/* 캠핑장 등록 입력폼 */

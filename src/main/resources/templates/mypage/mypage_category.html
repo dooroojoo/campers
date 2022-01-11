@@ -31,14 +31,14 @@
                 </th:block>
                 
                 <!-- 사업자 회원 -->
-                <th:block sec:authorize="hasRole('BUISNESS')">
+                <th:block sec:authorize="hasRole('COMPANY')">
                 	<li class="mypage_category_li"><a th:href="@{/mypage/mypage_host_reserve}">예약내역확인</a></li>
                 </th:block> 
                 
                 <li class="mypage_category_li"><a th:href="@{/company/csCenter}">고객센터</a></li>
                 
                 <!-- 사업자 권한을 가지고 있는 경우만 보임 사업자코드 '2', 관리자코드 '3' ? '사업자' ? -->
-                <th:block sec:authorize="hasRole('BUISNESS')">
+                <th:block sec:authorize="hasRole('COMPANY')">
                 	<li class="mypage_category_li"><a th:href="@{/mypage/mypage_camp_management}">내 숙소 관리</a></li>
             	</th:block>
             </ul>

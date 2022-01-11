@@ -8,17 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cp.campers.admin.model.vo.PageInfo;
+import com.cp.campers.mypage.model.vo.PageInfo;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.mypage.model.dao.MypageMapper;
 import com.cp.campers.mypage.model.vo.Camp;
-import com.cp.campers.mypage.model.vo.CampBusinessType;
-import com.cp.campers.mypage.model.vo.CampFacility;
-import com.cp.campers.mypage.model.vo.Room;
-import com.cp.campers.mypage.model.vo.RoomFile;
-import com.cp.campers.mypage.model.vo.CampFile;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class MypageServiceImpl implements MypageService{
 
@@ -69,24 +67,35 @@ public class MypageServiceImpl implements MypageService{
 	public List<Member> findAllMember(){
 		return mypageMapper.findAllMember();
 	}
+	
+	@Override
+	public List<Board> findAllBoard() {
+		return mypageMapper.findAllBoard();
+	}
+
+
 
 	/* 회원정보 수정 */
 	@Transactional
 	@Override
-	public void changeInfoModify(Member member/*, String email, 
+	public int changeInfoModify(Member member/*, String email, 
 			String phone, String nickName*/) {
-		
+		/*
 		member.setEmail(member.getEmail());
 		member.setPhone(member.getPhone());
 		member.setNickName(member.getNickName());
-				
-		mypageMapper.changeInfoModify(member);
+		*/
+		
+		
+		return mypageMapper.changeInfoModify(member);
 	}
 
 	/* 비밀번호 변경 */
 	@Transactional
 	@Override
-	public void changeInfoPwdModify(Member member, String pwd) {
+	public void changeInfoPwdModify(Member member) {
+		
+		int newPwd = mypageMapper.changeInfoPwdModify(member);
 		
 		member.setPwd(member.getPwd());
 		
@@ -108,21 +117,37 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public Map<String, Object> selectBoardList(int page) {
-		int listCount = mypageMapper.getListCount();
+	public Map<String, Object> selectMyBoardList(int writer, int page) {
+		int listCount = mypageMapper.getListCountMyBoard(writer);
+        
+        log.info(listCount+"");
 		
-		PageInfo pi = new PageInfo(page, listCount, 10, 7);
-				
-		List<Board> boardList = mypageMapper.selectBoardList(pi);
+		PageInfo pi = new PageInfo(page,listCount, 10, 7);
+		pi.setStartRow(page, pi.getBoardLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
+
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("writer", writer);
+		
+		List<Board> boardList = mypageMapper.selectMyBoardList(param);
 		
 		List<Board> thumbnailList = mypageMapper.selectThumbnailList();
-
+		
 		Map<String, Object> map = new HashMap<>();
-		map.put("pi", pi); 
+		map.put("pi", pi);
 		map.put("boardList", boardList);
 		map.put("thumbnailList", thumbnailList);
-
+		
 		return map;
+	}
+
+	/* 숙소 등록 */
+	@Transactional
+	@Override
+	public void mypage_camp_enrollment_room(Camp camp) {
+		mypageMapper.insertCamp(camp);
+		mypageMapper.insertRoom(camp.getRoom());
 	}
 
 	/*

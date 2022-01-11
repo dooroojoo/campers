@@ -1,6 +1,7 @@
 package com.cp.campers.mypage.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,6 +22,9 @@ public interface MypageMapper {
 	
 	// 회원 목록
 	List<Member> findAllMember();
+	
+	// 게시물 조회
+	List<Board> findAllBoard();
 		
 	/* 캠핑장 등록 */
 	void insertCamp(Camp camp);
@@ -61,9 +65,14 @@ public interface MypageMapper {
 	/* 닉네임 체크 */
 	int nickNameCheck(String nickName);
 
-	List<Board> selectBoardList(PageInfo pi);
+	List<Board> selectMyBoardList(Map<String, Object> param);
 
 	List<Board> selectThumbnailList();
+
+	int getListCountMyBoard(int writer);
+
+	
+
 	
 	// public Map<String, Object> findAllMember();
 }
