@@ -1,9 +1,11 @@
 package com.cp.campers.search.controller;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +51,20 @@ public class SearchController {
 		
 		Map<String, Object> map = searchService.campAllSearch(nowPage);
 		
+		// 선택 없이 상세페이지 접속할 때 한달 후로 날짜 지정 (임시)
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar startCal = Calendar.getInstance( );
+		Calendar endCal = Calendar.getInstance( );
+		startCal.add( Calendar.MONTH, + 1 ); //다음달
+		endCal.add( Calendar.MONTH, + 1 );
+		endCal.add( Calendar.DATE, +1 ); //다음날
+		
+		String dateIn = (df.format(startCal.getTime()));  
+		String dateOut = (df.format(endCal.getTime())); 
+		
+
+		mv.addObject("dateIn", dateIn);
+		mv.addObject("dateOut", dateOut);
 		mv.addObject("pi", map.get("pi"));
 		mv.addObject("campSearch", map.get("campAllList"));
 		mv.addObject("searchSize", map.get("searchSize"));

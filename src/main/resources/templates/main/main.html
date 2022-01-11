@@ -61,7 +61,7 @@
                 <div class="main-guest container">
                   <label><img src="resources/images/main/guest.png">인원
 					  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
-					  <input class="quantity" min="0" max="6" name="guest" value="1" type="number" required>
+					  <input class="quantity" min="1" max="6" name="guest" value="1" type="number" required>
 					  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                     <input type="text" class="area-text" placeholder="인원 수를 추가해주세요" readonly style="cursor:default;">
                   </label> </div>
@@ -70,11 +70,11 @@
                 <div class="main-search-bottom">
                   <div class="main-typeBtn btmContainer">
                     <label class="checkbox-mainType">
-                      <input type="checkbox" class="main-camping-type" id="main-type" name="type" value="1"><span><img src="resources/images/main/campfire.png" class="main-type-icon">캠핑장</span></label>
+                      <input type="checkbox" class="main-camping-type" id="main-type" name="type" value="캠핑장"><span><img src="resources/images/main/campfire.png" class="main-type-icon">캠핑장</span></label>
                     <label class="checkbox-mainType">
-                      <input type="checkbox" class="main-glamping-type" id="main-type" name="type" value="2"><span><img src="resources/images/main/tent.png" class="main-type-icon">글램핑</span></label>
+                      <input type="checkbox" class="main-glamping-type" id="main-type" name="type" value="글램핑"><span><img src="resources/images/main/tent.png" class="main-type-icon">글램핑</span></label>
                       <label class="checkbox-mainType">
-                        <input type="checkbox" class="main-caravan-type" id="main-type" name="type" value="3"><span><img src="resources/images/main/caravan.png" class="main-type-icon">카라반</span></label>
+                        <input type="checkbox" class="main-caravan-type" id="main-type" name="type" value="카라반"><span><img src="resources/images/main/caravan.png" class="main-type-icon">카라반</span></label>
                       
                         <input type="submit" class="main-search-sub" value=" ">
                       </div>
@@ -93,9 +93,10 @@
               <div class="main-slide-wrapper">
                 <div class="slide-container" th:each="slide : ${mainSlider}">
                 <div class="main-slide" id="slide">
-                <a th:href="@{/camp/detail?(campNo=${slide.cRNo})}">
-                  <img th:src="@{${slide.fRRoute}+${slide.fRName}}"></a></div>
+                  <img class="slideImg" th:src="@{${slide.fRRoute}+${slide.fRName}}" style="cursor:pointer"
+                  th:onclick="|location.href='@{/camp/detail(campNo=${slide.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></div>
                   <div class="slide-text" th:text="${slide.cRName}"></div>
+                  <input type="hidden" class="slide-cNo" th:value="${slide.cRNo}">
                 </div>
               </div>
               
@@ -129,12 +130,13 @@
          	<div class="main-best-content">
           
             <div class="main-img-wrap" th:each="best : ${mainBestList}">
-               <a th:href="@{/camp/detail?(campNo=${best.cRNo})}">
-              <div class="main-best-img">
-              <img th:src="@{${best.fRRoute}+${best.fRName}}">
+              <div class="main-best-img" style="cursor:pointer">
+              <img class="bestImg" th:src="@{${best.fRRoute}+${best.fRName}}" style="cursor:pointer"
+              th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|">
               <p class="main-best-title text" th:text="${best.cRName}"></p>
               <p class="main-best-location text" th:text="${best.cRAddress}"></p>
-            </div></a>
+              <input type="hidden" class="best-cNo" th:value="${best.cRNo}">
+            </div>
           	</div>
 
           </div>
@@ -150,12 +152,14 @@
           <div class="main-best-content">
 
             <div class="main-img-wrap" th:each="mainNew : ${mainNewList}">
-			<a th:href="@{/camp/detail?(campNo=${mainNew.cRNo})}">
-              <div class="main-best-img">
-              <img th:src="@{${mainNew.fRRoute}+${mainNew.fRName}}">
+            <input type="hidden" class="new-cNo" th:value="${mainNew.cRNo}">
+              <div class="main-best-img" style="cursor:pointer">
+              <img class="newImg" th:src="@{${mainNew.fRRoute}+${mainNew.fRName}}"
+              style="cursor:pointer"
+              th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|">
               <p class="main-best-title text" th:text="${mainNew.cRName}"></p>
               <p class="main-best-location text" th:text="${mainNew.cRAddress}"></p>
-            </div></a>
+            </div>
           </div>
 
          
@@ -172,6 +176,7 @@
       
     <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
+    
 
   	<!-- 제이쿼리 충돌 방지 코드 -->
 	<script type="text/javascript"> $.noConflict(); </script>
