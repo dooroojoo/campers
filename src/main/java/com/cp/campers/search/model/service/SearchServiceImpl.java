@@ -80,7 +80,7 @@ public class SearchServiceImpl implements SearchService{
 		if(listCount == 0) {
 			returnMap.put("searchSize", "검색된 캠핑장이 없습니다.");
 		} else {
-			returnMap.put("searchSize", listCount+1+"개의 캠핑장이 조회되었습니다.");
+			returnMap.put("searchSize", listCount+"개의 캠핑장이 조회되었습니다.");
 		}
 		
 		
