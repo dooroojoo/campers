@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cp.campers.admin.model.dao.AdminMapper;
+import com.cp.campers.admin.model.vo.CalculateInfo;
 import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.admin.model.vo.Report;
 import com.cp.campers.admin.model.vo.Search;
@@ -248,5 +249,26 @@ public class AdminServiceImpl implements AdminService{
 	public int completeReport(int rNo) {
 		return adminMapper.completeReport(rNo);
 	}
+
+//	@Override
+//	public Map<String, Object> calculateList(int page) {
+//		
+//		// 1. 게시글 총 개수 구하기 
+//		int listCount = adminMapper.getcalculateListCount();
+//		
+//		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+//		pi.setStartRow(page, pi.getUserLimit());
+//		pi.setEndRow(pi.getStartRow(), pi.getUserLimit());
+//		
+//		List<CalculateInfo> calculateList = adminMapper.calculateList(pi);
+//		
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("calculateList", calculateList);
+//		map.put("pi", pi);
+//		
+//		return map;
+//	}
+
+
 
 }

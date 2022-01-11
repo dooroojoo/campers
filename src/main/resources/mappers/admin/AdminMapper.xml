@@ -450,4 +450,42 @@
 			  , #{ campNo }
 			  , 3)
 	</insert>
+	
+	
+<!-- 	<select id="getcalculateListCount" resultType="_int">
+  		 SELECT
+		        COUNT(USER_NAME)
+		   FROM MEMBER M
+		   JOIN AUTHORITY_ROLE A ON(M.USER_NO = A.USER_NO) 
+		  WHERE AUTHORITY_CODE = 2;
+	</select>
+	
+ 	<resultMap type="com.cp.campers.camp.model.vo.CalculateInfo" id="calculateList">
+		<id property="campNo" column="CAMP_NO"></id>
+		<result property="userName" column="USER_NAME"/>
+		<result property="accountNum" column="ACCOUNT_NUM"/>
+		<result property="bank" column="BANK"/>
+	</resultMap>
+	
+	
+	<select id="calculateList" resultMap="calculateList">
+		 SELECT * 
+	      FROM (SELECT ROWNUM RNUM, A.*
+			      FROM (SELECT
+                               CAMP_NO
+                             , USER_NAME
+                             , ACCOUNT_NUM
+                             , BANK
+                              FROM MEMBER M
+                              JOIN CAMP C ON(M.USER_NO = C.USER_NO)
+                              JOIN AUTHORITY_ROLE A ON(M.USER_NO = A.USER_NO) 
+                             WHERE AUTHORITY_CODE = 2
+	                    ORDER BY C.CAMP_NO) A)
+		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
+	</select> -->
+	 
+	
+	
+	
+	
 </mapper>

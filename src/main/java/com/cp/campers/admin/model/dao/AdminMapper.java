@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.cp.campers.camp.model.vo.Room;
+import com.cp.campers.admin.model.vo.CalculateInfo;
 import com.cp.campers.admin.model.vo.PageInfo;
 import com.cp.campers.admin.model.vo.Report;
 import com.cp.campers.admin.model.vo.Search;
@@ -87,6 +88,14 @@ public interface AdminMapper {
 	
 	// 해지이력
 	void recordToDelete(int campNo);
+	
+	// 정산관리 목록 개수 
+	int getcalculateListCount();
+
+	// 정산관리목록
+	//List<CalculateInfo> calculateList(PageInfo pi);
+	
+	
 
 
 }
