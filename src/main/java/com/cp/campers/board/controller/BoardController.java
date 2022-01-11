@@ -259,14 +259,23 @@ public class BoardController {
 		
 		Board board = boardService.selectBoardUpdate(bid);
 		log.info("board="+board);
+		List<BoardFileNo> boardFileNoList = boardService.selectBoardImgae(bid);
+		
 		if(board != null) {
 			model.addAttribute(board);
-			
+		}
+		if(boardFileNoList != null) {
+			model.addAttribute(boardFileNoList);
 		}
 	
 		return "board/update";
 	}
-	
+	@PostMapping("/update")
+	public String boardUpdate(Model model, Board board) {
+		
+		
+		return "redirect:/board/detail?bid="+board.getBid();
+	}
 	@GetMapping("/delete")
 	public String boardDelete(Model model, int bid) {
 		
@@ -333,6 +342,7 @@ public class BoardController {
 
 				Attachment attachment = new Attachment();
 				attachment.setFileName(file.get("savedName"));
+				attachment.setFileNewName(file.get("originFileName"));
 				attachment.setFileRoute("/resources/images/uploadFiles/boardImg/");
 
 				if (i == 0)

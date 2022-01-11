@@ -33,6 +33,7 @@
 	<result property="fileRoute" column="FILE_ROUTE"/>
 	<result property="status" column="FILE_STATUS"/>
 	<result property="fileLevel" column="FILE_LEVEL"/>
+	<result property="fileNewName" column="FILE_NEW_NAME"/>
 </resultMap>
 
 
@@ -64,7 +65,8 @@ VALUES
 		#{fileName},
 		#{fileRoute},
 		DEFAULT,
-		#{fileLevel}
+		#{fileLevel},
+		#{fileNewName}
 )
 </insert>
 <insert id="insertImageNo" parameterType="_int">
