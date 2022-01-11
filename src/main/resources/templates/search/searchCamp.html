@@ -46,7 +46,7 @@
                     <div class="search-number-wrap">
                       <input type="search" placeholder="인원을 추가해주세요" readonly style="cursor: default;">
                       <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                    <input class="quantity" min="0" max="6" name="quantity" value="1" type="number" required>
+                    <input class="quantity" min="1" max="6" name="quantity" value="2" type="number" required>
                     <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                   </div>
                   </div>
@@ -143,13 +143,15 @@
                 <input type="hidden" id="campNo" th:value="${search.cNo}">
                   <div class="list-col-wrapper">
                   <div class="list-col-img">
-                    <img class="listImg" th:src="@{/resources/images/uploadFiles/campImg/}+${search.fileName}" style="cursor:pointer">
+                    <img class="listImg" th:src="@{/resources/images/uploadFiles/campImg/}+${search.fileName}" 
+                    style="cursor:pointer" th:onclick="|location.href='@{/camp/detail(campNo=${search.cNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|">
                 
                   
                   <div class="list-col-text">
                     <ul>
                       <li class="list-col-address" th:text="${search.cAddress}"></li>
-                      <li class="list-col-name" style="cursor:pointer" th:text="${search.cName}"></li>
+                      <li class="list-col-name" style="cursor:pointer" th:text="${search.cName}"
+                      th:onclick="|location.href='@{/camp/detail(campNo=${search.cNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></li>
                       <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span>인</li>
                       <li class="list-col-price"><span th:text="${search.minPrice}+'~'+${search.maxPrice}"></span>원</li>
                     </ul>
@@ -219,24 +221,6 @@
     
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
-    
-    <!-- 캠핑장 이미지&이름 클릭 시 상세페이지로 값 전달하면서 이동 / 검색안하고 들어가서 기본 값으로 넘겨줌 -->
-     <script>
-     $(function(){
-    	 let date = $('.area-text').val();
-    	 let dateIn = date.substring(0, 10);
-    	 let dateOut = date.substring(13, 23);
-    	 let guest = $('.quantity').val();
-     	 let cNo = $('#campNo').val();
-     	
-    	    $('.listImg').click(function(){
-    	    	location.href="/camp/detail?campNo="+cNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest;
-    	    });
-    	    $('.list-col-name').click(function(){
-    	    	location.href="/camp/detail?campNo="+cNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest;
-    	    });
-    });
-    </script>
     
     
  	<!-- 제이쿼리 충돌 방지 코드 -->
