@@ -41,16 +41,26 @@ public class CampServiceImpl implements CampService{
 		return map;
 	}
 
+	/* 객실 조회 */
 	@Override
 	public Room roomDetail(int roomNo) {
 		return campMapper.roomDetail(roomNo);
 	}
 
+	/* 리뷰 등록 */
+	@Override
+	@Transactional
+	public void insertReview(Review review) {
+		campMapper.insertReview(review);
+	}
+	
+	/* 리뷰 삭제 */
 	@Override
 	@Transactional
 	public void reviewDelete(int rid) {
 		campMapper.reviewDelete(rid);
 	}
+
 
 	
 }

@@ -29,3 +29,6 @@ custom:
   path:
     upload-images: 'C:/Users/lace2/git/campers/src/main/resources/uploadFiles/'
     #upload-images: 'C:/Users/OrzSaSin/git/campers/src/main/resources/uploadFiles/'
+#cos key
+cos:
+  key: cos1234

@@ -17,13 +17,15 @@ public interface CampMapper {
 	// 객실목록 조회
 	List<Room> roomList(int campNo);
 
-	// 리뷰 조회
-	List<Review> reviewList(int campNo);
-	
 	// 객실 조회
 	Room roomDetail(int roomNo);
+	
+	// 리뷰 조회
+	List<Review> reviewList(int campNo);
 
+	// 리뷰 등록
+	void insertReview(Review review);
+	
 	// 리뷰 삭제
 	void reviewDelete(int rid);
-
 }

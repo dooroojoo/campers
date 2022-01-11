@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cp.campers.camp.model.service.CampService;
+import com.cp.campers.camp.model.vo.Review;
 import com.cp.campers.camp.model.vo.Room;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class CampController {
 		this.campService = campService;
 	}
 
+	/* 숙소 상세 */
 	@GetMapping("detail")
 	public String campDetail(int campNo, Model model) {
 		
@@ -46,6 +48,7 @@ public class CampController {
 		
 	}
 	
+	/* 객실 상세 : ajax */
 	@GetMapping("/roomDetail/{roomNo}")
 	@ResponseBody
 	public Room roomDetail(@PathVariable int roomNo) {
@@ -54,6 +57,16 @@ public class CampController {
 		return campService.roomDetail(roomNo);
 	}
 	
+	/* 리뷰 등록 */
+	@GetMapping("/review/insert")
+	public String insertReview(Review review) {
+		
+		campService.insertReview(review);
+		
+		return "camp/review";
+	}
+	
+	/* 리뷰 삭제 */
 	@GetMapping("/reviewDelete")
 	public String reviewDelete(int rid, int campNo) {
 		
