@@ -265,10 +265,10 @@ body {
 }
 
 .mypage_character{
-  margin-left: 90px;
-  margin-top: 5px;
-  width: 7.5rem;
-  height: 7.5rem;
+  margin-left: 55px;
+  margin-top: 20px;
+  width: 12rem;
+  height: 9rem;
 }
 
 .mypage_wishlist{
@@ -284,9 +284,18 @@ body {
   padding-right : 5px;
 }
 
+/* 찜한 캠핑장 p*/
 .mypage_content_p{
   font-weight : bold;
   text-align: center;
+  margin-top: 5px;
+}
+
+/* 캐릭터 등록 p */
+.mypage_content_p2{
+  font-weight : bold;
+  text-align: center;
+  margin-top: 55px;
 }
 
 .mypage_content_3_ul{

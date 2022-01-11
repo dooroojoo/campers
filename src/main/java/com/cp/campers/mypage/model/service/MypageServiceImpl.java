@@ -146,7 +146,6 @@ public class MypageServiceImpl implements MypageService{
 	@Transactional
 	@Override
 	public void mypage_camp_enrollment_room(Camp camp) {
-		mypageMapper.insertCamp(camp);
 		mypageMapper.insertRoom(camp.getRoom());
 	}
 

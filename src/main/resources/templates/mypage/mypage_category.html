@@ -23,7 +23,11 @@
             <a th:href="@{/mypage}"><div class="ca_head">마이페이지</div></a>
             <ul class="mypage_category_ul">
                 <li class="mypage_category_li"><a th:href="@{/mypage/changinfo}">회원정보수정</a></li>
-                <li class="mypage_category_li"><a th:href="@{/mypage/wishcamp}">찜한캠핑장</a></li>
+                
+                <!-- 로그인 한 회원 -->
+                <th:block sec:authorize="hasRole('MEMBER')">
+                	<li class="mypage_category_li"><a th:href="@{/mypage/wishcamp}">찜한캠핑장</a></li>
+                </th:block>
                 
                 <!-- 로그인 한 회원 -->
                 <th:block sec:authorize="hasRole('MEMBER')">
