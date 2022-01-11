@@ -300,6 +300,11 @@ input[type="number"] {
     font-weight: 600;
 }
 
+.list-col-wrapper a{
+	text-decoration:none;
+	color: black;
+}
+
 /* .list-col-state{
     display: flex;
     flex-direction: row;

@@ -98,22 +98,24 @@
 			   JOIN BUSINESS_TYPE P ON (P.BUSINESS_NO = T.BUSINESS_NO)
 			   JOIN CAMP_FACILITY Y ON (C.CAMP_NO = Y.CAMP_NO)
                JOIN FACILITY L ON (L.FACILITY_NO = Y.FACILITY_NO)
-			  WHERE C.CAMP_STATUS = 'Y'
-			    AND F.FILE_STATUS = 'N'
-			    AND C.CAMP_ADDRESS LIKE '%'||#{ sArea }||'%'
-			    AND R.ROOM_MEMBER &gt;= #{ sGuest }
+			   WHERE C.CAMP_STATUS = 'Y'
+			     AND F.FILE_STATUS = 'N'
+			     AND C.CAMP_ADDRESS LIKE '%'||#{ sArea }||'%'
+			     AND R.ROOM_MEMBER &gt;= #{ sGuest }
+			    <trim prefix="AND">
 			    <if test="sName != null and sName != ''">
-			    AND C.CAMP_NAME LIKE '%'||#{ sName }||'%'
+			     C.CAMP_NAME LIKE '%'||#{ sName }||'%'
 			    </if>
 			    <if test="sType != null and sType != ''">
-			    AND P.BUSINESS_TYPE IN (#{ sType })
+			     P.BUSINESS_TYPE IN (#{ sType })
 			    </if>
 			     <if test="sFaci != null and sFaci != ''">
-			     AND L.FACILITY_NAME IN (#{ sFaci })
+			     L.FACILITY_NAME IN (#{ sFaci })
 			    </if>
 			     <if test="sFloor != null and sFloor != ''">
-			     AND R.ROOM_FLOOR IN (#{ sFloor })
+			     R.ROOM_FLOOR IN (#{ sFloor })
 			    </if>
+			    </trim>
 	</select>
 	
 	
