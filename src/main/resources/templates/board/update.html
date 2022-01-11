@@ -202,7 +202,7 @@
         
           <div class="freeBoard-container">
               <label class="freeBoard-label">자유게시판</label><label class="freeBoard-label-small">수정하기</label><br>
-              <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
+              <form th:action="@{/board/update}" method="post" enctype="multipart/form-data">
                 <div class="freeBoard-content">
                     <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요." maxlength="40" required th:value="${board.title}"><br>
                     <textarea th:text="${board.content}" class="writeContent" name="content" placeholder="내용을 입력하세요." required maxlength="3000"></textarea>
