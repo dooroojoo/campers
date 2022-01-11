@@ -219,8 +219,8 @@
           AND R.STATUS = 'N'
 	</select>
 	
-	<insert id="insertReview">
-		INSERT INTO REVIEW 
+	<insert id="insertReview" parameterType="com.cp.campers.camp.model.vo.Review">
+		INSERT INTO REVIEW (REVIEW_NO, USER_NO, RCONTENT, CREATE_DATE, STATUS, RESER_NO, CAMP_NO)
 		VALUES (SEQ_REVIEW_NO.NEXTVAL
               , #{ userNo }
               , #{ rcontent }
