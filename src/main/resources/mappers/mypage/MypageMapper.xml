@@ -148,7 +148,7 @@
 		<result property="status" column="FILE_STATUS"/>
 		<result property="fileLevel" column="FILE_LEVEL"/>
 	</resultMap> 
-     
+          
    <select id="selectMember" resultType="com.cp.campers.member.model.vo.Member">
    		SELECT *
    		FROM MEMBER
@@ -175,8 +175,28 @@
    	  	   , STATUS
    	  	   , CREATE_DATE
    	  	   , MODIFY_DATE
-      FROM MEMBER;
+      FROM MEMBER
      WHERE STATUS = 'Y'
+   </select>
+   
+   <select id="findAllBoard" resultMap="boardResultMap">
+   	SELECT
+   		   BID
+   		 , BTITLE
+   		 , BCONTENT
+   		 , MODIFY_DATE
+   		 , CREATE_DATE
+   		 , STATUS
+   		 , WRITER
+   		 , BCOUNT
+   		 , BLIKE
+   		 , NEXTID
+   		 , NEXTTITLE
+   		 , RREVID
+   		 , PREVTITLE
+   	 FROM BOARD
+   	 WHERE STATUS = 'Y'
+   	 ORDER BY BID
    </select>
      
    <insert id="insertCamp" parameterType="com.cp.campers.mypage.model.vo.Camp">
@@ -322,8 +342,9 @@
 	
 	<update id="changeInfoPwdModify" parameterType="com.cp.campers.member.model.vo.Member">
 		UPDATE MEMBER
-		   SET USER_PWD = #{ pwd }
-		WHERE USER_NO = #{ userNo }
+		   SET USER_PWD = #{ pwd }		     
+		 WHERE USER_NO = #{ userNo }
+		   AND USER_PWD = #{ pwd }
 	</update>
       
    <select id="nickNameCheck" parameterType="String" resultType="int">
@@ -347,7 +368,7 @@
    </delete>
     -->
  
- 	<select id="selectBoardList" resultMap="boardResultMap">
+ 	<select id="selectMyBoardList" parameterType="hashmap" resultMap="boardResultMap">
 	SELECT *
 	FROM (SELECT ROWNUM RNUM, A.*
 	FROM (SELECT 
@@ -361,9 +382,11 @@
 	            BLIKE
 	      FROM BOARD B
 	      JOIN MEMBER M ON (B.WRITER = M.USER_NO)
-	      WHERE B.STATUS = 'N'
-	ORDER BY bid DESC) A)
-	WHERE RNUM BETWEEN #{startRow} AND #{endRow} 
+	     WHERE B.STATUS = 'N'
+	       AND WRITER = #{ writer }
+		 ORDER BY bid DESC) A)
+	WHERE RNUM BETWEEN #{pi.startRow} AND #{pi.endRow} 
 	</select>
  
+ 	
 </mapper>

@@ -23,12 +23,13 @@
      <!-- category -->
 	<div th:replace="mypage/mypage_category.html"></div>
         <div>
-            <table class="mypage_camp_management_table">
         <div class="mypage_camp_management">
             <header class="mypage_camp_management_header">
                 <h1 class="mypage_camp_management_h1">캠핑장 관리</h1>
             </header>
         </div>
+            
+            <table class="mypage_camp_management_table">
                 <tr class="mypage_camp_management_table_header">
                     <th class="mypage_camp_management_table_header_no">NO</th>
                     <th class="mypage_camp_management_table_header_camp">캠핑장 이름</th>
@@ -59,7 +60,7 @@
                 </tr>
             </table>
             <div class="room_plus">
-                <img class="room_plus_img" src="/resources/images/mypage/plus.png">객실 추가하기
+                <a class="room_plus_p" href="/mypage/mypage_camp_enrollment_room"><img class="room_plus_img" src="/resources/images/mypage/plus.png">객실 추가하기</a>
             </div>
         <!-- 페이징 처리 -->
      <div class="member_pages">
@@ -119,6 +120,8 @@
 	</div>
     </div>
 	<!-- footer -->
-    <div th:replace="common/footer.html"></div>  
+    <div th:replace="common/footer.html"></div> 
+        
+     
 </body>
 </html>

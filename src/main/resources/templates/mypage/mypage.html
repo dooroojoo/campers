@@ -54,13 +54,12 @@
         </div>
         <div class="mypage_content_4">
             <div class="mypage_content_top">내가 등록한 게시물</div>
-            <ul class="mypage_content_4_ul" th:each="board : ${ boardList }">
-                <li class="mypage_content_4_li" th:text="${ board.title }"></li>
+            <ul class="mypage_content_4_ul" th:each="board : ${boardList}">
+                <li class="mypage_content_4_li" th:text="${board.btitle}"></li>
             </ul>    
         </div>
       </div>
-    </div>
-    
+    </div>    
     
     <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>

@@ -110,7 +110,13 @@
     font-weight: bold;
     margin-top: 20px;
     padding-top: 10px;
-    margin-left: 20px;
+    margin-left: 242px;
+}
+
+.room_plus_p{
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
 }
 
 .room_plus_img{

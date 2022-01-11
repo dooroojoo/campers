@@ -44,7 +44,7 @@
             <header class="changinfo_content_header">현재 비밀번호와 새로운 비밀번호를 입력 해주세요.</header>        
             <div class="changinfo_privacy">
                 
-                <form th:action="@{/mypage/changinfo_pwd_modify}" role="form"
+                <form th:action="@{/mypage/changinfo/changinfo_modify/changinfo_pwd_modify}" role="form"
                 	th:Object="${passwordForm}" method="post">
                     <h4 class="changinfoPwdModify_pwd">현재 비밀번호<input type="password" class="changinfoPwdModify_pwd_form" 
                     name="userPwd" id="userPwd" placeholder="비밀번호를 입력하세요"></input></h4>

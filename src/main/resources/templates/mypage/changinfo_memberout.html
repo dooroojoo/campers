@@ -5,6 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>changinfo_memberout</title>
+    <script>
+	const successMessage = '[[${ successMessage }]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+    </script>
+    
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
@@ -15,7 +23,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 </head>
 <body>
 	<!-- header -->
@@ -38,11 +45,12 @@
                 회원탈퇴 버튼을 클릭해 주세요.    
             </header>        
             <div class="changinfo_privacy">
-                <form th:action="@{/mypage/changinfo_memberout}" method="post">
+                <form class="changinfo_memberout_form" id="changinfo_modify_form" 
+                th:action="@{/mypage/changinfo/changinfo_memberout}" method="post" onsubmit="return validate();">
                     <h4 class="check_id">아 이 디<input type="text" class="check_id_form" id="id" name="id"></input></h4>
                     <h4 class="check_pwd">비밀번호 확인<input type="password" class="check_pwd_form" id="pwd" name="pwd"></input>
-                    <div class="check_font" id="userPwd2_check"></div>
-                    <button class="changinfoPwdModify_pwdbutton">회원탈퇴</button>
+                    <div class="check_font" id="user_check"></div>
+                    <button type="submit" id="submit" name="submit" class="changinfoPwdModify_pwdbutton">회원탈퇴</button>
                 </form>
             </div>
         </div>
@@ -52,6 +60,7 @@
     <!-- footer -->
     <div th:replace="common/footer.html"></div>    
     
+    <!-- 
     <script>
     $('#userPwd2').blur(function(){
 		if($('#userPwd').val() != $(this).val()){
@@ -60,9 +69,29 @@
 		} else {
 			$('#userPwd2_check').text('');
 		}
-	});
-	
+	});    
+    </script>
+     -->
     
+    <script>
+    function validate(){
+		return true;
+	}
+    
+    $("#submit").on('click', function(){
+			if(changinfo_memberout_form.id.value == ""){
+				alert("아이디를 입력하지 않았습니다")
+				changinfo_memberout_form.id.focus();
+				return false;
+			}
+			
+			if(changinfo_memberout_form.pwd.value == ""){
+				alert("비밀번호를 입력하지 않았습니다")
+				changinfo_memberout_form.pwd.focus();
+				return false;
+			}
+			return true;
+	    });
     </script>
     
     
