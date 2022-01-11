@@ -190,7 +190,7 @@
                             <div class="current_page" th:if="${ p == pi.page }">
                                 <a href="#" th:text="${p}"></a>
                             </div>
-                            <div th:if="${ p != pi.page }">
+                            <div th:if="${ p > pi.page }">
                                 <a th:href="@{/search/find(page=${p})}" th:text="${p}"></a>
                             </div>
                         </li>
