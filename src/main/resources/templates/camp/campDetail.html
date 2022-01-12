@@ -128,12 +128,12 @@
                         <div class="rv_top">
                             <div class="check_left">
                                 <div class="check_io"><h5>CHECK IN</h5></div>
-                                <div class="io_date">2021.12.05</div>
+                                <div class="io_date" th:text="${param.dateIn}"></div>
                             </div>
     
                             <div class="check_right">
                                 <div class="check_io"><h5>CHECK OUT</h5></div>
-                                <div class="io_date">2021.12.07</div>
+                                <div class="io_date" th:text="${param.dateOut}"></div>
                             </div>
                         </div>
 
@@ -143,7 +143,7 @@
                                 <span>인원</span>
                             </div>
                             <div>
-                                <span>2</span>
+                                <span th:text="${param.guest}"></span>
                             </div>
                             <div class="rv_select">
                                 <select id="roomName" name="roomName">

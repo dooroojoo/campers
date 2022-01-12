@@ -27,14 +27,16 @@
 
                 <h5>리뷰쓰기</h5>
 
-                <form action="#" method="post">
+                <form action="/camp/review" method="post">
 
                     <div class="writeArea">
                         <textarea id="replyCont" rows="5" cols="60" style="resize:none;border:none;" maxlength="100" 
-                        placeholder="100자 이내로 작성해주세요"></textarea>
+                        name="rcontent" placeholder="100자 이내로 작성해주세요"></textarea>
                     </div>
 
-
+					<input type="hidden" name="writer" th:value="${param.userNo}">
+					<input type="hidden" name="campNo" th:value="${param.campNo}">
+					<input type="hidden" name="reserNo" th:value="${param.reserNo}">
                     
                     <div class="btnArea">
                         <button class="btnBefore" onclick="/mypage/">이전</button>
