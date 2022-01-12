@@ -24,54 +24,50 @@
                         <li class="bank">은행</li>
                         <li class="sales_amount">월별 판매금액</li>
                         <li class="settlement_amount">월별 정산금액</li>
-                        <li class="calculate">정산</li>
                     </ul>
-                    <ul class="calculate_header">
-                        <li class="calcul_num">0001</li>
-                        <li class="business_name">김사업</li>
-                        <li class="account_num">1234567</li>
-                        <li class="bank">국민</li>
+                    <ul class="calculate_header" th:each="calculate : ${ calculateList }">
+                        <li class="calcul_num" th:text="${ calculate.campNo}"></li>
+                        <li class="business_name" th:text="${ calculate.userName}"></li>
+                        <li class="account_num"  th:text="${ calculate.accountNum}"></li>
+                        <li class="bank" th:text="${ calculate.bank}"></li>
                         <li class="sales_amount">500000</li>
                         <li class="settlement_amount">450000</li>
-                        <li class="calculate">
-                            <button type="submit">정산하기</button>
-                        </li>
                     </ul>
+					<div align="center"><p th:text="${noResult}"></p></div>
                 </div>
 	
 	
-	       <!--          2. 페이징 처리
-                <div class="admin_pages">
+	           <!--  2. 페이징 처리 -->
+                <div class="admin_pages" th:if="${#strings.isEmpty(noResult)}">
                     <ul class="admin_paging">
 
+                     <!-- 맨 처음으로 이동하는 버튼(<<) -->
+                     <li><a href="/admin/calculatePage?page=1">&lt;&lt;</a></li>
 
-                     맨 처음으로 이동하는 버튼(<<)
-                     <li><a href="/admin/reportPage?page=1">&lt;&lt;</a></li>
-
-                     이전 페이지로(<)
-                     <li th:if="${ pi.page > 1 }"><a th:href="@{/admin/reportPage(page=${pi.page-1})}">&lt;</a></li>
+                     <!-- 이전 페이지로(<) -->
+                     <li th:if="${pi.page > 1}"><a href="/admin/calculatePage?page=${pi.page-1}">&lt;</a></li>
                      <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
 
-                     최대 10개의 페이지 목록
+                   <!--   최대 10개의 페이지 목록 -->
                      <li th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
                          <div class="current_page" th:if="${ p == pi.page }">
                              <a href="#" th:text="${ p }"></a>
                          </div>
                          <div th:if="${ p != pi.page }">
-                             <a th:href="@{/admin/reportPage(page=${p})}" th:text="${ p }"></a>
+                             <a th:href="@{/admin/calculatePage(page=${p})}" th:text="${ p }"></a>
                          </div>
                      </li>
 
-                     다음 페이지로(>)
-                     <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/reportPage(page=${pi.page+1})}">&gt;</a></li>
+                    <!--  다음 페이지로(>) -->
+                     <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/calculatePage(page=${pi.page+1})}">&gt;</a></li>
                      <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
          
 
-                     맨 끝으로 이동하는 버튼(>>)
-                     <li><a th:href="@{/admin/reportPage(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                    <!--  맨 끝으로 이동하는 버튼(>>) -->
+                     <li><a th:href="@{/admin/calculatePage(page=${pi.maxPage})}">&gt;&gt;</a></li>
                    </ul>
                </div>
- -->
+ 
 	
 	
 	        </div>

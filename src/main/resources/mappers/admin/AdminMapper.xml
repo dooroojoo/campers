@@ -452,15 +452,15 @@
 	</insert>
 	
 	
-<!-- 	<select id="getcalculateListCount" resultType="_int">
+ 	<select id="getcalculateListCount" resultType="_int">
   		 SELECT
 		        COUNT(USER_NAME)
 		   FROM MEMBER M
 		   JOIN AUTHORITY_ROLE A ON(M.USER_NO = A.USER_NO) 
-		  WHERE AUTHORITY_CODE = 2;
+		  WHERE AUTHORITY_CODE = 2
 	</select>
 	
- 	<resultMap type="com.cp.campers.camp.model.vo.CalculateInfo" id="calculateList">
+ 	<resultMap type="com.cp.campers.admin.model.vo.CalculateInfo" id="calculateList">
 		<id property="campNo" column="CAMP_NO"></id>
 		<result property="userName" column="USER_NAME"/>
 		<result property="accountNum" column="ACCOUNT_NUM"/>
@@ -482,7 +482,7 @@
                              WHERE AUTHORITY_CODE = 2
 	                    ORDER BY C.CAMP_NO) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
-	</select> -->
+	</select> 
 	 
 	
 	
