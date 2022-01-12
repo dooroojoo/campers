@@ -41,8 +41,12 @@ public class CampController {
 		
 		log.info(map.get("reviewList").toString());
 		
+		if (map.get("roomList").toString().equals("[]")) {
+			model.addAttribute("noRoom", "예약할 수 있는 객실이 없어요!");
+		}
+		
 		if (map.get("reviewList").toString().equals("[]")) {
-			model.addAttribute("noResult", "아직 리뷰가 없어요!");
+			model.addAttribute("noReview", "아직 리뷰가 없어요!");
 		}
 		
 		return "camp/campDetail";
