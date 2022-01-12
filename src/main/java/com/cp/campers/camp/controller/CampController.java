@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -57,9 +58,13 @@ public class CampController {
 		return campService.roomDetail(roomNo);
 	}
 	
+	@GetMapping("/review")
+	public void insertReview() {}
+	
 	/* 리뷰 등록 */
-	@GetMapping("/review/insert")
+	@PostMapping("/review")
 	public String insertReview(Review review) {
+		log.info("입력 요청 review : {}", review);
 		
 		campService.insertReview(review);
 		
