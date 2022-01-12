@@ -16,7 +16,9 @@ $(function() {
                   minDate: 0,
                   startDate:toDay.setDate(toDay.getDate()+1),
                   endDate: toDay
+                  
   });
-
+  
   });
+  
   

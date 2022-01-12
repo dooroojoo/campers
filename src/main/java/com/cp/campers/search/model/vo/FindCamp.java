@@ -1,13 +1,12 @@
 package com.cp.campers.search.model.vo;
 
-import java.time.LocalDate;
 
 
 public class FindCamp{
 
 	private String sArea;				// 지역 검색
-	private LocalDate sIn;				// 체크인 날짜 검색
-	private LocalDate sOut;				// 체크아웃 날짜 검색
+	private String sIn;				// 체크인 날짜 검색
+	private String sOut;				// 체크아웃 날짜 검색
 	private String sGuest;				// 인원 수 검색
 	private String sName;				// 캠핑장이름 검색
 	private String sType;				// 캠핑장 타입 검색
@@ -16,7 +15,7 @@ public class FindCamp{
 	
 	public FindCamp() {}
 
-	public FindCamp(String sArea, LocalDate sIn, LocalDate sOut, String sGuest, String sName, String sType,
+	public FindCamp(String sArea, String sIn, String sOut, String sGuest, String sName, String sType,
 			String sFaci, String sFloor) {
 		super();
 		this.sArea = sArea;
@@ -37,19 +36,19 @@ public class FindCamp{
 		this.sArea = sArea;
 	}
 
-	public LocalDate getsIn() {
+	public String getsIn() {
 		return sIn;
 	}
 
-	public void setsIn(LocalDate sIn) {
+	public void setsIn(String sIn) {
 		this.sIn = sIn;
 	}
 
-	public LocalDate getsOut() {
+	public String getsOut() {
 		return sOut;
 	}
 
-	public void setsOut(LocalDate sOut) {
+	public void setsOut(String sOut) {
 		this.sOut = sOut;
 	}
 
