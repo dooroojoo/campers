@@ -3,29 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <title th:text="${camp.campName}"></title>
-
-	<!-- css -->
-	<link href="/resources/css/camp/campDetail.css" rel="stylesheet">
-	
-	<!-- icon -->
-	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-	
-	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="/resources/js/camp/room.js"></script>
-	
-	<!-- 캘린더 라이브러리 -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-	<!-- 슬라이드 -->
-	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-	
+<!-- css -->
+<link href="/resources/css/camp/campDetail.css" rel="stylesheet">
+<!-- icon -->
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+<!-- 캘린더 css -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<!-- 슬라이드 -->
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 </head>
 <body>
 <div th:replace="common/header.html"></div>
+<!-- header 밑으로 -->
+ <!-- jQuery UI js -->
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js" integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
+<!-- 캘린더 라이브러리 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="/resources/js/camp/room.js"></script>
 
 <div class="accom_wrap" id="moveTop">
     <div class="accom_content">
@@ -142,11 +139,15 @@
                         </div>
                         
 						<div class="rv-middle">
+							<input type="hidden" id="dateIn" th:value="${param.dateIn}">
+							<input type="hidden" id="dateOut" th:value="${param.dateOut}">
 	                        <script>
 	                       	$(function() {
 	                       		
-	                       		$.noConflict();
-	
+	                       		var dateIn = $('#dateIn').val();
+	                       		var dateOut = $('#dateOut').val();
+	                       		console.log(dateIn + ' ' + dateOut);
+	                       		
 	                       		var toDay = new Date();
 	                       		
 	                       	    $('input[name="daterange"]').daterangepicker({
@@ -160,16 +161,23 @@
 	                       	                    },
 	                       	                  "drops": "down",
 	                       	                  maxDate: 0,
-	                       	                  minDate: 0,
-	                       	                  startDate:toDay.setDate(toDay.getDate()+1),
+	                       	                  minDate: toDay,
+	                       	                  startDate: toDay.setDate(toDay.getDate()+1),
 	                       	                  endDate: toDay
 	                       	  });
+		                       	 $('input[name="daterange"]').datepicker();          
+		                         
+		                         //From의 초기값을 오늘 날짜로 설정
+		                         $('input[name="daterange"]').daterangepicker({startDate : new Date(dateIn), endDate : new Date(dateOut)});
 	
 	                       	  });
+	                       	
+	                      	
 	                       	</script>
 							<label class="search-date search-container">
-			                    <input type="text" id="main-date-check" class="area-text" name="daterange" th:value="|${param.dateIn} ~ ${param.dateOut}|"
+			                    <input type="text" id="main-date-check" class="area-text" name="daterange"
 			                    style="cursor: default;" readonly required>
+			                    
 			                </label>
 	                    </div>
 
@@ -587,6 +595,6 @@ function deleteRid(rid, campNo){
 </script>
 <div th:replace="common/footer.html"></div>
 <!-- 제이쿼리 충돌 방지 코드 -->
-<script> $.noConflict(); </script>
+<!-- <script> $.noConflict(); </script> -->
 </body>
 </html>
