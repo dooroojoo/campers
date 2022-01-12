@@ -5,14 +5,20 @@
 <title th:text="${camp.campName}"></title>
 
 	<!-- css -->
-	<link href="/resources/css/camp/campDetail.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/camp/campDetail.css" rel="stylesheet">
 	
 	<!-- icon -->
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	
+	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="/resources/js/camp/room.js"></script>
 	
+	<!-- 캘린더 라이브러리 -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 	<!-- 슬라이드 -->
 	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -128,23 +134,61 @@
                         <div class="rv_top">
                             <div class="check_left">
                                 <div class="check_io"><h5>CHECK IN</h5></div>
-                                <div class="io_date" th:text="${param.dateIn}"></div>
                             </div>
     
                             <div class="check_right">
                                 <div class="check_io"><h5>CHECK OUT</h5></div>
-                                <div class="io_date" th:text="${param.dateOut}"></div>
                             </div>
                         </div>
-
+                        
+						<div class="rv-middle">
+	                        <script>
+	                       	$(function() {
+	                       		
+	                       		$.noConflict();
+	
+	                       		var toDay = new Date();
+	                       		
+	                       	    $('input[name="daterange"]').daterangepicker({
+	                       	      "locale": {
+	                       	                      "format": "YYYY-MM-DD",
+	                       	                      "separator": " ~ ",
+	                       	                      "applyLabel": "확인",
+	                       	                      "cancelLabel": "취소",
+	                       	                      "daysOfWeek": ["월", "화", "수", "목", "금", "토", "일"],
+	                       	                      "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+	                       	                    },
+	                       	                  "drops": "down",
+	                       	                  maxDate: 0,
+	                       	                  minDate: 0,
+	                       	                  startDate:toDay.setDate(toDay.getDate()+1),
+	                       	                  endDate: toDay
+	                       	  });
+	
+	                       	  });
+	                       	</script>
+							<label class="search-date search-container">
+			                    <input type="text" id="main-date-check" class="area-text" name="daterange" th:value="|${param.dateIn} ~ ${param.dateOut}|"
+			                    style="cursor: default;" readonly required>
+			                </label>
+	                    </div>
 
                         <div class="rv_bottom">
                             <div class="rv_person">
-                                <span>인원</span>
+                                <!-- <span>인원</span> -->
+                                <div class="rv_guestNum">
+	                                <select id="guestNum" name="guestNum">
+	                                    <option selected>인원</option>
+	                                    <option value="1" th:selected="${#strings.equals(param.guest, '1')}">1</option>
+	                                    <option value="2" th:selected="${#strings.equals(param.guest, '2')}">2</option>
+	                                    <option value="3" th:selected="${#strings.equals(param.guest, '3')}">3</option>
+	                                    <option value="4" th:selected="${#strings.equals(param.guest, '4')}">4</option>
+	                                    <option value="5" th:selected="${#strings.equals(param.guest, '5')}">5</option>
+	                                    <option value="6" th:selected="${#strings.equals(param.guest, '6')}">6</option>
+	                                </select>
+	                            </div>
                             </div>
-                            <div>
-                                <span th:text="${param.guest}"></span>
-                            </div>
+                            
                             <div class="rv_select">
                                 <select id="roomName" name="roomName">
                                     <option checked>객실을 선택해주세요</option>
@@ -261,9 +305,9 @@
                         <ul class="checkTime_ul">
                             <li id="checkTime_li_icon"><i class="far fa-calendar-alt"></i></li>
                             <li class="checkTime_li"><h5>CHECK IN</h5></li>
-                            <li class="checkTime_li">15:00</li>
+                            <li class="checkTime_li" th:text="${camp.checkin}"></li>
                             <li class="checkTime_li_io"><h5>CHECK OUT</h5></li>
-                            <li class="checkTime_li_io">11:00</li>
+                            <li class="checkTime_li_io" th:text="${camp.checkout}"></li>
                         </ul>
                     </div>
 
@@ -333,6 +377,10 @@
                     </div>
                     
                 </div>
+                    <div align="center" class="noRoom" th:if="${not #strings.isEmpty(noRoom)}">
+                    	<img src="/resources/images/camp/no-connection.png">
+                    	<h4 th:text="${noRoom}"></h4>
+                    </div>
 
 				<script>
 				 	function showRoom(roomNo){
@@ -436,9 +484,9 @@
                         </ul>
                     </div>
                     
-                    <div align="center" th:if="${not #strings.isEmpty(noResult)}">
+                    <div align="center" th:if="${not #strings.isEmpty(noReview)}">
                     	<img class="noReview" src="/resources/images/camp/tent.png">
-                    	<h4 th:text="${noResult}"></h4>
+                    	<h4 th:text="${noReview}"></h4>
                     </div>
                 </div>
             </div>
@@ -537,7 +585,8 @@ function deleteRid(rid, campNo){
 	
 }
 </script>
-
 <div th:replace="common/footer.html"></div>
+<!-- 제이쿼리 충돌 방지 코드 -->
+<script> $.noConflict(); </script>
 </body>
 </html>
