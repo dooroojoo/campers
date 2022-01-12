@@ -250,24 +250,27 @@ public class AdminServiceImpl implements AdminService{
 		return adminMapper.completeReport(rNo);
 	}
 
-//	@Override
-//	public Map<String, Object> calculateList(int page) {
-//		
-//		// 1. 게시글 총 개수 구하기 
-//		int listCount = adminMapper.getcalculateListCount();
-//		
-//		PageInfo pi = new PageInfo(page, listCount, 10, 10);
-//		pi.setStartRow(page, pi.getUserLimit());
-//		pi.setEndRow(pi.getStartRow(), pi.getUserLimit());
-//		
-//		List<CalculateInfo> calculateList = adminMapper.calculateList(pi);
-//		
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("calculateList", calculateList);
-//		map.put("pi", pi);
-//		
-//		return map;
-//	}
+	@Override
+	public Map<String, Object> calculateList(int page) {
+		
+		// 1. 게시글 총 개수 구하기 
+		int listCount = adminMapper.getcalculateListCount();
+		
+		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		pi.setStartRow(page, pi.getUserLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getUserLimit());
+		
+		List<CalculateInfo> calculateList = adminMapper.calculateList(pi);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("calculateList", calculateList);
+		map.put("pi", pi);
+		
+		return map;
+	}
+
+	
+
 
 
 

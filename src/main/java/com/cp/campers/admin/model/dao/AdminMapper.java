@@ -93,7 +93,7 @@ public interface AdminMapper {
 	int getcalculateListCount();
 
 	// 정산관리목록
-	//List<CalculateInfo> calculateList(PageInfo pi);
+	List<CalculateInfo> calculateList(PageInfo pi);
 	
 	
 

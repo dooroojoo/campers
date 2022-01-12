@@ -13,6 +13,9 @@ public class CalculateInfo {
 	private int msa; 			 // 월별판매금액
 	private int msma;    		 // 월별정산금액
 	
+	
+	public CalculateInfo() {}
+	
 	public CalculateInfo(int campNo, String userName, String accountNum, String bank, int msa, int msma) {
 		super();
 		this.campNo = campNo;
