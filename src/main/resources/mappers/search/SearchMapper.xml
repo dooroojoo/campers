@@ -56,7 +56,7 @@
                     ROWNUM AS NUM
                   , C.CAMP_NO 
                   , C.CAMP_NAME 
-                  , C.CAMP_ADDRESS 
+                  , SUBSTR(CAMP_ADDRESS, 0, INSTR(CAMP_ADDRESS, ' ', 1, 3)) AS "CAMP_ADDRESS"
                   , F.FILE_ROUTE 
                   , F.FILE_NAME 
                   , SUM(R.ROOM_COUNT) AS "ROOM_COUNT"

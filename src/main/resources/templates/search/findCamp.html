@@ -32,7 +32,7 @@
                 <input type="hidden" th:each="fc:${fc}">
                    <p>지역</p>
                    <label class="search-area search-container">
-                   <input type="text" placeholder="어디로 여행가세요?" name="area" th:value="${fc.sArea}" required >
+                   <input type="text" placeholder="어디로 여행가세요?" class="find-area" name="area" th:value="${fc.sArea}" required >
                     </label>
                 
                   
@@ -57,20 +57,21 @@
 
                 <p>캠핑장명</p>
                    <label class="search-name search-container">
-                   <input type="text" placeholder="캠핑장 이름으로 찾아볼까요?" name="name" th:value="${fc.sName}">
+                   <input type="text" placeholder="캠핑장 이름으로 찾아볼까요?" id="find-name" name="name" th:value="${fc.sName}">
                 </label>
                    
                 <div class="search-camp-type">
                   <p>숙소유형</p>
                   <div class="camp-type-btn">
                    <label class="search-type">
-                      <input type="checkbox" class="s-type-camping" name="type" value="캠핑"><span class="search-style">캠핑</span>
+                   <input type="hidden" id="search-type-val" th:value="${fc.sType}">
+                      <input type="checkbox" id="s-type-camping" name="type" value="캠핑"><span class="search-style">캠핑</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-glamping" name="type" value="글램핑"><span class="search-style">글램핑</span>
+                      <input type="checkbox" id="s-type-glamping" name="type" value="글램핑"><span class="search-style">글램핑</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="type" value="카라반"><span class="search-style">카라반</span>
+                      <input type="checkbox" id="s-type-caravan" name="type" value="카라반"><span class="search-style">카라반</span>
                     </label>
                   </div>
                 </div>
@@ -78,32 +79,33 @@
                 <div class="search-convenient-type">
                   <p>주요시설</p>
                   <div class="camp-type-btn">
+                  <input type="hidden" id="find-faci-val" th:value="${fc.sFaci}">
                   <label class="search-type">
-                      <input type="checkbox" class="s-type-camping" name="facility" value="수영장"><span class="search-style">수영장</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="수영장"><span class="search-style">수영장</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-glamping" name="facility" value="바베큐장"><span>바베큐장</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="바베큐장"><span>바베큐장</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="반려동물"><span>반려동물</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="반려동물"><span>반려동물</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="조식제공"><span>조식제공</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="조식제공"><span>조식제공</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="매점"><span class="search-style">매점</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="매점"><span class="search-style">매점</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="샤워실"><span class="search-style">샤워실</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="샤워실"><span class="search-style">샤워실</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="와이파이"><span>와이파이</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="와이파이"><span>와이파이</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="전기"><span class="search-style">전기</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="전기"><span class="search-style">전기</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" class="s-type-caravan" name="facility" value="개수대"><span class="search-style">개수대</span>
+                      <input type="checkbox" class="find-facility" name="facility" value="개수대"><span class="search-style">개수대</span>
                     </label>
                   </div>
             </div>
@@ -111,6 +113,7 @@
             <div class="search-bottom-type">
               <p>바닥</p>
               <div class="camp-type-btn">
+              <input type="hidden" id="find-floor-val" th:value="${fc.sFloor}">
                <label class="search-type">
                   <input type="checkbox" class="s-type-camping" name="floor" value="데크"><span class="search-style">데크</span>
                 </label>
@@ -185,7 +188,7 @@
                    
                     <!-- 이전 페이지로(<)  -->
                     <li th:if="${pi.page > 1}">
-                    <a th:href="@{/search/find(page=${pi.page - 1 })}">&lt;</a>
+                    <a th:href="${pi.page - 1 }">&lt;</a>
                     </li>
                     <li th:unless="${pi.page > 1}">
                     <a href="#">&lt;</a>
@@ -195,8 +198,8 @@
                             <div class="current_page" th:if="${ p == pi.page }">
                                 <a href="#" th:text="${p}"></a>
                             </div>
-                            <div th:if="${ p > pi.page }">
-                                <a th:href="@{/search/find(page=${p})}" th:text="${p}"></a>
+                            <div th:if="${ p != pi.page }">
+                                <a class="find-paging" style="cursor:pointer" th:text="${p}"></a>
                             </div>
                         </li>
         		
@@ -223,6 +226,29 @@
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
     
+    <script>
+    $(function(){    
+    	$(".find-paging").click(function(){
+    		let area = $(".find-area").val();
+    		let dateIn = $(".find-in-date").val();
+    		let dateOut = $(".find-out-date").val();
+    		let guest = $(".find-guest").val();
+    		let name = $("#find-name").val();
+    		let typeObj = $("#search-type-val").val();
+    		let faciObj= $("#find-faci-val").val();
+    		let floorObj = $("#find-floor-val").val();
+    		
+    		let typeArr = typeObj.split(',');
+    		let faciArr = faciObj.split(',');
+    		let floorArr = floorObj.split(',');
+    		
+    		
+            location.href='/search/find?page='+$(this).text()+'&area='+area+'&type='+typeArr+'&daterange='+dateIn
+            		+'+~+'+dateOut+'&quantity='+guest+'&name='+name+'&facility='+faciArr+'&floor='+floorArr; 
+        });
+    });
+    </script>
+    
     
  	<!-- 제이쿼리 충돌 방지 코드 -->
 	<script type="text/javascript"> $.noConflict(); </script>
@@ -238,6 +264,6 @@
 	<script type="text/javascript"> $.noConflict(); </script>
 	
 	<!-- 캘린더 스크립트 -->
-	<script type="text/javascript" src="/resources/js/main/datePicker.js"></script>
+	<script src="/resources/js/main/datePicker.js"></script>
 </body>
 </html>

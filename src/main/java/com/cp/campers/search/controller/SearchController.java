@@ -3,13 +3,10 @@ package com.cp.campers.search.controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +90,10 @@ public class SearchController {
 			nowPage = Integer.parseInt(page);
 		}
 		
-		
-		String type =String.join(", ", typeArr);
-		String facility =String.join(", ", facilityArr);
-		String floor =String.join(", ", floorArr);
+		// List로 넘어온 체크박스 String으로 합쳐주기
+		String type =String.join(",", typeArr);
+		String facility =String.join(",", facilityArr);
+		String floor =String.join(",", floorArr);
 		
 		log.info(area);
 		log.info(daterange);
@@ -108,19 +105,16 @@ public class SearchController {
 		log.info(floor);
 		
 		
-		// String -> Date로 변환
+		// 날짜 자르기
 		String inDate = daterange.substring(0,10);
 		String outDate = daterange.substring(13,23);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
-		LocalDate checkIn = LocalDate.parse(inDate, formatter);
-		LocalDate checkOut = LocalDate.parse(outDate, formatter);
 
 		
 		FindCamp fc = new FindCamp();
 		fc.setsName(name);
 		fc.setsArea(area);
-		fc.setsIn(checkIn);
-		fc.setsOut(checkOut);
+		fc.setsIn(inDate);
+		fc.setsOut(outDate);
 		fc.setsGuest(quantity);
 		fc.setsFaci(facility);
 		fc.setsFloor(floor);
