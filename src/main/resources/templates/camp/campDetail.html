@@ -151,7 +151,7 @@
 	                       		var dateOut = $('#dateOut').val();
 	                       		var toDay = new Date();
 	                       		
-	                       	    $('input[name="daterange"]').daterangepicker({
+	                       	    /* $('input[name="daterange"]').daterangepicker({
 	                       	      "locale": {
 	                       	                      "format": "YYYY-MM-DD",
 	                       	                      "separator": " ~ ",
@@ -165,7 +165,7 @@
 	                       	                  minDate: 0,
 	                       	                  startDate: toDay.setDate(toDay.getDate()+1),
 	                       	                  endDate: toDay
-	                       	  });
+	                       	  }); */
 		                       	 $('input[name="daterange"]').datepicker();   
 		                         $('input[name="daterange"]').daterangepicker({startDate : new Date(dateIn), endDate : new Date(dateOut), 
 		                        	 locale:  {
@@ -193,7 +193,7 @@
                             <div class="rv_person">
                                 <!-- <span>인원</span> -->
                                 <div class="rv_guestNum">
-	                                <select id="guestNum" name="guestNum" ><!--  -->
+	                                <select id="guestNum" name="guestNum" th:onchange="changeLoad()" >
 	                                    <option selected>인원</option>
 	                                    <option value="1" th:selected="${#strings.equals(param.guest, '1')}">1</option>
 	                                    <option value="2" th:selected="${#strings.equals(param.guest, '2')}">2</option>
