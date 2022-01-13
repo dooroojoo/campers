@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -187,7 +188,7 @@ public class MemberController {
 		 String phone2 = request.getParameter("phone2");
 		 String phone3 = request.getParameter("phone3");
 		 
-		 member.setPhone(phone1+"-"+phone2+"-"+phone3);
+		 member.setPhone(phone1+""+phone2+""+phone3);
 	      
 	      /* 파일명 확인 */
 		 log.info("size"+singleFile.getSize());
@@ -232,6 +233,22 @@ public class MemberController {
 		  log.info(member.getId(), member.getEmail());
 		  
 		  return memberService.findPwd(member);
+	 }
+	 
+	 @ResponseBody
+	 @GetMapping("/idCheck/{id}")
+	 public String selectIdCheck(@PathVariable String id) {
+		 int result = memberService.idCheck(id);
+		 
+		 String message ="";
+		 if(result>0) {
+			 message = "fail";
+		 }else {
+			 message = "success";
+		 }
+		return message;
+		
+		 
 	 }
 	
 }

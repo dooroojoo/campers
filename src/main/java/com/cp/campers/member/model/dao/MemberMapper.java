@@ -19,4 +19,6 @@ public interface MemberMapper {
 	void modifyPw(Member user);
 
 	Member readUser(Member member);
+
+	int idCheck(String id);
 }

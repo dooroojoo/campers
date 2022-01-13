@@ -155,5 +155,10 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.findMemberById(userId);
 	}
 
+	@Override
+	public int idCheck(String id) {
+		return memberMapper.idCheck(id);
+	}
+
 
 }

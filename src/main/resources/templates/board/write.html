@@ -260,13 +260,40 @@
 	 <script>
     $(function(){
    		$('.preview1').click(function (e){
-   			$('.image1').click();
+   			let fileCheck1 = document.querySelector(".image1").value;
+   			let fileCheck2 = document.querySelector(".image2").value;
+   			let fileCheck3 = document.querySelector(".image3").value;
+   			if(!fileCheck1){
+   				$('.image1').click();
+   			}else if(!fileCheck2){
+   				$('.image2').click();
+   			}else if(!fileCheck3){
+   				$('.image3').click();
+   			}
    		}) 
    		$('.preview2').click(function (e){
-   			$('.image2').click();
+   			let fileCheck1 = document.querySelector(".image1").value;
+   			let fileCheck2 = document.querySelector(".image2").value;
+   			let fileCheck3 = document.querySelector(".image3").value;
+   			if(!fileCheck1){
+   			$('.image1').click();
+   			}else if(!fileCheck2){
+   				$('.image2').click();
+   			}else if(!fileCheck3){
+   				$('.image3').click();
+   			}
    		}) 	
    		$('.preview3').click(function (e){
-   			$('.image3').click();
+   			let fileCheck1 = document.querySelector(".image1").value;
+   			let fileCheck2 = document.querySelector(".image2").value;
+   			let fileCheck3 = document.querySelector(".image3").value;
+   			if(!fileCheck1){
+   			$('.image1').click();
+   			}else if(!fileCheck2){
+   				$('.image2').click();
+   			}else if(!fileCheck3){
+   				$('.image3').click();
+   			}
    		}) 	
    
     })

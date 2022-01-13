@@ -9,5 +9,6 @@ public class Attachment {
 	private String fileRoute;
 	private String status;
 	private int fileLevel;
-	private String fileNewName;
+	private String fileOriginName;
+	private String deletedName;
 }
