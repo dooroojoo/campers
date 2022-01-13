@@ -8,7 +8,7 @@ import com.cp.campers.camp.model.vo.Room;
 public interface CampService {
 
 	// 숙소 상세
-	Map<String, Object> campDetail(int campNo);
+	Map<String, Object> campDetail(int campNo, String dateIn, String dateOut);
 
 	// 객실 상세
 	Room roomDetail(int roomNo);

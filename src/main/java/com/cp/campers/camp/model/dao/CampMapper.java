@@ -1,6 +1,7 @@
 package com.cp.campers.camp.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -28,4 +29,7 @@ public interface CampMapper {
 	
 	// 리뷰 삭제
 	void reviewDelete(int rid);
+
+	// 예약된 건수
+	String reserveCount(Map<String, Object> param);
 }

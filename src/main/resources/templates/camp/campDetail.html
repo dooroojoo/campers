@@ -7,7 +7,9 @@
 <link href="/resources/css/camp/campDetail.css" rel="stylesheet">
 <!-- icon -->
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+
 <!-- 캘린더 css -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- 슬라이드 -->
@@ -139,6 +141,7 @@
                         </div>
                         
 						<div class="rv-middle">
+							<input type="hidden" id="campNo" name="campNo" th:value="${camp.campNo}">
 							<input type="hidden" id="dateIn" th:value="${param.dateIn}">
 							<input type="hidden" id="dateOut" th:value="${param.dateOut}">
 	                        <script>
@@ -146,8 +149,6 @@
 	                       		
 	                       		var dateIn = $('#dateIn').val();
 	                       		var dateOut = $('#dateOut').val();
-	                       		console.log(dateIn + ' ' + dateOut);
-	                       		
 	                       		var toDay = new Date();
 	                       		
 	                       	    $('input[name="daterange"]').daterangepicker({
@@ -159,25 +160,32 @@
 	                       	                      "daysOfWeek": ["월", "화", "수", "목", "금", "토", "일"],
 	                       	                      "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
 	                       	                    },
-	                       	                  "drops": "down",
+	                       	                 "drops": "down",
 	                       	                  maxDate: 0,
-	                       	                  minDate: toDay,
+	                       	                  minDate: 0,
 	                       	                  startDate: toDay.setDate(toDay.getDate()+1),
 	                       	                  endDate: toDay
 	                       	  });
-		                       	 $('input[name="daterange"]').datepicker();          
+		                       	 $('input[name="daterange"]').datepicker();   
+		                         $('input[name="daterange"]').daterangepicker({startDate : new Date(dateIn), endDate : new Date(dateOut), 
+		                        	 locale:  {
+		                        		  "format": 'YYYY-MM-DD',
+		                        	      "separator": " ~ ",
+                   	                      "applyLabel": "확인",
+                   	                      "cancelLabel": "취소",
+                   	                      "daysOfWeek": ["월", "화", "수", "목", "금", "토", "일"],
+                   	                      "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                   	                    },
+                   	                 "drops": "down",
+                  	                  maxDate: 0,
+                  	                  minDate: 0});
 		                         
-		                         //From의 초기값을 오늘 날짜로 설정
-		                         $('input[name="daterange"]').daterangepicker({startDate : new Date(dateIn), endDate : new Date(dateOut)});
-	
 	                       	  });
-	                       	
-	                      	
 	                       	</script>
 							<label class="search-date search-container">
-			                    <input type="text" id="main-date-check" class="area-text" name="daterange"
-			                    style="cursor: default;" readonly required>
-			                    
+			                    <input type="text" id="main-date-check" class="area-text" name="daterange" style="cursor: default;" 
+			                    readonly required>
+			                    <!-- th:select="changeLoad()"  -->
 			                </label>
 	                    </div>
 
@@ -185,7 +193,7 @@
                             <div class="rv_person">
                                 <!-- <span>인원</span> -->
                                 <div class="rv_guestNum">
-	                                <select id="guestNum" name="guestNum">
+	                                <select id="guestNum" name="guestNum" ><!--  -->
 	                                    <option selected>인원</option>
 	                                    <option value="1" th:selected="${#strings.equals(param.guest, '1')}">1</option>
 	                                    <option value="2" th:selected="${#strings.equals(param.guest, '2')}">2</option>
@@ -220,6 +228,24 @@
 
 
         </div>
+
+		<div id="map" style="width:500px; height:400px;"></div>
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=29177cf0f41918547d34e57ce4ad216b"></script>
+		<script>
+		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+		var options = { //지도를 생성할 때 필요한 기본 옵션
+			center: new kakao.maps.LatLng(37.42629133933456, 126.99184858960511), //지도의 중심좌표.
+			level: 3 //지도의 레벨(확대, 축소 정도)
+		};
+		var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+		// 지도를 클릭한 위치에 표출할 마커입니다
+		var marker = new kakao.maps.Marker({ 
+		    // 지도 중심좌표에 마커를 생성합니다 
+		    position: map.getCenter() 
+		}); 
+		// 지도에 마커를 표시합니다
+		marker.setMap(map);
+		</script>
 
         <div class="introduce">
             <!-- 4. 숙소 소개 -->
@@ -392,8 +418,6 @@
 
 				<script>
 				 	function showRoom(roomNo){
-				 		// console.log("roomNo : " + roomNo);
-				 		
 				 		$.ajax({
 			 				url : "/camp/roomDetail/" + roomNo,
 			 				type : "get",
@@ -592,9 +616,19 @@ function deleteRid(rid, campNo){
 	}
 	
 }
+
+function changeLoad() {
+	let dateRange = $('input[name=daterange]').val();
+	let guest = $('select[name=guestNum]').val();
+	let campNo = $('input[name=campNo]').val();
+	let dateIn = dateRange.substr(0, 10);
+	let dateOut = dateRange.substring(13, dateRange.length);
+	
+	console.log("location.href=/camp/detail?campNo="+campNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest);
+	
+	location.href="/camp/detail?campNo="+campNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest;
+}
 </script>
 <div th:replace="common/footer.html"></div>
-<!-- 제이쿼리 충돌 방지 코드 -->
-<!-- <script> $.noConflict(); </script> -->
 </body>
 </html>

@@ -7,6 +7,7 @@ input:focus {
 .accom_wrap {
     width: 1000px;
     margin: auto;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 .accom_content {
     width: 980px;
@@ -16,14 +17,6 @@ ul, li {
 	margin: 0;
 	padding: 0;
 }
-
-/* pre { */
-    /* 스크롤바 자동으로 처리 */
-    /* overflow: visible; */
-    /* 공백을 공백으로 처리&자동 줄바꿈 */
-    /* white-space: pre-wrap; */
-    /* margin: 0; */
-/* } */
 
 .text_controller {  /* 글자 자동 내림 */
     padding: 5px;

@@ -236,4 +236,17 @@
 		  WHERE REVIEW_NO = #{ rid }
 	</update>
 	
+	<select id="reserveCount" parameterType="hashmap" resultType="string">
+	select count(*)
+	from reserve
+	where room_no = #{roomNo}
+	and
+	((to_date(checkin, 'YYYY-MM-DD') <![CDATA[ <= ]]> to_date(#{dateIn}, 'YYYY-MM-DD')
+	and to_date(checkout, 'YYYY-MM-DD') <![CDATA[ > ]]> to_date(#{dateIn}, 'YYYY-MM-DD'))
+	or
+	(to_date(checkin, 'YYYY-MM-DD') <![CDATA[ < ]]> to_date(#{dateOut}, 'YYYY-MM-DD')
+	and to_date(checkout, 'YYYY-MM-DD') <![CDATA[ >= ]]> to_date(#{dateOut}, 'YYYY-MM-DD'))
+	)
+	</select>
+	
 </mapper>
