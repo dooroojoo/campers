@@ -30,16 +30,17 @@ public class CampController {
 
 	/* 숙소 상세 */
 	@GetMapping("detail")
-	public String campDetail(int campNo, Model model) {
+	public String campDetail(int campNo, String dateIn, String dateOut, Model model) {
 		
-		Map<String, Object> map = campService.campDetail(campNo);
+		Map<String, Object> map = campService.campDetail(campNo, dateIn, dateOut);
 		
 		model.addAttribute("camp", map.get("camp"));
 		model.addAttribute("roomList", map.get("roomList"));
 		model.addAttribute("reviewList", map.get("reviewList"));
 		model.addAttribute("newReply", '\n');
 		
-		log.info(map.get("reviewList").toString());
+		// log.info(map.get("reviewList").toString());
+		log.info("reserveCount : ", map.get("reserveCount"));
 		
 		if (map.get("roomList").toString().equals("[]")) {
 			model.addAttribute("noRoom", "예약할 수 있는 객실이 없어요!");

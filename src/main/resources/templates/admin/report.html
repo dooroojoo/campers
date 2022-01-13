@@ -66,7 +66,8 @@
                         <li class="delete" th:if="${report.deleteStatus}=='Y'">
                         	<div th:text="${report.reason}"></div>
                         </li>
-                        <li class="report_date" th:text="${#dates.format(report.reportDate, 'yy-MM-dd') }" th:title="${#dates.format(report.reportDate, 'yyyy-MM-dd hh:mm:ss')}"></li>
+                        <li class="report_date" th:text="${#dates.format(report.reportDate, 'yy-MM-dd') }" 
+                        th:title="${#dates.format(report.reportDate, 'yyyy-MM-dd hh:mm:ss')}"></li>
                         <li class="report_type" th:if="${#strings.equals(report.reportType, 'board')}">게시판</li>
                         <li class="report_type" th:if="${#strings.equals(report.reportType, 'reply')}">댓글</li>
                         <li class="report_update">
