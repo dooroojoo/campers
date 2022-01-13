@@ -97,12 +97,12 @@ public class SearchController {
 		
 		log.info(area);
 		log.info(daterange);
-		log.info(quantity);
-		log.info(name);
-		log.info(page);
-		log.info(type);
-		log.info(facility);
-		log.info(floor);
+		log.info("guest : " + quantity);
+		log.info("name : " + name);
+		log.info("page : " + page);
+		log.info("type : " + type);
+		log.info("faci : " + facility);
+		log.info("floor : " + floor);
 		
 		
 		// 날짜 자르기
