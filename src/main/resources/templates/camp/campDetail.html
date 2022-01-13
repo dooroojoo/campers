@@ -151,7 +151,7 @@
 	                       		var dateOut = $('#dateOut').val();
 	                       		var toDay = new Date();
 	                       		
-	                       	    /* $('input[name="daterange"]').daterangepicker({
+	                       	    $('input[name="daterange"]').daterangepicker({
 	                       	      "locale": {
 	                       	                      "format": "YYYY-MM-DD",
 	                       	                      "separator": " ~ ",
@@ -165,7 +165,7 @@
 	                       	                  minDate: 0,
 	                       	                  startDate: toDay.setDate(toDay.getDate()+1),
 	                       	                  endDate: toDay
-	                       	  }); */
+	                       	  		});
 		                       	 $('input[name="daterange"]').datepicker();   
 		                         $('input[name="daterange"]').daterangepicker({startDate : new Date(dateIn), endDate : new Date(dateOut), 
 		                        	 locale:  {
@@ -183,18 +183,15 @@
 	                       	  });
 	                       	</script>
 							<label class="search-date search-container">
-			                    <input type="text" id="main-date-check" class="area-text" name="daterange" style="cursor: default;" 
-			                    readonly required>
-			                    <!-- th:select="changeLoad()"  -->
+			                    <input type="text" id="main-date-check" class="area-text" name="daterange" style="cursor: default;" readonly required>
 			                </label>
 	                    </div>
 
                         <div class="rv_bottom">
                             <div class="rv_person">
-                                <!-- <span>인원</span> -->
                                 <div class="rv_guestNum">
 	                                <select id="guestNum" name="guestNum" th:onchange="changeLoad()" >
-	                                    <option selected>인원</option>
+	                                    <option value="0" th:selected="${#strings.equals(param.guest, '0')}">인원</option>
 	                                    <option value="1" th:selected="${#strings.equals(param.guest, '1')}">1</option>
 	                                    <option value="2" th:selected="${#strings.equals(param.guest, '2')}">2</option>
 	                                    <option value="3" th:selected="${#strings.equals(param.guest, '3')}">3</option>
@@ -207,8 +204,9 @@
                             
                             <div class="rv_select">
                                 <select id="roomName" name="roomName">
-                                    <option checked>객실을 선택해주세요</option>
-                                    <option th:each="room : ${roomList}" th:text="${room.roomName}"></option>
+                                    <option selected>객실을 선택해주세요</option>
+                                    <option th:each="room : ${roomList}" th:text="${room.roomName}"
+                                    th:if="${room.roomAmount} >= ${room.rCount} AND ${#numbers.formatInteger(param.guest, 1)} <= ${room.roomMember}"></option>
                                 </select>
                             </div>
                         </div>
@@ -397,16 +395,23 @@
                 <div class="rooms_area">
                 
                     <div class="rooms_wrap" id="rooms_wrap" th:each="room : ${ roomList }">
-                     <div th:id="'rooms_img'+${room.roomNo}" class="rooms_img" th:each="imgfile : ${room.imgFileList}" 
+                     <div th:id="'rooms_img'+${room.roomNo}" class="rooms_img" th:each="imgfile : ${room.imgFileList}"
                         th:style="'background-image: url(' + @{${imgfile.fileRoute} + ${imgfile.fileName}} + ');'" 
                         th:onclick="|showRoom('${ room.roomNo }'); show();|">
-                        <input type="hidden" name="roomNo" th:value="${ room.roomNo }">                      
+                        <input type="hidden" name="roomNo" th:value="${ room.roomNo }">   
                         </div>
                         
                         
                         <div class="rooms_info">
-                            <div class="info_roomName" th:text="${ room.roomName }"></div>
-                            <div class="info_person" th:text="|${ room.roomMember } 인|"></div>
+                        	<div class="info_roomName noReserve" th:text="${ room.roomName }"
+                        	th:if="${room.roomAmount} <= ${room.rCount} OR ${#numbers.formatInteger(param.guest, 1)} > ${room.roomMember}"></div>
+                            <div class="info_roomName" th:text="${ room.roomName }"
+                            th:if="${room.roomAmount} > ${room.rCount} AND ${#numbers.formatInteger(param.guest, 1)} <= ${room.roomMember}"></div>
+                            
+                            <div class="info_person noReserve" th:text="|${ room.roomMember } 인|"
+                            th:if="${room.roomAmount} <= ${room.rCount} OR ${#numbers.formatInteger(param.guest, 1)} > ${room.roomMember}"></div>
+                            <div class="info_person" th:text="|${ room.roomMember } 인|"
+                            th:if="${room.roomAmount} > ${room.rCount} AND ${#numbers.formatInteger(param.guest, 1)} <= ${room.roomMember}"></div>
                         </div>
                     </div>
                     

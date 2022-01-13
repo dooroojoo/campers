@@ -30,6 +30,6 @@ public interface CampMapper {
 	// 리뷰 삭제
 	void reviewDelete(int rid);
 
-	// 예약된 건수
-	String reserveCount(Map<String, Object> param);
+	// 예약건수 조회
+	int reserveCount(Map<String, Object> param);
 }

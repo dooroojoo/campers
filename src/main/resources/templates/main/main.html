@@ -100,7 +100,7 @@
                 <div class="slide-container" th:each="slide : ${mainSlider}">
                 <div class="main-slide" id="slide">
                   <img class="slideImg" th:src="@{${slide.fRRoute}+${slide.fRName}}" style="cursor:pointer"
-                  th:onclick="|location.href='@{/camp/detail(campNo=${slide.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></div>
+                  th:onclick="|location.href='@{/camp/detail(campNo=${slide.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|"></div>
                   <div class="slide-text" th:text="${slide.cRName}"></div>
                   <input type="hidden" class="slide-cNo" th:value="${slide.cRNo}">
                 </div>
@@ -137,12 +137,12 @@
             <div class="main-img-wrap" th:each="best : ${mainBestList}">
               <div class="main-best-img" style="cursor:pointer">
               <img class="bestImg" th:src="@{${best.fRRoute}+${best.fRName}}" style="cursor:pointer"
-              th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|">
+              th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|">
               <p class="main-best-title text" th:text="${best.cRName}"
               style="cursor:pointer"
-              th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></p>
+              th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|"></p>
               <p class="main-best-location text" th:text="${best.cRAddress}"
-              th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></p>
+              th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|"></p>
               <input type="hidden" class="best-cNo" th:value="${best.cRNo}"
               >
             </div>
@@ -165,12 +165,12 @@
               <div class="main-best-img" style="cursor:pointer">
               <img class="newImg" th:src="@{${mainNew.fRRoute}+${mainNew.fRName}}"
               style="cursor:pointer"
-              th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|">
+              th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|">
               <p class="main-best-title text" th:text="${mainNew.cRName}"
               style="cursor:pointer"
-              th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></p>
+              th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|"></p>
               <p class="main-best-location text" th:text="${mainNew.cRAddress}"
-              th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></p>
+              th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|"></p>
             </div>
           </div>
 

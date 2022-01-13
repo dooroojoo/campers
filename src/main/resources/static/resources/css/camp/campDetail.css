@@ -451,7 +451,10 @@ fieldset {
 .info_person {
     font-size: 12px;
 }
-
+.noReserve{
+	color: darkgray;
+	text-decoration: line-through;
+}
 
 /*---- 9. 리뷰 목록 -----*/
 .review_list{
