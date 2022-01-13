@@ -351,12 +351,8 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
 }
 
-.main-img-wrap a{
-    text-decoration: none;
-    color: black;
-}
 
-.main-img-wrap a:hover{
+.main-img-wrap p:hover{
   color: rgb(231, 111, 82);
   text-decoration: none;
 }
