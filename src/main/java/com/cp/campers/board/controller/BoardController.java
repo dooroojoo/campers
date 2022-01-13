@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.cp.campers.board.model.service.BoardService;
 import com.cp.campers.board.model.vo.Attachment;
@@ -104,6 +106,7 @@ public class BoardController {
 	@GetMapping("/detail")
 	public String detailList(Model model, int bid, HttpServletRequest request, HttpServletResponse response, @AuthenticationPrincipal UserImpl loginUser) {
 		
+		// 쿠키를 통해 조회수 증가
 		Cookie[] cookies = request.getCookies();
 		
 		String bcount = "";
@@ -131,16 +134,17 @@ public class BoardController {
 				log.info("조회수 증가 실패");
 			}
 		}
+		// board 정보 가져오기
 		Board board = boardService.boardDetail(bid);
 		
-		model.addAttribute(board);
-		
-		log.info(board.getPrevTitle());
-		log.info(board.getNextTitle());
-		
+		// 댓글리스트 가져오기
 		List<Comment> commentList = boardService.selectCommentList(bid);
 
+		// 사진리스트 가져오기
 		List<BoardFileNo> boardFileNoList = boardService.selectBoardImgae(bid);
+		
+		// 가져온 데이터들 view로 보내주기
+		model.addAttribute(board);
 		
 		if(!boardFileNoList.toString().equals("[]")) {
 			model.addAttribute(boardFileNoList);
@@ -148,6 +152,8 @@ public class BoardController {
 	
 		model.addAttribute(commentList);
 		
+		
+		// 회원이 이 게시물을 좋아요 했었는지 bid와 userNo 넘겨주기
 		Map<String, Object> bidAndUserNo = new HashMap<>();
 		bidAndUserNo.put("bid", bid);
 		
@@ -158,6 +164,7 @@ public class BoardController {
 			model.addAttribute("likedBid", likedBid);
 		}
 		
+		// 이 게시물의 좋아요 개수
 		String likeCounts = boardService.selectLikeCount(bid);
 		model.addAttribute("likeCounts",likeCounts);
 		
@@ -208,6 +215,7 @@ public class BoardController {
 		model.addAttribute("pi", map.get("pi"));
 		
 	}
+	
 	@GetMapping("/mycommentPage")
 	public String myCommentListPage(Model model,@AuthenticationPrincipal UserImpl loginUser, int page) {
 		
@@ -260,22 +268,130 @@ public class BoardController {
 		Board board = boardService.selectBoardUpdate(bid);
 		log.info("board="+board);
 		List<BoardFileNo> boardFileNoList = boardService.selectBoardImgae(bid);
+		log.info("File="+boardFileNoList);
 		
 		if(board != null) {
 			model.addAttribute(board);
 		}
-		if(boardFileNoList != null) {
+		if(!boardFileNoList.toString().equals("[]")) {
 			model.addAttribute(boardFileNoList);
+			log.info("size="+boardFileNoList.size());
 		}
 	
 		return "board/update";
 	}
 	@PostMapping("/update")
-	public String boardUpdate(Model model, Board board) {
+	public String boardUpdate(Model model, Board board ,@Value("${custom.path.upload-images}") String uploadFilesPath,
+			@RequestParam(required = false) List<MultipartFile> images,
+			HttpServletRequest request, String[] changeName) {
 		
+		log.info("bid="+board.getBid());
 		
+		// setFilePath 해줄 변수 선언
+		String filePath = uploadFilesPath + "/boardImg";
+		// 해당 파일 경로 존재 여부 확인
+		File mkdir = new File(filePath);
+		if (!mkdir.exists())
+			mkdir.mkdir();
+		
+		// 파일에 관한 정보 보관 list
+		List<Map<String, String>> files = new ArrayList<>();
+		
+		for(String name : changeName) {
+			
+			System.out.println(name);
+		}
+		
+
+		for (int i = 0; i < images.size(); i++) {
+			
+		System.out.println("@@@@@@@@@"+images.get(i).getSize());	
+			
+			if(images.get(i).getSize() != 0) {
+				
+			// 파일명 변경 처리
+			String originFileName = images.get(i).getOriginalFilename();
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+
+			//파일에 관한 정보 추출 후 보관
+			Map<String, String> file = new HashMap<>();
+			file.put("filePath", filePath);
+			file.put("originFileName", originFileName);
+			file.put("savedName", savedName);
+			file.put("index", i+"");
+			file.put("isNew", "Y");
+			System.out.println("idx=="+file.get("index"));
+			if(i==0) {
+				file.put("fileLevel", "0");
+			}else {
+				file.put("fileLevel", "1");
+			}
+			
+			if(changeName.length >= i+1) {
+				file.put("deletedName", changeName[i]);
+			}
+			files.add(file);
+			
+			}else {
+				Map<String, String> file = new HashMap<>();
+				file.put("index", i+"");
+				file.put("isNew", "N");
+				files.add(file);
+			}
+		}
+
+		// 파일 저장
+		try {
+
+			// title, content 먼저 update
+			boardService.updateBoard(board);
+			
+			for (int i = 0; i < images.size(); i++) {
+				
+				Map<String, String> file = files.get(i);
+				if(file.get("isNew") == "Y") {
+					
+				// view에서 가져온 파일 수 만큼, 지정한 경로에, 변경된 이름으로 파일 생성
+				images.get(i).transferTo(new File(file.get("filePath") + "\\" + file.get("savedName")));
+
+				// Attachment 객체에 담아서 db에 넣기 위한 setter
+				Attachment attachment = new Attachment();
+				attachment.setFileRoute("/resources/images/uploadFiles/boardImg/");
+				attachment.setFileName(file.get("savedName"));
+				attachment.setFileOriginName(file.get("originFileName"));
+				attachment.setDeletedName(file.get("deletedName"));
+
+				// 가져온 파일 첫번째라면 썸네일
+				if(file.get("fileLevel") == "0") {
+					attachment.setFileLevel(0);
+				}else {
+					attachment.setFileLevel(1);
+				}
+				
+				int result = boardService.updateBoardImage(attachment,board.getBid());
+				
+				if(result > 0) {
+					for(Map<String, String> photo : files) {
+						if(photo.get("deletedName") != null) {
+							File deletedFile = new File(filePath+photo.get("deletedName"));
+							deletedFile.delete();
+						}
+					}
+				}
+				}
+			}
+
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			for (int i = 0; i < images.size(); i++) {
+				Map<String, String> file = files.get(i);
+				new File(file.get("filePath") + "\\" + file.get("savedName")).delete();
+			}
+		}
 		return "redirect:/board/detail?bid="+board.getBid();
 	}
+	
 	@GetMapping("/delete")
 	public String boardDelete(Model model, int bid) {
 		
@@ -342,7 +458,7 @@ public class BoardController {
 
 				Attachment attachment = new Attachment();
 				attachment.setFileName(file.get("savedName"));
-				attachment.setFileNewName(file.get("originFileName"));
+				attachment.setFileOriginName(file.get("originFileName"));
 				attachment.setFileRoute("/resources/images/uploadFiles/boardImg/");
 
 				if (i == 0)

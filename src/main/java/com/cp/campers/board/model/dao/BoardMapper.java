@@ -30,7 +30,7 @@ public interface BoardMapper {
 	
 	void deleteBoard(int bid);
 	
-	int updateBoard(Board board);
+	void updateBoard(Board board);
 	
 	Board boardDetail(int bid);
 
@@ -75,6 +75,12 @@ public interface BoardMapper {
 	String selectLikedBid(Map<String, Object> bidAndUserNo);
 
 	void boardLikeDown(Map<String, Object> param);
+
+	int updateBoardImage(Map<String, Object> param);
+
+	int insertAddedPhoto(Map<String, Object> param);
+
+	void insertAddedImageNo(Map<String, Object> param);
 
 
 }

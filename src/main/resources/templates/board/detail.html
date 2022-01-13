@@ -603,7 +603,7 @@ width: 60px;
 				<!--댓글-->
 				<div th:if="${commentList} != null">
 				<div class="comment-content" th:each="comment : ${ commentList }">
-					<div class="comment-box" th:if="${ comment.refCid == 0}">
+					<div class="comment-box" th:if="${ comment.refCid == 0} AND ${comment.status} == 'N'">
 						<div class="comment-left">
 							<div class="user-profile">
 								<img class="haveProfile" th:if="${comment.profilePath != null }" th:src="${comment.profilePath}">
@@ -618,11 +618,8 @@ width: 60px;
 									th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
 									</th:block>
 								</div>
-								<div class="comment-leftBottom" th:if="${comment.status} == 'N'">
+								<div class="comment-leftBottom">
 									<p th:text="${comment.cContent}"></p>
-								</div>
-								<div class="comment-leftBottom" th:if="${comment.status} == 'Y'">
-									<p>삭제된 댓글입니다.</p>
 								</div>
 							</div>
 						</div>
@@ -648,6 +645,43 @@ width: 60px;
 							</div>
 						</div>
 					</div>
+					<!-- 삭제된 댓글 -->
+					<div class="comment-box" th:if="${ comment.refCid == 0} AND ${comment.status} == 'Y'">
+						<div class="comment-left">
+							<div class="user-profile">
+								<img class="noProfile"src="/resources/images/board/member_profile_navy.png">
+							</div>
+							<div class="comment-leftTopBottom">
+								<div class="comment-leftTop">
+									<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+								</div>
+								<div class="comment-leftBottom">
+									<p style="color:grey">삭제된 댓글입니다.</p>
+								</div>
+							</div>
+						</div>
+						<div class="comment-right">
+							<th:block sec:authorize="isAuthenticated()">
+								<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
+									<input type="hidden" name="id" th:value="${comment.cid}">
+									<input type="hidden" name="nickName" th:value="${comment.nickName}">
+									<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+									<input type="hidden" name="suspect" th:value="${comment.cWriter}">
+									<input type="hidden" name="reportType" value="reply">
+						            <img src="/resources/images/board/report_img.png" onclick="show()">
+						        </div>
+					        </th:block>
+					        <th:block sec:authorize="isAnonymous()">
+						        <div class="comment-rightTop">
+						      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+								</div>
+					        </th:block>
+							<div class="comment-rightBottom">
+								<label></label>
+								<div></div>
+							</div>
+						</div>
+					</div>
 					<!-- 숨겨진 답글창 -->
 					<div class="refComment-writer" hidden>
 					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refOriginCid},refWriter=${comment.nickName})}" method="post">
@@ -666,9 +700,8 @@ width: 60px;
 						</div>
 					<!-- 대댓글 -->
 					<div class="refComment"  th:unless="${comment.refCid == 0 }">
-						<div class="refcomment-box" >
-
-							<div class="comment-left ref" >
+						<div class="refcomment-box" th:if="${comment.status}=='N'" >
+							<div class="comment-left ref">
 								<div class="user-profile">
 									<img class="refImg" style="width: 20px;"
 										src="/resources/images/board/right-arrow.png">
@@ -684,13 +717,9 @@ width: 60px;
 										th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
 										</th:block>
 									</div>
-									<div class="comment-leftBottom" th:if="${comment.status}=='N'">
+									<div class="comment-leftBottom">
 										<label th:text="|@${comment.refWriter}|"></label>
 										<p th:text="${comment.cContent}"></p>
-									</div>
-									<div class="comment-leftBottom" th:if="${comment.status}=='Y'">
-										<label th:text="|@${comment.refWriter}|"></label>
-										<p>삭제된 댓글입니다.</p>
 									</div>
 								</div>
 							</div>
@@ -715,6 +744,47 @@ width: 60px;
 									<label th:onclick="openComment(this);">답글</label>
 								</div>
 							</div>
+						</div>
+						<!-- 삭제된 댓글 -->
+						<div class="refcomment-box" th:if="${comment.status}=='Y'" >
+							<div class="comment-left ref">
+								<div class="user-profile">
+									<img class="refImg" style="width: 20px;"
+										src="/resources/images/board/right-arrow.png">
+									
+								<img class="noProfile"src="/resources/images/board/member_profile_navy.png">
+								</div>
+								<div class="comment-leftTopBottom">
+									<div class="comment-leftTop">
+										<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+									</div>
+									<div class="comment-leftBottom">
+										<p style="color:grey;">삭제된 댓글입니다.</p>
+									</div>
+								</div>
+							</div>
+							
+							<div class="comment-right">
+								<th:block sec:authorize="isAuthenticated()">
+									<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
+										<input type="hidden" name="id" th:value="${comment.cid}">
+										<input type="hidden" name="nickName" th:value="${comment.nickName}">
+										<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
+										<input type="hidden" name="suspect" th:value="${comment.cWriter}">
+										<input type="hidden" name="reportType" value="reply">
+							            <img src="/resources/images/board/report_img.png" onclick="show()">
+							        </div>
+						        </th:block>
+						        <th:block sec:authorize="isAnonymous()">
+							        <div class="comment-rightTop">
+							      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+									</div>
+						        </th:block>
+								<div class="comment-rightBottom">
+									<label></label>
+								</div>
+							</div>
+						
 						</div>
 						<!-- 대댓글의 답글창 -->
 						<div class="refComment-writer" hidden>

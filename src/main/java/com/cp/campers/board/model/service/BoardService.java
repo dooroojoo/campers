@@ -21,7 +21,7 @@ public interface BoardService {
 	
 	void deleteBoard(int bid);
 	
-	int updateBoard(Board board);
+	void updateBoard(Board board);
 	
 	Board boardDetail(int bid);
 
@@ -54,6 +54,8 @@ public interface BoardService {
 	String selectLikeCount(int bid);
 
 	String boardLikeDown(Map<String, Object> param);
+
+	int updateBoardImage(Attachment attachment, String bid);
 
 
 

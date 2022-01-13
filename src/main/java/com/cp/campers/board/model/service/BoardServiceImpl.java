@@ -69,8 +69,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int updateBoard(Board board) {
-		return 0;
+	public void updateBoard(Board board) {
+		boardMapper.updateBoard(board);
 	}
 
 	@Override
@@ -221,6 +221,37 @@ public class BoardServiceImpl implements BoardService {
 	public String boardLikeDown(Map<String, Object> param) {
 		boardMapper.boardLikeDown(param);
 		return boardMapper.selectLikeCount(param.get("bid"));
+	}
+
+	@Override
+	public int updateBoardImage(Attachment attachment, String bid) {
+		int updatePhotoResult = 0;
+		int insertPhotoResult = 0;
+		
+		int updateListCount = 0;
+		int insertListCount = 0;
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("bid", bid);
+		param.put("attachment", attachment);
+		
+		if(attachment.getDeletedName() != null) {
+			updatePhotoResult += boardMapper.updateBoardImage(param);
+			updateListCount++;
+		}else {
+			insertPhotoResult += boardMapper.insertAddedPhoto(param);
+			boardMapper.insertAddedImageNo(param);
+			insertListCount++;
+		}
+		
+		int result = 0;
+		
+		if(updatePhotoResult == updateListCount &&
+				insertPhotoResult == insertListCount) {
+			result = 1;
+		}
+		
+		return result;
 	}
 
 

@@ -61,7 +61,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.invalidateHttpSession(true) // 세션만료
 				.logoutSuccessUrl("/") //로그아웃 성공 후 페이지
 			.and()
-				.exceptionHandling()
+				.exceptionHandling()	
 				.accessDeniedPage("/common/denied") // 억지로 접근불가한 경로로 바꿨을때 이동할 페이지	
 			.and()
 				.csrf().disable();
