@@ -117,9 +117,7 @@
 			   JOIN BUSINESS_TYPE P ON P.BUSINESS_NO = T.BUSINESS_NO
 			   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
                JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
-               JOIN RESERVE E ON R.ROOM_NO = E.ROOM_NO
-			   WHERE F.FILE_STATUS = 'N'
-			     AND E.ROOM_NO 
+			  WHERE F.FILE_STATUS = 'N'
 			     AND R.ROOM_MEMBER &gt;= #{ sGuest }
 			    <if test="sType != 'null'">
 			     AND P.BUSINESS_TYPE IN (#{ sType })
