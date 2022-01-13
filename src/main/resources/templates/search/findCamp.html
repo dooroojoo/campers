@@ -5,13 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>캠핑장 검색</title>
-     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
     <link href="/resources/css/search/search-style.css" rel="stylesheet">
     <!-- 캘린더 라이브러리 -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +17,15 @@
 <body>
     <!-- header -->
     <div th:replace="common/header.html"></div>
-      
+
+	 <!-- jQuery -->
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js" integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
+   	<!-- datePicker -->
+   	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+   	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+   	<script type="text/javascript" src="/resources/js/main/datePicker.js"></script> 
+
+
     <div class="search-wrapper">
       <!-- 검색페이지 컨텐츠 -->
       <div class="search-camping">
@@ -227,43 +231,36 @@
     <div th:replace="common/footer.html"></div>
     
     <script>
-    $(function(){    
-    	$(".find-paging").click(function(){
-    		let area = $(".find-area").val();
-    		let dateIn = $(".find-in-date").val();
-    		let dateOut = $(".find-out-date").val();
-    		let guest = $(".find-guest").val();
-    		let name = $("#find-name").val();
-    		let typeObj = $("#search-type-val").val();
-    		let faciObj= $("#find-faci-val").val();
-    		let floorObj = $("#find-floor-val").val();
+    var aa = jQuery.noConflict();
+    aa(function(){    
+    	aa(".find-paging").click(function(){
+    		let area = aa(".find-area").val();
+    		let dateIn = aa(".find-in-date").val();
+    		let dateOut = aa(".find-out-date").val();
+    		let guest = aa(".find-guest").val();
+    		let name = aa("#find-name").val();
+    		let typeObj = aa("#search-type-val").val();
+    		let faciObj= aa("#find-faci-val").val();
+    		let floorObj = aa("#find-floor-val").val();
     		
     		let typeArr = typeObj.split(',');
     		let faciArr = faciObj.split(',');
     		let floorArr = floorObj.split(',');
     		
     		
-            location.href='/search/find?page='+$(this).text()+'&area='+area+'&type='+typeArr+'&daterange='+dateIn
+            location.href='/search/find?page='+aa(this).text()+'&area='+area+'&type='+typeArr+'&daterange='+dateIn
             		+'+~+'+dateOut+'&quantity='+guest+'&name='+name+'&facility='+faciArr+'&floor='+floorArr; 
         });
     });
     </script>
     
-    
- 	<!-- 제이쿼리 충돌 방지 코드 -->
-	<script type="text/javascript"> $.noConflict(); </script>
 
 	<!-- 인원수 증가 버튼 클릭시 submit 제출되지 않게-->
 	  <script>
-	  $('form').on('click', 'button:not([type="submit"])', function(e){
+	  var bb = jQuery.noConflict();
+	  bb('form').on('click', 'button:not([type="submit"])', function(e){
 	    e.preventDefault();
 	  })
 	  </script>
-
-	<!-- 제이쿼리 충돌 방지 코드 -->
-	<script type="text/javascript"> $.noConflict(); </script>
-	
-	<!-- 캘린더 스크립트 -->
-	<script src="/resources/js/main/datePicker.js"></script>
 </body>
 </html>

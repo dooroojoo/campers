@@ -1,8 +1,8 @@
-$(function() {
-
+var jb = jQuery.noConflict();
+jb(function() {
 	var toDay = new Date();
 	
-    $('input[name="daterange"]').daterangepicker({
+    jb('input[name="daterange"]').daterangepicker({
       "locale": {
                       "format": "YYYY-MM-DD",
                       "separator": " ~ ",
