@@ -1,6 +1,5 @@
 package com.cp.campers.search.model.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,10 @@ import com.cp.campers.search.model.vo.SearchCamp;
 public interface SearchMapper {
 	
 	/* 메인페이지에서 캠핑장 검색 조회 */
-	List<SearchCamp> mainSearch(HashMap<String, Object> map);
+	List<SearchCamp> mainSearch(Map<String, Object> map);
+	
+	/* 메인 검색 총 개수 구하기 */
+	int mainSearchCount(FindCamp fc);
 	
 	/* 캠핑장 검색페이지에서 전체 조회 및 페이징 처리 */
 	List<SearchCamp> campAllSearch(PageInfo pi);
