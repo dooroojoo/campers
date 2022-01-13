@@ -39,6 +39,12 @@
 			   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
 			   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
 			  WHERE F.FILE_STATUS = 'N'
+			  <if test="sType != null and !sType.isEmpty() and !''.equals(sType) and sType.size != 0">
+			    AND P.BUSINESS_TYPE IN 
+			    <foreach item="type" collection="sType" open="(" separator="," close=")">
+				 #{type}
+				 </foreach>
+			   </if>
 			     GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME, R.ROOM_MEMBER
            )
 	</select>
@@ -69,15 +75,21 @@
 			   WHERE F.FILE_STATUS = 'N' 
 			    AND F.FILE_LEVEL = 1
 			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest } 
+			    <if test="fc.sType != null and !fc.sType.isEmpty() and !''.equals(fc.sType) and fc.sType.size != 0">
+			    AND P.BUSINESS_TYPE IN 
+			    <foreach item="type" collection="fc.sType" open="(" separator="," close=")">
+				 #{type}
+				 </foreach>
+			   </if>
 			  GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME, R.ROOM_MEMBER
 			  ORDER BY C.CAMP_NAME ASC
 			)A)
-		WHERE ROWNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
+		WHERE ROWNUM BETWEEN #{ startRow } AND #{ endRow }
 	</select>
 
 
 
-	<select id="campAllSearch" parameterType="com.cp.campers.search.model.vo.PageInfo" resultMap="searchCampMap">
+	<select id="campAllSearch" parameterType="_int" resultMap="searchCampMap">
 		SELECT
         *
 		FROM
@@ -117,11 +129,11 @@
 	
 	
 	<!-- 조건 검색된 캠핑장 총 개수 구하기 -->
-	<select id="campFindCount" resultType="_int">
+	<select id="campFindCount" parameterType="Map" resultType="_int">
 	SELECT
         	COUNT(CAMP_NO)
 	   FROM (SELECT
-				    C.CAMP_NO
+				    C.CAMP_NO 
 				  , C.CAMP_NAME 
 				  , C.CAMP_ADDRESS 
 				  , F.FILE_ROUTE 
@@ -135,9 +147,9 @@
                            , CAMP_NAME
                            , CAMP_ADDRESS
 			   			FROM CAMP
-			   		   WHERE CAMP_ADDRESS LIKE '%'||#{ sArea }||'%'
-			   		   <if test="sName != ''">
-			   		     AND CAMP_NAME LIKE '%'||#{ sName }||'%'
+			   		   WHERE CAMP_ADDRESS LIKE '%'||#{ fc.sArea }||'%'
+			   		  <if test="fc.sName !='null' and fc.sName != null and fc.sName != ''">
+			   		     AND CAMP_NAME LIKE '%'||#{ fc.sName }||'%'
 			   		   </if>
                          AND CAMP_STATUS = 'Y') C
 			   JOIN ROOM R ON R.CAMP_NO = C.CAMP_NO 
@@ -148,17 +160,26 @@
 			   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
                JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
 			  WHERE F.FILE_STATUS = 'N'
-			     AND R.ROOM_MEMBER &gt;= #{ sGuest }
-			    <if test="sType != 'null'">
-			     AND P.BUSINESS_TYPE IN (#{ sType })
+			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest }
+			  <if test="type != null and !type.isEmpty() and !''.equals(type) and type.size != 0">
+			    AND P.BUSINESS_TYPE IN 
+			    <foreach item="type" collection="type" open="(" separator="," close=")">
+				 #{type}
+				 </foreach>
+			   </if>
+			    <if test="faci != null and !faci.isEmpty() and !''.equals(faci) and faci.size != 0">
+			    AND L.FACILITY_NAME IN 
+			    <foreach item="faci" collection="faci" open="(" separator="," close=")">
+			     #{faci}
+			    </foreach>
 			    </if>
-			     <if test="sFaci != 'null'">
-			     AND L.FACILITY_NAME IN (#{ sFaci })
+			     <if test="floor != null and !floor.isEmpty() and !''.equals(floor) and floor.size != 0">
+			     AND R.ROOM_FLOOR IN 
+			     <foreach item="floor" collection="floor" open="(" separator="," close=")">
+			     #{floor}
+			    </foreach>
 			    </if>
-			     <if test="sFloor != 'null'">
-			     AND R.ROOM_FLOOR IN (#{ sFloor })
-			    </if>
-			     GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME, R.ROOM_MEMBER
+			    GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME, R.ROOM_MEMBER
            )
 	</select>
 	
@@ -183,7 +204,7 @@
                            , CAMP_ADDRESS
 			   			FROM CAMP
 			   		   WHERE CAMP_ADDRESS LIKE '%'||#{ fc.sArea }||'%'
-			   		   <if test="fc.sName != null and fc.sName != ''">
+			   		  <if test="fc.sName !='null' and fc.sName != null and fc.sName != ''">
 			   		     AND CAMP_NAME LIKE '%'||#{ fc.sName }||'%'
 			   		   </if>
                          AND CAMP_STATUS = 'Y') C
@@ -194,22 +215,31 @@
 			   JOIN BUSINESS_TYPE P ON P.BUSINESS_NO = T.BUSINESS_NO
 			   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
                JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
-			   WHERE F.FILE_STATUS = 'N' 
+			  WHERE F.FILE_STATUS = 'N' 
 			    AND F.FILE_LEVEL = 1
-			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest } 
-			    <if test="fc.sType != 'null'">
-			    AND P.BUSINESS_TYPE IN (#{ fc.sType })
+			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest }
+			   <if test="type != null and !type.isEmpty() and !''.equals(type) and type.size != 0">
+			    AND P.BUSINESS_TYPE IN 
+			    <foreach item="type" collection="type" open="(" separator="," close=")">
+				 #{type}
+				 </foreach>
+			   </if>
+			    <if test="faci != null and !faci.isEmpty() and !''.equals(faci) and faci.size != 0">
+			    AND L.FACILITY_NAME IN 
+			    <foreach item="faci" collection="faci" open="(" separator="," close=")">
+			     #{faci}
+			    </foreach>
 			    </if>
-			     <if test="fc.sFaci != 'null'">
-			    AND L.FACILITY_NAME IN (#{ fc.sFaci })
-			    </if>
-			     <if test="fc.sFloor != 'null'">
-			    AND R.ROOM_FLOOR IN (#{ fc.sFloor })
+			     <if test="floor != null and !floor.isEmpty() and !''.equals(floor) and floor.size != 0">
+			     AND R.ROOM_FLOOR IN 
+			     <foreach item="floor" collection="floor" open="(" separator="," close=")">
+			     #{floor}
+			    </foreach>
 			    </if>
 			  GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME, R.ROOM_MEMBER
 			  ORDER BY C.CAMP_NAME ASC
 			)A)
-		WHERE ROWNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
+		WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 	</select>
 	
 	
