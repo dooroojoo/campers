@@ -44,10 +44,11 @@
             <header class="changinfo_content_header">현재 비밀번호와 새로운 비밀번호를 입력 해주세요.</header>        
             <div class="changinfo_privacy">
                 
-                <form th:action="@{/mypage/changinfo/changinfo_modify/changinfo_pwd_modify}" role="form"
-                	th:Object="${passwordForm}" method="post">
-                    <h4 class="changinfoPwdModify_pwd">현재 비밀번호<input type="password" class="changinfoPwdModify_pwd_form" 
-                    name="userPwd" id="userPwd" placeholder="비밀번호를 입력하세요"></input></h4>
+                <form th:action="@{/mypage/changinfo/changinfoModify/changinfoPwdModify}" role="form"
+                	th:Object="${PasswordForm}" method="post">
+                    <h4 class="changinfoPwdModify_pwd">현재 비밀번호
+                    <input type="password" class="changinfoPwdModify_pwd_form" 
+                    name="pwd" id="pwd" placeholder="비밀번호를 입력하세요"></input></h4>
                    
                     <h4 class="changinfoPwdModify_newpwd">변경 비밀번호<input type="password" class="changinfoPwdModify_newpwd_form" name="newPwd" id="newPwd"></input>
                     <br></h4>
@@ -106,12 +107,12 @@
      
     <script>
 		$("#updatePwdBtn").on('click', function(){
-			const userPwd = document.getElementById('userPwd');
+			const pwd = document.getElementById('pwd');
 			const newPwd = document.getElementById('newPwd');
 			const newPwd2 = document.getElementById('newPwd2');
 			
 			/* 하나라도 공란으로 입력 시 alert 후 submit 하지 않음 */
-	        if(userPwd.value == "" || newPwd.value == "" || newPwd2.value == "") {
+	        if(pwd.value == "" || newPwd.value == "" || newPwd2.value == "") {
 	            alert("비밀번호를 입력해주세요.");
 	            return false;
 	        }

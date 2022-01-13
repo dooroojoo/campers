@@ -22,6 +22,35 @@
     width: 1100px;
 }
 
+.previewBox{
+            display: flex;
+            padding: 15px 0;
+           
+}
+
+.inputImgPreview{
+            position:relative;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #8a8a8a;
+            margin-right: 10px;
+            text-align: center;
+            cursor: pointer;
+}
+
+.beforeInput{
+        	display:block; 
+        	position:absolute;     
+        	top: 25%;
+            left: 25%;
+}
+.afterInput{
+	    	max-width: 100px;
+		    max-height: 100px;
+		    min-width: 100px;
+	   		min-height: 100px;
+}
+
 .textbox{
     height: 30px;
 }
