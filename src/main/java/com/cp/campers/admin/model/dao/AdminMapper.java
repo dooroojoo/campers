@@ -94,8 +94,5 @@ public interface AdminMapper {
 
 	// 정산관리목록
 	List<CalculateInfo> calculateList(PageInfo pi);
-	
-	
-
 
 }
