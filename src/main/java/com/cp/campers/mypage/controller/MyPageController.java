@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +30,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.member.model.service.MemberService;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
@@ -56,15 +62,15 @@ public class MyPageController {
 	 public ModelAndView mypageMember(Member member, Board board, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		
 		member.setUserNo(user.getUserNo());
-		board.setWriter(user.getUserNo());
+		//board.setWriter(user.getUserNo());
 		
 		List<Member> memberList = mypageService.findAllMember();
-		List<Board> boardList = mypageService.findAllBoard();
+		//List<Board> boardList = mypageService.findAllBoard();
 		
 		
 		mv.addObject("memberList", memberList);
-		mv.addObject("boardList", boardList);
-		mv.setViewName("/mypage/mypage");
+		//mv.addObject("boardList", boardList);
+		mv.setViewName("mypage/mypage");
 		
 		/*
 		// board
@@ -93,13 +99,13 @@ public class MyPageController {
 	}
 	
 	/* 회원 탈퇴 */
-	@GetMapping("/changinfo/changinfo_memberout") 
+	@GetMapping("/changinfo/changinfoMemberout") 
 	public String changeInfoMemberout() {
 		return"mypage/changinfo_memberout"; 
 	}
 	
 	/* 회원탈퇴 입력 폼 */
-	@PostMapping("/changinfo/changinfo_memberout")
+	@PostMapping("/changinfo/changinfoMemberout")
 	public String changeInfoMemberout(Member member, @AuthenticationPrincipal UserImpl user, 
 								RedirectAttributes rttr, Model model, Locale locale){
 		/* 유저 정보 가져오기 */
@@ -133,75 +139,74 @@ public class MyPageController {
 	}
 	
 	/* 회원 정보 수정 */
-	@GetMapping("/changinfo/changinfo_modify") 
+	@GetMapping("/changinfo/changinfoModify") 
 	public String changeInfoModify() {
 		return"mypage/changinfo_modify"; 
 	}
 		
 	/* 회원 정보 수정 폼 */
-	@PostMapping("/changinfo/changinfo_modify/update") /*String email, String phone, String nickName,*/
+	@PostMapping("/changinfo/changinfoModify/update") /*String email, String phone, String nickName,*/
 	public String changeInfoModify(Member member, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, Locale locale) {
 		
 		// 유저 정보 가져오기
 		member.setUserNo(user.getUserNo());
+		member.setId(user.getId());
 		
-		mypageService.changeInfoModify(member);
-		
-		
-		/*
-		member.setEmail(user.getEmail());
-		member.setPhone(user.getPhone());
-		member.setNickName(user.getNickName());
-		
-		// changeInfoModify update 
-		// , email, phone, nickName
-		String msg = mypageService.changeInfoModify(member);
-		
-		Map<String, String> map = new HashMap<>();
-		map.put("msg", msg);
-		
-		// 로그 확인
-		// log.info(member.toString());
-		*/
-		
+		member = mypageService.changeInfoModify(member);
+				
 		// 메세지		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoModify", null, locale));
+		
+		
+		user.setDetails(member);
+	
 		
 		// 리다이렉트
 		return "redirect:/mypage/changinfo"; 
 	}		
 	
 	/* 회원 비밀번호 변경 */
-	@GetMapping("/changinfo/changinfo_modify/changinfo_pwd_modify") 
+	@GetMapping("/changinfo/changinfoModify/changinfoPwdModify") 
 	public String changeInfoPwdModify() {
 		return"mypage/changinfo_pwd_modify"; 
 	}
 	
 	/* 회원 비밀번호 변경 입력 폼 */
-	@PostMapping("/changinfo/changinfo_modify/changinfo_pwd_modify")
-	public String changeInfoPwdModify(Member member, RedirectAttributes rttr, Locale locale) {
+	@PostMapping("/changinfo/changinfoModify/changinfoPwdModify")
+	public String changeInfoPwdModify(Member member, @AuthenticationPrincipal UserImpl user,
+			@RequestParam("pwd")String pwd , @RequestParam("newPwd")String newPwd ,
+			@RequestParam("newPwd2")String newPwd2 ,RedirectAttributes rttr, Locale locale) {
+		
+		// 유저 정보 가져오기
+		member.setUserNo(user.getUserNo());
+		member.setId(user.getId());
+		member.setPwd(user.getPwd());
+		
+		
 		
 		mypageService.changeInfoPwdModify(member);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoPwdModify", null, locale));
 		
+		user.setDetails(member);
+		
 		return "redirect:/mypage/changinfo";
 	}
 	
 	/* 캠핑장 등록 페이지 */
-	@GetMapping("/mypage_camp_enrollment") 
+	@GetMapping("/mypageCampEnrollment") 
 	public String mypageCampEnrollmentForm() {
 				
 		return "mypage/mypage_camp_enrollment"; 
 	}
 	
-	@GetMapping("/mypage_camp_enrollment_room")
+	@GetMapping("/mypageCampEnrollmentRoom")
 	public String mypage_camp_enrollment_roomForm() {
 		return "mypage/mypage_camp_enrollment_room";
 	}
 	
 	/* 숙소 등록 */
-	@PostMapping("/mypage_camp_enrollment_room")
+	@PostMapping("/mypageCampEnrollmentRoom")
 	public String mypage_camp_enrollment_room(Camp camp, Room room, @AuthenticationPrincipal UserImpl user,
 			@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
 			@RequestParam List<MultipartFile> roomMultiFiles,
@@ -225,13 +230,13 @@ public class MyPageController {
 	
 	/* 캠핑장 등록 입력폼 */
 	/* @AuthenticationPrincipal UserImpl user 유저 정보 가져오기 */
-	@PostMapping("/mypage_camp_enrollment")
+	@PostMapping("/mypageCampEnrollment")
 	public String mypageCampEnrollment(Camp camp, CampFile campFile, RoomFile roomFile,
 							Room room, @AuthenticationPrincipal UserImpl user,
 							@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
 							@RequestParam MultipartFile singleFile,
-							@RequestParam List<MultipartFile> campMultiFiles,
-							@RequestParam List<MultipartFile> roomMultiFiles,
+							@RequestParam MultipartFile[] campMultiFiles,
+							@RequestParam MultipartFile[] roomMultiFiles,
 							HttpServletRequest request,
 							RedirectAttributes rttr, Locale locale) {
 		/* 유저 정보 받아오기 */
@@ -276,71 +281,94 @@ public class MyPageController {
 		 * 사업장 사진, 객실 사진 주석처리 하면 사업장등록증 까진 insert 가능. */
 		
 		/* 사업장 사진을 저장할 경로 */
-		String campFilePath = uploadFilesPath + "campImg";
+		String campFilePath = uploadFilesPath + "/campImg";
+		
 		/* 해당 파일 경로 존재 여부 확인하여 없을 경우 make directory */
-		File mkdir2 = new File(filePath);
+		File mkdir2 = new File(campFilePath);
 		if(!mkdir2.exists()) mkdir2.mkdirs();
 		
+		int campNo = 0;
 		/* 사업장 사진 파일에 관한 정보 보관 */		
-		List<Map<String, String>> files2 = new ArrayList<>();
+		List<Map<String, String>> files = new ArrayList<>();
+		List<MultipartFile> campMultiFileList = new ArrayList<>();
+		
+		for(int i = 0; i < campMultiFiles.length; i++) {
+			if(campMultiFiles[i].getSize() != 0) {
+				campMultiFileList.add(campMultiFiles[i]);
+			}
+		}
 		
 		/* List<MultipartFile> 반복문 */
-		for(int i = 0; i < campMultiFiles.size(); i++) {
+		for(int i = 0; i < campMultiFileList.size(); i++) {
 			/* 파일명 변경 처리 */
-			String originFileName2 = campMultiFiles.get(i).getOriginalFilename();
-			String ext2 = originFileName2.substring(originFileName2.lastIndexOf("."));
-			String savedName2 = UUID.randomUUID().toString().replace("-", "") + ext2;
-			
+			//String originFileName2 = campMultiFileList.get(i).getOriginalFilename();
+			//String ext2 = originFileName2.substring(originFileName2.lastIndexOf("."));
+			//String savedName2 = UUID.randomUUID().toString().replace("-", "") + ext2;
+						
 			/* 파일에 관한 정보 추출 후 보관 */
-			Map<String, String> file2 = new HashMap<>();
-			file2.put("originFileName2", originFileName2);
-			file2.put("savedName2", savedName2);
-			file2.put("campFilePath", campFilePath);
-			
-			files2.add(file2);
+			Map<String, String> file = new HashMap<>();
+			file.put("originFileName", originFileName);
+			file.put("savedName", savedName);
+			file.put("campFilePath", campFilePath);			
+			files.add(file);
 		}
 		
 		/* 파일 저장 */
 		try {
-			for(int i = 0; i < campMultiFiles.size(); i++) {
-				Map<String, String> file2 = files2.get(i);
-				campMultiFiles.get(i).transferTo(new File(file2.get("campFilePath") + "/" + file2.get("savedName2")));
-				String originFileName2 = campMultiFiles.get(i).getOriginalFilename();
-				String ext2 = originFileName2.substring(originFileName2.lastIndexOf("."));
-				String savedName2 = UUID.randomUUID().toString().replace("-", "") + ext2;
-				/* 주소 전송 참고
-				 * camp.setCampPath("/resources/images/uploadFiles/businessImg/"+savedName);
-				 * */
-				camp.setCampFile(campFile);
+		
+			for(int i = 0; i < campMultiFileList.size(); i++) {
 				
-				//camp.setCampFile("/resources/images/uploadFiles/campImg/" + savedName2);
-				// mypageService.mypageCampEnrollment(camp);
-			} 
-			
+				Map<String, String> file = files.get(i);
+				campMultiFileList.get(i).transferTo(new File(file.get("campFilePath") + "\\" + file.get("savedName")));
+				
+				Attachment attachment = new Attachment();
+				attachment.setFileName(file.get("savedName"));
+				attachment.setFileNewName(file.get("originFileNmae"));
+				attachment.setFileNewName("originFileNmae");
+				attachment.setFileRoute("/resources/images/uploadFiles/campImg/");
+				
+				if(i == 0)
+					attachment.setFileLevel(0);
+				else
+					attachment.setFileLevel(1);
+				
+				mypageService.insertCampImage(attachment);
+				
+				} 
+			campNo = mypageService.selectCampNo();
 		} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			/* 실패 시 저장 된 파일 삭제 */
-				for(int i = 0; i < campMultiFiles.size(); i++) {
-					Map<String, String> file2 = files2.get(i);
-					new File(file2.get(campFilePath) + "/" + file2.get("savedName")).delete();
+				for(int i = 0; i < campMultiFileList.size(); i++) {
+					
+					Map<String, String> file = files.get(i);
+					new File(file.get("campFilePath") + "\\" + file.get("savedName")).delete();
 				}				
 		}	
 	   
 		/* --------------------------- 객실 ------------------------------*/
 		
 		/* 객실 사진을 저장할 경로 */
-		String roomFilePath = uploadFilesPath + "roomImg";
+		String roomFilePath = uploadFilesPath + "/roomImg";
+		
 		/* 해당 파일 경로 존재 여부 확인하여 없을 경우 make directory */
-		File mkdir3 = new File(filePath);
+		File mkdir3 = new File(roomFilePath);
 		if(!mkdir3.exists()) mkdir3.mkdirs();						
 		
 		/* 객실 사진 파일에 관한 정보 보관 */
-		List<Map<String, String>> files3 = new ArrayList<>();		
+		List<Map<String, String>> files3 = new ArrayList<>();
+		List<MultipartFile> roomMultiFileList = new ArrayList<>();
+				
+		for(int i = 0; i < roomMultiFiles.length; i++) {
+			if(roomMultiFiles[i].getSize() != 0) {
+				roomMultiFileList.add(roomMultiFiles[i]);
+			}
+		}		
 		
 		/* List<MultipartFile> 반복문 */
-		for(int i = 0; i < roomMultiFiles.size(); i++) {
+		for(int i = 0; i < roomMultiFileList.size(); i++) {
 			/* 파일명 변경 처리 */
-			String originFileName3 = roomMultiFiles.get(i).getOriginalFilename();
+			String originFileName3 = roomMultiFileList.get(i).getOriginalFilename();
 			String ext3 = originFileName3.substring(originFileName3.lastIndexOf("."));
 			String savedName3 = UUID.randomUUID().toString().replace("-", "") + ext3;
 			
@@ -355,27 +383,34 @@ public class MyPageController {
 		
 		/* 파일 저장 */
 		try {
-			for(int i = 0; i < roomMultiFiles.size(); i++) {
+			for(int i = 0; i < roomMultiFileList.size(); i++) {
 				Map<String, String> file3 = files3.get(i);
-				roomMultiFiles.get(i).transferTo(new File(file3.get("roomFilePath") + "/" + file3.get("savedName")));
-				String originFileName3 = roomMultiFiles.get(i).getOriginalFilename();
-				String ext3 = originFileName3.substring(originFileName3.lastIndexOf("."));
-				String savedName3 = UUID.randomUUID().toString().replace("-", "") + ext3;
-				//camp.setCampPath("/resources/images/uploadFiles/roomImg/" + savedName3);
-				camp.setRoomFile(roomFile);
-				mypageService.mypageCampEnrollment(camp);
+				roomMultiFileList.get(i).transferTo(new File(file3.get("roomFilePath") + "/" + file3.get("savedName")));
+				
+				Attachment atta2 = new Attachment();
+				atta2.setFileName(file3.get("savedName3"));
+				atta2.setFileNewName(file3.get("originFileNmae"));
+				atta2.setFileRoute("/resources/images/uploadFiles/roomImg/");
+				
+				if(i == 0)
+					atta2.setFileLevel(0);
+				else
+					atta2.setFileLevel(1);
+				
+				mypageService.insertRoomImage(atta2);
 			} 
 			
 		} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			/* 실패 시 저장 된 파일 삭제 */
-				for(int i = 0; i < roomMultiFiles.size(); i++) {
+				for(int i = 0; i < roomMultiFileList.size(); i++) {
 					Map<String, String> file3 = files3.get(i);
-					new File(file3.get(roomFilePath) + "/" + file3.get("savedName")).delete();
+					new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
 				}				
 		}
 		
-		/*----------------------------- 아직...------------------------------*/
+		
+		
 		
 		/* 캠프 사진 파일 */
 		//camp.setCampPath("filePath");
@@ -399,31 +434,31 @@ public class MyPageController {
 	}	
 	
 	/* 캠핑장 해지 */
-	@GetMapping("/mypage_camp_management_out") 
+	@GetMapping("/mypageCampManagementOut") 
 	public String mypageCampManagementOut() {
 		return"mypage/mypage_camp_management_out"; 
 	}
 	
 	/* 캠핑장 관리(사업자용) */
-	@GetMapping("/mypage_camp_management") 
+	@GetMapping("/mypageCampManagement") 
 	public String mypageCampManagement() {
 		return"mypage/mypage_camp_management"; 
 	}
 	
 	/* 마이페이지 카테고리 */
-	@GetMapping("/mypage_category") 
+	@GetMapping("/mypageCategory") 
 	public String mypageCategory() {
 		return"mypage/mypage_category"; 
 	}
 	
 	/* 회원 예약 내역 */
-	@GetMapping("/mypage_guest_reserve") 
+	@GetMapping("/mypageGuestReserve") 
 	public String mypageGuestReserve() {
 		return"mypage/mypage_guest_reserve"; 
 	}
 	
 	/* 사업자 예약 내역 */
-	@GetMapping("/mypage_host_reserve") 
+	@GetMapping("/mypageHostReserve") 
 	public String mypageHostReserve() {
 		return"mypage/mypage_host_reserve"; 
 	}

@@ -49,8 +49,20 @@
 		<collection property="CampFacility" resultMap="CampFacilityResultMap"/>
 		<collection property="Facility" resultMap="FacilityResultMap"/>
 		<collection property="imgFileList" resultMap="imageFileResultMap"/>
-		<collection property="CampFile" resultMap="CampFileResultMap"/>
-		<collection property="RoomFile" resultMap="RoomFileResultMap"/>
+		<collection property="CampFileNoList" resultMap="CampFileNoResultMap"/>
+		<collection property="RoomFileNoList" resultMap="RoomFileNoResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.CampFileNo" id="CampFileNoResultMap">
+		<id property="campNo" column="CAMP_No"/>
+		<id property="fileNo" column="FILE_NO"/>
+		<association property="attachment" resultMap="attachmentResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.RoomFileNo" id="RoomFileNoResultMap">
+		<id property="roomNo" column="ROOM_No"/>
+		<id property="fileNo" column="FILE_NO"/>
+		<association property="attachment" resultMap="attachmentResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="BusinessTypeResultMap">
@@ -141,12 +153,13 @@
 		<association property="attachment" resultMap="attachmentResultMap"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.board.model.vo.Attachment" id="attachmentResultMap">
+	<resultMap type="com.cp.campers.mypage.model.vo.Attachment" id="attachmentResultMap">
 		<id property="fileNo" column="FILE_NO"/>
 		<result property="fileName" column="FILE_NAME"/>
 		<result property="fileRoute" column="FILE_ROUTE"/>
 		<result property="status" column="FILE_STATUS"/>
 		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="fileNewName" column="FILE_NEW_NAME"/>
 	</resultMap> 
           
    <select id="selectMember" resultType="com.cp.campers.member.model.vo.Member">
@@ -388,5 +401,50 @@
 	WHERE RNUM BETWEEN #{pi.startRow} AND #{pi.endRow} 
 	</select>
  
+ 	<insert id="insertCampImage" parameterType="com.cp.campers.mypage.model.vo.Attachment">
+		INSERT
+		INTO IMAGEFILE
+		VALUES
+		(
+				SEQ_FILE_NO.NEXTVAL,
+				#{fileName},
+				#{fileRoute},
+				DEFAULT,
+				#{fileLevel},
+				#{fileNewName}
+		)
+	</insert>
+	
+	<insert id="insertRoomImage" parameterType="com.cp.campers.mypage.model.vo.Attachment">
+		INSERT
+		INTO IMAGEFILE
+		VALUES
+		(
+				SEQ_FILE_NO.NEXTVAL,
+				#{fileName},
+				#{fileRoute},
+				DEFAULT,
+				#{fileLevel},
+				#{fileNewName}
+		)
+	</insert>
+ 	
+ 	<insert id="insertImageNo" parameterType="_int">
+		INSERT
+		INTO CAMP_FILE
+		VALUES
+		(SEQ_CAMP_NO.CURRVAL, SEQ_FILE_NO.CURRVAL)
+	</insert>
+	
+	<insert id="insertImageNo2" parameterType="_int">
+		INSERT
+		INTO ROOM_FILE
+		VALUES
+		(SEQ_ROOM_NO.CURRVAL, SEQ_FILE_NO.CURRVAL)
+	</insert>
+ 	
+ 	<select id="selectCampNo" resultType="int">
+ 		SELECT SEQ_CAMP_NO.CURRVAL, FROM DUAL
+ 	</select>
  	
 </mapper>

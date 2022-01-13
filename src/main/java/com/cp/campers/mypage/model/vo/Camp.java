@@ -35,10 +35,10 @@ public class Camp {
 	private Room room;
 	
 	/* CampFile 연결 */
-	private CampFile campFile;
+	private List<CampFileNo> campFileNoList;
 	
 	/* RoomFile 연결 */
-	private RoomFile roomFile;
+	private List<RoomFileNo> roomFileNoList;
 	
 	/* ImageFile 연결 */
 	private List<ImageFile> imageFileList;

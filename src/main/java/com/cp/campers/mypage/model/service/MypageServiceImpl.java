@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cp.campers.mypage.model.vo.PageInfo;
+import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.member.model.dao.MemberMapper;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.mypage.model.dao.MypageMapper;
 import com.cp.campers.mypage.model.vo.Camp;
+import com.cp.campers.mypage.model.vo.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,10 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MypageServiceImpl implements MypageService{
 
 	private final MypageMapper mypageMapper;
+	private final MemberMapper memberMapper;
 	
 	@Autowired
-	public MypageServiceImpl(MypageMapper mypageMapper) {
+	public MypageServiceImpl(MypageMapper mypageMapper,  MemberMapper memberMapper) {
 		this.mypageMapper = mypageMapper;
+		this.memberMapper = memberMapper;
 	}
 
 	/* 캠프장 등록 */
@@ -52,7 +56,7 @@ public class MypageServiceImpl implements MypageService{
 		//	mypageMapper.insertRoom(room);
 		// }			
 		mypageMapper.insertRoom(camp.getRoom());	
-		
+				
 		/* CAMP_FILE INSERT */
 		//mypageMapper.insertCampFile(camp.getCampFile());
 		//for(Integer fileNo : camp.getCampFile()) {
@@ -78,16 +82,12 @@ public class MypageServiceImpl implements MypageService{
 	/* 회원정보 수정 */
 	@Transactional
 	@Override
-	public int changeInfoModify(Member member/*, String email, 
+	public Member changeInfoModify(Member member/*, String email, 
 			String phone, String nickName*/) {
-		/*
-		member.setEmail(member.getEmail());
-		member.setPhone(member.getPhone());
-		member.setNickName(member.getNickName());
-		*/
 		
-		
-		return mypageMapper.changeInfoModify(member);
+		mypageMapper.changeInfoModify(member);
+				
+		return memberMapper.findMemberById(member.getId());
 	}
 
 	/* 비밀번호 변경 */
@@ -99,7 +99,8 @@ public class MypageServiceImpl implements MypageService{
 		
 		member.setPwd(member.getPwd());
 		
-		mypageMapper.changeInfoPwdModify(member);		
+		mypageMapper.changeInfoPwdModify(member);
+		
 	}
 
 	/* 닉네임 체크 */
@@ -147,6 +148,26 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public void mypage_camp_enrollment_room(Camp camp) {
 		mypageMapper.insertRoom(camp.getRoom());
+	}
+
+	/* 캠핑장 사진 등록*/
+	@Override
+	public void insertCampImage(Attachment attachment) {
+		mypageMapper.insertCampImage(attachment);
+		mypageMapper.insertImageNo();
+	}
+
+	/* 객실 사진 등록 */
+	@Override
+	public void insertRoomImage(Attachment atta2) {
+		mypageMapper.insertRoomImage(atta2);
+		mypageMapper.insertImageNo2();
+		
+	}
+
+	@Override
+	public int selectCampNo() {
+		return mypageMapper.selectCampNo();
 	}
 
 	/*

@@ -38,7 +38,7 @@
             </header>
         </div>
         <!--   -->
-            <form id="enrollForm" th:action="@{/mypage/mypage_camp_enrollment}" method="post"
+            <form id="enrollForm" th:action="@{/mypage/mypageCampEnrollment}" method="post"
             		enctype="multipart/form-data">
             <table class="mypage_camp_enrollment_table">
                 <tr class="mypage_camp_enrollment_table_header">
@@ -73,11 +73,28 @@
 								Required request part 'multiFiles' is not present
 								org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'multiFiles' is not present 
                     -->
-                    <td><input type="file" name="singleFile"></td>
+                    <td><input type="file" class="imageinput image01" name="singleFile" accept="image/*" hidden>
+                		<div class="previewBox">
+                			<div class="inputImgPreview preview01"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                		</div>
+                	</td>	
                 </tr>
                 <tr>
                     <th>사업장 사진</th>
-                    <td><input type="file" name="campMultiFiles" multiple>
+                    <td><!-- <input type="file" name="campMultiFiles" multiple> -->
+                		<input type="file" class="imageinput image1" name="campMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image2" name="campMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image3" name="campMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image4" name="campMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image5" name="campMultiFiles"  accept="image/*" hidden>
+	                  
+                    <div class="previewBox">
+                        <div class="inputImgPreview preview1"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview preview2"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview preview3"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview preview4"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview preview5"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                    </div>
                 </tr>
                 <tr>
                     <th>사업장 계좌번호</th>
@@ -201,7 +218,20 @@
                 </tr>
                 <tr>
                     <th>객실 사진</th>
-                    <td><input type="file" name="roomMultiFiles" multiple>
+                    <td>
+                		<input type="file" class="imageinput image21" name="roomMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image22" name="roomMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image23" name="roomMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image24" name="roomMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image25" name="roomMultiFiles"  accept="image/*" hidden>
+	                  
+	                    <div class="previewBox">
+	                        <div class="inputImgPreview preview21"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                        <div class="inputImgPreview preview22"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                        <div class="inputImgPreview preview23"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                        <div class="inputImgPreview preview24"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                        <div class="inputImgPreview preview25"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    </div>
                 </tr>
                 <tr>
                     <th>객실 바닥 형태</th><!-- name="roomFloor"  -->
@@ -221,53 +251,7 @@
                 </tr>                
                 <tbody></tbody>
             </table>
-        
-        <!--        
-        <div class="clon_table">
-        	<table class="mypage_camp_enrollment_table">
-        		<tr>
-                    <th>객실 최대인원</th>
-                    <td><input class="textbox" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요."></td>
-                </tr>
-                <tr>
-                    <th>객실 이름(호수)</th>
-                    <td><input class="textbox" name="roomName" type="text" placeholder="객실 이름을 입력해주세요."></td>
-                </tr>
-                <tr>
-                    <th>객실 가격</th>
-                    <td><input class="textbox" name="roomPrice" type="text" placeholder="객실 가격을 입력해주세요."></td>
-                </tr>
-                <tr>
-                    <th>객실 크기</th>
-                    <td><input class="textbox" name="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요."></td>
-                </tr>
-                <tr>
-                    <th>객실 소개</th>
-                    <td><input class="textbox" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."></td>
-                </tr>
-                <tr>
-                    <th>객실 사진</th>
-                    <td><input type="file" name="roomMultiFiles" multiple>
-                </tr>
-                <tr>
-                    <th>객실 바닥 형태</th>
-                    <td><input type="radio" name="roomFloor" value="데크" checked>데크 <input type="radio" name="roomFloor" value="잔디">잔디 <input type="radio" name="roomFloor" value="파쇄석">파쇄석 </td>
-                </tr>
-                <tr>
-                    <th>객실 주차 여부</th>
-                    <td><input type="radio" name="roomParking" value="텐트 옆 주차" checked>텐트 옆 주차 <input type="radio" name="roomParking" value="주차장 주차">주차장 주차 <input type="radio" name="roomParking" value="외부 주차">외부 주차</td>
-                </tr>
-                <tr>
-                    <th>객실 형태</th>
-                    <td><input type="radio" name="roomForm" value="카라반" checked>카라반 <input type="radio" name="roomForm" value="캠핑">캠핑 <input type="radio" name="roomForm" value="글램핑">글램핑</td>
-                </tr>
-                <tr>
-                    <th>객실 수량</th>
-                    <td><input class="textbox2" name="roomAmount" type="number" placeholder="1"></td>
-                </tr>
-        	</table>
-        </div>
-         -->
+                
         	<div class="room_plus">
                 <button type="button" id="room_plus_button" class="room_plus_button"><img class="room_plus_img" src="/resources/images/mypage/plus.png">객실 추가하기</button>
             </div>
@@ -297,6 +281,65 @@
 		"<tr><th>객실 수량</th><td><input class='textbox2' name='roomAmount' type='number' placeholder='1'></td></tr>"
 		);   
     });
+    </script>
+    
+    <script>
+    $(function(){
+    	$('.preview01').click(function (e){
+   			$('.image01').click();
+   		}) 
+   		$('.preview1').click(function (e){
+   			$('.image1').click();
+   		}) 
+   		$('.preview2').click(function (e){
+   			$('.image2').click();
+   		}) 	
+   		$('.preview3').click(function (e){
+   			$('.image3').click();
+   		})
+   		$('.preview4').click(function (e){
+   			$('.image4').click();
+   		}) 	
+   		$('.preview5').click(function (e){
+   			$('.image5').click();
+   		})
+   		$('.preview21').click(function (e){
+   			$('.image21').click();
+   		}) 
+   		$('.preview22').click(function (e){
+   			$('.image22').click();
+   		}) 	
+   		$('.preview23').click(function (e){
+   			$('.image23').click();
+   		})
+   		$('.preview24').click(function (e){
+   			$('.image24').click();
+   		}) 	
+   		$('.preview25').click(function (e){
+   			$('.image25').click();
+   		}) 	
+   
+    })
+    </script>
+    
+    <script>
+    /* input type file 요소들 */
+    const fileElements = document.querySelectorAll("[type=file]");
+    /* div image_area 요소들 */
+    const imageArea = document.querySelectorAll(".inputImgPreview");
+    /* input type file 요소에 change 이벤트 발생 시 (파일 첨부 발생) */
+    fileElements.forEach(item => item.addEventListener('change', preview));
+
+    function preview(){
+    	let index = Array.from(fileElements).indexOf(this);   //input type="file" 이게 this
+    	if(this.files && this.files[0]) {
+    		let reader = new FileReader();
+    		reader.readAsDataURL(this.files[0]);
+    		reader.onload = function() {
+    			imageArea[index].innerHTML = "<img class='afterInput' src='" + reader.result + "'>";
+    		}
+    	}
+    }
     </script>
     
     <!-- <script>
