@@ -1,303 +1,374 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>write</title>
- 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nunito:wght@300&display=swap" rel="stylesheet">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>write</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
-   <style>
-        .freeBoard-wrap{
-            display: flex;
-            justify-content: center;
-            font-family: 'Noto Sans KR', sans-serif;
-            
-            /* font-weight: 900; */
-        }
-        .freeBoard-content {
-            margin-top: 118px;
-            min-width: 600px;
-            border-top: 2px solid black;
-        }
-        .freeBoard-label {
-            float: left;
-		    font-size: 39px;
-		    margin-top: 67px;
-		    font-weight: 100;
-        }
-  
-        .freeBoard-label-small{
-            font-size: 22px;
-		    float: left;
-		    margin-top: 88px;
-		    margin-left: 20px;
-		    font-weight: 100;
-        }
-    
+<link
+	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nunito:wght@300&display=swap"
+	rel="stylesheet">
 
-        .freeBoard-footer {
-            display: flex;
-            margin-bottom: 50px;
-            justify-content: space-between;
-            
-        }
-        .freeBoard-footer button {
-            margin-top: 5px;
-            border-radius: 5px;
-            padding: 7px 7px;
-            border: #D1D1D1 1px solid;
-            background-color: white;
-            font-weight: 900;
-            font-size: 12px;
-            cursor: pointer;
-            font-family: 'Noto Sans KR', sans-serif;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap"
+	rel="stylesheet">
+<style>
+.freeBoard-wrap {
+	display: flex;
+	justify-content: center;
+	font-family: 'Noto Sans KR', sans-serif;
 
-            
-        }
-        
-        .freeBoard-container {
-            border-radius: 10px;
-            border: 1px solid #D1D1D1;
-            padding: 0 50px;
-            margin-bottom: 100px;
-        }
+	/* font-weight: 900; */
+}
 
-        .writeTitle{
-            margin-top: 20px;
-            width: 700px;
-            height: 40px;
-            padding-left: 5px;
-            border-radius: 10px;
-            border:1px solid #bdbdbd;
-        }
+.freeBoard-content {
+	margin-top: 118px;
+	min-width: 600px;
+	border-top: 2px solid black;
+}
 
-        .writeTitle:focus {
-            outline: none;
-        }
-    
-        .writeContent{
-            overflow: hidden;
-            padding-top: 5px;
-            padding-left: 5px;
-            font-size: 15px;
-            margin-top: 20px;
-            width: 700px;
-            max-width: 794px;
-            height: 350px;
-            max-height: 570px;
-            border-radius: 10px;
-            border: 1px solid #bdbdbd;
-            resize: none;
-            font-family: 'Noto Sans KR', sans-serif;
+.freeBoard-label {
+	float: left;
+	font-size: 39px;
+	margin-top: 67px;
+	font-weight: 100;
+}
 
+.freeBoard-label-small {
+	font-size: 22px;
+	float: left;
+	margin-top: 88px;
+	margin-left: 20px;
+	font-weight: 100;
+}
 
-        }
-        .writeContent:focus {
-            outline: none;
-        }
+.freeBoard-footer {
+	display: flex;
+	margin-bottom: 50px;
+	justify-content: space-between;
+}
 
-        .photoLimit{
-            color: grey;
-        }
-        .previewBox{
-            display: flex;
-            padding: 15px 0;
-            border-bottom: 2px solid black;
-        }
+.freeBoard-footer button {
+	margin-top: 5px;
+	border-radius: 5px;
+	padding: 7px 7px;
+	border: #D1D1D1 1px solid;
+	background-color: white;
+	font-weight: 900;
+	font-size: 12px;
+	cursor: pointer;
+	font-family: 'Noto Sans KR', sans-serif;
+}
 
-        .inputImgPreview{
-            position:relative;
-            width: 100px;
-            height: 100px;
-            border: 1px solid #8a8a8a;
-            margin-right: 10px;
-            text-align: center;
-            cursor: pointer;
-        }
-        
-        .beforeInput{
-        	display:block; 
-        	position:absolute;     
-        	top: 25%;
-            left: 25%;
-        }
-    	.afterInput{
-	    	max-width: 100px;
-		    max-height: 100px;
-		    min-width: 100px;
-	   		min-height: 100px;
-    	}
-        .freeBoard-aside {
-            font-size: 21px;
-            line-height: 50px;
-            margin-top: 155px;
-            margin-right: 30px;
-            border: 1px solid #e3e3e3;
-            height: 208px;
-            font-weight: 500;
-            padding: 40px 20px;
-            border-radius: 10px;
-            box-shadow: rgb(0 0 0 / 8%) 10px 10px 6px;
-            position: fixed;
-            left: 76%;
-           	background: white;
-  			z-index: 10000;
+.freeBoard-container {
+	border-radius: 10px;
+	border: 1px solid #D1D1D1;
+	padding: 0 50px;
+	margin-bottom: 100px;
+}
 
-        }
-        .boradWrite{
-            border-bottom: 2px solid grey;
-        }
-        
-   		.freeBoard-aside a {
-        	color: black;
-        	text-decoration: none;	
-        }
-        .freeBoard-aside a:hover {
+.writeTitle {
+	margin-top: 20px;
+	width: 700px;
+	height: 40px;
+	padding-left: 5px;
+	border-radius: 10px;
+	border: 1px solid #bdbdbd;
+}
+
+.writeTitle:focus {
+	outline: none;
+}
+
+.writeContent {
+	overflow: hidden;
+	padding-top: 5px;
+	padding-left: 5px;
+	font-size: 15px;
+	margin-top: 20px;
+	width: 700px;
+	max-width: 794px;
+	height: 350px;
+	max-height: 570px;
+	border-radius: 10px;
+	border: 1px solid #bdbdbd;
+	resize: none;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.writeContent:focus {
+	outline: none;
+}
+
+.photoLimit {
+	color: grey;
+}
+
+.previewBox {
+	display: flex;
+	padding: 15px 0;
+	border-bottom: 2px solid black;
+}
+
+.inputImgPreview {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	border: 1px solid #8a8a8a;
+	margin-right: 10px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.beforeInput {
+	display: block;
+	position: absolute;
+	top: 25%;
+	left: 25%;
+}
+
+.afterInput {
+	max-width: 100px;
+	max-height: 100px;
+	min-width: 100px;
+	min-height: 100px;
+}
+
+.freeBoard-aside {
+	font-size: 21px;
+	line-height: 50px;
+	margin-top: 155px;
+	margin-right: 30px;
+	border: 1px solid #e3e3e3;
+	height: 208px;
+	font-weight: 500;
+	padding: 40px 20px;
+	border-radius: 10px;
+	box-shadow: rgb(0 0 0/ 8%) 10px 10px 6px;
+	position: fixed;
+	left: 76%;
+	background: white;
+	z-index: 10000;
+}
+
+.boradWrite {
+	border-bottom: 2px solid grey;
+}
+
+.freeBoard-aside a {
+	color: black;
+	text-decoration: none;
+}
+
+.freeBoard-aside a:hover {
 	color: rgb(231, 111, 82);
 }
-        .maxLengthSub {
-       	 	 position: relative;
-        }
-        .maxLengthSub sub{
-             right: 1%;
-	 		 position: absolute;
-  			 bottom: 7px;
-        }
-    
-    </style>
+
+.maxLengthSub {
+	position: relative;
+}
+
+.maxLengthSub sub {
+	right: 1%;
+	position: absolute;
+	bottom: 7px;
+}
+
+.cancleBtn {
+	background-size: 15px 15px;
+	margin-left: 80px;
+	position: absolute;
+	background-image: url('/resources/images/board/x-mark.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	border: none;
+	width: 20px;
+	height: 20px;
+	background-color: rgba(40, 40, 40, 0.10);
+	border-radius: 100%;
+}
+</style>
 </head>
 <body>
-   <div th:replace="common/header.html"></div>
-  <div class="freeBoard-wrap">
-    <div class="freeBoard-aside">
-          
-     	 <div>
-        <th:block sec:authorize="isAuthenticated()">
-            <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
-        </th:block>
-        <th:block sec:authorize="isAnonymous()">
-      		<a onclick="loginPlz();" class="myboard">내가 쓴 게시물</a>
-        </th:block>
-        </div>
-        <div>
-       	<th:block sec:authorize="isAuthenticated()">
-            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
-        </th:block>
-        <th:block sec:authorize="isAnonymous()">
-        	<a onclick="loginPlz();" class="mycomment">내가 쓴 댓글</a>
-        </th:block>
-        </div>
-        <div>
-            <a href="/board/list" class="gotolist">목록으로</a>
-        </div>
-        <div>
-        <th:block sec:authorize="isAuthenticated()">
-            <a href="/board/write" class="boradWrite">글쓰기</a>
-        </th:block>
-        <th:block sec:authorize="isAnonymous()">
-        	<a onclick="loginPlz();" class="boradWrite">글쓰기</a>
-        </th:block>
-        </div>
-    </div>
-         
-        
-          <div class="freeBoard-container">
-              <label class="freeBoard-label">자유게시판</label><label class="freeBoard-label-small">글쓰기</label><br>
-              <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
-                <div class="freeBoard-content">
-                    <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요." maxlength="40" required><br>
-                    <textarea maxlength="1500" class="writeContent" name="content" placeholder="내용을 입력하세요." required ></textarea>
-                    <div class="maxLengthSub"><sub>0/1500</sub></div>
-                    
-                    <br><input type="file" class="imageinput image1" name="images"  accept="image/*" hidden>
-                    <input type="file" class="imageinput image2" name="images"  accept="image/*" hidden>
-                    <input type="file" class="imageinput image3" name="images"  accept="image/*" hidden>
-                   <!--  <input type="text" name="writer" th:value="${#authentication.principal.userNo}"> -->
-                  
-                    <div class="previewBox">
-                        <div class="inputImgPreview preview1"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
-                        <div class="inputImgPreview preview2"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
-                        <div class="inputImgPreview preview3"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
-                    </div>
-                </div>
-                <div class="freeBoard-footer">
-                    <div class="freeBoard-footerLeft">
-                        <button type="reset" onclick="location.href='/board/list'">취소</button>
-                        <label class="photoLimit"> 사진은 최대 3장까지 첨부 가능합니다.</label>
-                    </div>
-                    <div class="freeBoard-footerRight">
-                        <button type="submit">등록</button>
-                    </div>
-                </div>
-              </form>
-                
-            </div>
-        </div>
-        
-         <div th:replace="common/footer.html"></div>
-         <script>
-         $(".writeContent").keyup(
-        		 function(){
-        			 $(".maxLengthSub sub").html($(".writeContent").val().length+"/1500");
-        			 
-        			 if($(".writeContent").val().length> 1499){
-        				 alert("1500자 이하로 입력 가능합니다.");
-        				 $(".writeContent").blur();
-        			 }
-        		 }
-         )
-         
-         
-         </script>
-	 <script>
-    $(function(){
-   		$('.preview1').click(function (e){
-   			let fileCheck1 = document.querySelector(".image1").value;
-   			let fileCheck2 = document.querySelector(".image2").value;
-   			let fileCheck3 = document.querySelector(".image3").value;
-   			if(!fileCheck1){
-   				$('.image1').click();
-   			}else if(!fileCheck2){
-   				$('.image2').click();
-   			}else if(!fileCheck3){
-   				$('.image3').click();
-   			}
-   		}) 
-   		$('.preview2').click(function (e){
-   			let fileCheck1 = document.querySelector(".image1").value;
-   			let fileCheck2 = document.querySelector(".image2").value;
-   			let fileCheck3 = document.querySelector(".image3").value;
-   			if(!fileCheck1){
-   			$('.image1').click();
-   			}else if(!fileCheck2){
-   				$('.image2').click();
-   			}else if(!fileCheck3){
-   				$('.image3').click();
-   			}
-   		}) 	
-   		$('.preview3').click(function (e){
-   			let fileCheck1 = document.querySelector(".image1").value;
-   			let fileCheck2 = document.querySelector(".image2").value;
-   			let fileCheck3 = document.querySelector(".image3").value;
-   			if(!fileCheck1){
-   			$('.image1').click();
-   			}else if(!fileCheck2){
-   				$('.image2').click();
-   			}else if(!fileCheck3){
-   				$('.image3').click();
-   			}
-   		}) 	
-   
-    })
-    </script>
- <script src="/resources/js/board/imagePreview.js"></script>
+	<div th:replace="common/header.html"></div>
+	<div class="freeBoard-wrap">
+		<div class="freeBoard-aside">
+
+			<div>
+				<th:block sec:authorize="isAuthenticated()">
+					<a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<a onclick="loginPlz();" class="myboard">내가 쓴 게시물</a>
+				</th:block>
+			</div>
+			<div>
+				<th:block sec:authorize="isAuthenticated()">
+					<a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<a onclick="loginPlz();" class="mycomment">내가 쓴 댓글</a>
+				</th:block>
+			</div>
+			<div>
+				<a href="/board/list" class="gotolist">목록으로</a>
+			</div>
+			<div>
+				<th:block sec:authorize="isAuthenticated()">
+					<a href="/board/write" class="boradWrite">글쓰기</a>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<a onclick="loginPlz();" class="boradWrite">글쓰기</a>
+				</th:block>
+			</div>
+		</div>
+
+
+		<div class="freeBoard-container">
+			<label class="freeBoard-label">자유게시판</label><label
+				class="freeBoard-label-small">글쓰기</label><br>
+			<form th:action="@{/board/write}" method="post"
+				enctype="multipart/form-data">
+				<div class="freeBoard-content">
+					<input class="writeTitle" name="title" type="text"
+						placeholder="제목을 입력하세요." maxlength="40" required><br>
+					<textarea maxlength="1500" class="writeContent" name="content"
+						placeholder="내용을 입력하세요." required></textarea>
+					<div class="maxLengthSub">
+						<sub>0/1500</sub>
+					</div>
+
+					<br>
+					<input type="file" class="imageinput image1" name="images" accept="image/*" hidden>
+					<input type="file" class="imageinput image2" name="images" accept="image/*" hidden>
+					<input type="file" class="imageinput image3" name="images" accept="image/*" hidden>
+					<!--  <input type="text" name="writer" th:value="${#authentication.principal.userNo}"> -->
+
+					<div class="previewBox">
+						<div class="inputImgPreview preview1">
+							<img class="beforeInput" src="/resources/images/board/cameraImg.png">
+						</div>
+						<div class="inputImgPreview preview2">
+							<img class="beforeInput" src="/resources/images/board/cameraImg.png">
+						</div>
+						<div class="inputImgPreview preview3">
+							<img class="beforeInput" src="/resources/images/board/cameraImg.png">
+						</div>
+					</div>
+				</div>
+				<div class="freeBoard-footer">
+					<div class="freeBoard-footerLeft">
+						<button type="reset" onclick="location.href='/board/list'">취소</button>
+						<label class="photoLimit"> 사진은 최대 3장까지 첨부 가능합니다.</label>
+					</div>
+					<div class="freeBoard-footerRight">
+						<button type="submit">등록</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+
+	<div th:replace="common/footer.html"></div>
+	<script>
+		$(document).on("click",".index0", function(e){
+			if (e.target !== e.currentTarget) return;
+			$(".image1").val("");
+			$(".index0").remove();
+			$(".after0").remove();
+			$(".preview1").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
+			console.log(e.target);
+			console.log(e.currentTarget);
+		});
+	
+		$(document).on("click",".index1", function(e){
+			$(".image2").val("");
+			$(".index1").remove();
+			$(".after1").remove();
+			$(".preview2").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
+			if (e.target !== e.currentTarget) return;
+		});
+		
+		$(document).on("click",".index2", function(e){
+			$(".image3").val("");
+			$(".index2").remove();
+			$(".after2").remove();
+			$(".preview3").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
+			if (e.target !== e.currentTarget) return;
+		});
+		
+	</script>
+ 	<script>
+			$(".preview1").mouseenter(function(){
+				$(".index0").fadeIn(100);
+			})
+			$(".preview2").mouseenter(function(){
+				$(".index1").fadeIn(100);
+			})
+			$(".preview3").mouseenter(function(){
+				$(".index2").fadeIn(100);
+			})
+	</script>
+	<script>
+		$(".preview1").mouseleave(function(){
+			$(".index0").fadeOut(100);
+		})
+		$(".preview2").mouseleave(function(){
+			$(".index1").fadeOut(100);
+		})
+		$(".preview3").mouseleave(function(){
+			$(".index2").fadeOut(100);
+		})
+	</script> 
+	
+	<script>
+		$(".writeContent").keyup(
+				function() {
+					$(".maxLengthSub sub").html(
+							$(".writeContent").val().length + "/1500");
+
+					if ($(".writeContent").val().length > 1499) {
+						alert("1500자 이하로 입력 가능합니다.");
+						$(".writeContent").blur();
+					}
+				})
+	</script>
+	<script>
+		  $(function() {
+			$('.preview1').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image1').click();
+			})
+			$('.preview2').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image2').click();
+			})
+			$('.preview3').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image3').click();
+			})
+			$('.preview1 .beforeInput').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image1').click();
+			})
+			$('.preview2 .beforeInput').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image2').click();
+			})
+			$('.preview3 .beforeInput').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image3').click();
+			})
+
+		})  
+	</script>
+	<script src="/resources/js/board/imagePreview.js"></script>
 </body>
 </html>
