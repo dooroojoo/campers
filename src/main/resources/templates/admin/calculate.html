@@ -42,29 +42,29 @@
                     <ul class="admin_paging">
 
                      <!-- 맨 처음으로 이동하는 버튼(<<) -->
-                     <li><a href="/admin/calculatePage?page=1">&lt;&lt;</a></li>
+                     <li><a href="/admin/calculate?page=1">&lt;&lt;</a></li>
 
                      <!-- 이전 페이지로(<) -->
-                     <li th:if="${pi.page > 1}"><a th:href="@{/admin/calculatePage(page=${pi.page-1})}">&lt;</a></li>
+                     <li th:if="${pi.page > 1}"><a th:href="@{/admin/calculate(page=${pi.page-1})}">&lt;</a></li>
                      <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
 
-                   <!--   최대 10개의 페이지 목록 -->
+                   <!--   최대 10개의 페이지 목록(페이지바)-->
                      <li th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
                          <div class="current_page" th:if="${ p == pi.page }">
                              <a href="#" th:text="${ p }"></a>
                          </div>
-                         <div th:if="${ p != pi.page }">
-                             <a th:href="@{/admin/calculatePage(page=${p})}" th:text="${ p }"></a>
+                         <div th:unless="${ p == pi.page}">
+                         	<a th:href="@{/admin/calculate(pageValue=${p})}" th:text="${p}"></a>
                          </div>
                      </li>
 
                     <!--  다음 페이지로(>) -->
-                     <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/calculatePage(page=${pi.page+1})}">&gt;</a></li>
+                     <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/admin/calculate(page=${pi.page+1})}">&gt;</a></li>
                      <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
          
 
                     <!--  맨 끝으로 이동하는 버튼(>>) -->
-                     <li><a th:href="@{/admin/calculatePage(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                     <li><a th:href="@{/admin/calculate(page=${pi.maxPage})}">&gt;&gt;</a></li>
                    </ul>
                </div>
  
