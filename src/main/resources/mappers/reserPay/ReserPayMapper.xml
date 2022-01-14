@@ -6,6 +6,8 @@
 		<id property="reserNo" column="RESER_NO"/>
 		<result property="userNo" column="USER_NO"/>
 		<result property="reserName" column="RESER_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="reserState" column="RESER_STATE"/>
 		<result property="request" column="REQUEST"/>
 		<result property="checkIn" column="CHECKIN"/>
 		<result property="checkOut" column="CHECKOUT"/>

@@ -14,6 +14,7 @@ public class ReserveInfo {
 	private int reserNo; 			// 예약번호  --
 	private int userNo;  			// 회원번호 --
 	private String reserName; 		// 예약자명
+	private String reserState;		// 예약상태
 	private String phone; 			// 핸드폰번호
 	private String request;			// 예약요청사항
 	private String checkIn; 		// 체크인

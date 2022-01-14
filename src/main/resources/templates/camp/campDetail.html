@@ -7,9 +7,6 @@
 <link href="/resources/css/camp/campDetail.css" rel="stylesheet">
 <!-- icon -->
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
-
 <!-- 캘린더 css -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- 슬라이드 -->
@@ -17,7 +14,7 @@
 </head>
 <body>
 <div th:replace="common/header.html"></div>
-<!-- header 밑으로 -->
+<!-- header.html 밑으로 -->
  <!-- jQuery UI js -->
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js" integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
 <!-- 캘린더 라이브러리 -->
@@ -33,7 +30,7 @@
             <div class="btnBefore">
             	<i class="fas fa-chevron-left" onclick="location.href='javascript:history.back();'"></i>
             </div>
-            <div class="accom_title"><h2 th:text="${camp.campName}"></h2></div>
+            <div class="accom_title"><h2 id="campName" th:text="${camp.campName}" th:value="${camp.campName}"></h2></div>
             <div></div>
         </div>
 
@@ -105,7 +102,7 @@
                 <div class="accom_address">
                     <span class="accom_profile_icon"><i class="far fa-map"></i></span>
                     <span class="text_controller" id="address" style="padding: 0;">
-                    	<span th:text="${ camp.campAddress }"></span>
+                    	<span id="campAddress" th:text="${ camp.campAddress }" th:value="${ camp.campAddress }"></span>
                     	<span class="clipIcon"><i class="far fa-copy" id="copy" onclick="clip();"></i></span>
                     </span>
                 </div>
@@ -165,7 +162,7 @@
 	                       	                  minDate: 0,
 	                       	                  startDate: toDay.setDate(toDay.getDate()+1),
 	                       	                  endDate: toDay
-	                       	  });
+	                       	  		});
 		                       	 $('input[name="daterange"]').datepicker();   
 		                         $('input[name="daterange"]').daterangepicker({startDate : new Date(dateIn), endDate : new Date(dateOut), 
 		                        	 locale:  {
@@ -183,18 +180,15 @@
 	                       	  });
 	                       	</script>
 							<label class="search-date search-container">
-			                    <input type="text" id="main-date-check" class="area-text" name="daterange" style="cursor: default;" 
-			                    readonly required>
-			                    <!-- th:select="changeLoad()"  -->
+			                    <input type="text" id="main-date-check" class="area-text" name="daterange" style="cursor: default;" readonly required>
 			                </label>
 	                    </div>
 
                         <div class="rv_bottom">
                             <div class="rv_person">
-                                <!-- <span>인원</span> -->
                                 <div class="rv_guestNum">
-	                                <select id="guestNum" name="guestNum" ><!--  -->
-	                                    <option selected>인원</option>
+	                                <select id="guestNum" name="guestNum" th:onchange="changeLoad()" >
+	                                    <option value="0" th:selected="${#strings.equals(param.guest, '0')}">인원</option>
 	                                    <option value="1" th:selected="${#strings.equals(param.guest, '1')}">1</option>
 	                                    <option value="2" th:selected="${#strings.equals(param.guest, '2')}">2</option>
 	                                    <option value="3" th:selected="${#strings.equals(param.guest, '3')}">3</option>
@@ -207,8 +201,9 @@
                             
                             <div class="rv_select">
                                 <select id="roomName" name="roomName">
-                                    <option checked>객실을 선택해주세요</option>
-                                    <option th:each="room : ${roomList}" th:text="${room.roomName}"></option>
+                                    <option selected>객실을 선택해주세요</option>
+                                    <option th:each="room : ${roomList}" th:text="${room.roomName}"
+                                    th:if="${room.roomAmount} >= ${room.rCount} AND ${#numbers.formatInteger(param.guest, 1)} <= ${room.roomMember}"></option>
                                 </select>
                             </div>
                         </div>
@@ -217,35 +212,27 @@
                     </div>
 
 
-                    <div class="rvBtn">
-                        <span><i class="far fa-calendar-alt"></i></span>
-                        <button type="submit"><span>예약하기</span></button>
-                    </div>
-
-
+                    	<!-- 로그인 안한 경우 로그인 페이지 이동 -->
+				        <th:block sec:authorize="isAnonymous()">
+							<div class="rvBtn" onclick="loginPlz();">
+							<span><i class="far fa-calendar-alt"></i></span>
+	                        <button type="button"><span>예약하기</span></button>
+	                        </div>
+				        </th:block>
+				        <!-- 로그인한 경우 예약 페이지 이동 -->
+                        <th:block sec:authorize="isAuthenticated()">
+	                        <div class="rvBtn">
+		                        <span><i class="far fa-calendar-alt"></i></span>
+		                        <button type="submit"><span>예약하기</span></button>
+		                    </div>
+					    </th:block>
                 </form>
             </div>
 
 
         </div>
 
-		<div id="map" style="width:500px; height:400px;"></div>
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=29177cf0f41918547d34e57ce4ad216b"></script>
-		<script>
-		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-		var options = { //지도를 생성할 때 필요한 기본 옵션
-			center: new kakao.maps.LatLng(37.42629133933456, 126.99184858960511), //지도의 중심좌표.
-			level: 3 //지도의 레벨(확대, 축소 정도)
-		};
-		var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-		// 지도를 클릭한 위치에 표출할 마커입니다
-		var marker = new kakao.maps.Marker({ 
-		    // 지도 중심좌표에 마커를 생성합니다 
-		    position: map.getCenter() 
-		}); 
-		// 지도에 마커를 표시합니다
-		marker.setMap(map);
-		</script>
+
 
         <div class="introduce">
             <!-- 4. 숙소 소개 -->
@@ -333,8 +320,6 @@
                 <fieldset>
                     <legend><h4 class="camp_title">운영 정책</h4></legend>
 
-
-
                     <div class="check_time">
                         <ul class="checkTime_ul">
                             <li id="checkTime_li_icon"><i class="far fa-calendar-alt"></i></li>
@@ -345,22 +330,16 @@
                         </ul>
                     </div>
 
-
-
                     <div class="policyArea">
                         <div class="policyIcon"><i class="fas fa-info-circle"></i></div>
                         <div class="text_controller" id="policyTxt">
                         	<p class="txtSet" th:utext="${#strings.replace(camp.campPolicy, newReply, '<br>')}"></p>
                         </div>
                     </div>
-
-
-
                 </fieldset>
             </div>
 
-
-
+			
 
             <!-- 7. 취소 환불 규정 -->
             <div class="accom_refund">
@@ -386,27 +365,85 @@
                 </fieldset>
             </div>
 
+            <!-- 8. 위치 안내 -->
+            <div class="accom_refund">
+                <fieldset>
+                    <legend><h4 class="camp_title">위치 안내</h4></legend>
+                    <div class="refund_div">
+						<div id="map" style="width:100%;height:350px;margin-bottom:13px;border-radius:10px;"></div>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=29177cf0f41918547d34e57ce4ad216b&libraries=services"></script>
+						<script>
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						    mapOption = {
+						        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+						        level: 3 // 지도의 확대 레벨
+						    };  
+						
+						// 지도를 생성합니다    
+						var map = new kakao.maps.Map(mapContainer, mapOption); 
+						
+						// 주소-좌표 변환 객체를 생성합니다
+						var geocoder = new kakao.maps.services.Geocoder();
+						
+						// 주소 정보를 가져옵니다
+						var address = document.getElementById('campAddress').innerText;
+						console.log(address);
+						// 숙소 이름을 가져옵니다
+						var campName = document.getElementById('campName').innerText;
+						console.log(campName);
+						// 주소로 좌표를 검색합니다
+						geocoder.addressSearch(address, function(result, status) {
+						
+						    // 정상적으로 검색이 완료됐으면 
+						     if (status === kakao.maps.services.Status.OK) {
+						
+						        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						
+						        // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords
+						        });
+						
+						        // 인포윈도우로 장소에 대한 설명을 표시합니다
+						        var infowindow = new kakao.maps.InfoWindow({
+						            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+campName+'</div>'
+						        });
+						        infowindow.open(map, marker);
+						
+						        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						        map.setCenter(coords);
+						    } 
+						});    
+						</script>
+                    </div>
+                </fieldset>
+            </div>
 
-
-
-
-            <!-- 8. 객실 목록 -->
+            <!-- 9. 객실 목록 -->
             <div class="rooms_list" id="room-point">
                 <div class="rooms_title"><h4>ROOMS</h4></div>
 
                 <div class="rooms_area">
                 
                     <div class="rooms_wrap" id="rooms_wrap" th:each="room : ${ roomList }">
-                     <div th:id="'rooms_img'+${room.roomNo}" class="rooms_img" th:each="imgfile : ${room.imgFileList}" 
+                     <div th:id="'rooms_img'+${room.roomNo}" class="rooms_img" th:each="imgfile : ${room.imgFileList}"
                         th:style="'background-image: url(' + @{${imgfile.fileRoute} + ${imgfile.fileName}} + ');'" 
                         th:onclick="|showRoom('${ room.roomNo }'); show();|">
-                        <input type="hidden" name="roomNo" th:value="${ room.roomNo }">                      
+                        <input type="hidden" name="roomNo" th:value="${ room.roomNo }">   
                         </div>
                         
                         
                         <div class="rooms_info">
-                            <div class="info_roomName" th:text="${ room.roomName }"></div>
-                            <div class="info_person" th:text="|${ room.roomMember } 인|"></div>
+                        	<div class="info_roomName noReserve" th:text="${ room.roomName }"
+                        	th:if="${room.roomAmount} <= ${room.rCount} OR ${#numbers.formatInteger(param.guest, 1)} > ${room.roomMember}"></div>
+                            <div class="info_roomName" th:text="${ room.roomName }"
+                            th:if="${room.roomAmount} > ${room.rCount} AND ${#numbers.formatInteger(param.guest, 1)} <= ${room.roomMember}"></div>
+                            
+                            <div class="info_person noReserve" th:text="|${ room.roomMember } 인|"
+                            th:if="${room.roomAmount} <= ${room.rCount} OR ${#numbers.formatInteger(param.guest, 1)} > ${room.roomMember}"></div>
+                            <div class="info_person" th:text="|${ room.roomMember } 인|"
+                            th:if="${room.roomAmount} > ${room.rCount} AND ${#numbers.formatInteger(param.guest, 1)} <= ${room.roomMember}"></div>
                         </div>
                     </div>
                     
@@ -482,7 +519,7 @@
 
 
 
-            <!-- 9. 리뷰 -->
+            <!-- 10. 리뷰 -->
             <div class="review_list">
 
                 <div class="review_title"><h4>REVIEW</h4></div>
@@ -614,7 +651,12 @@ function deleteRid(rid, campNo){
 	if(confirm("정말로 삭제하시겠습니까?")){
 		location.href="/camp/reviewDelete?rid=" + rid + "&campNo=" + campNo;
 	}
-	
+}
+
+function loginPlz(){
+	if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
+		location.href="/member/login";
+	}
 }
 
 function changeLoad() {

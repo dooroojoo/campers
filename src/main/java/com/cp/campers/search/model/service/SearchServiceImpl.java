@@ -30,11 +30,11 @@ public class SearchServiceImpl implements SearchService{
 		
 		// 2. PageInfo 객체 만들기
 		PageInfo pi = new PageInfo(nowPage, listCount, 10, 5);
-		pi.setStartRow(nowPage, pi.getCampLimit());
-		pi.setEndRow(pi.getStartRow(), pi.getCampLimit());
+		int startRow = (pi.getPage() - 1) * pi.getCampLimit() + 1;
+		int endRow = startRow + pi.getCampLimit() - 1;
 		
 		// 3. 페이징 처리 된 게시글 목록 조회
-		List<SearchCamp> campAllList = searchMapper.campAllSearch(pi);
+		List<SearchCamp> campAllList = searchMapper.campAllSearch(startRow, endRow);
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		
@@ -51,20 +51,29 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public Map<String, Object> campFindSearch(FindCamp fc, int nowPage) {
+	public Map<String, Object> campFindSearch(FindCamp fc, List<String> typeArr, List<String> facilityArr,
+			List<String> floorArr, int nowPage) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("fc", fc);
+		map.put("type", typeArr);
+		map.put("faci", facilityArr);
+		map.put("floor", floorArr);
+		
 		
 		// 검색된 캠핑장 개수 조회
-		int listCount = searchMapper.campFindCount(fc);
+		int listCount = searchMapper.campFindCount(map);
 		System.out.println(listCount);
 
 		// 2. PageInfo 객체 만들기
 		PageInfo pi = new PageInfo(nowPage, listCount, 10, 5);
-		pi.setStartRow(nowPage, pi.getCampLimit());
-		pi.setEndRow(pi.getStartRow(), pi.getCampLimit());
+		int startRow = (pi.getPage() - 1) * pi.getCampLimit() + 1;
+		int endRow = startRow + pi.getCampLimit() - 1;
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("pi", pi);
-		map.put("fc", fc);
+
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		
 		
 		// 페이징 처리 된 게시글 목록 조회
 		List<SearchCamp> campFindSearch = searchMapper.campFindSearch(map);
@@ -94,12 +103,13 @@ public class SearchServiceImpl implements SearchService{
 
 		// 2. PageInfo 객체 만들기
 		PageInfo pi = new PageInfo(nowPage, listCount, 10, 5);
-		pi.setStartRow(nowPage, pi.getCampLimit());
-		pi.setEndRow(pi.getStartRow(), pi.getCampLimit());
+		int startRow = (pi.getPage() - 1) * pi.getCampLimit() + 1;
+		int endRow = startRow + pi.getCampLimit() - 1;
 				
 		Map<String, Object> map = new HashMap<>();
-		map.put("pi", pi);
 		map.put("fc", fc);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
 				
 		// 페이징 처리 된 게시글 목록 조회
 		List<SearchCamp> campFindSearch = searchMapper.mainSearch(map);

@@ -16,10 +16,7 @@ public interface MypageService{
 	List<Member> findAllMember();
 	
 	List<Board> findAllBoard();
-	
-	/* 캠핑장 등록 */
-	void mypageCampEnrollment(Camp camp);
-
+		
 	/* 회원정보 수정 */
 	Member changeInfoModify(Member member/*, String email, String phone, String nickName*/);
 
@@ -32,8 +29,11 @@ public interface MypageService{
 	/* 회원 탈퇴 */
 	void changeInfoMemberout(Member member);
 
-	/* 게시판 목록*/
+	/* 내 게시판 목록 */
 	Map<String, Object> selectMyBoardList(int writer, int page);
+
+	/* 내 정보 목록 */
+	Map<String, Object> selectMyMemberList(int userNo, int page);
 
 	/* 숙소 등록 */
 	void mypage_camp_enrollment_room(Camp camp);
@@ -46,6 +46,12 @@ public interface MypageService{
 
 	int selectCampNo();
 
-	// 회원목록
-	//Map<String, Object> findAllMember();
+	Map<String, Object> selectMyPageList(int writer);
+
+	void mypageCampEnrollment(Camp camp, Attachment attachment, Attachment atta2);
+
+	/* 사업자 예약내역 확인 */
+	Map<String, Object> selectMyHostReserveList(int writer, int page);
+
+	
 }

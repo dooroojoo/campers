@@ -14,20 +14,20 @@
 		<result property="status" column="STATUS"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
-		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
 	</resultMap>
-	
+
 	<resultMap type="com.cp.campers.member.model.vo.MemberRole" id="memberRoleResultMap">
 		<id property="memberNo" column="USER_NO"/>
 		<id property="authorityCode" column="AUTHORITY_CODE"/>
 		<association property="authority" resultMap="authorityResultMap"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.member.model.vo.Authority" id="authorityResultMap">      <!-- 위의 association(1대 1)에서의 resultMap이랑 여기서 id랑 일치시키기 -->
-	    <id property="authorityCode" column="AUTHORITY_CODE"/>
-	    <result property="authorityName" column="AUTHORITY_NAME"/>
-	    <result property="authorityDesc" column="AUTHORITY_DESC"/>
-	</resultMap>
+   <resultMap type="com.cp.campers.member.model.vo.Authority" id="authorityResultMap">      <!-- 위의 association(1대 1)에서의 resultMap이랑 여기서 id랑 일치시키기 -->
+      <id property="authorityCode" column="AUTHORITY_CODE"/>
+      <result property="authorityName" column="AUTHORITY_NAME"/>
+      <result property="authorityDesc" column="AUTHORITY_DESC"/>
+   </resultMap>
 		
 	<resultMap type="com.cp.campers.mypage.model.vo.Camp" id="CampResultMap">
 		<id property="campNo" column="CAMP_NO"/>
@@ -127,7 +127,7 @@
 	</resultMap>
 	     
     <resultMap type="com.cp.campers.board.model.vo.Board" id="boardResultMap">
-	<id property="bid" column="BID"/>
+		<id property="bid" column="BID"/>
 		<result property="title" column="BTITLE"/>
 		<result property="content" column="BCONTENT"/>
 		<result property="createDate" column="CREATE_DATE"/>
@@ -153,14 +153,40 @@
 		<association property="attachment" resultMap="attachmentResultMap"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.mypage.model.vo.Attachment" id="attachmentResultMap">
+	<resultMap type="com.cp.campers.board.model.vo.Attachment" id="attachmentResultMap">
 		<id property="fileNo" column="FILE_NO"/>
 		<result property="fileName" column="FILE_NAME"/>
 		<result property="fileRoute" column="FILE_ROUTE"/>
 		<result property="status" column="FILE_STATUS"/>
 		<result property="fileLevel" column="FILE_LEVEL"/>
-		<result property="fileNewName" column="FILE_NEW_NAME"/>
-	</resultMap> 
+		<result property="fileOriginName" column="FILE_ORIGIN_NAME"/>
+		<result property="deletedName" column="DELETED_NAME"/>
+	</resultMap>
+    
+   <select id="findMemberById" resultMap="memberResultMap">
+   	SELECT
+		    A.USER_NO,
+		    A.USER_ID, 
+		    A.USER_PWD, 
+		    A.USER_NAME, 
+		    A.NICKNAME, 
+		    A.PROFILE_PATH, 
+		    A.EMAIL, 
+		    A.USER_PHONE, 
+		    A.STATUS, 
+		    A.CREATE_DATE, 
+		    A.MODIFY_DATE,
+		    B.USER_NO REF_MEMBER_NO,
+		    B.AUTHORITY_CODE REF_AUTHORITY_CODE, 
+		    C.AUTHORITY_CODE REF_AUTHORITY_CODE2, 
+		    C.AUTHORITY_NAME, 
+		    C.AUTHORITY_DESC
+	    FROM MEMBER A
+	    LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
+	    LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+    WHERE A.USER_ID = #{ userId }
+    AND STATUS = 'Y'
+   </select>
           
    <select id="selectMember" resultType="com.cp.campers.member.model.vo.Member">
    		SELECT *
@@ -174,9 +200,11 @@
 		 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
 		 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
    </select>  
-     
-   <select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
-   	  SELECT 
+   <!-- resultType="com.cp.campers.member.model.vo.Member" -->         
+   <select id="findAllMember" resultMap="memberResultMap">
+   	  SELECT *
+      FROM (SELECT ROWNUM RNUM, A.*
+      FROM (select 
    	  		 USER_NO
    	  	   , USER_ID
    	  	   , USER_PWD
@@ -189,27 +217,33 @@
    	  	   , CREATE_DATE
    	  	   , MODIFY_DATE
       FROM MEMBER
-     WHERE STATUS = 'Y'
+      WHERE STATUS = 'Y'
+        AND USER_NO = #{ userNo }
+   ORDER BY USER_NO DESC) A)
    </select>
-   
+          
    <select id="findAllBoard" resultMap="boardResultMap">
-   	SELECT
-   		   BID
-   		 , BTITLE
-   		 , BCONTENT
-   		 , MODIFY_DATE
-   		 , CREATE_DATE
-   		 , STATUS
-   		 , WRITER
-   		 , BCOUNT
-   		 , BLIKE
+   	SELECT *
+   	FROM (SELECT ROWNUM RNUM, A.*
+   	FROM (SELECT
+   		   B.BID
+   		 , B.BTITLE
+   		 , B.BCONTENT
+   		 , B.MODIFY_DATE
+   		 , B.CREATE_DATE
+   		 , B.STATUS
+   		 , B.WRITER
+   		 , B.BCOUNT
+   		 , B.BLIKE
    		 , NEXTID
    		 , NEXTTITLE
    		 , RREVID
    		 , PREVTITLE
-   	 FROM BOARD
-   	 WHERE STATUS = 'Y'
-   	 ORDER BY BID
+   	 FROM BOARD B
+   	 JOIN MEMBER M ON (B.WRITER = M.USER_NO)
+   	 WHERE STATUS = 'N'
+   	   AND WRITER = #{ writer }
+   	 ORDER BY BID DESC) A)
    </select>
      
    <insert id="insertCamp" parameterType="com.cp.campers.mypage.model.vo.Camp">
@@ -381,24 +415,25 @@
    </delete>
     -->
  
+ 	<!--   -->
  	<select id="selectMyBoardList" parameterType="hashmap" resultMap="boardResultMap">
 	SELECT *
 	FROM (SELECT ROWNUM RNUM, A.*
-	FROM (SELECT 
-	            BID, 
-	            BTITLE,
-	            BCONTENT,
-	            B.MODIFY_DATE,
-	            B.CREATE_DATE,
-	            NICKNAME,
-	            BCOUNT,
-	            BLIKE
-	      FROM BOARD B
-	      JOIN MEMBER M ON (B.WRITER = M.USER_NO)
-	     WHERE B.STATUS = 'N'
-	       AND WRITER = #{ writer }
-		 ORDER BY bid DESC) A)
-	WHERE RNUM BETWEEN #{pi.startRow} AND #{pi.endRow} 
+	FROM (select 
+	            bid, 
+	            btitle, 
+	            bcontent, 
+	            b.modify_date, 
+	            b.create_date,
+	            nickName,
+	            bcount,
+	            blike
+	      from board b
+	      join member m on (b.writer = m.user_no)
+	      where b.status = 'N'
+	      and writer = #{ writer }
+	      ORDER BY bid DESC) A)
+	where RNUM between #{pi.startRow} and #{pi.endRow}
 	</select>
  
  	<insert id="insertCampImage" parameterType="com.cp.campers.mypage.model.vo.Attachment">
@@ -411,8 +446,15 @@
 				#{fileRoute},
 				DEFAULT,
 				#{fileLevel},
-				#{fileNewName}
+				#{fileOriginName}
 		)
+	</insert>
+	
+ 	<insert id="insertImageNo" parameterType="_int">
+		INSERT
+		INTO CAMP_FILE
+		VALUES
+		(SEQ_CAMP_NO.CURRVAL, SEQ_FILE_NO.CURRVAL)
 	</insert>
 	
 	<insert id="insertRoomImage" parameterType="com.cp.campers.mypage.model.vo.Attachment">
@@ -425,15 +467,8 @@
 				#{fileRoute},
 				DEFAULT,
 				#{fileLevel},
-				#{fileNewName}
+				#{fileOriginName}
 		)
-	</insert>
- 	
- 	<insert id="insertImageNo" parameterType="_int">
-		INSERT
-		INTO CAMP_FILE
-		VALUES
-		(SEQ_CAMP_NO.CURRVAL, SEQ_FILE_NO.CURRVAL)
 	</insert>
 	
 	<insert id="insertImageNo2" parameterType="_int">
@@ -446,5 +481,104 @@
  	<select id="selectCampNo" resultType="int">
  		SELECT SEQ_CAMP_NO.CURRVAL, FROM DUAL
  	</select>
+ 	
+ 	<select id="getListCountMyMember" resultType="int">
+ 		select count(*)
+ 		from member
+ 		where user_no = #{userNo}
+ 		  and status = 'Y'
+ 	</select>
+ 	 
+ 	 <select id="getListCountMyHostReserveList" resultType="int">
+ 	 	SELECT COUNT(*)
+ 	 	FROM CAMP
+ 	 	WHERE USER_NO = #{userNo}
+ 	 	AND CAMP_STATUS = 'Y'
+ 	 </select>
+ 	 
+ 	 <select id="getListCountMyBoard" resultType="int">
+	select count(*)
+	from board
+	where writer = #{writer}
+	and status ='N'
+	</select>
+ 	 
+ 	 <select id="selectThumbnailList" resultMap="boardResultMap">
+	select
+	        bid,
+	        file_level,
+	        file_route,
+	        file_name
+	    from board
+	    join board_file using(bid)
+	    join imagefile using(file_no)
+	  where file_level = 0
+	  and file_status = 'N'
+	  order by bid desc
+	</select>
+	
+	 <select id="selectThumbnailList2" resultMap="boardResultMap">
+	select
+	        bid,
+	        file_level,
+	        file_route,
+	        file_name
+	    from board
+	    join board_file using(bid)
+	    join imagefile using(file_no)
+	  where file_level = 0
+	  and file_status = 'N'
+	  order by bid desc
+	</select>
+	
+ 	 <!-- parameterType="hasmap"  -->
+ 	 <!-- 
+ 	 <select id="selectMyHostReserveList" resultType="com.cp.campers.reservePayment.model.vo.reserveInfo">
+ 	 	SELECT *
+ 	 	FROM (SELECT ROWNUM RNUM, A.*
+ 	 	FROM (SELECT
+ 	 			    RESER_NO
+ 	 			  , USER_NO
+ 	 			  , RESER_NAME
+ 	 			  , PHONE
+ 	 			  , RESER_STATE
+ 	 			  , REQUEST
+ 	 			  , CHECKIN
+ 	 			  , CHECKOUT
+ 	 			  , ACCOUNT_NUM
+ 	 			  , ACCOUNT_HOL
+ 	 			  , BANK
+ 	 			  , ROOM_QUA
+ 	 			  , ROOM_NO
+ 	 	       FROM RESERVE R
+ 	 	       JOIN MEMBER M ON (R.USER_NO = M.USER_NO)
+ 	 	      WHERE R.RESER_STATUS = 'Y'
+ 	 	        AND USER_NO = #{ userNo }
+ 	 	      ORDER BY USER_NO DESC) A) 	 
+ 	 </select> 	 
+ 	  -->
+ 	  	 
+ 	<select id="selectMyMemberList" parameterType="hashmap" resultMap="memberResultMap">
+ 		SELECT *
+	FROM (SELECT ROWNUM RNUM, A.*
+	FROM (select 
+	            user_no
+	          , user_id
+	          , user_pwd
+	          , user_name
+	          , nickName
+	          , profile_path
+	          , email
+	          , user_phone
+	          , status
+	          , create_Date
+	          , modify_date
+	      from member
+	      where status = 'Y'
+	       and user_no = #{ userNo }
+	ORDER BY user_no DESC) A)
+	where RNUM between #{pi.startRow} and #{pi.endRow}
+ 	</select>
+ 		
  	
 </mapper>

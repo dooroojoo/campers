@@ -36,6 +36,7 @@
 		 FROM MEMBER A
 		 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
 		 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+		WHERE B.AUTHORITY_CODE != 3
 	</select>
    
 	<select id="getListCountBySearch" parameterType="com.cp.campers.admin.model.vo.Search" resultType="_int">
@@ -52,6 +53,7 @@
 		WHERE A.USER_ID LIKE '%' || #{ searchValue } || '%'
 		</when>
 		</choose>
+		 AND B.AUTHORITY_CODE != 3
 	</select>
    
 	<select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
@@ -68,6 +70,7 @@
 	                     FROM MEMBER A
 	                     LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
 	                     LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+	                    WHERE B.AUTHORITY_CODE != 3
 	                    ORDER BY A.CREATE_DATE) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 	</select>
@@ -105,7 +108,8 @@
 						 <when test="search.searchCondition == 'id'">
 						 WHERE A.USER_ID LIKE '%' || #{ search.searchValue } || '%'
 						 </when>
-						 </choose>) A)
+						 </choose>
+						   AND B.AUTHORITY_CODE != 3) A)
 		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
 	</select>
 
@@ -431,7 +435,7 @@
 		INSERT INTO CAMP_RECORD 
 		VALUES (SEQ_CR_NO.NEXTVAL
 			  , DEFAULT
-			  , #{ campNo }
+			  , SEQ_CAMP_NO.CURRVAL
 			  , 2)
 	</insert>
 
@@ -439,7 +443,7 @@
 		INSERT INTO CAMP_RECORD 
 		VALUES (SEQ_CR_NO.NEXTVAL
 			  , DEFAULT
-			  , #{ campNo }
+			  , SEQ_CAMP_NO.CURRVAL
 			  , 1)
 	</insert>	
 	
@@ -447,7 +451,7 @@
 		INSERT INTO CAMP_RECORD 
 		VALUES (SEQ_CR_NO.NEXTVAL
 			  , DEFAULT
-			  , #{ campNo }
+			  , SEQ_CAMP_NO.CURRVAL
 			  , 3)
 	</insert>
 	

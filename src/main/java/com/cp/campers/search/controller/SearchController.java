@@ -18,7 +18,6 @@ import com.cp.campers.search.model.service.SearchService;
 import com.cp.campers.search.model.vo.FindCamp;
 
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Controller
 @RequestMapping("/search")
@@ -75,9 +74,9 @@ public class SearchController {
 								@RequestParam(value="daterange") String daterange,
 								@RequestParam(value="quantity") String quantity,
 								@RequestParam(value="name", required=false, defaultValue="") String name,
-								@RequestParam(value="type", required=false, defaultValue="null") List<String> typeArr,
-								@RequestParam(value="facility", required=false, defaultValue="null") List<String> facilityArr,
-								@RequestParam(value="floor", required=false, defaultValue="null") List<String> floorArr
+								@RequestParam(value="type", required=false, defaultValue="") List<String> typeArr,
+								@RequestParam(value="facility", required=false, defaultValue="") List<String> facilityArr,
+								@RequestParam(value="floor", required=false, defaultValue="") List<String> floorArr
 										) throws ParseException {
 		
 		int nowPage = 1;
@@ -87,18 +86,18 @@ public class SearchController {
 		}
 		
 		// List로 넘어온 체크박스 String으로 합쳐주기
-		String type =String.join(",", typeArr);
-		String facility =String.join(",", facilityArr);
-		String floor =String.join(",", floorArr);
+//		String type =String.join(",", typeArr);
+//		String facility =String.join(",", facilityArr);
+//		String floor =String.join(",", floorArr);
 		
 		log.info(area);
 		log.info(daterange);
 		log.info("guest : " + quantity);
 		log.info("name : " + name);
 		log.info("page : " + page);
-		log.info("type : " + type);
-		log.info("faci : " + facility);
-		log.info("floor : " + floor);
+		log.info("type : " + typeArr);
+		log.info("faci : " + facilityArr);
+		log.info("floor : " + floorArr);
 		
 		
 		// 날짜 자르기
@@ -112,12 +111,9 @@ public class SearchController {
 		fc.setsIn(inDate);
 		fc.setsOut(outDate);
 		fc.setsGuest(quantity);
-		fc.setsFaci(facility);
-		fc.setsFloor(floor);
-		fc.setsType(type);
 		
 		
-		Map<String, Object> map = searchService.campFindSearch(fc, nowPage);
+		Map<String, Object> map = searchService.campFindSearch(fc, typeArr, facilityArr, floorArr, nowPage);
 		
 		
 		mv.addObject("campFindSearch", map.get("campFindSearch"));
@@ -133,18 +129,19 @@ public class SearchController {
 	// 메인페이지 캠핑장 검색 기능
 	@GetMapping("main")
 	public ModelAndView mainSearch( ModelAndView mv,
-									@RequestParam(value="page", required=false, defaultValue="1") String page,
+									@RequestParam(value="page", required=false, defaultValue="1") int page,
 									@RequestParam(value="area") String area,
 									@RequestParam(value="daterange") String daterange,
-									@RequestParam(value="guest") String quantity
+									@RequestParam(value="guest") String quantity,
+									@RequestParam(value="type", required=false, defaultValue="null") List<String> typeArr
 									) throws ParseException {
 		
 		
 		
 		int nowPage = 1;
 		
-		if(page != null) {
-			nowPage = Integer.parseInt(page);
+		if(page != 1) {
+			nowPage = page;
 		}
 		
 		log.info(area);

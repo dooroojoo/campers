@@ -1,7 +1,10 @@
 package com.cp.campers.member.model.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
+import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
 
@@ -21,4 +24,6 @@ public interface MemberMapper {
 	Member readUser(Member member);
 
 	int idCheck(String id);
+
+	List<Member> selectThumbnailList();
 }

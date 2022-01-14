@@ -9,8 +9,6 @@ public class PageInfo {
 	private int maxPage;		// 전체 페이지에서 가장 마지막 페이지
 	private int startPage;		// 하단에 보여질 페이지 목록 시작 값
 	private int endPage;		// 하단에 보여질 페이지 목록 끝 값
-	private int startRow;
-	private int endRow;
 	
 	
 	// 페이징 처리 계산에 필요한 값을 받아 start, end, maxPage 계산하여 값 설정하기
@@ -100,27 +98,12 @@ public class PageInfo {
 	}
 
 	
-	public int getStartRow() {
-		return startRow;
-	}
-
-	public void setStartRow(int startRow, int campLimit) {
-		this.startRow = (page - 1 ) * campLimit + 1;
-	}
-
-	public int getEndRow() {
-		return endRow;
-	}
-
-	public void setEndRow(int endRow, int campLimit) {
-		this.endRow = startRow + campLimit -1;
-	}
 
 	@Override
 	public String toString() {
 		return "PageInfo [page=" + page + ", listCount=" + listCount + ", pageLimit=" + pageLimit + ", campLimit="
 				+ campLimit + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage=" + endPage
-				+ ", startRow=" + startRow + ", endRow=" + endRow + "]";
+				+  "]";
 	}
 
 	

@@ -91,6 +91,14 @@ public class UserImpl extends User{
 		return memberRoleList;
 	}
 
+	@Override
+	public String toString() {
+		return "UserImpl [userNo=" + userNo + ", id=" + id + ", pwd=" + pwd + ", userName=" + userName + ", nickName="
+				+ nickName + ", profilePath=" + profilePath + ", email=" + email + ", phone=" + phone + ", status="
+				+ status + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", memberRoleList="
+				+ memberRoleList + "]";
+	}
+
 
 	
 
