@@ -26,3 +26,4 @@ public interface MemberMapper {
 	int idCheck(String id);
 
 	List<Member> selectThumbnailList();
+}

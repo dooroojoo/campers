@@ -205,22 +205,6 @@ public class MypageServiceImpl implements MypageService{
 		return map;
 	}
 
-/* 숙소 등록 */
-	@Transactional
-	@Override
-	public void mypage_camp_enrollment_room(Camp camp) {
-		mypageMapper.insertRoom(camp.getRoom());
-		
-		/* 신규업체 신청 시 이력테이블 */
-		adminMapper.recordToNew(camp.getCampNo());
-	}
-
-	/* 캠핑장 사진 등록*/
-	@Override
-	public void insertCampImage(Attachment attachment) {
-		mypageMapper.insertCampImage(attachment);
-		mypageMapper.insertImageNo();
-	}
 
 	/* 객실 사진 등록 */
 	@Override

@@ -358,10 +358,10 @@ public class MyPageController {
 				
 				attachment = new Attachment();
 				attachment.setFileName(file.get("savedName"));
-				attachment.setFileNewName(file.get("originFileNmae"));
-				attachment.setFileNewName("originFileNmae");
+				attachment.setFileOriginName(file.get("originFileNmae"));
+				// attachment.setFileNewName("originFileNmae");
 				attachment.setFileRoute("/resources/images/uploadFiles/campImg/");
-				
+								
 				if(i == 0)
 					attachment.setFileLevel(0);
 				else
@@ -426,7 +426,7 @@ public class MyPageController {
 				
 				atta2 = new Attachment();
 				atta2.setFileName(file3.get("savedName3"));
-				atta2.setFileNewName(file3.get("originFileName3"));
+				atta2.setFileOriginName(file3.get("originFileName3"));
 				atta2.setFileRoute("/resources/images/uploadFiles/roomImg/");
 				
 				if(i == 0)
