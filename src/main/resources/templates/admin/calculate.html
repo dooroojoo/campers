@@ -45,7 +45,7 @@
                      <li><a href="/admin/calculatePage?page=1">&lt;&lt;</a></li>
 
                      <!-- 이전 페이지로(<) -->
-                     <li th:if="${pi.page > 1}"><a href="/admin/calculatePage?page=${pi.page-1}">&lt;</a></li>
+                     <li th:if="${pi.page > 1}"><a th:href="@{/admin/calculatePage(page=${pi.page-1})}">&lt;</a></li>
                      <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
 
                    <!--   최대 10개의 페이지 목록 -->
