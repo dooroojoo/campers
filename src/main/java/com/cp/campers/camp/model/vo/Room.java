@@ -19,6 +19,7 @@ public class Room {
 	private String roomForm;
 	private int roomCount;
 	private int campNo;
+	private int rCount;				// 예약된 건수
 	private List<ImageFile> imgFileList;
 	
 }

@@ -18,4 +18,6 @@ public interface MemberService extends UserDetailsService{
 
 	Member findUserByUserId(String id);
 
+	int idCheck(String id);
+
 }

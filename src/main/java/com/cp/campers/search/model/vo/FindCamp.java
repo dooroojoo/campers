@@ -1,7 +1,6 @@
 package com.cp.campers.search.model.vo;
 
 
-
 public class FindCamp{
 
 	private String sArea;				// 지역 검색
@@ -15,8 +14,8 @@ public class FindCamp{
 	
 	public FindCamp() {}
 
-	public FindCamp(String sArea, String sIn, String sOut, String sGuest, String sName, String sType,
-			String sFaci, String sFloor) {
+	public FindCamp(String sArea, String sIn, String sOut, String sGuest, String sName, String sType, String sFaci,
+			String sFloor) {
 		super();
 		this.sArea = sArea;
 		this.sIn = sIn;
@@ -98,6 +97,7 @@ public class FindCamp{
 				+ sName + ", sType=" + sType + ", sFaci=" + sFaci + ", sFloor=" + sFloor + "]";
 	}
 
+	
 	
 	
 	

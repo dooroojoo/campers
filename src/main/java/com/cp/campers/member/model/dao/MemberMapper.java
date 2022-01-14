@@ -23,5 +23,6 @@ public interface MemberMapper {
 
 	Member readUser(Member member);
 
+	int idCheck(String id);
+
 	List<Member> selectThumbnailList();
-}

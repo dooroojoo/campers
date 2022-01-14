@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cp.campers.admin.model.dao.AdminMapper;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.dao.MemberMapper;
@@ -24,11 +25,13 @@ public class MypageServiceImpl implements MypageService{
 
 	private final MypageMapper mypageMapper;
 	private final MemberMapper memberMapper;
+	private final AdminMapper adminMapper;
 	
 	@Autowired
-	public MypageServiceImpl(MypageMapper mypageMapper,  MemberMapper memberMapper) {
+	public MypageServiceImpl(MypageMapper mypageMapper,  MemberMapper memberMapper, AdminMapper adminMapper) {
 		this.mypageMapper = mypageMapper;
 		this.memberMapper = memberMapper;
+		this.adminMapper = adminMapper;
 	}
 
 	/* 캠프장 등록 */
@@ -72,6 +75,9 @@ public class MypageServiceImpl implements MypageService{
 		
 		/* ROOM_FILE INSERT */
 		//mypageMapper.insertRoomFile(camp.getRoomFile());
+		
+		/* 신규업체 신청 시 이력테이블 */
+		adminMapper.recordToNew(camp.getCampNo());
 	}
 	
 	
@@ -199,6 +205,24 @@ public class MypageServiceImpl implements MypageService{
 		return map;
 	}
 
+/* 숙소 등록 */
+	@Transactional
+	@Override
+	public void mypage_camp_enrollment_room(Camp camp) {
+		mypageMapper.insertRoom(camp.getRoom());
+		
+		/* 신규업체 신청 시 이력테이블 */
+		adminMapper.recordToNew(camp.getCampNo());
+	}
+
+	/* 캠핑장 사진 등록*/
+	@Override
+	public void insertCampImage(Attachment attachment) {
+		mypageMapper.insertCampImage(attachment);
+		mypageMapper.insertImageNo();
+	}
+
+	/* 객실 사진 등록 */
 	@Override
 	public Map<String, Object> selectMyMemberList(int userNo, int page) {
 		

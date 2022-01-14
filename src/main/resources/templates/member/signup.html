@@ -130,19 +130,19 @@
             	<img class="profileImg" src="/resources/images/member/profileInput.png" style="height:100%;"><br>
             </div>
             <input type="file" class="profileInput" name="singleFile" style="display:none;"/>
-            <label>아이디</label><label class="redStar">*</label><br>
-            <input type="text" name="id" maxlength="12"><br>
-            <label>비밀번호</label><label class="redStar">*</label><br>
-            <input type="password" name="pwd"><br>
-            <label>비밀번호 확인</label><label class="redStar">*</label><br>
-            <input type="text"><br>
-            <label>이름</label><label class="redStar">*</label><br>
-            <input type="text" name="userName"><br>
-            <label>닉네임</label><label class="redStar">*</label><br>
-            <input type="text" name="nickName"  maxlength="8"><br>
+            <label>아이디</label><label class="redStar">*</label>&nbsp;&nbsp;&nbsp;<label class="idRed" style="color:red;"></label><br>
+            <input class="idInput" type="text" name="id" maxlength="12" required><br>
+            <label>비밀번호</label><label class="redStar">*</label>&nbsp;&nbsp;&nbsp;<label class="pwdRed" style="color:red;"></label><br>
+            <input class="pwd1" type="password" name="pwd" maxlength="12" required><br>
+            <label>비밀번호 확인</label><label class="redStar">*</label>&nbsp;&nbsp;&nbsp;<label class="pwd2Red" style="color:red;"></label><br>
+            <input class="pwd2" type="password" maxlength="12" required><br>
+            <label>이름</label><label class="redStar">*</label>&nbsp;&nbsp;&nbsp;<label class="nameRed" style="color:red;"></label><br>
+            <input class="name" type="text" name="userName" maxlength="5" required><br>
+            <label>닉네임</label><label class="redStar">*</label>&nbsp;&nbsp;&nbsp;<label class="nickRed" style="color:red;"></label><br>
+            <input class="nick" type="text" name="nickName"  maxlength="8" required><br>
             <div class="email">
-                <label>이메일</label><label class="redStar">*</label><br>
-                <input type="text" name="email1"><label class="atSign">@</label><select id="selbox" name="email2">
+                <label>이메일</label><label class="redStar"></label>&nbsp;&nbsp;&nbsp;<label class="emailRed" style="color:red;"></label><br>
+                <input class="emailInput" type="text" name="email1"><label class="atSign">@</label><select id="selbox" name="email2">
                     <option value="naver.com">naver.com</option>
                     <option value="daum.net">daum.net</option>
                     <option value="gmail.com">gmail.com</option>
@@ -151,13 +151,126 @@
                     <option value="direct">직접입력</option></select><input type="text" class="email" id="selboxDirect" name="email3" style="width:224px; height:36px;"/>
             </div>
             <div class="phone">
-                <label>휴대전화</label><label class="redStar">*</label><br>
+                <label>휴대전화</label><label class="redStar"></label>&nbsp;&nbsp;&nbsp;<label class="phoneRed" style="color:red;"></label><br>
                 <input type="text" name="phone1" maxlength="4"><input type="text" name="phone2"  maxlength="4"><input type="text" name="phone3"  maxlength="4"><br>
                 <button class="signupBtn" type="submit">가입하기</button>
             </div>
         </form>
         </div>
     </div>
+    <script>
+    
+    $(document).on("keyup",".pwd1", function() {
+    	let regExp = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{5,}/;
+    	
+    	if(regExp.test($(".pwd1").val())){
+    		$(".pwdRed").text("")
+	    	if($(".pwd2").val()==$(".pwd1").val()){
+	    		$(".pwdRed").text("");
+	    		$(".pwd2Red").text("사용가능한 비밀번호입니다.");
+	    	}else {
+	    		$(".pwd2Red").text("비밀번호 확인이 일치하지 않습니다.")
+	    	}
+	    	
+    	}else {
+    		$(".pwdRed").text("영문 대소문자와 숫자, 특수문자를 포함한 5~12자로 입력하세요.")
+    	}
+    	
+    })
+    
+    $(document).on("keyup",".pwd2", function() {
+    	if($(".pwd2").val()==$(".pwd1").val()){
+    		$(".pwd2Red").text("사용가능한 비밀번호입니다.")
+    	}else {
+    		$(".pwd2Red").text("비밀번호 확인이 일치하지 않습니다")
+    	}
+    	
+    })
+    
+    </script>
+    <script>
+    $(document).on("keyup",".name",function(){
+    	let regExp = /^[가-힣]{2,}$/;
+    	if(regExp.test($(".name").val())){
+	    	if($(".name").val().length == 6){
+	    		$(".nameRed").text("최대 5자까지 입력 가능합니다.")
+	    	}else{
+	    		$(".nameRed").text("")
+	    	}
+    	}else{
+    		$(".nameRed").text("한글 2~5자로 입력해주세요.")
+    	}
+    	
+    })
+     </script>
+    <script>
+    $(document).on("keyup",".nick",function(){
+    	let regExp = /^[가-힣a-zA-Z0-9]{2,}$/;
+    	if(regExp.test($(".nick").val())){
+    		$(".nickRed").text("");
+	    	if($(".nick").val().length == 9){
+	    		$(".nickRed").text("최대 2~8자까지 입력 가능합니다.");
+	    	}else {
+	    		$(".nickRed").text("");
+	    	}
+    	}else{
+    		$(".nickRed").text("올바른 형식이 아닙니다.");
+    	}
+    })
+    
+    $(document).on("keyup",".emailInput",function(){
+    	let regExp = /^[a-zA-Z0-9]{2,}$/;
+    	if(regExp.test($(".emailInput").val())){
+    		$(".emailRed").text("");
+    	}else{
+    		$(".emailRed").text("올바른 이메일 형식이 아닙니다.");
+    	}
+    })
+    
+    $(document).on("keyup","#selboxDirect",function(){
+   	 let regExp = /^([a-zA-Z])+\.[a-zA-Z]{2,3}/;
+    	if(regExp.test($("#selboxDirect").val())){
+    		$(".emailRed").text("");
+    	}else{
+    		$(".emailRed").text("올바른 이메일 주소 형식이 아닙니다.");
+    	}
+    })
+    
+ 
+    </script>
+    <script>
+    	$(document).on("keyup",".idInput", function() {
+			    let regExp = /^[a-z\d]{4,15}$/;
+			    let id = $(".idInput").val()
+    			console.log(id);
+			    if(regExp.test(id)){
+	    			$.ajax({
+	    				url : "/member/idCheck/"+id,
+				    	type : "get",
+				    	success : function(data){
+				    		console.log(data);
+				    		if(data == "success"){
+				    			$(".idRed").text("사용 가능한 아이디입니다.");
+				    			if(id.length==13){
+				    				$(".idRed").text("최대 12자까지 입력가능합니다.");
+				    			}
+				    		}else if (data == "fail"){
+				    			$(".idRed").text("이미 사용중인 아이디입니다.");
+				    		}
+				    		
+				    	},
+				    	error : function(e){
+				    		console.log(e);
+				    		$(".idRed").text("아이디를 입력해주세요.");
+				    	}
+	    			})
+			    }else {
+			    	$(".idRed").text("영문 소문자 및 숫자 4~12자로 입력하세요.");
+			    }
+    		}
+    	)
+    </script>
+    
     <script>
     $(function(){
    		$('.profileImg').click(function (e){

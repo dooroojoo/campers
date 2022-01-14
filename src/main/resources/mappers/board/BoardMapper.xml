@@ -33,7 +33,7 @@
 	<result property="fileRoute" column="FILE_ROUTE"/>
 	<result property="status" column="FILE_STATUS"/>
 	<result property="fileLevel" column="FILE_LEVEL"/>
-	<result property="fileNewName" column="FILE_NEW_NAME"/>
+	<result property="fileOriginName" column="FILE_ORIGIN_NAME"/>
 </resultMap>
 
 
@@ -66,7 +66,7 @@ VALUES
 		#{fileRoute},
 		DEFAULT,
 		#{fileLevel},
-		#{fileNewName}
+		#{fileOriginName}
 )
 </insert>
 <insert id="insertImageNo" parameterType="_int">
@@ -295,7 +295,8 @@ select
             bid,
             file_no,
             file_route,
-            file_name
+            file_name,
+            file_origin_name
       from board_file 
       join imagefile using (file_no)
       where bid = #{bid}
@@ -410,4 +411,38 @@ delete from board_like
 where bid = #{bid}
 and user_no = #{userNo}
 </delete>
+
+<update id="updateBoard" parameterType="com.cp.campers.board.model.vo.Board">
+UPDATE BOARD
+    SET BCONTENT = #{content}
+      , BTITLE = #{title}
+      , MODIFY_DATE = SYSDATE
+  WHERE BID = #{bid}
+</update>
+
+<update id="updateBoardImage" parameterType="hashmap">
+UPDATE IMAGEFILE
+	SET FILE_ORIGIN_NAME = #{attachment.fileOriginName}
+	  , FILE_NAME = #{attachment.fileName}
+  WHERE FILE_NAME = #{attachment.deletedName}
+</update>
+
+<insert id="insertAddedPhoto" parameterType="hashmap">
+INSERT
+	INTO IMAGEFILE VALUES
+	(
+		SEQ_FILE_NO.NEXTVAL,
+		#{attachment.fileName},
+		#{attachment.fileRoute},
+		DEFAULT,
+		#{attachment.fileLevel},
+		#{attachment.fileOriginName}
+	)
+</insert>
+<insert id="insertAddedImageNo" parameterType="hashmap">
+INSERT
+INTO BOARD_FILE
+VALUES
+(#{bid}, SEQ_FILE_NO.CURRVAL)
+</insert>
 </mapper>

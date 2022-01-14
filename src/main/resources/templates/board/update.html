@@ -203,18 +203,61 @@
           <div class="freeBoard-container">
               <label class="freeBoard-label">자유게시판</label><label class="freeBoard-label-small">수정하기</label><br>
               <form th:action="@{/board/update}" method="post" enctype="multipart/form-data">
-                <div class="freeBoard-content">
+                <div class="freeBoard-content" th:if="${boardFileNoList}!=null">
                     <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요." maxlength="40" required th:value="${board.title}"><br>
                     <textarea th:text="${board.content}" class="writeContent" name="content" placeholder="내용을 입력하세요." required maxlength="3000"></textarea>
-                    <br><input type="file" class="imageinput image1" name="images"  accept="image/*" hidden>
-                    <input type="file" class="imageinput image2" name="images"  accept="image/*" hidden>
-                    <input type="file" class="imageinput image3" name="images"  accept="image/*" hidden>
+                    <br>
+                    <input type="hidden" th:value="${board.bid}" name="bid">
+                    <input th:if="${boardFileNoList.size()}>0" th:value="${boardFileNoList.get(0).Attachment.fileName}" type="file" class="imageinput image1" name="images"  accept="image/*" >
+                    <input th:if="${boardFileNoList.size()}>1" th:value="${boardFileNoList.get(1).Attachment.fileName}"type="file" class="imageinput image2" name="images"  accept="image/*" >
+                    <input th:if="${boardFileNoList.size()}>2" th:value="${boardFileNoList.get(2).Attachment.fileName}" type="file" class="imageinput image3" name="images"  accept="image/*" >
+                    <input th:unless="${boardFileNoList.size()}>0" type="file" class="imageinput image1" name="images"  accept="image/*" >
+                    <input th:unless="${boardFileNoList.size()}>1" type="file" class="imageinput image2" name="images"  accept="image/*" >
+                   	<input th:unless="${boardFileNoList.size()}>2" type="file" class="imageinput image3" name="images"  accept="image/*" >
+                    <div th:each="fileNo :${boardFileNoList}">
+                    	<input type="hidden" name="changeName" th:value="${fileNo.Attachment.fileName}">
+                    </div>
+                    
                    <!--  <input type="text" name="writer" th:value="${#authentication.principal.userNo}"> -->
                   
                     <div class="previewBox">
-                        <div class="inputImgPreview preview1"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
-                        <div class="inputImgPreview preview2"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
-                        <div class="inputImgPreview preview3"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        <div class="inputImgPreview preview1" th:if="${boardFileNoList.size()}>0">
+                        <img class="afterInput" th:src="${boardFileNoList.get(0).Attachment.fileRoute}+${boardFileNoList.get(0).Attachment.fileName}"></div>
+                        <div class="inputImgPreview preview1" th:unless="${boardFileNoList.size()}>0">
+                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        
+                        <div class="inputImgPreview preview2" th:if="${boardFileNoList.size()}>1">
+                        <img class="afterInput" th:src="${boardFileNoList.get(1).Attachment.fileRoute}+${boardFileNoList.get(1).Attachment.fileName}"></div>
+                        <div class="inputImgPreview preview2" th:unless="${boardFileNoList.size()}>1">
+                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        
+                        <div class="inputImgPreview preview3" th:if="${boardFileNoList.size()}>2">
+						<img class="afterInput" th:src="${boardFileNoList.get(2).Attachment.fileRoute}+${boardFileNoList.get(2).Attachment.fileName}"></div>
+						<div class="inputImgPreview preview3" th:unless="${boardFileNoList.size()}>2">                 
+                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                    </div>
+                </div>
+                 <div class="freeBoard-content" th:unless="${boardFileNoList}!=null">
+                    <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요." maxlength="40" required th:value="${board.title}"><br>
+                    <textarea th:text="${board.content}" class="writeContent" name="content" placeholder="내용을 입력하세요." required maxlength="3000"></textarea>
+                    <br>
+                    <input type="hidden" th:value="${board.bid}" name="bid">
+                    <input type="file" class="imageinput image1" name="images"  accept="image/*" hidden>
+                    <input type="file" class="imageinput image2" name="images"  accept="image/*" hidden>
+                    <input type="file" class="imageinput image3" name="images"  accept="image/*" hidden>
+                    <div>
+                    	<input type="hidden" name="changeName">
+                    </div>
+                    
+                    <div class="previewBox">
+                        <div class="inputImgPreview preview1">
+                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        
+                        <div class="inputImgPreview preview2">
+                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        
+						<div class="inputImgPreview preview3">                 
+                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
                     </div>
                 </div>
                 <div class="freeBoard-footer">
@@ -233,18 +276,18 @@
         
          <div th:replace="common/footer.html"></div>
 	 <script>
-    $(function(){
-   		$('.preview1').click(function (e){
-   			$('.image1').click();
-   		}) 
-   		$('.preview2').click(function (e){
-   			$('.image2').click();
-   		}) 	
-   		$('.preview3').click(function (e){
-   			$('.image3').click();
-   		}) 	
-   
-    })
+	 $(function(){
+		$('.preview1').click(function (e){
+				$('.image1').click();
+		}) 
+		$('.preview2').click(function (e){
+				$('.image2').click();
+		}) 	
+		$('.preview3').click(function (e){
+				$('.image3').click();
+		}) 	
+
+ })
     </script>
  <script src="/resources/js/board/imagePreview.js"></script>
 </body>
