@@ -221,6 +221,7 @@ input[type="number"] {
     background-color: black;
     color: white;
     background-image: url("/resources/images/search/search.png");
+    transition: 0.4s;
 }
 
 .search-submit-img{

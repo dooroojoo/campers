@@ -161,16 +161,15 @@
                JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
 			  WHERE F.FILE_STATUS = 'N'
 			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest }
-			  <if test="type != null and !type.isEmpty() and !''.equals(type) and type.size != 0">
+			   <if test="type != null and !type.isEmpty() and !''.equals(type) and type.size != 0">
 			    AND P.BUSINESS_TYPE IN 
 			    <foreach item="type" collection="type" open="(" separator="," close=")">
 				 #{type}
 				 </foreach>
 			   </if>
 			    <if test="faci != null and !faci.isEmpty() and !''.equals(faci) and faci.size != 0">
-			    AND L.FACILITY_NAME IN 
-			    <foreach item="faci" collection="faci" open="(" separator="," close=")">
-			     #{faci}
+			    <foreach item="faci" collection="faci">
+			     AND L.FACILITY_NAME = #{faci}
 			    </foreach>
 			    </if>
 			     <if test="floor != null and !floor.isEmpty() and !''.equals(floor) and floor.size != 0">
@@ -225,9 +224,8 @@
 				 </foreach>
 			   </if>
 			    <if test="faci != null and !faci.isEmpty() and !''.equals(faci) and faci.size != 0">
-			    AND L.FACILITY_NAME IN 
-			    <foreach item="faci" collection="faci" open="(" separator="," close=")">
-			     #{faci}
+			    <foreach item="faci" collection="faci">
+			     AND L.FACILITY_NAME = #{faci}
 			    </foreach>
 			    </if>
 			     <if test="floor != null and !floor.isEmpty() and !''.equals(floor) and floor.size != 0">

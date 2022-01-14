@@ -188,11 +188,11 @@
                 <ul class="member_paging">
                 
                      <!--  맨 처음으로 이동하는 버튼(<<) -->
-                   <li><a href="/search/find?page=1">&lt;&lt;</a></li>
+                   <li><a class="first-paging" style="cursor:pointer">&lt;&lt;</a></li>
                    
                     <!-- 이전 페이지로(<)  -->
                     <li th:if="${pi.page > 1}">
-                    <a th:href="${pi.page - 1 }">&lt;</a>
+                    <a class="back-paging" style="cursor:pointer">&lt;</a>
                     </li>
                     <li th:unless="${pi.page > 1}">
                     <a href="#">&lt;</a>
@@ -209,12 +209,12 @@
         		
                    <!--  다음 페이지로(>) --> 
                     <li th:if="${pi.page < pi.maxPage}">
-                        <a th:href="@{/search/find(page=${pi.page + 1})}">&gt;</a>
+                        <a class="next-paging" style="cursor:pointer">&gt;</a>
                     </li>
 
                     <!-- 맨 끝으로 이동하는 버튼(>>) -->
                    <li>
-                    <a th:href="@{/search/find(page=${pi.maxPage})}">&gt;&gt;</a></li>
+                    <a class="end-paging" style="cursor:pointer">&gt;&gt;</a></li>
                 </ul>
                
             </div>
@@ -230,8 +230,9 @@
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
     
-    <script>
-    var aa = jQuery.noConflict();
+   <!--   클릭한 페이지 이동 이벤트 -->
+   <script>
+	var aa = jQuery.noConflict();
     aa(function(){    
     	aa(".find-paging").click(function(){
     		let area = aa(".find-area").val();
@@ -249,6 +250,96 @@
     });
     </script>
     
+
+	<!--  첫페이지로 이동 -->
+	<script>
+  var cc = jQuery.noConflict();
+    cc(function(){    
+    	cc(".first-paging").click(function(){
+    		let area = cc(".find-area").val();
+    		let dateIn = cc(".find-in-date").val();
+    		let dateOut = cc(".find-out-date").val();
+    		let guest = cc(".find-guest").val();
+    		let name = cc("#find-name").val();
+    		let typeObj = cc("#search-type-val").val();
+    		let faciObj= cc("#find-faci-val").val();
+    		let floorObj = cc("#find-floor-val").val();
+    		
+            location.href='/search/find?page=1'+'&area='+area+'&type='+typeObj+'&daterange='+dateIn
+            		+'+~+'+dateOut+'&quantity='+guest+'&name='+name+'&facility='+faciObj+'&floor='+floorObj; 
+        });
+    });
+    </script>
+    
+    
+     <!-- 이전 페이지로 이동(<) -->
+    <script th:inline="javascript">
+    /*<![CDATA[*/ let back = /*[[ ${pi.page - 1} ]]*/;
+    /*]]*/
+
+    var ee = jQuery.noConflict();
+    ee(function(){    
+    	ee(".back-paging").click(function(){
+    		let area = ee(".find-area").val();
+    		let dateIn = ee(".find-in-date").val();
+    		let dateOut = ee(".find-out-date").val();
+    		let guest = ee(".find-guest").val();
+    		let name = ee("#find-name").val();
+    		let typeObj = ee("#search-type-val").val();
+    		let faciObj= ee("#find-faci-val").val();
+    		let floorObj = ee("#find-floor-val").val();
+    		
+            location.href='/search/find?page='+back+'&area='+area+'&type='+typeObj+'&daterange='+dateIn
+            		+'+~+'+dateOut+'&quantity='+guest+'&name='+name+'&facility='+faciObj+'&floor='+floorObj; 
+        });
+    });
+    </script>
+    
+    <!-- 다음페이지로 이동(>) -->
+    <script th:inline="javascript">
+    /*<![CDATA[*/ let next = /*[[ ${pi.page + 1} ]]*/;
+    /*]]*/
+
+    var dd = jQuery.noConflict();
+    dd(function(){    
+    	dd(".next-paging").click(function(){
+    		let area = dd(".find-area").val();
+    		let dateIn = dd(".find-in-date").val();
+    		let dateOut = dd(".find-out-date").val();
+    		let guest = dd(".find-guest").val();
+    		let name = dd("#find-name").val();
+    		let typeObj = dd("#search-type-val").val();
+    		let faciObj= dd("#find-faci-val").val();
+    		let floorObj = dd("#find-floor-val").val();
+    		
+            location.href='/search/find?page='+next+'&area='+area+'&type='+typeObj+'&daterange='+dateIn
+            		+'+~+'+dateOut+'&quantity='+guest+'&name='+name+'&facility='+faciObj+'&floor='+floorObj; 
+        });
+    });
+    </script>
+    
+    <!-- 마지막페이지로 이동(>>) -->
+    <script th:inline="javascript">
+    /*<![CDATA[*/ let end = /*[[ ${pi.maxPage} ]]*/;
+    /*]]*/
+
+    var ff = jQuery.noConflict();
+    ff(function(){    
+    	ff(".end-paging").click(function(){
+    		let area = ff(".find-area").val();
+    		let dateIn = ff(".find-in-date").val();
+    		let dateOut = ff(".find-out-date").val();
+    		let guest = ff(".find-guest").val();
+    		let name = ff("#find-name").val();
+    		let typeObj = ff("#search-type-val").val();
+    		let faciObj= ff("#find-faci-val").val();
+    		let floorObj = ff("#find-floor-val").val();
+    		
+            location.href='/search/find?page='+end+'&area='+area+'&type='+typeObj+'&daterange='+dateIn
+            		+'+~+'+dateOut+'&quantity='+guest+'&name='+name+'&facility='+faciObj+'&floor='+floorObj; 
+        });
+    });
+    </script>
 
 	<!-- 인원수 증가 버튼 클릭시 submit 제출되지 않게-->
 	  <script>
