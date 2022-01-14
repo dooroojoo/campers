@@ -33,17 +33,25 @@
                 <h1 class="changinfo_h1">회원정보</h1>
             </header>
         </div>
-            <div class="changinfo_content_div">
+            <div class="changinfo_content_div"> 
                 <header class="changinfo_content_header">회원님의 정보를 수정, 탈퇴하기가 가능 합니다</header>        
-                <div class="changinfo_privacy">
-                    <h4 class="changinfo_id">아이디<label class="changinfo_id_form" sec:authentication="principal.id"></label></h4>
-                    <h4 class="changinfo_name">이름<label class="changinfo_name_form" sec:authentication="principal.userName"></label></h4>
+                <div class="changinfo_privacy" th:each="member : ${ memberList }">
+                    <h4 class="changinfo_id">아이디<label class="changinfo_id_form" th:text="${ member.id }"></label></h4>
+                    <h4 class="changinfo_name">이름<label class="changinfo_name_form" th:text="${ member.userName }"></label></h4>
                     <h4 class="changinfo_pwd">비밀번호<label class="changinfo_pwd_form"></label></h4>
-                    <h4 class="changinfo_email">이메일<label class="changinfo_email_form" sec:authentication="principal.email"></label></h4>
-                    <h4 class="changinfo_phone">전화번호<label class="changinfo_phone_form" sec:authentication="principal.phone"></label></h4>
-                    <h4 class="changinfo_nickname">닉네임<label class="changinfo_nickname_form" sec:authentication="principal.nickName"></label></h4>
+                    <h4 class="changinfo_email">이메일<label class="changinfo_email_form" th:text="${ member.email }"></label></h4>
+                    <h4 class="changinfo_phone">전화번호<label class="changinfo_phone_form" th:text="${ member.phone }"></label></h4>
+                    <h4 class="changinfo_nickname">닉네임<label class="changinfo_nickname_form" th:text="${ member.nickName }"></label></h4>
                     <a th:href="@{/mypage/changinfo/changinfoModify}"><button class="changeinfo_changebutton">수정하기</button></a>
                     <a th:href="@{/mypage/changinfo/changinfoMemberout}"><button class="changeinfo_outbutton">탈퇴하기</button></a>
+                	<!-- 
+                	sec:authentication="principal.id"
+                	sec:authentication="principal.userName"
+                	sec:authentication="principal.email"
+                	sec:authentication="principal.phone"
+                	sec:authentication="principal.nickName"
+                	 -->
+                
                 </div>               
             </div>
         </div>

@@ -28,8 +28,11 @@
     <div class="mypage_content"> 
         <div class="mypage_content_1">
             <div class="mypage_content_top">캐릭터 등록</div>
-	            <div class="image_area">
+	            <div class="image_area" th:each="member : ${memberList}">
+		            <!-- 
 		            <img class="mypage_character" src="/resources/images/uploadFiles/profileImg/62ff8cb417354f9ba8ec84e8ee834444.jpg"><br>
+		             -->
+		            <img class="mypage_character" th:src="${member.profilePath}">
 		            <!-- 
 		            <img class="mypage_character" src="sec:authentication='principal.profilePath'"><br>
 		             -->
@@ -47,12 +50,18 @@
         <div class="mypage_content_3">
             <div class="mypage_content_top">회원님 정보</div>
             <ul class="mypage_content_3_ul">
-                <li class="mypage_content_3_li">                
+                <li class="mypage_content_3_li" th:each="member : ${ memberList }">                
                 <img class="mypage_img_user" src="/resources/images/mypage/user.png"/>
-                가입일 : <label class="mypage_date" sec:authentication="principal.createDate"></label></li>
+                가입일 : <label class="mypage_date" th:text="${ member.createDate }"></li>
+                <!-- 
+                sec:authentication="principal.createDate">
+                -->  
                 <li class="mypage_content_3_li">
                 <img class="mypage_img_user" src="/resources/images/mypage/user.png"></src>
-                최근 로그일 : <label class="mypage_date" sec:authentication="principal.modifyDate"></li>
+                <!-- 
+                sec:authentication="principal.modifyDate"
+                 -->
+                최근 로그일 : <label class="mypage_date" th:text="${ member.modifyDate }"></li>
             </ul>
         </div>
         <div class="mypage_content_4">
