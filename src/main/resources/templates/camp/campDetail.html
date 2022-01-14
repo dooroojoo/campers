@@ -7,9 +7,6 @@
 <link href="/resources/css/camp/campDetail.css" rel="stylesheet">
 <!-- icon -->
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
-
 <!-- 캘린더 css -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- 슬라이드 -->
@@ -33,7 +30,7 @@
             <div class="btnBefore">
             	<i class="fas fa-chevron-left" onclick="location.href='javascript:history.back();'"></i>
             </div>
-            <div class="accom_title"><h2 th:text="${camp.campName}"></h2></div>
+            <div class="accom_title"><h2 id="campName" th:text="${camp.campName}" th:value="${camp.campName}"></h2></div>
             <div></div>
         </div>
 
@@ -105,7 +102,7 @@
                 <div class="accom_address">
                     <span class="accom_profile_icon"><i class="far fa-map"></i></span>
                     <span class="text_controller" id="address" style="padding: 0;">
-                    	<span th:text="${ camp.campAddress }"></span>
+                    	<span id="campAddress" th:text="${ camp.campAddress }" th:value="${ camp.campAddress }"></span>
                     	<span class="clipIcon"><i class="far fa-copy" id="copy" onclick="clip();"></i></span>
                     </span>
                 </div>
@@ -210,17 +207,23 @@
                                 </select>
                             </div>
                         </div>
-
-
                     </div>
 
 
-                    <div class="rvBtn">
-                        <span><i class="far fa-calendar-alt"></i></span>
-                        <button type="submit"><span>예약하기</span></button>
-                    </div>
-
-
+                   	<!-- 로그인 안한 경우 로그인 페이지 이동 -->
+			        <th:block sec:authorize="isAnonymous()">
+						<div class="rvBtn" onclick="loginPlz();">
+						<span><i class="far fa-calendar-alt"></i></span>
+                        <button type="button"><span>예약하기</span></button>
+                        </div>
+			        </th:block>
+			        <!-- 로그인한 경우 예약 페이지 이동 -->
+                       <th:block sec:authorize="isAuthenticated()">
+                        <div class="rvBtn">
+	                        <span><i class="far fa-calendar-alt"></i></span>
+	                        <button type="submit"><span>예약하기</span></button>
+	                    </div>
+				    </th:block>
                 </form>
             </div>
 
@@ -334,8 +337,7 @@
                 </fieldset>
             </div>
 
-
-
+			
 
             <!-- 7. 취소 환불 규정 -->
             <div class="accom_refund">
@@ -361,9 +363,62 @@
                 </fieldset>
             </div>
 
+            <!-- 8. 위치 안내 -->
+            <div class="accom_refund">
+                <fieldset>
+                    <legend><h4 class="camp_title">위치 안내</h4></legend>
+                    <div class="refund_div">
+						<div id="map" style="width:100%;height:350px;margin-bottom:13px;border-radius:10px;"></div>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=29177cf0f41918547d34e57ce4ad216b&libraries=services"></script>
+						<script>
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						    mapOption = {
+						        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+						        level: 3 // 지도의 확대 레벨
+						    };  
+						
+						// 지도를 생성합니다    
+						var map = new kakao.maps.Map(mapContainer, mapOption); 
+						
+						// 주소-좌표 변환 객체를 생성합니다
+						var geocoder = new kakao.maps.services.Geocoder();
+						
+						// 주소 정보를 가져옵니다
+						var address = document.getElementById('campAddress').innerText;
+						console.log(address);
+						// 숙소 이름을 가져옵니다
+						var campName = document.getElementById('campName').innerText;
+						console.log(campName);
+						// 주소로 좌표를 검색합니다
+						geocoder.addressSearch(address, function(result, status) {
+						
+						    // 정상적으로 검색이 완료됐으면 
+						     if (status === kakao.maps.services.Status.OK) {
+						
+						        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						
+						        // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords
+						        });
+						
+						        // 인포윈도우로 장소에 대한 설명을 표시합니다
+						        var infowindow = new kakao.maps.InfoWindow({
+						            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+campName+'</div>'
+						        });
+						        infowindow.open(map, marker);
+						
+						        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						        map.setCenter(coords);
+						    } 
+						});    
+						</script>
+                    </div>
+                </fieldset>
+            </div>
 
-
-            <!-- 8. 객실 목록 -->
+            <!-- 9. 객실 목록 -->
             <div class="rooms_list" id="room-point">
                 <div class="rooms_title"><h4>ROOMS</h4></div>
 
@@ -462,7 +517,7 @@
 
 
 
-            <!-- 9. 리뷰 -->
+            <!-- 10. 리뷰 -->
             <div class="review_list">
 
                 <div class="review_title"><h4>REVIEW</h4></div>
@@ -594,7 +649,12 @@ function deleteRid(rid, campNo){
 	if(confirm("정말로 삭제하시겠습니까?")){
 		location.href="/camp/reviewDelete?rid=" + rid + "&campNo=" + campNo;
 	}
-	
+}
+
+function loginPlz(){
+	if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
+		location.href="/member/login";
+	}
 }
 
 function changeLoad() {
