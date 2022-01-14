@@ -1,5 +1,6 @@
 package com.cp.campers.member.model.service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,9 @@ import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.MemberRole;
 import com.cp.campers.member.model.vo.UserImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class MemberServiceImpl implements MemberService{
 
@@ -54,7 +58,7 @@ public class MemberServiceImpl implements MemberService{
 		
 		UserImpl user = new UserImpl(member.getId(), member.getPwd(), authorities);
 		user.setDetails(member);
-		
+		log.info("login : " + user);
 		return user;
 	}
 

@@ -55,12 +55,11 @@
                         <small class="camp_room">아침고요수목원 101번 캠핑장</small></th>
                     <th class="mypage_guest_reserve_table_body2">
                     	<input class="mypage_guest_reserve_button" type="button" value="예약취소">
-                    </th>
-                    <th class="mypage_guest_reserve_table_body2">
                     	<input class="mypage_guest_reserve_button" type="button" 
                     	th:onclick="|location.href='@{/camp/review(userNo=${#authentication.principal.userNo}, campNo=40, reserNo=1)}'|" 
                     	value="리뷰쓰기">
                     </th>
+                    
                 </tr>
             </table>
         <!-- 페이징 처리 -->

@@ -159,7 +159,8 @@
 		<result property="fileRoute" column="FILE_ROUTE"/>
 		<result property="status" column="FILE_STATUS"/>
 		<result property="fileLevel" column="FILE_LEVEL"/>
-		<result property="fileNewName" column="FILE_NEW_NAME"/>
+		<result property="fileOriginName" column="FILE_ORIGIN_NAME"/>
+		<result property="deletedName" column="DELETED_NAME"/>
 	</resultMap>
     
    <select id="findMemberById" resultMap="memberResultMap">
@@ -445,7 +446,7 @@
 				#{fileRoute},
 				DEFAULT,
 				#{fileLevel},
-				#{fileNewName}
+				#{fileOriginName}
 		)
 	</insert>
 	
@@ -466,7 +467,7 @@
 				#{fileRoute},
 				DEFAULT,
 				#{fileLevel},
-				#{fileNewName}
+				#{fileOriginName}
 		)
 	</insert>
 	
@@ -531,30 +532,31 @@
 	</select>
 	
  	 <!-- parameterType="hasmap"  -->
- 	 <select id="selectMyHostReserveList" resultMap="CampResultMap">
+ 	 <!-- 
+ 	 <select id="selectMyHostReserveList" resultType="com.cp.campers.reservePayment.model.vo.reserveInfo">
  	 	SELECT *
  	 	FROM (SELECT ROWNUM RNUM, A.*
  	 	FROM (SELECT
- 	 			    CAMP_NO
- 	 			  , CAMP_NAME
+ 	 			    RESER_NO
  	 			  , USER_NO
- 	 			  , CAMP_ADDRESS
- 	 			  , CAMP_PHONE
- 	 			  , CAMP_INTRO
- 	 			  , CAMP_PATH
- 	 			  , CAMP_POLICY
- 	 			  , CAMP_STATUS
- 	 			  , ACCOUNT_NUM
- 	 			  , BANK
+ 	 			  , RESER_NAME
+ 	 			  , PHONE
+ 	 			  , RESER_STATE
+ 	 			  , REQUEST
  	 			  , CHECKIN
  	 			  , CHECKOUT
- 	 			  , REFUSAL
- 	 	       FROM CAMP C
- 	 	       JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
- 	 	      WHERE C.CAMP_STATUS = 'Y'
+ 	 			  , ACCOUNT_NUM
+ 	 			  , ACCOUNT_HOL
+ 	 			  , BANK
+ 	 			  , ROOM_QUA
+ 	 			  , ROOM_NO
+ 	 	       FROM RESERVE R
+ 	 	       JOIN MEMBER M ON (R.USER_NO = M.USER_NO)
+ 	 	      WHERE R.RESER_STATUS = 'Y'
  	 	        AND USER_NO = #{ userNo }
  	 	      ORDER BY USER_NO DESC) A) 	 
  	 </select> 	 
+ 	  -->
  	  	 
  	<select id="selectMyMemberList" parameterType="hashmap" resultMap="memberResultMap">
  		SELECT *
