@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cp.campers.board.model.service.BoardService;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.service.MemberService;
@@ -50,50 +51,71 @@ public class MyPageController {
 
 	private MypageService mypageService;
 	private MessageSource messageSource;
+	private BoardService boardService;
 	
 	 @Autowired
-	   public MyPageController(MypageService mypageService, MessageSource messageSource) {	      
+	   public MyPageController(MypageService mypageService, MessageSource messageSource,
+			   BoardService boardService) {	      
 	     this.mypageService = mypageService;
 	     this.messageSource = messageSource;
+	     this.boardService = boardService;
 	 }
 	
 	 /* 회원 목록 */
 	 @GetMapping("")
-	 public ModelAndView mypageMember(Member member, Board board, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+	 public ModelAndView mypageMember(Model model, Member member, Board board, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		
-		member.setUserNo(user.getUserNo());
+		//member.setUserNo(user.getUserNo());
 		//board.setWriter(user.getUserNo());
+		int writer = user.getUserNo();
+		int userNo = user.getUserNo();
+	
+		// member.setProfilePath(user.getProfilePath());
+		// user.setDetails(member);
 		
-		List<Member> memberList = mypageService.findAllMember();
-		//List<Board> boardList = mypageService.findAllBoard();
+		int page = 1;
+				
+		Map<String, Object> map = mypageService.selectMyBoardList(writer, page);
 		
+		// 보류
+		Map<String, Object> map2 = mypageService.selectMyMemberList(userNo,page);
+		member.setUserNo(user.getUserNo());
+		member.setProfilePath(user.getProfilePath());
+		user.setDetails(member);
 		
-		mv.addObject("memberList", memberList);
-		//mv.addObject("boardList", boardList);
-		mv.setViewName("mypage/mypage");
+		//log.info(member.toString());
+		//log.info(user.toString());
+		//log.info(map.toString());
+		log.info(map2.toString());
+		//List<Member> memeberList = mypageService.findAllMember();
+				
+		mv.addObject("boardList", map.get("boardList"));
+		mv.addObject("pi",map.get("pi"));
+		mv.addObject("memberList", map2.get("memberList"));		
+		mv.addObject("campList", map.get("campList"));
 		
-		/*
-		// board
-		int writer = loginUser.getUserNo();
-		
-		log.info("page="+page);
-		
-		//int page = 1;
-		
-		Map<String, Object> map = mypageService.selectMyBoardList(writer,page);
-		
-		model.addAttribute("boardList",map.get("boardList"));
-		model.addAttribute("pi",map.get("pi"));
+		model.addAttribute("boardList", map.get("boardList"));
+		model.addAttribute("memberList", map2.get("memberList"));
+		model.addAttribute("pi", map.get("pi"));
+		// 보류
+		//model.addAttribute("memberList", map.get("memberList"));
 		model.addAttribute("thumbnailList", map.get("thumbnailList"));
-		*/		
-		
+		mv.setViewName("mypage/mypage");
+								
 		return mv;
 	 }	 
 	
 	/* 회원 정보 */
 	@GetMapping("/changinfo") 
 	public String changeInfo(@AuthenticationPrincipal UserImpl user, Model model) {
-				
+		int userNo = user.getUserNo();
+		int page = 1;
+		Map<String, Object> map2 = mypageService.selectMyMemberList(userNo,page);
+		
+		model.addAttribute("memberList", map2.get("memberList"));	
+		
+		log.info(user.toString());
+		log.info(map2.toString());
 		model.addAttribute("user", user.getUserNo());
 		return"mypage/changinfo"; 
 	}
@@ -108,6 +130,8 @@ public class MyPageController {
 	@PostMapping("/changinfo/changinfoMemberout")
 	public String changeInfoMemberout(Member member, @AuthenticationPrincipal UserImpl user, 
 								RedirectAttributes rttr, Model model, Locale locale){
+		
+		
 		/* 유저 정보 가져오기 */
 		member.setUserNo(user.getUserNo());
 		member.setId(user.getId());
@@ -140,26 +164,39 @@ public class MyPageController {
 	
 	/* 회원 정보 수정 */
 	@GetMapping("/changinfo/changinfoModify") 
-	public String changeInfoModify() {
+	public String changeInfoModify(@AuthenticationPrincipal UserImpl user, Model model) {
+		
+		int userNo = user.getUserNo();
+		int page = 1;
+		Map<String, Object> map2 = mypageService.selectMyMemberList(userNo,page);
+		
+		model.addAttribute("memberList", map2.get("memberList"));	
+		
+		log.info(user.toString());
+		log.info(map2.toString());
+		model.addAttribute("user", user.getUserNo());
+		
+		
+		
 		return"mypage/changinfo_modify"; 
 	}
 		
 	/* 회원 정보 수정 폼 */
 	@PostMapping("/changinfo/changinfoModify/update") /*String email, String phone, String nickName,*/
-	public String changeInfoModify(Member member, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, Locale locale) {
+	public String changeInfoModify(Model model, Member member, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, Locale locale) {
 		
 		// 유저 정보 가져오기
 		member.setUserNo(user.getUserNo());
 		member.setId(user.getId());
 		
 		member = mypageService.changeInfoModify(member);
-				
+		
+		log.info(member.toString());
+		
 		// 메세지		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoModify", null, locale));
-		
-		
-		user.setDetails(member);
-	
+				
+		user.setDetails(member);	
 		
 		// 리다이렉트
 		return "redirect:/mypage/changinfo"; 
@@ -238,7 +275,8 @@ public class MyPageController {
 							@RequestParam MultipartFile[] campMultiFiles,
 							@RequestParam MultipartFile[] roomMultiFiles,
 							HttpServletRequest request,
-							RedirectAttributes rttr, Locale locale) {
+							RedirectAttributes rttr, Locale locale
+						) {
 		/* 유저 정보 받아오기 */
 		camp.setUserNo(user.getUserNo());
 				
@@ -265,11 +303,7 @@ public class MyPageController {
 		try {
 			singleFile.transferTo(new File(filePath + "/" + savedName));
 			camp.setCampPath("/resources/images/uploadFiles/businessImg/"+savedName);
-			//camp.setCampPath(filePath + "/businessImg");
-			//camp.setCampPath(filePath);
 			
-			/* 오류 이유!!! */
-			//mypageService.mypageCampEnrollment(camp);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
@@ -286,11 +320,12 @@ public class MyPageController {
 		/* 해당 파일 경로 존재 여부 확인하여 없을 경우 make directory */
 		File mkdir2 = new File(campFilePath);
 		if(!mkdir2.exists()) mkdir2.mkdirs();
-		
-		int campNo = 0;
+				
 		/* 사업장 사진 파일에 관한 정보 보관 */		
 		List<Map<String, String>> files = new ArrayList<>();
 		List<MultipartFile> campMultiFileList = new ArrayList<>();
+		
+		Attachment attachment = new Attachment();
 		
 		for(int i = 0; i < campMultiFiles.length; i++) {
 			if(campMultiFiles[i].getSize() != 0) {
@@ -301,14 +336,14 @@ public class MyPageController {
 		/* List<MultipartFile> 반복문 */
 		for(int i = 0; i < campMultiFileList.size(); i++) {
 			/* 파일명 변경 처리 */
-			//String originFileName2 = campMultiFileList.get(i).getOriginalFilename();
-			//String ext2 = originFileName2.substring(originFileName2.lastIndexOf("."));
-			//String savedName2 = UUID.randomUUID().toString().replace("-", "") + ext2;
+			String originFileName2 = campMultiFileList.get(i).getOriginalFilename();
+			String ext2 = originFileName2.substring(originFileName2.lastIndexOf("."));
+			String savedName2 = UUID.randomUUID().toString().replace("-", "") + ext2;
 						
 			/* 파일에 관한 정보 추출 후 보관 */
 			Map<String, String> file = new HashMap<>();
-			file.put("originFileName", originFileName);
-			file.put("savedName", savedName);
+			file.put("originFileName", originFileName2);
+			file.put("savedName", savedName2);
 			file.put("campFilePath", campFilePath);			
 			files.add(file);
 		}
@@ -321,7 +356,7 @@ public class MyPageController {
 				Map<String, String> file = files.get(i);
 				campMultiFileList.get(i).transferTo(new File(file.get("campFilePath") + "\\" + file.get("savedName")));
 				
-				Attachment attachment = new Attachment();
+				attachment = new Attachment();
 				attachment.setFileName(file.get("savedName"));
 				attachment.setFileNewName(file.get("originFileNmae"));
 				attachment.setFileNewName("originFileNmae");
@@ -332,10 +367,10 @@ public class MyPageController {
 				else
 					attachment.setFileLevel(1);
 				
-				mypageService.insertCampImage(attachment);
+				//mypageService.insertCampImage(attachment);
 				
 				} 
-			campNo = mypageService.selectCampNo();
+			
 		} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			/* 실패 시 저장 된 파일 삭제 */
@@ -359,6 +394,8 @@ public class MyPageController {
 		List<Map<String, String>> files3 = new ArrayList<>();
 		List<MultipartFile> roomMultiFileList = new ArrayList<>();
 				
+		Attachment atta2 = new Attachment();
+		
 		for(int i = 0; i < roomMultiFiles.length; i++) {
 			if(roomMultiFiles[i].getSize() != 0) {
 				roomMultiFileList.add(roomMultiFiles[i]);
@@ -387,9 +424,9 @@ public class MyPageController {
 				Map<String, String> file3 = files3.get(i);
 				roomMultiFileList.get(i).transferTo(new File(file3.get("roomFilePath") + "/" + file3.get("savedName")));
 				
-				Attachment atta2 = new Attachment();
+				atta2 = new Attachment();
 				atta2.setFileName(file3.get("savedName3"));
-				atta2.setFileNewName(file3.get("originFileNmae"));
+				atta2.setFileNewName(file3.get("originFileName3"));
 				atta2.setFileRoute("/resources/images/uploadFiles/roomImg/");
 				
 				if(i == 0)
@@ -397,7 +434,7 @@ public class MyPageController {
 				else
 					atta2.setFileLevel(1);
 				
-				mypageService.insertRoomImage(atta2);
+				//mypageService.insertRoomImage(atta2);
 			} 
 			
 		} catch (IllegalStateException | IOException e) {
@@ -407,9 +444,7 @@ public class MyPageController {
 					Map<String, String> file3 = files3.get(i);
 					new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
 				}				
-		}
-		
-		
+		}		
 		
 		
 		/* 캠프 사진 파일 */
@@ -424,7 +459,8 @@ public class MyPageController {
 		//camp.setRoomFile(roomFile);
 		/* 캠프, 캠프 타입, 시설 타입, 객실 등록한 로그 파일 받아오기 */
 		log.info(camp.toString());
-		mypageService.mypageCampEnrollment(camp);
+		log.info("@@@@@@@@@@@@@@"+attachment+"@@@@@@@@@@"+atta2);
+		mypageService.mypageCampEnrollment(camp,attachment,atta2);
 		
 		/* 숙소 등록 메세지 */
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
@@ -459,8 +495,18 @@ public class MyPageController {
 	
 	/* 사업자 예약 내역 */
 	@GetMapping("/mypageHostReserve") 
-	public String mypageHostReserve() {
-		return"mypage/mypage_host_reserve"; 
+	public String mypageHostReserve(Model model, @AuthenticationPrincipal UserImpl user) {
+		
+		int writer = user.getUserNo();
+		
+		int page = 1;
+		
+		Map<String, Object> map = mypageService.selectMyHostReserveList(writer, page);
+		
+		model.addAttribute("campList", map.get("campList"));
+		model.addAttribute("pi", map.get("pi"));
+				
+		return"mypage/mypage_host_reserve";
 	}
 	
 	/* 찜한 페이지 */

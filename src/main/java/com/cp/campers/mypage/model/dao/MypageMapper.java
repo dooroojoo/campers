@@ -17,6 +17,7 @@ import com.cp.campers.mypage.model.vo.CampFacility;
 import com.cp.campers.mypage.model.vo.CampFile;
 import com.cp.campers.mypage.model.vo.Room;
 import com.cp.campers.mypage.model.vo.RoomFile;
+import com.cp.campers.mypage.model.vo.WishCamp;
 
 @Mapper
 public interface MypageMapper {
@@ -26,6 +27,9 @@ public interface MypageMapper {
 	
 	// 게시물 조회
 	List<Board> findAllBoard();
+	
+	// 찜한 회원 목록
+	List<WishCamp> findAllWishCamp();
 		
 	/* 캠핑장 등록 */
 	void insertCamp(Camp camp);
@@ -69,6 +73,8 @@ public interface MypageMapper {
 	List<Board> selectMyBoardList(Map<String, Object> param);
 
 	List<Board> selectThumbnailList();
+	
+	List<Member> selectThumbnailList2();
 
 	int getListCountMyBoard(int writer);
 
@@ -83,6 +89,20 @@ public interface MypageMapper {
 	void insertImageNo2();
 
 	int selectCampNo();
+
+	int getListCountMyMember(int writer);
+
+	int selectcurrval();
+
+	List<Camp> selectCampList();
+
+	List<Member> selectMyMemberList(Map<String, Object> param);
+
+	/* 사업자 예약내역 확인 리스트 */
+	int getListCountMyHostReserveList(int writer);
+
+	/* 사업자 예약내역 */
+	List<Camp> selectMyHostReserveList(Map<String, Object> param);
 
 	
 
