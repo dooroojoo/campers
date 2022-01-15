@@ -28,18 +28,13 @@
 				  , MAX(R.ROOM_MEMBER) AS "MAX_GUEST"
 				  , MIN(R.ROOM_PRICE) AS "MIN_PRICE"
 				  , MAX(R.ROOM_PRICE) AS "MAX_PRICE"
-			   FROM (SELECT
-			   				 CAMP_NO
-                           , CAMP_NAME
-                           , CAMP_ADDRESS
-			   			FROM CAMP
-			   		   WHERE CAMP_ADDRESS LIKE '%'||#{ sArea }||'%'
-                         AND CAMP_STATUS = 'Y') C
+			   FROM CAMP C
 			   JOIN ROOM R ON R.CAMP_NO = C.CAMP_NO 
 			   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
 			   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
 			  WHERE F.FILE_STATUS = 'N'
 			    AND F.FILE_LEVEL = 0
+			    AND C.CAMP_ADDRESS LIKE '%'||#{ sArea }||'%'
 			  <if test="sType != null and !sType.isEmpty() and !''.equals(sType) and sType.size != 0">
 			    AND P.BUSINESS_TYPE IN 
 			    <foreach item="type" collection="sType" open="(" separator="," close=")">
@@ -63,18 +58,13 @@
 				  , MAX(R.ROOM_MEMBER) AS "MAX_GUEST"
 				  , MIN(R.ROOM_PRICE) AS "MIN_PRICE"
 				  , MAX(R.ROOM_PRICE) AS "MAX_PRICE"
-			   FROM (SELECT
-			   				 CAMP_NO
-                           , CAMP_NAME
-                           , CAMP_ADDRESS
-			   			FROM CAMP
-			   		   WHERE CAMP_ADDRESS LIKE '%'||#{ fc.sArea }||'%'
-                         AND CAMP_STATUS = 'Y') C
+			   FROM CAMP C
 			   JOIN ROOM R ON R.CAMP_NO = C.CAMP_NO 
 			   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
 			   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
 			   WHERE F.FILE_STATUS = 'N' 
 			    AND F.FILE_LEVEL = 0
+			    AND C.CAMP_ADDRESS LIKE '%'||#{ fc.sArea }||'%'
 			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest } 
 			    <if test="fc.sType != null and !fc.sType.isEmpty() and !''.equals(fc.sType) and fc.sType.size != 0">
 			    AND P.BUSINESS_TYPE IN 
@@ -134,33 +124,30 @@
 	SELECT
         	COUNT(CAMP_NO)
 	   FROM (SELECT
-				    C.CAMP_NO 
-				  , C.CAMP_NAME 
-				  , C.CAMP_ADDRESS 
-				  , F.FILE_ROUTE 
-				  , F.FILE_NAME 
+				    C.CAMP_NO AS "CAMP_NO"
+				  , C.CAMP_NAME AS "CAMP_NAME"
+				  , SUBSTR(C.CAMP_ADDRESS, 0, INSTR(C.CAMP_ADDRESS, ' ', 1, 3)) AS "CAMP_ADDRESS"
+				  , F.FILE_ROUTE AS "FILE_ROUTE"
+				  , F.FILE_NAME AS "FILE_NAME"
 				  , SUM(R.ROOM_COUNT) AS "ROOM_COUNT"
 				  , MAX(R.ROOM_MEMBER) AS "MAX_GUEST"
 				  , MIN(R.ROOM_PRICE) AS "MIN_PRICE"
 				  , MAX(R.ROOM_PRICE) AS "MAX_PRICE"
-			   FROM (SELECT
-			   				 CAMP_NO
-                           , CAMP_NAME
-                           , CAMP_ADDRESS
-			   			FROM CAMP
-			   		   WHERE CAMP_ADDRESS LIKE '%'||#{ fc.sArea }||'%'
-			   		  <if test="fc.sName !='null' and fc.sName != null and fc.sName != ''">
-			   		     AND CAMP_NAME LIKE '%'||#{ fc.sName }||'%'
-			   		   </if>
-                         AND CAMP_STATUS = 'Y') C
+			   FROM CAMP C
 			   JOIN ROOM R ON R.CAMP_NO = C.CAMP_NO 
 			   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
 			   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
 			   JOIN CAMP_BUSINESS_TYPE T ON C.CAMP_NO = T.CAMP_NO
 			   JOIN BUSINESS_TYPE P ON P.BUSINESS_NO = T.BUSINESS_NO
 			   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
-               JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
-			  WHERE F.FILE_STATUS = 'N'
+			   JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
+			   LEFT JOIN RESERVE E ON E.ROOM_NO = R.ROOM_NO
+			  WHERE C.CAMP_ADDRESS LIKE '%'||#{ fc.sArea }||'%'
+			  <if test="fc.sName !='null' and fc.sName != null and fc.sName != ''">
+			   	AND C.CAMP_NAME LIKE '%'||#{ fc.sName }||'%'
+			  </if>
+                AND C.CAMP_STATUS = 'Y'
+			    AND F.FILE_STATUS = 'N'
 			    AND F.FILE_LEVEL = 0
 			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest }
 			   <if test="type != null and !type.isEmpty() and !''.equals(type) and type.size != 0">
@@ -180,7 +167,10 @@
 			     #{floor}
 			    </foreach>
 			    </if>
-			    GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME, R.ROOM_MEMBER
+			     AND ((E.CHECKIN IS NULL OR E.CHECKIN NOT BETWEEN #{ fc.sIn } AND #{ fc.sOut }) 
+			     AND (E.CHECKIN IS NULL OR E.CHECKOUT NOT BETWEEN #{ fc.sIn } AND #{ fc.sOut }))
+			     AND R.ROOM_COUNT != 0
+			  GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME, R.ROOM_MEMBER
            )
 	</select>
 	
@@ -192,31 +182,28 @@
 		FROM (SELECT
 				    C.CAMP_NO AS "CAMP_NO"
 				  , C.CAMP_NAME AS "CAMP_NAME"
-				  , SUBSTR(CAMP_ADDRESS, 0, INSTR(CAMP_ADDRESS, ' ', 1, 3)) AS "CAMP_ADDRESS"
+				  , SUBSTR(C.CAMP_ADDRESS, 0, INSTR(C.CAMP_ADDRESS, ' ', 1, 3)) AS "CAMP_ADDRESS"
 				  , F.FILE_ROUTE AS "FILE_ROUTE"
 				  , F.FILE_NAME AS "FILE_NAME"
 				  , SUM(R.ROOM_COUNT) AS "ROOM_COUNT"
 				  , MAX(R.ROOM_MEMBER) AS "MAX_GUEST"
 				  , MIN(R.ROOM_PRICE) AS "MIN_PRICE"
 				  , MAX(R.ROOM_PRICE) AS "MAX_PRICE"
-			   FROM (SELECT
-			   				 CAMP_NO
-                           , CAMP_NAME
-                           , CAMP_ADDRESS
-			   			FROM CAMP
-			   		   WHERE CAMP_ADDRESS LIKE '%'||#{ fc.sArea }||'%'
-			   		  <if test="fc.sName !='null' and fc.sName != null and fc.sName != ''">
-			   		     AND CAMP_NAME LIKE '%'||#{ fc.sName }||'%'
-			   		   </if>
-                         AND CAMP_STATUS = 'Y') C
+			   FROM CAMP C
 			   JOIN ROOM R ON R.CAMP_NO = C.CAMP_NO 
 			   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
 			   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
 			   JOIN CAMP_BUSINESS_TYPE T ON C.CAMP_NO = T.CAMP_NO
 			   JOIN BUSINESS_TYPE P ON P.BUSINESS_NO = T.BUSINESS_NO
 			   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
-               JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
-			  WHERE F.FILE_STATUS = 'N'
+			   JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
+			   LEFT JOIN RESERVE E ON E.ROOM_NO = R.ROOM_NO
+			  WHERE C.CAMP_ADDRESS LIKE '%'||#{ fc.sArea }||'%'
+			  <if test="fc.sName !='null' and fc.sName != null and fc.sName != ''">
+			   	AND C.CAMP_NAME LIKE '%'||#{ fc.sName }||'%'
+			  </if>
+                AND C.CAMP_STATUS = 'Y'
+			    AND F.FILE_STATUS = 'N'
 			    AND F.FILE_LEVEL = 0
 			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest }
 			   <if test="type != null and !type.isEmpty() and !''.equals(type) and type.size != 0">
@@ -236,6 +223,9 @@
 			     #{floor}
 			    </foreach>
 			    </if>
+			    AND ((E.CHECKIN IS NULL OR E.CHECKIN NOT BETWEEN #{ fc.sIn } AND #{ fc.sOut }) 
+			    AND (E.CHECKIN IS NULL OR E.CHECKOUT NOT BETWEEN #{ fc.sIn } AND #{ fc.sOut }))
+			    AND R.ROOM_COUNT != 0
 			  GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME, R.ROOM_MEMBER
 			  ORDER BY C.CAMP_NAME ASC
 			)A)
