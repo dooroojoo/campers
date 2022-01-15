@@ -27,7 +27,7 @@
 				 WHERE C.CAMP_ADDRESS LIKE '%강원도%'
 				   AND C.CAMP_STATUS = 'Y'
 				   AND G.FILE_STATUS = 'N'
-				   AND G.FILE_LEVEL = 1
+				   AND G.FILE_LEVEL = 0
 				 ORDER BY DBMS_RANDOM.VALUE
 			 )
 	   WHERE ROWNUM &lt; 6
@@ -56,7 +56,7 @@
 				  JOIN RESERVE E ON E.ROOM_NO = R.ROOM_NO
 				 WHERE C.CAMP_STATUS = 'Y'
 				   AND G.FILE_STATUS = 'N'
-				   AND G.FILE_LEVEL = 1
+				   AND G.FILE_LEVEL = 0
 				 GROUP BY E.ROOM_NO 
                      , C.CAMP_NO
 			   		 , C.CAMP_NAME
@@ -91,7 +91,7 @@
 				 WHERE C.CAMP_STATUS = 'Y'
 				   AND R.RECORD_NO = 2
 				   AND G.FILE_STATUS = 'N'
-				   AND G.FILE_LEVEL = 1
+				   AND G.FILE_LEVEL = 0
 				 ORDER BY R.RECORD_DATE DESC
 			)
 		 WHERE ROWNUM &lt; 4

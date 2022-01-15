@@ -4,7 +4,7 @@ package com.cp.campers.search.model.vo;
 public class FindCamp{
 
 	private String sArea;				// 지역 검색
-	private String sIn;				// 체크인 날짜 검색
+	private String sIn;					// 체크인 날짜 검색
 	private String sOut;				// 체크아웃 날짜 검색
 	private String sGuest;				// 인원 수 검색
 	private String sName;				// 캠핑장이름 검색

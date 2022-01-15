@@ -39,6 +39,7 @@
 			   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
 			   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
 			  WHERE F.FILE_STATUS = 'N'
+			    AND F.FILE_LEVEL = 0
 			  <if test="sType != null and !sType.isEmpty() and !''.equals(sType) and sType.size != 0">
 			    AND P.BUSINESS_TYPE IN 
 			    <foreach item="type" collection="sType" open="(" separator="," close=")">
@@ -73,7 +74,7 @@
 			   JOIN CAMP_FILE I ON C.CAMP_NO = I.CAMP_NO 
 			   JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO
 			   WHERE F.FILE_STATUS = 'N' 
-			    AND F.FILE_LEVEL = 1
+			    AND F.FILE_LEVEL = 0
 			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest } 
 			    <if test="fc.sType != null and !fc.sType.isEmpty() and !''.equals(fc.sType) and fc.sType.size != 0">
 			    AND P.BUSINESS_TYPE IN 
@@ -111,7 +112,7 @@
                JOIN IMAGEFILE F ON I.FILE_NO = F.FILE_NO 
               WHERE C.CAMP_STATUS = 'Y'
                 AND F.FILE_STATUS = 'N' 
-                AND F.FILE_LEVEL = 1 
+                AND F.FILE_LEVEL = 0 
               GROUP BY ROWNUM, C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME 
               ORDER BY C.CAMP_NAME ASC
 		 )
@@ -160,6 +161,7 @@
 			   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
                JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
 			  WHERE F.FILE_STATUS = 'N'
+			    AND F.FILE_LEVEL = 0
 			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest }
 			   <if test="type != null and !type.isEmpty() and !''.equals(type) and type.size != 0">
 			    AND P.BUSINESS_TYPE IN 
@@ -214,8 +216,8 @@
 			   JOIN BUSINESS_TYPE P ON P.BUSINESS_NO = T.BUSINESS_NO
 			   JOIN CAMP_FACILITY Y ON C.CAMP_NO = Y.CAMP_NO
                JOIN FACILITY L ON L.FACILITY_NO = Y.FACILITY_NO
-			  WHERE F.FILE_STATUS = 'N' 
-			    AND F.FILE_LEVEL = 1
+			  WHERE F.FILE_STATUS = 'N'
+			    AND F.FILE_LEVEL = 0
 			    AND R.ROOM_MEMBER &gt;= #{ fc.sGuest }
 			   <if test="type != null and !type.isEmpty() and !''.equals(type) and type.size != 0">
 			    AND P.BUSINESS_TYPE IN 
