@@ -84,8 +84,6 @@ height: auto !important;
 }
 
 .main-area:hover, .main-checkDate:hover{
-    font-weight: 600;
-    font-size: 12px;
     color: rgb(231, 111, 82);
     transition: 0.3s;
 }
