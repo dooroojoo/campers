@@ -1,7 +1,7 @@
 .content{
-    width: 1100px;
+    width: 1900px;
     margin: auto;
-    display: flex;
+    /* display: flex; */
     float: left;
 }
 

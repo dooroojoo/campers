@@ -28,6 +28,10 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
+.main-wrapper{
+	max-width: 1900px;
+    margin: 0 auto;
+}
 /* 메뉴바 아이콘 */
 .sidebar-menu{
   width: 30px;
@@ -172,10 +176,10 @@ body {
 /* ========================================================*/
 
 .content{
-  width :1100px;
+  width :1900px;
   margin:auto;
   /* float: left; */
-  display: flex;
+  /*display: flex; */
 }
 
 .mypage_content{
@@ -184,7 +188,8 @@ body {
   display: grid;
   grid-template-rows: 400px 400px;
   grid-template-columns: 600px 600px;
-  margin-left : 25%;  
+  margin-left : 25%;
+  margin-top: -150px;
 }
 
 .image_area{

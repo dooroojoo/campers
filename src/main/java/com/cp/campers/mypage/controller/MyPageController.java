@@ -2,7 +2,9 @@ package com.cp.campers.mypage.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -39,8 +41,12 @@ import com.cp.campers.member.model.service.MemberService;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
+import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
+import com.cp.campers.mypage.model.vo.CampBusinessType;
+import com.cp.campers.mypage.model.vo.CampFacility;
 import com.cp.campers.mypage.model.vo.CampFile;
+import com.cp.campers.mypage.model.vo.Facility;
 import com.cp.campers.mypage.model.vo.Room;
 import com.cp.campers.mypage.model.vo.RoomFile;
 import com.cp.campers.reservePayment.model.vo.ReserveInfo;
@@ -52,21 +58,23 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/mypage")
 public class MyPageController {
 
-	private MypageService mypageService;
 	private MessageSource messageSource;
+	private MypageService mypageService;
 	private BoardService boardService;
 	private AdminService adminService;
 	
 	 @Autowired
-	   public MyPageController(MypageService mypageService, MessageSource messageSource,
+	   public MyPageController(MessageSource messageSource, MypageService mypageService, 
 			   BoardService boardService, AdminService adminService) {	      
+		 this.messageSource = messageSource;
 	     this.mypageService = mypageService;
-	     this.messageSource = messageSource;
 	     this.boardService = boardService;
 	     this.adminService = adminService;
 	 }
 	
 	 /* 회원 목록 */
+	 /* 관리자 admin password : admin1!
+	  * 회원 user12345 password: user12345!*/
 	 @GetMapping("")
 	 public ModelAndView mypageMember(Model model, Member member, Board board, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		
@@ -92,9 +100,14 @@ public class MyPageController {
 		//log.info(member.toString());
 		//log.info(user.toString());
 		//log.info(map.toString());
-		log.info(map2.toString());
+		log.info("map2 : " + map2.toString());
 		//List<Member> memeberList = mypageService.findAllMember();
+		//log.info(map.toString());
 				
+		Date today = new Date();
+		
+		log.info("date : " + today);
+		
 		mv.addObject("boardList", map.get("boardList"));
 		mv.addObject("pi",map.get("pi"));
 		mv.addObject("memberList", map2.get("memberList"));		
@@ -103,6 +116,7 @@ public class MyPageController {
 		model.addAttribute("boardList", map.get("boardList"));
 		model.addAttribute("memberList", map2.get("memberList"));
 		model.addAttribute("pi", map.get("pi"));
+		model.addAttribute("standardDate", new Date());
 		// 보류
 		//model.addAttribute("memberList", map.get("memberList"));
 		model.addAttribute("thumbnailList", map.get("thumbnailList"));
@@ -146,11 +160,13 @@ public class MyPageController {
 				
 		// log.info("유저 아이디 : ", user);
 		
+		log.info(member.toString());
+		
 		mypageService.changeInfoMemberout(member);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoMemberout", null, locale));
-		
-		return "mypage/changinfo";
+				
+		return "redirect:/main";
 	}
 	
 	/* 닉네임 중복 체크 */
@@ -282,16 +298,17 @@ public class MyPageController {
 							@RequestParam MultipartFile singleFile,
 							@RequestParam MultipartFile[] campMultiFiles,
 							@RequestParam MultipartFile[] roomMultiFiles,
-							HttpServletRequest request,
-							RedirectAttributes rttr, Locale locale, CampRecord campRecord
+							HttpServletRequest request, CampRecord campRecord,
+							RedirectAttributes rttr, Locale locale
+							
 						) { 
 		/* 유저 정보 받아오기 */ 
 		camp.setUserNo(user.getUserNo());
-		log.info(camp.toString());
-		log.info(user.toString()); 
-		/* ------------------------사업장등록증-------------------------------- *
-		log.info(uploadFilesPath);
+
+		//log.info(camp.toString());
+		//log.info(user.toString()); 
 		
+		/* ------------------------사업장등록증-------------------------------- *
 		/* 사업자등록증 파일을 저장할 경로 */				
 		String filePath = uploadFilesPath + "businessImg";
 		
@@ -373,7 +390,7 @@ public class MyPageController {
 				// attachment.setFileNewName(file.get("originFileNmae"));
 				// attachment.setFileNewName("originFileNmae");
 				attachment.setFileRoute("/resources/images/uploadFiles/campImg/");
-				
+				//attachment.setFileLevel(5);
 				
 				if(i == 0)
 					attachment.setFileLevel(0);
@@ -442,7 +459,7 @@ public class MyPageController {
 				atta2.setFileOriginName(file3.get("originFileName3"));
 				// atta2.setFileNewName(file.get("originFileNmae"));
 				atta2.setFileRoute("/resources/images/uploadFiles/roomImg/");
-				
+			    //atta2.setFileLevel(5);
 				
 				
 				if(i == 0)
@@ -460,18 +477,48 @@ public class MyPageController {
 					Map<String, String> file3 = files3.get(i);
 					new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
 				}				
-		}		
-		
+		}			
 		
 		/* 캠프 사진 파일 */
 		//camp.setCampPath("filePath");
 		
 		/* 숙소 등록 */
 		camp.setRoom(room);
-		log.info(room.toString());
+		log.info(room.toString());		
 		
 		campRecord.setCampNo(camp.getCampNo());
+		
 		// campRecord.setCrNo(camp.getCampNo());
+		//for(String businessTypeCheck : businessType) {
+		//	mypageService.insertCampBusinessType(camp.getCampNo());
+		//}
+		
+		String[] businessTypeCheck = request.getParameterValues("businessType");
+		String[] facilityNoCheck = request.getParameterValues("facilityNo");
+		
+		List<String> btypeList = new ArrayList<>();
+		for(String check : businessTypeCheck) {
+			btypeList.add(check);
+		}
+		
+		List<String> ftypeList = new ArrayList<>();
+		for(String check2 : facilityNoCheck) {
+			ftypeList.add(check2);
+		}
+		//camp.setCampBusinessTypeList(campBusinessType.setBusinessType(businessTypeCheck));
+		/*
+		camp.setCampBusinessTypeList(campBusinessType.setBusinessType(businessType.setBusinessType(businessTypes)));
+		camp.setCampFacilityList(campFacility.setFacility(facilityNos));	
+		businessType.setBusinessType(businessTypes);
+		campFacility.setFacility(facilityNos);
+		*/
+		//log.info(businessType.toString());
+		
+		//for(String facilityNoCheck : facilityNo) {
+		//	mypageService.insertCampFacility(camp.getCampNo());
+		//}
+		
+		//campFacility.setCampNo(camp.getCampNo());		
 		
 		/* 숙소 사진 등록 */
 		//camp.setCampFile(campFile);
@@ -482,11 +529,12 @@ public class MyPageController {
 		log.info("@@@@@@@@@@@@@@"+attachment+"@@@@@@@@@@"+atta2);
 		log.info(attachment.toString());
 		log.info(atta2.toString());
-		mypageService.mypageCampEnrollment(camp,attachment,atta2);
+		//log.info(campFacility.toString());
+		//log.info(campBusinessType.toString());
+		mypageService.mypageCampEnrollment(camp,btypeList,ftypeList,attachment,atta2);
 		
 		/* 숙소 등록 메세지 */
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
-		
 		/* 등록후 페이지 */
 		return "redirect:/mypage";
 	}	
@@ -522,18 +570,35 @@ public class MyPageController {
 	
 	/* 사업자 예약 내역 */
 	@GetMapping("/mypageHostReserve") 
-	public String mypageHostReserve(Model model, @AuthenticationPrincipal UserImpl user) {
+	public void mypageHostReserve(Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
 		
-		int writer = user.getUserNo();
+		//camp.setUserNo(user.getUserNo());
+		//camp.setUserNo(user.getUserNo());
+		//model.toString();		
 		
-		int page = 1;
+		int userNo = user.getUserNo();
 		
-		Map<String, Object> map = mypageService.selectMyHostReserveList(writer, page);
+		int page = 1;		
+				
+		log.info("page : " + page);
 		
+		log.info("user : " + user.toString());
+		//log.info("camp : " + camp.toString());
+		//log.info("model : " + model.toString());
+				
+		Map<String, Object> map = mypageService.selectMyHostReserveList(userNo, page);
+				
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
-				
-		return"mypage/mypage_host_reserve";
+		model.addAttribute("campImageList", map.get("campImageList"));
+		model.addAttribute("reserveList", map.get("reserveList"));
+		
+		// model.addAttribute("user", user.getUserNo());		
+		
+		log.info("map : " + map.toString());
+		log.info("model : " + model.toString());
+		
+		// return"mypage/mypage_host_reserve";
 	}
 	
 	/* 찜한 페이지 */

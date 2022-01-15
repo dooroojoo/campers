@@ -1,7 +1,7 @@
 .content{
-    width: 1100px;
+    width: 1900px;
     margin: auto;
-    display: flex;
+    /* display: flex; */
     float: left;
 }
 
@@ -10,18 +10,27 @@
     /*margin: auto;*/
 }
 
+.changinfo_header{
+	margin-left: 51%;
+	margin-top: -90px;
+}
+
 .changinfo_h1{
     border-bottom: 3px solid lightgray;
     margin-top: 30px;
     margin-left: 15%;
-    width: 1100px;
+    width: 615px;
+}
+
+.changinfo_content{
+	margin-left: 7%
 }
 
 .changinfo_content_div{
     width: 600px;
     height: 500px;
-    margin-top: 50px;
-    margin-left: 40%;
+    margin-top: 30px;
+    margin-left: 30%;
     background: lightgray;
 }
 

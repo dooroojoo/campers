@@ -7,15 +7,21 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cp.campers.admin.model.dao.AdminMapper;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.dao.MemberMapper;
 import com.cp.campers.member.model.vo.Member;
+import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.dao.MypageMapper;
+import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
+import com.cp.campers.mypage.model.vo.CampBusinessType;
+import com.cp.campers.mypage.model.vo.CampFacility;
 import com.cp.campers.mypage.model.vo.PageInfo;
+import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,7 +43,8 @@ public class MypageServiceImpl implements MypageService{
 	/* 캠프장 등록 */
 	@Transactional
 	@Override
-	public void mypageCampEnrollment(Camp camp,Attachment attachment,Attachment atta2) {
+	public void mypageCampEnrollment(Camp camp, List<String> btypeList, 
+			List<String> ftypeList, Attachment attachment,Attachment atta2) {
 		
 		/* CAMP TABLE INSERT */
 		mypageMapper.insertCamp(camp);
@@ -45,14 +52,25 @@ public class MypageServiceImpl implements MypageService{
 		/* CAMP_BUSINESS_TYPE INSERT */
 		/* 반복문으로 Integer 선택한 체크박스 businessNo 를 캠프 비즈니스 타입으로
 		 * mypageMapper에 CampBusinessType 에 businessNo 입력 */
-		for(Integer businessNo : camp.getBusinessType()) {
-			mypageMapper.insertCampBusinessType(businessNo);			
+		//for(Integer businessNo : camp.getBusinessType()) {
+	    //	mypageMapper.insertCampBusinessType(businessNo);			
+		//}
+		//log.info("camp : " + camp.toString());
+		
+		for(String btype : btypeList ) {
+			mypageMapper.insertCampBusinessType(btype);
 		}
 		
 		/* CAMP_FACILITY INSERT */
-		for(Integer facilityNo : camp.getFacilityNo()) {
-			mypageMapper.insertCampFacility(facilityNo);
+		//for(Integer facilityNo : camp.getFacilityNo()) {
+		//	mypageMapper.insertCampFacility(facilityNo);
+		//}
+		
+		for(String ftype : ftypeList ) {
+			mypageMapper.insertCampFacility(ftype);
 		}
+		
+		//mypageMapper.insertCampFacility(camp.getCampNo());
 		
 		/* ROOM INSERT */
 		//for(Room room : camp.getRoomList()) {
@@ -78,6 +96,7 @@ public class MypageServiceImpl implements MypageService{
 		
 		/* 신규업체 신청 시 이력테이블 */
 		adminMapper.recordToNew(camp.getCampNo());
+	
 	}
 	
 	
@@ -236,25 +255,41 @@ public class MypageServiceImpl implements MypageService{
 
 	/* 사업자 예약내역 확인 */
 	@Override
-	public Map<String, Object> selectMyHostReserveList(int writer, int page) {
-		int listCount = mypageMapper.getListCountMyHostReserveList(writer);
+	public Map<String, Object> selectMyHostReserveList(int userNo, int page) {
+		int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
 		
-		PageInfo pi = new PageInfo(page, listCount, 10, 7);
+		log.info("listCount : " + listCount+"");
+		
+		PageInfo pi = new PageInfo(page, listCount, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
 		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
 		
 		Map<String, Object> param = new HashMap<>();
 		param.put("pi", pi);
-		param.put("writer", writer);
+		param.put("userNo", userNo);
+		
+		log.info("param : " + param.toString());
 		
 		List<Camp> campList = mypageMapper.selectMyHostReserveList(param);
 		
+		List<Camp> campImageList = mypageMapper.selectCampImageList();
+		
+		List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
+				
+		log.info("campList : " + campList.toString());
+		log.info("campImageList : " + campImageList.toString());
+		log.info("reserveList : " + reserveList.toString());
+				
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
 		map.put("campList", campList);
+		map.put("campImageList", campImageList);
+		map.put("reserveList", reserveList);
 		
 		return map;
 	}
+
+	
 
 	
 	

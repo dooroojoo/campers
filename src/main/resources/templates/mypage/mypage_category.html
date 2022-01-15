@@ -1,55 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>category</title>
+    <title>header</title>
+    
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     <!-- 외부 css -->
+    
+    <script src="/resources/js/admin/menuHeight.js"></script>
     <link href="/resources/css/mypage/mypage_category.css" rel="stylesheet">
+    
     <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div class="content">
-    <aside>
-        <div class="mypage_category">
-            <a th:href="@{/mypage}"><div class="ca_head">마이페이지</div></a>
-            <ul class="mypage_category_ul">
-                <li class="mypage_category_li"><a th:href="@{/mypage/changinfo}">회원정보수정</a></li>
-                
-                <!-- 로그인 한 회원 -->
-                <th:block sec:authorize="hasRole('MEMBER')">
-                	<li class="mypage_category_li"><a th:href="@{/mypage/wishcamp}">찜한캠핑장</a></li>
-                </th:block>
-                
-                <!-- 로그인 한 회원 -->
-                <th:block sec:authorize="hasRole('MEMBER')">
-	                <li class="mypage_category_li"><a th:href="@{/mypage/mypageGuestReserve}">예약내역확인</a></li>
-                </th:block>
-                
-                <!-- 사업자 회원 -->
-                <th:block sec:authorize="hasRole('COMPANY')">
-                	<li class="mypage_category_li"><a th:href="@{/mypage/mypageHostReserve}">예약내역확인</a></li>
-                </th:block> 
-                
-                <li class="mypage_category_li"><a th:href="@{/company/csCenter}">고객센터</a></li>
-                
-                <!-- 사업자 권한을 가지고 있는 경우만 보임 사업자코드 '2', 관리자코드 '3' ? '사업자' ? -->
-                <th:block sec:authorize="hasRole('COMPANY')">
-                	<li class="mypage_category_li"><a th:href="@{/mypage/mypageCampManagement}">내 숙소 관리</a></li>
-            	</th:block>
+    
+    <!-- header -->    
+    <div class="header">
+        <header>
+        <div class="sidebar-menu"></div>
+       </header>
+       
+          <section id="menu-section">
+            <ul class="sidebar-list">
+              <li class="sidebar"><a href="/mypage/changinfo">회원 정보 수정</a></li>
+              <th:block sec:authorize="hasRole('MEMBER')">
+              	<li class="sidebar"><a href="/mypage/wishcamp">찜 한 캠핑장</a></li>
+              </th:block>
+              <th:block sec:authorize="hasRole('MEMBER')">
+              	<li class="sidebar"><a href="/mypage/mypageGuestReserve">예약 내역 확인</a></li>
+              </th:block>
+              <th:block sec:authorize="hasRole('COMPANY')">
+              	<li class="sidebar"><a href="/mypage/mypageHostReserve">예약 내역 확인</a></li>
+              </th:block>
+              <th:block sec:authorize="hasRole('COMPANY')">
+              	<li class="sidebar"><a href="/mypage/mypageCampManagement">내 숙소 관리</a></li>
+              </th:block>
             </ul>
+          </section>
+        <div class="main-logo">
+          <a href="/main"><img src="/resources/images/common/header_footer/logo.png"> </a>
         </div>
+    
+        <div class="join-icon">
+    	  <a href="/member/logout"><img src="/resources/images/member/logoutBtn.png"></a>
+    	</div>
+    	
+    	<div class="mypage-icon">
+			<a href="/mypage"><img src="/resources/images/common/header_footer/member.png"></a>
+        </div>
+    
+      </div>
 
-    </aside>
-</div>
+    
+    
+    <!-- 사이드 메뉴 효과 스크립트 -->
+    <script>
+      const menuToggle = document.querySelector('.sidebar-menu');
+      const menuBar = document.getElementById('menu-section');
+
+     menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('close');
+      menuBar.classList.toggle('close');
+    });
+
+  </script>
 
 </body>
 </html>

@@ -38,8 +38,8 @@
                     <th class="mypage_host_reserve_table_header_date">예약 날짜</th>
                     <th class="mypage_host_reserve_table_header_status">예약 상태</th>
                 </tr>
-                <!-- 
-                <tr>
+                 
+                <tr th:each="camp : ${ campList }">
                     <th class="mypage_host_reserve_table_body"></th>
                     <th class="mypage_host_reserve_table_body">
                     	<img class="mypage_host_reserve_table_img" th:src="${ camp.fileNo }">
@@ -54,7 +54,7 @@
                     <th class="mypage_host_reserve_table_body2">
                     	<input class="mypage_host_reserve_button" type="button" value="입금완료"></th>
                 </tr>
-                 -->
+                 
                 <tr>
                     <th class="mypage_host_reserve_table_body"></th>
                     <th class="mypage_host_reserve_table_body"><img class="mypage_host_reserve_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>

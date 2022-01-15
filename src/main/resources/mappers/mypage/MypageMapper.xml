@@ -162,6 +162,39 @@
 		<result property="fileOriginName" column="FILE_ORIGIN_NAME"/>
 		<result property="deletedName" column="DELETED_NAME"/>
 	</resultMap>
+	
+	<resultMap id="reserPayResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
+		<id property="reserNo" column="RESER_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="reserName" column="RESER_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="reserState" column="RESER_STATE"/>
+		<result property="request" column="REQUEST"/>
+		<result property="checkIn" column="CHECKIN"/>
+		<result property="checkOut" column="CHECKOUT"/>
+		<result property="accountNum" column="ACCOUNT_NUM"/>
+		<result property="accountHol" column="ACCOUNT_HOL"/>
+		<result property="bank" column="BANK"/>
+		<result property="roomQua" column="ROOM_QUA"/>
+		<result property="roomNo" column="ROOM_NO"/>
+	</resultMap>
+	
+	<resultMap type="com.cp.campers.mypage.model.vo.Camp" id="ReservationCampResultMap">
+		<id property="campNo" column="CAMP_NO"/>
+		<result property="campName" column="CAMP_NAME"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="campAddress" column="CAMP_ADDRESS"/>
+		<result property="campPhone" column="CAMP_PHONE"/>
+		<result property="campIntro" column="CAMP_INTRO"/>
+		<result property="campPath" column="CAMP_PATH"/>
+		<result property="campPolicy" column="CAMP_POLICY"/>
+		<result property="campStatus" column="CAMP_STATUS"/>
+		<result property="accountNum" column="ACCOUNT_NUM"/>
+		<result property="bank" column="BANK"/>
+		<result property="checkin" column="CHECKIN"/>
+		<result property="checkout" column="CHECKOUT"/>
+		<result property="refusal" column="REFUSAL"/>
+    </resultMap>
     
    <select id="findMemberById" resultMap="memberResultMap">
    	SELECT
@@ -281,7 +314,7 @@
 			, #{ checkout }
 		)
    </insert>
-   
+   <!-- 
    <insert id="insertCampBusinessType">
    	INSERT
    	INTO CAMP_BUSINESS_TYPE
@@ -296,7 +329,8 @@
    		, #{ businessNo }
    	)
    </insert>
-   
+    -->
+   <!-- 
    <insert id="insertCampFacility">
    	INSERT
    	INTO CAMP_FACILITY
@@ -311,7 +345,8 @@
    		, #{ facilityNo }
    	)
    </insert>
-   
+    -->
+    
    <!-- 캠핑장 사진 -->
    <insert id="insertCampFile">
    INSERT
@@ -402,7 +437,7 @@
 	
 	<update id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
 		UPDATE MEMBER
-		   SET STATUS = 'N'
+		   SET STATUS = 'X'
 		 WHERE USER_ID = #{ id }
 		   AND USER_PWD = #{ pwd }  
 	</update>
@@ -497,10 +532,10 @@
  	 </select>
  	 
  	 <select id="getListCountMyBoard" resultType="int">
-	select count(*)
-	from board
-	where writer = #{writer}
-	and status ='N'
+		select count(*)
+		from board
+		where writer = #{writer}
+		and status ='N'
 	</select>
  	 
  	 <select id="selectThumbnailList" resultMap="boardResultMap">
@@ -517,6 +552,21 @@
 	  order by bid desc
 	</select>
 	
+	<select id="selectCampImageList" resultMap="CampResultMap">
+		select
+		        camp_no,
+		        file_level,
+		        file_route,
+		        file_name
+		    from camp
+		    join camp_file using(camp_no)
+		    join imagefile using(file_no)
+		  where file_level = 1
+		  and file_status = 'N'
+		  order by camp_no desc
+	</select>
+	
+	
 	 <select id="selectThumbnailList2" resultMap="boardResultMap">
 	select
 	        bid,
@@ -531,32 +581,54 @@
 	  order by bid desc
 	</select>
 	
- 	 <!-- parameterType="hasmap"  -->
- 	 <!-- 
- 	 <select id="selectMyHostReserveList" resultType="com.cp.campers.reservePayment.model.vo.reserveInfo">
+ 	<select id="selectMyHostReserveList" resultMap="ReservationCampResultMap">
  	 	SELECT *
  	 	FROM (SELECT ROWNUM RNUM, A.*
  	 	FROM (SELECT
- 	 			    RESER_NO
- 	 			  , USER_NO
- 	 			  , RESER_NAME
- 	 			  , PHONE
- 	 			  , RESER_STATE
- 	 			  , REQUEST
- 	 			  , CHECKIN
- 	 			  , CHECKOUT
- 	 			  , ACCOUNT_NUM
- 	 			  , ACCOUNT_HOL
- 	 			  , BANK
- 	 			  , ROOM_QUA
- 	 			  , ROOM_NO
- 	 	       FROM RESERVE R
- 	 	       JOIN MEMBER M ON (R.USER_NO = M.USER_NO)
- 	 	      WHERE R.RESER_STATUS = 'Y'
- 	 	        AND USER_NO = #{ userNo }
+ 	 			    C.CAMP_NO
+ 	 			  , C.CAMP_NAME
+ 	 			  , C.USER_NO
+ 	 			  , C.CAMP_ADDRESS
+ 	 			  , C.CAMP_PHONE
+ 	 			  , C.CAMP_INTRO
+ 	 			  , C.CAMP_PATH
+ 	 			  , C.CAMP_POLICY
+ 	 			  , C.ACCOUNT_NUM
+ 	 			  , C.BANK
+ 	 			  , C.CHECKIN
+ 	 			  , C.CHECKOUT
+ 	 			  , C.REFUSAL
+ 	 	       FROM CAMP C
+ 	 	       JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+ 	 	      WHERE C.CAMP_STATUS = 'Y'
+ 	 	        AND C.USER_NO = #{ userNo }
  	 	      ORDER BY USER_NO DESC) A) 	 
- 	 </select> 	 
- 	  -->
+ 	 </select>
+ 	 
+ 	 <select id="selectHostReserveList" resultMap="reserPayResultMap">
+ 	 	SELECT *
+	 	 	FROM (SELECT ROWNUM RNUM, A.*
+	 	 	FROM (SELECT
+	 	 			    R.RESER_NO
+	 	 			  , R.USER_NO
+	 	 			  , R.RESER_NAME
+	 	 			  , R.PHONE
+	 	 			  , R.RESER_STATE
+	 	 			  , R.REQUEST
+	 	 			  , R.CHECKIN
+	 	 			  , R.CHECKOUT
+	 	 			  , R.ACCOUNT_NUM
+	 	 			  , R.ACCOUNT_HOL
+	 	 			  , R.BANK
+	 	 			  , R.ROOM_QUA
+	 	 			  , R.ROOM_NO
+	 	 	       FROM RESERVE R
+	 	 	       JOIN MEMBER M ON (R.USER_NO = M.USER_NO)
+	 	 	      WHERE R.RESER_STATE = 'Y'
+	 	 	        AND R.USER_NO = #{ userNo }
+	 	 	      ORDER BY USER_NO DESC) A)
+ 	 </select>
+ 	 
  	  	 
  	<select id="selectMyMemberList" parameterType="hashmap" resultMap="memberResultMap">
  		SELECT *
@@ -579,6 +651,22 @@
 	ORDER BY user_no DESC) A)
 	where RNUM between #{pi.startRow} and #{pi.endRow}
  	</select>
- 		
+ 	
+ 	<insert id="insertCampBusinessType" parameterType="string">
+		INSERT INTO CAMP_BUSINESS_TYPE 
+		VALUES (
+				SEQ_CAMP_NO.CURRVAL
+   			  , #{ btype }
+			    )
+	</insert>
+	
+	<insert id="insertCampFacility" parameterType="string">
+		INSERT INTO CAMP_FACILITY 
+		VALUES (
+				SEQ_CAMP_NO.CURRVAL
+   				, #{ ftype }
+   				)
+	</insert>
+ 	
  	
 </mapper>

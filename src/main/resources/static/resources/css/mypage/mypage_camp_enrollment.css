@@ -1,13 +1,19 @@
 .content{
-    width: 1100px;
+    width: 1900px;
     margin: auto;
-    display: flex;
+    /* display: flex; */
     float: left;
+    
 }
 
 .mypage_camp_enrollment{
     width: 1100px;
+	margin-top: -80px;
 }
+
+.content{
+}
+
 
 .mypage_camp_enrollment_h1{
     border-bottom: 3px solid lightgray;
@@ -16,10 +22,18 @@
     width: 1100px;
 }
 
+.mypage_camp_enrollment_content{
+	margin-left: 10%;
+}
+
 .mypage_camp_enrollment_table{
     margin-left : 15.2%;
     border: 1px solid lightgray;
     width: 1100px;
+}
+
+.mypage_camp_enrollment_header{
+	margin-left : 10%;
 }
 
 .previewBox{
