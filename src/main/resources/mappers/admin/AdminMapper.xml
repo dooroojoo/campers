@@ -37,6 +37,7 @@
 		 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
 		 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
 		WHERE B.AUTHORITY_CODE != 3
+		  AND STATUS != 'X'
 	</select>
    
 	<select id="getListCountBySearch" parameterType="com.cp.campers.admin.model.vo.Search" resultType="_int">
@@ -53,7 +54,8 @@
 		WHERE A.USER_ID LIKE '%' || #{ searchValue } || '%'
 		</when>
 		</choose>
-		 AND B.AUTHORITY_CODE != 3
+		  AND B.AUTHORITY_CODE != 3
+		  AND STATUS != 'X'
 	</select>
    
 	<select id="findAllMember" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="memberResultMap">
@@ -71,7 +73,8 @@
 	                     LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
 	                     LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
 	                    WHERE B.AUTHORITY_CODE != 3
-	                    ORDER BY A.CREATE_DATE) A)
+	                      AND STATUS != 'X'
+	                    ORDER BY A.CREATE_DATE DESC) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 	</select>
    
@@ -109,10 +112,10 @@
 						 WHERE A.USER_ID LIKE '%' || #{ search.searchValue } || '%'
 						 </when>
 						 </choose>
-						   AND B.AUTHORITY_CODE != 3) A)
+						   AND B.AUTHORITY_CODE != 3
+						   AND STATUS != 'X') A)
 		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
 	</select>
-
 
 	<!-- 신고 -->
 	<resultMap type="com.cp.campers.admin.model.vo.Report" id="reportResultMap">
@@ -277,6 +280,7 @@
 	<select id="getCampListCount" resultType="_int">
    		SELECT COUNT(CAMP_NO)
    		  FROM CAMP
+   		 WHERE CAMP_STATUS IN ('Y', 'N')
 	</select>
    
 	<select id="getCampListCountBySearch" parameterType="com.cp.campers.admin.model.vo.Search" resultType="_int">
@@ -290,6 +294,7 @@
 		WHERE CAMP_NAME LIKE '%' || #{ searchValue } || '%'
 		</when>
 		</choose>
+		  AND CAMP_STATUS IN ('Y', 'N')
 	</select>
    
 	<select id="findAllCamp" parameterType="com.cp.campers.admin.model.vo.PageInfo" resultMap="campResultMap">
@@ -313,8 +318,9 @@
                           										     C.CAMP_NO
                           										   , MAX(CR.RECORD_DATE)
                           										FROM CAMP_RECORD CR 
-                          										JOIN CAMP C ON(C.CAMP_NO = CR.CAMP_NO) 
-                          										GROUP BY C.CAMP_NO)
+                          										JOIN CAMP C ON(C.CAMP_NO = CR.CAMP_NO)
+                          									   WHERE CAMP_STATUS IN ('Y', 'N')
+                          									   GROUP BY C.CAMP_NO)
                         ORDER BY CR.RECORD_DATE DESC) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 	</select>
@@ -340,8 +346,9 @@
                           										     C.CAMP_NO
                           										   , MAX(CR.RECORD_DATE)
                           										FROM CAMP_RECORD CR 
-                          										JOIN CAMP C ON(C.CAMP_NO = CR.CAMP_NO) 
-                          										GROUP BY C.CAMP_NO)
+                          										JOIN CAMP C ON(C.CAMP_NO = CR.CAMP_NO)
+                          									   WHERE CAMP_STATUS IN ('Y', 'N')
+                          									   GROUP BY C.CAMP_NO)
                         <choose>
 						<when test="search.searchCondition == 'no'">		
 						 AND C.CAMP_NO = #{ search.searchValue }
@@ -435,7 +442,7 @@
 		INSERT INTO CAMP_RECORD 
 		VALUES (SEQ_CR_NO.NEXTVAL
 			  , DEFAULT
-			  , SEQ_CAMP_NO.CURRVAL
+			  , #{ campNo }
 			  , 2)
 	</insert>
 
@@ -451,7 +458,7 @@
 		INSERT INTO CAMP_RECORD 
 		VALUES (SEQ_CR_NO.NEXTVAL
 			  , DEFAULT
-			  , SEQ_CAMP_NO.CURRVAL
+			  , #{ campNo }
 			  , 3)
 	</insert>
 	

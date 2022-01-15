@@ -384,11 +384,13 @@ public class MyPageController {
 				Map<String, String> file = files.get(i);
 				campMultiFileList.get(i).transferTo(new File(file.get("campFilePath") + "/" + file.get("savedName2")));
 				
+
 				attachment = new Attachment();
 				attachment.setFileName(file.get("savedName2"));
 				attachment.setFileOriginName(file.get("originFileName2"));
 				// attachment.setFileNewName(file.get("originFileNmae"));
 				// attachment.setFileNewName("originFileNmae");
+
 				attachment.setFileRoute("/resources/images/uploadFiles/campImg/");
 				//attachment.setFileLevel(5);
 				
@@ -456,8 +458,10 @@ public class MyPageController {
 				
 				atta2 = new Attachment();
 				atta2.setFileName(file3.get("savedName3"));
+
 				atta2.setFileOriginName(file3.get("originFileName3"));
 				// atta2.setFileNewName(file.get("originFileNmae"));
+
 				atta2.setFileRoute("/resources/images/uploadFiles/roomImg/");
 			    //atta2.setFileLevel(5);
 				

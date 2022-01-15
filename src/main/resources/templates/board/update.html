@@ -160,8 +160,30 @@
         	color: black;
         	text-decoration: none;	
         }
-    .freeBoard-aside a:hover {
-	color: rgb(231, 111, 82);
+	    .freeBoard-aside a:hover {
+			color: rgb(231, 111, 82);
+		}
+		.maxLengthSub {
+			position: relative;
+		}
+		
+		.maxLengthSub sub {
+			right: 1%;
+			position: absolute;
+			bottom: 7px;
+		}
+		.cancleBtn {
+	background-size: 15px 15px;
+	margin-left: 80px;
+	position: absolute;
+	background-image: url('/resources/images/board/x-mark.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	border: none;
+	width: 20px;
+	height: 20px;
+	background-color: rgba(40, 40, 40, 0.10);
+	border-radius: 100%;
 }
     </style>
 </head>
@@ -203,43 +225,59 @@
           <div class="freeBoard-container">
               <label class="freeBoard-label">자유게시판</label><label class="freeBoard-label-small">수정하기</label><br>
               <form th:action="@{/board/update}" method="post" enctype="multipart/form-data">
+              <!-- 만약 수정할 이미지가 있다면 -->
                 <div class="freeBoard-content" th:if="${boardFileNoList}!=null">
                     <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요." maxlength="40" required th:value="${board.title}"><br>
                     <textarea th:text="${board.content}" class="writeContent" name="content" placeholder="내용을 입력하세요." required maxlength="3000"></textarea>
+                   	<div class="maxLengthSub">
+						<sub>0/1500</sub>
+					</div>
+					
                     <br>
                     <input type="hidden" th:value="${board.bid}" name="bid">
-                    <input th:if="${boardFileNoList.size()}>0" th:value="${boardFileNoList.get(0).Attachment.fileName}" type="file" class="imageinput image1" name="images"  accept="image/*" >
-                    <input th:if="${boardFileNoList.size()}>1" th:value="${boardFileNoList.get(1).Attachment.fileName}"type="file" class="imageinput image2" name="images"  accept="image/*" >
-                    <input th:if="${boardFileNoList.size()}>2" th:value="${boardFileNoList.get(2).Attachment.fileName}" type="file" class="imageinput image3" name="images"  accept="image/*" >
-                    <input th:unless="${boardFileNoList.size()}>0" type="file" class="imageinput image1" name="images"  accept="image/*" >
-                    <input th:unless="${boardFileNoList.size()}>1" type="file" class="imageinput image2" name="images"  accept="image/*" >
-                   	<input th:unless="${boardFileNoList.size()}>2" type="file" class="imageinput image3" name="images"  accept="image/*" >
-                    <div th:each="fileNo :${boardFileNoList}">
-                    	<input type="hidden" name="changeName" th:value="${fileNo.Attachment.fileName}">
-                    </div>
-                    
+                    <!-- 새로넣을 파일 인풋  -->
+                    <input hidden type="file" class="imageinput image1" name="images"  accept="image/*" >
+                    <input hidden type="file" class="imageinput image2" name="images"  accept="image/*" >
+                    <input hidden type="file" class="imageinput image3" name="images"  accept="image/*" >
+                    <!-- 원래 있던 파일 인풋 -->
+                    	<input type="hidden" class="change1" name="changeName" th:value="${boardFileNoList.get(0).Attachment.fileName}">
+                    	<input type="hidden" class="change2" name="changeName" th:value="${boardFileNoList.get(1).Attachment.fileName}">
+                    	<input type="hidden" class="change3" name="changeName" th:value="${boardFileNoList.get(2).Attachment.fileName}">
                    <!--  <input type="text" name="writer" th:value="${#authentication.principal.userNo}"> -->
                   
                     <div class="previewBox">
+                    	<!-- 수정할 이미지가 한개라면 -->
                         <div class="inputImgPreview preview1" th:if="${boardFileNoList.size()}>0">
-                        <img class="afterInput" th:src="${boardFileNoList.get(0).Attachment.fileRoute}+${boardFileNoList.get(0).Attachment.fileName}"></div>
+                        	<button type='button' class='cancleBtn index0'></button><img class="afterInput after0" th:src="${boardFileNoList.get(0).Attachment.fileRoute}+${boardFileNoList.get(0).Attachment.fileName}">
+                        </div>
                         <div class="inputImgPreview preview1" th:unless="${boardFileNoList.size()}>0">
-                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        	<img class="beforeInput" src="/resources/images/board/cameraImg.png">
+                        </div>
                         
+                        <!-- 수정할 이미지가 두개라면 -->
                         <div class="inputImgPreview preview2" th:if="${boardFileNoList.size()}>1">
-                        <img class="afterInput" th:src="${boardFileNoList.get(1).Attachment.fileRoute}+${boardFileNoList.get(1).Attachment.fileName}"></div>
+                        	<button type='button' class='cancleBtn index1'></button><img class="afterInput after1" th:src="${boardFileNoList.get(1).Attachment.fileRoute}+${boardFileNoList.get(1).Attachment.fileName}">
+                        </div>
                         <div class="inputImgPreview preview2" th:unless="${boardFileNoList.size()}>1">
-                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        	<img class="beforeInput" src="/resources/images/board/cameraImg.png">
+                        </div>
                         
+                        <!-- 수정할 이미지가 세개라면 -->
                         <div class="inputImgPreview preview3" th:if="${boardFileNoList.size()}>2">
-						<img class="afterInput" th:src="${boardFileNoList.get(2).Attachment.fileRoute}+${boardFileNoList.get(2).Attachment.fileName}"></div>
+							<button type='button' class='cancleBtn index2'></button><img class="afterInput after2" th:src="${boardFileNoList.get(2).Attachment.fileRoute}+${boardFileNoList.get(2).Attachment.fileName}">
+						</div>
 						<div class="inputImgPreview preview3" th:unless="${boardFileNoList.size()}>2">                 
-                        <img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                        	<img class="beforeInput" src="/resources/images/board/cameraImg.png">
+                        </div>
                     </div>
                 </div>
+                <!-- 수정할 이미지가 없다면 -->
                  <div class="freeBoard-content" th:unless="${boardFileNoList}!=null">
                     <input class="writeTitle" name="title" type="text" placeholder="제목을 입력하세요." maxlength="40" required th:value="${board.title}"><br>
                     <textarea th:text="${board.content}" class="writeContent" name="content" placeholder="내용을 입력하세요." required maxlength="3000"></textarea>
+                   	<div class="maxLengthSub">
+						<sub>0/1500</sub>
+					</div>
                     <br>
                     <input type="hidden" th:value="${board.bid}" name="bid">
                     <input type="file" class="imageinput image1" name="images"  accept="image/*" hidden>
@@ -275,20 +313,95 @@
         </div>
         
          <div th:replace="common/footer.html"></div>
-	 <script>
-	 $(function(){
-		$('.preview1').click(function (e){
-				$('.image1').click();
-		}) 
-		$('.preview2').click(function (e){
-				$('.image2').click();
-		}) 	
-		$('.preview3').click(function (e){
-				$('.image3').click();
-		}) 	
+	<script>
+		$(document).on("click",".index0", function(e){
+			$(".image1").val("");
+			$(".index0").remove();
+			$(".after0").remove();
+			$(".preview1").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
+			console.log(e.target);
+			console.log(e.currentTarget);
+		});
+	
+		$(document).on("click",".index1", function(e){
+			$(".image2").val("");
+			$(".index1").remove();
+			$(".after1").remove();
+			$(".preview2").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
+		});
+		
+		$(document).on("click",".index2", function(e){
+			$(".image3").val("");
+			$(".index2").remove();
+			$(".after2").remove();
+			$(".preview3").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
+		});
+		
+	</script>
+ 	<script>
+		$(".preview1").mouseenter(function(){
+			$(".index0").fadeIn(100);
+		})
+		$(".preview2").mouseenter(function(){
+			$(".index1").fadeIn(100);
+		})
+		$(".preview3").mouseenter(function(){
+			$(".index2").fadeIn(100);
+		})
+	</script>
+	<script>
+		$(".preview1").mouseleave(function(){
+			$(".index0").fadeOut(100);
+		})
+		$(".preview2").mouseleave(function(){
+			$(".index1").fadeOut(100);
+		})
+		$(".preview3").mouseleave(function(){
+			$(".index2").fadeOut(100);
+		})
+	</script> 
+	
+	<script>
+		$(".writeContent").keyup(
+				function() {
+					$(".maxLengthSub sub").html(
+							$(".writeContent").val().length + "/1500");
 
- })
-    </script>
+					if ($(".writeContent").val().length > 1499) {
+						alert("1500자 이하로 입력 가능합니다.");
+						$(".writeContent").blur();
+					}
+				})
+	</script>
+	<script>
+		  $(function() {
+			$('.preview1').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image1').click();
+			})
+			$('.preview2').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image2').click();
+			})
+			$('.preview3').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image3').click();
+			})
+			$('.preview1 .beforeInput').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image1').click();
+			})
+			$('.preview2 .beforeInput').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image2').click();
+			})
+			$('.preview3 .beforeInput').on('click',function(e) {
+				if (e.target != e.currentTarget) return;
+				$('.image3').click();
+			})
+
+		})  
+	</script>
  <script src="/resources/js/board/imagePreview.js"></script>
 </body>
 </html>

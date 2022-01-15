@@ -305,7 +305,6 @@ public class BoardController {
 
 		for (int i = 0; i < images.size(); i++) {
 			
-		System.out.println("@@@@@@@@@"+images.get(i).getSize());	
 			
 			if(images.get(i).getSize() != 0) {
 				

@@ -198,11 +198,11 @@
                     <a href="#">&lt;</a>
 
                    <!-- 최대 10개의 페이지 목록 --> 
-                     <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                     <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}" th:if="${p != 0}">
                             <div class="current_page" th:if="${ p == pi.page }">
                                 <a href="#" th:text="${p}"></a>
                             </div>
-                            <div th:if="${ p != pi.page }">
+                            <div th:if="${ p != pi.page } and ${ p != 0}">
                                 <a class="find-paging" style="cursor:pointer" th:text="${p}"></a>
                             </div>
                         </li>
