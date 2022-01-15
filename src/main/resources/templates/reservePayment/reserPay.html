@@ -186,8 +186,8 @@
             <div class="marginPay">
                 <input type="radio" id="card" name="payment" value="card" checked>
                 <label class="payBox" for="card">신용카드</label>
-                <input type="radio" id="kakaoPay"name="payment" value="kakaoPay" >
-                <label class="payBox" for="kakaoPay">카카오페이</label>       
+<!--                 <input type="radio" id="kakaoPay"name="payment" value="kakaoPay" >
+                <label class="payBox" for="kakaoPay">카카오페이</label>  -->      
             </div>
             <button class="goPay" id="" type="button" onclick="formChk()">결제하기</button>
             </form>
@@ -300,11 +300,11 @@
 	         return false;
 	     }
 	     
-	     if($('#card').is(':checked') == true ) {
 		     requestPay();
+	    /*  if($('#card').is(':checked') == true ) {
 	     } else {
 	    	 
-	     }
+	     } */
 	}
 
 	// 정규 표현식 객체, 사용자가 input태그에 입력한 태그, 그때 내가 전달할 메세지 
