@@ -147,7 +147,7 @@ public class AdminServiceImpl implements AdminService{
 		
 		int result = 0;
 		
-		// 1. 일반권한
+		// 1. 일반권한 부여
 		MemberRole mr = new MemberRole();
 		mr.setMemberNo(userNo);
 		mr.setAuthorityCode(1);
@@ -182,16 +182,16 @@ public class AdminServiceImpl implements AdminService{
 	@Transactional
 	public void enroll(int campNo, int userNo) {
 		
-		// 1. 사업자권한
+		// 1. 사업자권한 부여
 		MemberRole mr = new MemberRole();
 		mr.setMemberNo(userNo);
 		mr.setAuthorityCode(2);
 		adminMapper.updateMemberRole(mr);
 		
-		// 2. 등록
+		// 2. 숙소 등록
 		adminMapper.enroll(campNo);
 		
-		// 3. 이력
+		// 3. 등록 이력
 		adminMapper.recordToEnroll(campNo);
 	}
 
@@ -253,7 +253,6 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public Map<String, Object> calculateList(int page) {
 		
-		// 1. 게시글 총 개수 구하기 
 		int listCount = adminMapper.getcalculateListCount();
 		
 		PageInfo pi = new PageInfo(page, listCount, 10, 10);
