@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.vo.Member;
+import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.vo.Camp;
+import com.cp.campers.mypage.model.vo.CampBusinessType;
+import com.cp.campers.mypage.model.vo.CampFacility;
 
 public interface MypageService{
 
@@ -48,10 +52,12 @@ public interface MypageService{
 
 	Map<String, Object> selectMyPageList(int writer);
 
-	void mypageCampEnrollment(Camp camp, Attachment attachment, Attachment atta2);
+	/* 캠핑장 등록 */
+	void mypageCampEnrollment(Camp camp, List<String> btypeList, 
+			List<String> ftypeList, Attachment attachment, Attachment atta2);
 
 	/* 사업자 예약내역 확인 */
-	Map<String, Object> selectMyHostReserveList(int writer, int page);
+	Map<String, Object> selectMyHostReserveList(int userNo, int page);
 
 	
 }

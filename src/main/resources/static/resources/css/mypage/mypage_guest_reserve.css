@@ -1,20 +1,35 @@
 .content{
+    width: 1900px;
+    margin: auto;
+    /* display: flex; */
+    float: left;
+}
+
+/*
+.content{
     width: 1100px;
     margin: auto;
     display: flex;
-    float: left;width: 1100px;
+    float: left;
+    width: 1100px;
     margin: auto;
 }
+*/
 
 .mypage_guest_reserve{
     width: 1100px;
+}
+
+.mypage_guest_reserve_header{
+	margin-left : 25%;
+	margin-top : -80px;
 }
 
 .mypage_guest_reserve_h1{
     border-bottom: 3px solid lightgray;
     margin-top: 30px;
     margin-left: 15%;
-    width: 1100px;
+    width: 1150px;
 }
 
 .mypage_guest_reserve_table{
@@ -85,7 +100,7 @@
     /* 페이징 */
     .member_pages {
         margin: 10px;
-        margin-left: 20%;
+        margin-left: 0%;
     }
     .member_paging {
         height: 50px;

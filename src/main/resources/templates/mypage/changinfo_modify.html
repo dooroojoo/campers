@@ -26,12 +26,13 @@
 </head>
 <body>
 	<!-- header -->
-    <div th:replace="common/header.html"></div>
-	
-	<div class="content">
-	
+    <!-- <div th:replace="common/header.html"></div>
+	 -->
 	<!-- category -->
 	<div th:replace="mypage/mypage_category.html"></div>	
+
+	<div class="content">
+	
     
     <div class="changinfo_content">
     <div class="changinfo">
@@ -52,10 +53,10 @@
                     <h4 class="changinfo_pwd">비밀번호
                     <a href="/mypage/changinfo/changinfoModify/changinfoPwdModify"><button type="button" class="changinfo_pwdbutton">비밀번호 변경</button></a></h4>
                     
-                    <h4 class="changinfo_email">이메일(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_email_form2" id="email" name="email" required placeholder="이메일"></input></h4>
+                    <h4 class="changinfo_email">이메일(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_email_form2" id="email" name="email" required placeholder="이메일" th:value="${ member.email }"></input></h4>
                     <div class="check_font" id="email_check"></div>
                     
-                    <h4 class="changinfo_phone">전화번호(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_phone_form2" id="phone" name="phone" maxlength="11" required placeholder="전화번호"></input></h4>
+                    <h4 class="changinfo_phone">전화번호(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_phone_form2" id="phone" name="phone" maxlength="11" required placeholder="전화번호" th:value="${ member.phone }"></input></h4>
                     <div class="check_font" id="phone_check"></div>
                     
                     <h4 class="changinfo_nickname">닉네임<input type="text" class="changinfo_nickname_form2" id="nickName" name="nickName" placeholder="닉네임" maxlength="8" oninput="checkNickName"></input><button type="button" class="changinfo_pwdbutton" name="nickNameCheck_btn" id="nickNameCheck">중복확인</button></h4>
@@ -96,7 +97,7 @@
 		var phoneJ = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
 		
 		// 닉네임 정규식
-		var nicknameJ = /^[a-z0-9가-힣]{3,8}$/;
+		var nicknameJ = /^[a-z0-9가-힣]{2,8}$/;
 		
 		$('#email').blur(function(){
 			if(mailJ.test($(this).val())){

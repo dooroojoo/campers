@@ -1,8 +1,8 @@
 /* memberout */
 .content{
-    width: 1100px;
+    width: 1900px;
     margin: auto;
-    display: flex;
+    /* display: flex; */
     float: left;
 }
 
@@ -12,18 +12,23 @@
     display: grid;
 }
 
+.changinfo_header{
+	margin-left : 3%;
+	margin-top: -80px;
+}
+
 .changinfo_h1{
     border-bottom: 3px solid lightgray;
-    margin-top: 30px;
+    margin-top: 20px;
     margin-left: 15%;
-    width: 1100px;
+    width: 610px;
 }
 
 .changinfo_content_div{
     width: 600px;
     height: 250px;
-    margin-top: 50px;
-    margin-left: 50%;
+    margin-top: 30px;
+    margin-left: 35%;
     background: lightgray;
 }
 
@@ -66,6 +71,7 @@
   width: 100%;
   height: 130px;
   background-color: #F2F2F2;
+  padding-top: 260px;
   display: flex;
   justify-content: space-between;
   align-items: center;

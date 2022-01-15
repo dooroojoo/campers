@@ -18,16 +18,19 @@
 </head>
 <body>
 	<!-- header -->
+    <!-- 
     <div th:replace="common/header.html"></div>
-    
-    <div class="content">
-	
+     -->    
 	<!-- category -->
 	<div th:replace="mypage/mypage_category.html"></div>
+    
+    <div class="wrapper">
+    
+    <div class="content">	
 
     <div class="mypage_content"> 
         <div class="mypage_content_1">
-            <div class="mypage_content_top">캐릭터 등록</div>
+            <div class="mypage_content_top">프로필 사진</div>
 	            <div class="image_area" th:each="member : ${memberList}">
 		            <!-- 
 		            <img class="mypage_character" src="/resources/images/uploadFiles/profileImg/62ff8cb417354f9ba8ec84e8ee834444.jpg"><br>
@@ -52,7 +55,10 @@
             <ul class="mypage_content_3_ul">
                 <li class="mypage_content_3_li" th:each="member : ${ memberList }">                
                 <img class="mypage_img_user" src="/resources/images/mypage/user.png"/>
+                <!-- 
                 가입일 : <label class="mypage_date" th:text="${ member.createDate }"></li>
+                 -->
+                가입일 : <label class="mypage_date" th:text="${ #dates.format(member.createDate, 'yyyy년 MM월 dd일 E요일') }"></li>
                 <!-- 
                 sec:authentication="principal.createDate">
                 -->  
@@ -61,18 +67,19 @@
                 <!-- 
                 sec:authentication="principal.modifyDate"
                  -->
-                최근 로그일 : <label class="mypage_date" th:text="${ member.modifyDate }"></li>
+                최근 로그일 : <label class="mypage_date" th:text="${ #dates.format(standardDate, 'yyyy년 MM월 dd일 E요일') }"></li>
+                
             </ul>
         </div>
         <div class="mypage_content_4">
             <div class="mypage_content_top">내가 등록한 게시물</div>
-            <ul class="mypage_content_4_ul" th:each="board : ${ boardList }">
-                <li class="mypage_content_4_li" th:text="${ board.title }"></li>
+            <ul class="mypage_content_4_ul" th:each="board : ${ boardList }" th:onclick="'location.href=\''+@{/board/detail(bid=${board.bid})}+'\''">
+                <a><li class="mypage_content_4_li" th:text="${ board.title }"></li></a>
             </ul>    
         </div>
       </div>
     </div>    
-    
+    </div>
     <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
     
@@ -90,6 +97,26 @@
     		document.querySelector('.image_area').className = "image_area div_after";
     	})
     })
+    </script>
+    
+    <script>
+    /* input type file 요소들 */
+    const fileElements = document.querySelectorAll("[type=file]");
+    /* div image_area 요소들 */
+    const imageArea = document.querySelectorAll(".inputImgPreview");
+    /* input type file 요소에 change 이벤트 발생 시 (파일 첨부 발생) */
+    fileElements.forEach(item => item.addEventListener('change', preview));
+
+    function preview(){
+    	let index = Array.from(fileElements).indexOf(this);   //input type="file" 이게 this
+    	if(this.files && this.files[0]) {
+    		let reader = new FileReader();
+    		reader.readAsDataURL(this.files[0]);
+    		reader.onload = function() {
+    			imageArea[index].innerHTML = "<img class='afterInput' src='" + reader.result + "'>";
+    		}
+    	}
+    }
     </script>
        
 </body>

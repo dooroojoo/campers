@@ -10,14 +10,17 @@ import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.camp.model.vo.ImageFile;
 import com.cp.campers.member.model.vo.Member;
+import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.CampBusinessType;
 import com.cp.campers.mypage.model.vo.CampFacility;
 import com.cp.campers.mypage.model.vo.CampFile;
+import com.cp.campers.mypage.model.vo.Facility;
 import com.cp.campers.mypage.model.vo.Room;
 import com.cp.campers.mypage.model.vo.RoomFile;
 import com.cp.campers.mypage.model.vo.WishCamp;
+import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 
 @Mapper
 public interface MypageMapper {
@@ -42,11 +45,15 @@ public interface MypageMapper {
 
 	// 사업장 타입 등록
 	// Integer 체크박스 담기
-	void insertCampBusinessType(Integer businessNo);
-
+	//void insertCampBusinessType(Integer businessNo);
+	void insertCampBusinessType(String btype);
+	
+	
 	// 사업장 시설 등록
 	// Integer 체크박스 담기
-	void insertCampFacility(Integer facilityNo);
+	//void insertCampFacility(Integer facilityNo);
+	void insertCampFacility(String ftype);
+	
 
 	// 객실 등록
 	void insertRoom(Room room);
@@ -99,10 +106,14 @@ public interface MypageMapper {
 	List<Member> selectMyMemberList(Map<String, Object> param);
 
 	/* 사업자 예약내역 확인 리스트 */
-	int getListCountMyHostReserveList(int writer);
+	int getListCountMyHostReserveList(int userNo);
 
 	/* 사업자 예약내역 */
 	List<Camp> selectMyHostReserveList(Map<String, Object> param);
+
+	List<Camp> selectCampImageList();
+
+	List<ReserveInfo> selectHostReserveList(Map<String, Object> param);
 
 	
 
