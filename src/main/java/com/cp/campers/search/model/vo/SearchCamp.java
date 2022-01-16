@@ -15,6 +15,8 @@ public class SearchCamp {
 	private int maxGuest;		// 객실최대인원(ROOM테이블참조)
 	private int minPrice;		// 객실최소가격(ROOM테이블참조)
 	private int maxPrice;		// 객실최대가격(ROOM테이블참조)
+	private int rAmount;		// 보유객실수량(ROOM테이블참조)
+	private int rQua;			// 예약객실합계(RESERVE테이블참조)
 	
 
 }

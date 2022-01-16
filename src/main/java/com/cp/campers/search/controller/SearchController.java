@@ -85,11 +85,6 @@ public class SearchController {
 			nowPage = Integer.parseInt(page);
 		}
 		
-		// List로 넘어온 체크박스 String으로 합쳐주기
-//		String type =String.join(",", typeArr);
-//		String facility =String.join(",", facilityArr);
-//		String floor =String.join(",", floorArr);
-		
 		log.info(area);
 		log.info(daterange);
 		log.info("guest : " + quantity);
@@ -116,6 +111,13 @@ public class SearchController {
 		Map<String, Object> map = searchService.campFindSearch(fc, typeArr, facilityArr, floorArr, nowPage);
 		
 		
+		// List로 넘어온 체크박스 String으로 합쳐주기
+		String typeStr =String.join(",", typeArr);
+		String faciStr =String.join(",", facilityArr);
+		String floorStr =String.join(",", floorArr);
+		
+		
+		
 		mv.addObject("campFindSearch", map.get("campFindSearch"));
 		mv.addObject("searchSize", map.get("searchSize"));
 		mv.addObject("pi", map.get("pi"));
@@ -123,6 +125,9 @@ public class SearchController {
 		mv.addObject("type", typeArr);
 		mv.addObject("facility", facilityArr);
 		mv.addObject("floor", floorArr);
+		mv.addObject("typeStr", typeStr);
+		mv.addObject("faciStr", faciStr);
+		mv.addObject("floorStr", floorStr);
 		
 		mv.setViewName("search/findCamp");
 		

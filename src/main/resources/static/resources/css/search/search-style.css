@@ -306,7 +306,7 @@ input[type="number"] {
 	color: black;
 }
 
-/* .list-col-state{
+.list-col-state{
     display: flex;
     flex-direction: row;
     justify-content: right;
@@ -314,7 +314,8 @@ input[type="number"] {
 
 .list-bookable{
     width: 65px;
-    background-color: tomato;
+    background-color: black;
+    color : white;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
@@ -327,7 +328,7 @@ input[type="number"] {
 
 .list-booked{
     width: 65px;
-    background-color: #CACACA;
+    background-color: #b9b9b9;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
@@ -336,7 +337,8 @@ input[type="number"] {
     margin-top: -3%;
     padding-left: 2%;
     padding-right: 2%;
-} */
+} 
+
 
 
 /* 페이징 */
