@@ -57,6 +57,8 @@ public interface BoardService {
 
 	int updateBoardImage(Attachment attachment, String bid);
 
+	void updateDeletedImage(List<String> deleteList);
+
 
 
 

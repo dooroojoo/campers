@@ -82,5 +82,7 @@ public interface BoardMapper {
 
 	void insertAddedImageNo(Map<String, Object> param);
 
+	void deleteImgs(String deleteImg);
+
 
 }

@@ -240,15 +240,15 @@
                     <input hidden type="file" class="imageinput image2" name="images"  accept="image/*" >
                     <input hidden type="file" class="imageinput image3" name="images"  accept="image/*" >
                     <!-- 원래 있던 파일 인풋 -->
-                    	<input type="hidden" class="change1" name="changeName" th:value="${boardFileNoList.get(0).Attachment.fileName}">
-                    	<input type="hidden" class="change2" name="changeName" th:value="${boardFileNoList.get(1).Attachment.fileName}">
-                    	<input type="hidden" class="change3" name="changeName" th:value="${boardFileNoList.get(2).Attachment.fileName}">
+                   	<input type="hidden" th:if="${boardFileNoList.size()}>0" class="change1" name="changeName" th:value="${boardFileNoList.get(0).Attachment.fileName}">
+                   	<input type="hidden" th:if="${boardFileNoList.size()}>1" class="change2" name="changeName" th:value="${boardFileNoList.get(1).Attachment.fileName}">
+                   	<input type="hidden" th:if="${boardFileNoList.size()}>2" class="change3" name="changeName" th:value="${boardFileNoList.get(2).Attachment.fileName}">
                    <!--  <input type="text" name="writer" th:value="${#authentication.principal.userNo}"> -->
                   
                     <div class="previewBox">
                     	<!-- 수정할 이미지가 한개라면 -->
                         <div class="inputImgPreview preview1" th:if="${boardFileNoList.size()}>0">
-                        	<button type='button' class='cancleBtn index0'></button><img class="afterInput after0" th:src="${boardFileNoList.get(0).Attachment.fileRoute}+${boardFileNoList.get(0).Attachment.fileName}">
+                        	<button hidden type='button' class='cancleBtn index0'></button><img class="afterInput after0" th:src="${boardFileNoList.get(0).Attachment.fileRoute}+${boardFileNoList.get(0).Attachment.fileName}">
                         </div>
                         <div class="inputImgPreview preview1" th:unless="${boardFileNoList.size()}>0">
                         	<img class="beforeInput" src="/resources/images/board/cameraImg.png">
@@ -256,7 +256,7 @@
                         
                         <!-- 수정할 이미지가 두개라면 -->
                         <div class="inputImgPreview preview2" th:if="${boardFileNoList.size()}>1">
-                        	<button type='button' class='cancleBtn index1'></button><img class="afterInput after1" th:src="${boardFileNoList.get(1).Attachment.fileRoute}+${boardFileNoList.get(1).Attachment.fileName}">
+                        	<button hidden type='button' class='cancleBtn index1'></button><img class="afterInput after1" th:src="${boardFileNoList.get(1).Attachment.fileRoute}+${boardFileNoList.get(1).Attachment.fileName}">
                         </div>
                         <div class="inputImgPreview preview2" th:unless="${boardFileNoList.size()}>1">
                         	<img class="beforeInput" src="/resources/images/board/cameraImg.png">
@@ -264,11 +264,15 @@
                         
                         <!-- 수정할 이미지가 세개라면 -->
                         <div class="inputImgPreview preview3" th:if="${boardFileNoList.size()}>2">
-							<button type='button' class='cancleBtn index2'></button><img class="afterInput after2" th:src="${boardFileNoList.get(2).Attachment.fileRoute}+${boardFileNoList.get(2).Attachment.fileName}">
+							<button hidden type='button' class='cancleBtn index2'></button><img class="afterInput after2" th:src="${boardFileNoList.get(2).Attachment.fileRoute}+${boardFileNoList.get(2).Attachment.fileName}">
 						</div>
 						<div class="inputImgPreview preview3" th:unless="${boardFileNoList.size()}>2">                 
                         	<img class="beforeInput" src="/resources/images/board/cameraImg.png">
                         </div>
+                        
+                        <input type="hidden" name="deleteImgs" id="deleteImg1">
+						<input type="hidden" name="deleteImgs" id="deleteImg2">
+						<input type="hidden" name="deleteImgs" id="deleteImg3">
                     </div>
                 </div>
                 <!-- 수정할 이미지가 없다면 -->
@@ -313,14 +317,31 @@
         </div>
         
          <div th:replace="common/footer.html"></div>
+
+	<script>
+		$(document).one("click",".index0",function(){
+			let deleteName1 = $(".change1").val();
+			$("#deleteImg1").val(deleteName1);
+		});
+		
+		$(document).one("click",".index1",function(){
+			let deleteName2 = $(".change2").val();
+			$("#deleteImg2").val(deleteName2);
+		});
+		
+		$(document).one("click",".index2",function(){
+			let deleteName3 = $(".change3").val();
+			$("#deleteImg3").val(deleteName3);
+		});c
+	
+	
+	</script>
 	<script>
 		$(document).on("click",".index0", function(e){
 			$(".image1").val("");
 			$(".index0").remove();
 			$(".after0").remove();
 			$(".preview1").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
-			console.log(e.target);
-			console.log(e.currentTarget);
 		});
 	
 		$(document).on("click",".index1", function(e){
@@ -339,6 +360,10 @@
 		
 	</script>
  	<script>
+ 	$(document).on("ready", ".index0",function(){
+ 		$(".index0").css("display","none");
+ 	});
+ 	
 		$(".preview1").mouseenter(function(){
 			$(".index0").fadeIn(100);
 		})
@@ -374,33 +399,31 @@
 				})
 	</script>
 	<script>
-		  $(function() {
-			$('.preview1').on('click',function(e) {
-				if (e.target != e.currentTarget) return;
-				$('.image1').click();
-			})
-			$('.preview2').on('click',function(e) {
-				if (e.target != e.currentTarget) return;
-				$('.image2').click();
-			})
-			$('.preview3').on('click',function(e) {
-				if (e.target != e.currentTarget) return;
-				$('.image3').click();
-			})
-			$('.preview1 .beforeInput').on('click',function(e) {
-				if (e.target != e.currentTarget) return;
-				$('.image1').click();
-			})
-			$('.preview2 .beforeInput').on('click',function(e) {
-				if (e.target != e.currentTarget) return;
-				$('.image2').click();
-			})
-			$('.preview3 .beforeInput').on('click',function(e) {
-				if (e.target != e.currentTarget) return;
-				$('.image3').click();
-			})
 
-		})  
+	$(document).on('click','.preview1',function(e) {
+		if (e.target != e.currentTarget) return;
+		$('.image1').click();
+	})
+	$(document).on('click','.preview2',function(e) {
+		if (e.target != e.currentTarget) return;
+		$('.image2').click();
+	})
+	$(document).on('click','.preview3',function(e) {
+		if (e.target != e.currentTarget) return;
+		$('.image3').click();
+	})
+	$(document).on('click','.preview1 .beforeInput',function(e) {
+		if (e.target != e.currentTarget) return;
+		$('.image1').click();
+	})
+	$(document).on('click','.preview2 .beforeInput',function(e) {
+		if (e.target != e.currentTarget) return;
+		$('.image2').click();
+	})
+	$(document).on('click','.preview3 .beforeInput',function(e) {
+		if (e.target != e.currentTarget) return;
+		$('.image3').click();
+	})
 	</script>
  <script src="/resources/js/board/imagePreview.js"></script>
 </body>

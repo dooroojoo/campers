@@ -282,10 +282,19 @@ public class BoardController {
 	}
 	@PostMapping("/update")
 	public String boardUpdate(Model model, Board board ,@Value("${custom.path.upload-images}") String uploadFilesPath,
-			@RequestParam(required = false) List<MultipartFile> images,
+			@RequestParam(required = false) List<MultipartFile> images, String[] deleteImgs,
 			HttpServletRequest request, String[] changeName) {
-		
-		log.info("bid="+board.getBid());
+	
+		List<String> deleteList = new ArrayList<>();
+
+		if(deleteImgs != null) {
+		for(String deleteImg : deleteImgs) {
+			if(!deleteImg.equals("")) {
+				deleteList.add(deleteImg);
+			}
+		}
+		}
+		boardService.updateDeletedImage(deleteList);
 		
 		// setFilePath 해줄 변수 선언
 		String filePath = uploadFilesPath + "/boardImg";
@@ -369,6 +378,7 @@ public class BoardController {
 				}
 				
 				int result = boardService.updateBoardImage(attachment,board.getBid());
+				
 				
 				if(result > 0) {
 					for(Map<String, String> photo : files) {

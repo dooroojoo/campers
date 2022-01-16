@@ -57,8 +57,29 @@ public class MemberController {
 	      this.authenticationManager = authenticationManager;
 	 }
 	 
-	 @GetMapping("/login")
-	 public String loginForm() {
+	 @RequestMapping("/login")
+	 public String loginForm(@RequestParam(value = "error", required = false) String error,
+             				 @RequestParam(value = "exception", required = false) String exception, Model model) {
+		 model.addAttribute("error",error);
+		 if(exception != null) {
+			 if(exception.equals("exceptionNo1")) {
+				 model.addAttribute("failureMessage","존재하지 않는 아이디입니다.");
+			 }else if(exception.equals("exceptionNo2Count1")) {
+				 model.addAttribute("failureMessage","비밀번호 입력 오류 1회. 5번 연속 틀릴 시 계정이 비활성화 됩니다.");
+			 }else if(exception.equals("exceptionNo2Count2")) {
+				 model.addAttribute("failureMessage","비밀번호 입력 오류 2회. 5번 연속 틀릴 시 계정이 비활성화 됩니다.");
+			 }else if(exception.equals("exceptionNo2Count3")) {
+				 model.addAttribute("failureMessage","비밀번호 입력 오류 3회. 5번 연속 틀릴 시 계정이 비활성화 됩니다.");
+			 }else if(exception.equals("exceptionNo2Count4")) {
+				 model.addAttribute("failureMessage","비밀번호 입력 오류 4회. 5번 연속 틀릴 시 계정이 비활성화 됩니다.");
+			 }else if(exception.equals("exceptionNo2Count5")) {
+				 model.addAttribute("failureMessage","비밀번호 입력 오류 5회. 계정이 비활성화 됩니다.");
+			 }else if(exception.equals("exceptionNo3")) {
+				 model.addAttribute("failureMessage","사용 정지된 계정입니다.");
+			 }else if(exception.equals("exceptionNo4")) {
+				 model.addAttribute("failureMessage","잠긴 계정입니다.");
+			 }
+		 }
 		 return "member/login";
 	 }
 	 

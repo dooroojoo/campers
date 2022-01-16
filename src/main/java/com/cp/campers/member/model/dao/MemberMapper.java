@@ -26,4 +26,10 @@ public interface MemberMapper {
 	int idCheck(String id);
 
 	List<Member> selectThumbnailList();
+
+	void loginFailCount(String username);
+
+	int checkFailCount(String username);
+
+	void disabledMember(String username);
 }

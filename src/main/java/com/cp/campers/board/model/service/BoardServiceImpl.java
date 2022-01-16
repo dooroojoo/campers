@@ -1,5 +1,6 @@
 package com.cp.campers.board.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -252,6 +253,15 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public void updateDeletedImage(List<String> deleteList) {
+		for(String deleteImg : deleteList) {
+			boardMapper.deleteImgs(deleteImg);
+			log.info("@@@@@@@@@"+deleteImg);
+		}
+		
 	}
 
 
