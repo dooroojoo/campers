@@ -9,7 +9,7 @@ import com.cp.campers.search.model.vo.FindCamp;
 public interface SearchService {
 	
 	// 메인페이지에서 캠핑장 검색 조회
-	Map<String, Object> mainSearch(FindCamp fc, int nowPage);
+	Map<String, Object> mainSearch(FindCamp fc, int nowPage, List<String> typeArr);
 
 	// 캠핑장 검색페이지에서 전체 조회
 	Map<String, Object> campAllSearch(int nowPage);
