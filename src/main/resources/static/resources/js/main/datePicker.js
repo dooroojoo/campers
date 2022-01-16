@@ -13,7 +13,7 @@ jb(function() {
                     },
                   "drops": "down",
                   maxDate: 0,
-                  minDate: toDay,
+                  minDate: new Date(),
                   startDate:toDay.setDate(toDay.getDate()+1),
                   endDate: toDay
                   
