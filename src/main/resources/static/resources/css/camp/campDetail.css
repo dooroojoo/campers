@@ -47,6 +47,7 @@ ul, li {
 /* 2) 슬라이드 */
 .div-accomdImg img {  /* 사진 크기 */
     width: 900px;
+    height:520px;
     border-radius: 15px;
     min-height: 500px;
 }

@@ -50,8 +50,6 @@
                 </div>
             </div>
 
-
-
             <!-- button prev -->
             <div class="accomd_button1">
                 <!-- If we need navigation buttons -->
@@ -70,7 +68,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!-- swiper script -->
@@ -125,8 +122,6 @@
             <div class="accom_reservation">
                 <form action="/reserPay" method="post">
                     <div class="rvArea">
-
-
                         <div class="rv_top">
                             <div class="check_left">
                                 <div class="check_io"><h5>CHECK IN</h5></div>
@@ -187,7 +182,7 @@
                         <div class="rv_bottom">
                             <div class="rv_person">
                                 <div class="rv_guestNum">
-	                                <select id="guestNum" name="guestNum" th:onchange="changeLoad()" >
+	                                <select id="guestNum" name="guestNum" th:onchange="changeLoad()">
 	                                    <option value="0" th:selected="${#strings.equals(param.guest, '0')}">인원</option>
 	                                    <option value="1" th:selected="${#strings.equals(param.guest, '1')}">1</option>
 	                                    <option value="2" th:selected="${#strings.equals(param.guest, '2')}">2</option>
@@ -207,8 +202,6 @@
                                 </select>
                             </div>
                         </div>
-
-
                     </div>
 
 
@@ -387,10 +380,10 @@
 						
 						// 주소 정보를 가져옵니다
 						var address = document.getElementById('campAddress').innerText;
-						console.log(address);
+						
 						// 숙소 이름을 가져옵니다
 						var campName = document.getElementById('campName').innerText;
-						console.log(campName);
+						
 						// 주소로 좌표를 검색합니다
 						geocoder.addressSearch(address, function(result, status) {
 						
