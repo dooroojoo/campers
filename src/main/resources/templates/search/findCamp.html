@@ -18,12 +18,9 @@
     <!-- header -->
     <div th:replace="common/header.html"></div>
 
-	 <!-- jQuery -->
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js" integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
-   	<!-- datePicker -->
+   	 <!-- datePicker -->
    	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-   	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<!--  	<script type="text/javascript" src="/resources/js/main/datePicker.js"></script> -->
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 
     <div class="search-wrapper">
@@ -68,14 +65,14 @@
                   <p>숙소유형</p>
                   <div class="camp-type-btn">
                    <label class="search-type">
-                   <input type="hidden" id="search-type-val" th:value="${fc.sType}">
-                      <input type="checkbox" id="s-type-camping" name="type" value="캠핑"><span class="search-style">캠핑</span>
+                   	<input type="hidden" class="typeArr" th:value="${type}">
+                      <input type="checkbox" id="s-type-camping" name="type" value="캠핑" ><span class="search-style">캠핑</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" id="s-type-glamping" name="type" value="글램핑"><span class="search-style">글램핑</span>
+                      <input type="checkbox" id="s-type-glamping" name="type" value="글램핑" ><span class="search-style">글램핑</span>
                     </label>
                     <label class="search-type">
-                      <input type="checkbox" id="s-type-caravan" name="type" value="카라반"><span class="search-style">카라반</span>
+                      <input type="checkbox" id="s-type-caravan" name="type" value="카라반" ><span class="search-style">카라반</span>
                     </label>
                   </div>
                 </div>
@@ -83,8 +80,8 @@
                 <div class="search-convenient-type">
                   <p>주요시설</p>
                   <div class="camp-type-btn">
-                  <input type="hidden" id="find-faci-val" th:value="${fc.sFaci}">
                   <label class="search-type">
+                  <input type="hidden" class="faciArr" th:value="${facility}">
                       <input type="checkbox" class="find-facility" name="facility" value="수영장"><span class="search-style">수영장</span>
                     </label>
                     <label class="search-type">
@@ -117,8 +114,8 @@
             <div class="search-bottom-type">
               <p>바닥</p>
               <div class="camp-type-btn">
-              <input type="hidden" id="find-floor-val" th:value="${fc.sFloor}">
                <label class="search-type">
+               <input type="hidden" class="floorArr" th:value="${floor}">
                   <input type="checkbox" class="s-type-camping" name="floor" value="데크"><span class="search-style">데크</span>
                 </label>
                 <label class="search-type">
@@ -229,6 +226,12 @@
     
      <!-- 푸터 -->
     <div th:replace="common/footer.html"></div>
+    
+    
+    
+    
+    
+    
     
    <!--   클릭한 페이지 이동 이벤트 -->
    <script>
@@ -377,5 +380,59 @@
 	    
 	    });
 	  </script>
+	  
+	  
+	 <!-- 선택한 체크박스 값 가져오기  -->
+	 <!-- 타입 -->
+	<script>
+	var hh = jQuery.noConflict();
+	  
+      hh(function(){
+				var typeArr = hh(".typeArr").val();
+				console.log(typeArr);
+
+				hh('input:checkbox[name="type"]').each(function() {
+					if( typeArr.indexOf(this.value) > -1){  
+						hh(this).prop('checked', true); 
+					   }
+				});
+      });
+
+	  </script>
+	  
+	  <!-- 시설 -->
+	  <script>
+	  var ii = jQuery.noConflict();
+	  
+	  ii(function(){
+    	  var faciArr = ii(".faciArr").val();
+    	  console.log(faciArr);
+    	  
+    	  ii('input:checkbox[name="facility"]').each(function() {
+				if( faciArr.indexOf(this.value) > -1){  
+					ii(this).prop('checked', true); 
+				  }
+		});
+    	  
+	  });  
+	  </script>
+	  
+	  <!-- 바닥 -->
+	  <script>
+	  var jj = jQuery.noConflict();
+	  
+	  jj(function(){
+    	  var floorArr = jj(".floorArr").val();
+    	  console.log(floorArr);
+    	  
+    	  jj('input:checkbox[name="floor"]').each(function() {
+				if( floorArr.indexOf(this.value) > -1){  
+					jj(this).prop('checked', true); 
+				  }
+		});
+    	  
+	  });  
+	  </script>
+	  
 </body>
 </html>

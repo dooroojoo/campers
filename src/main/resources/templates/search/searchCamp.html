@@ -64,6 +64,7 @@
                   <p>숙소유형</p>
                   <div class="camp-type-btn">
                    <label class="search-type">
+                   <input type="hidden" class="typeArr" th:value="${type}">
                      <input type="checkbox" class="s-type-camping" name="type" value="캠핑"><span class="search-style">캠핑</span>
                     </label>
                     <label class="search-type">
@@ -233,6 +234,23 @@
 	  aa('form').on('click', 'button:not([type="submit"])', function(e){
 	    e.preventDefault();
 	  })
+	  </script>
+	  
+	 <!-- 타입 체크박스 값 가져오기  -->
+	<script>
+	var bb = jQuery.noConflict();
+	  
+	bb(function(){
+				var typeArr = bb(".typeArr").val();
+				console.log(typeArr);
+
+				bb('input:checkbox[name="type"]').each(function() {
+					if( typeArr.indexOf(this.value) > -1){  
+						bb(this).prop('checked', true); 
+					   }
+				});
+      });
+
 	  </script>
 </body>
 </html>

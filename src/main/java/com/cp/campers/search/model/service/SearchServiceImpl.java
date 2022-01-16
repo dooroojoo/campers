@@ -63,7 +63,6 @@ public class SearchServiceImpl implements SearchService{
 		
 		// 검색된 캠핑장 개수 조회
 		int listCount = searchMapper.campFindCount(map);
-		System.out.println(listCount);
 
 		// 2. PageInfo 객체 만들기
 		PageInfo pi = new PageInfo(nowPage, listCount, 10, 5);
@@ -95,11 +94,14 @@ public class SearchServiceImpl implements SearchService{
 	
 	
 	@Override
-	public Map<String, Object> mainSearch(FindCamp fc, int nowPage) {
+	public Map<String, Object> mainSearch(FindCamp fc, int nowPage, List<String> typeArr) {
+		
+		Map<String, Object> countMap = new HashMap<>();
+		countMap.put("fc", fc);
+		countMap.put("type", typeArr);
 		
 		// 검색된 캠핑장 개수 조회
-		int listCount = searchMapper.mainSearchCount(fc);
-		System.out.println(listCount);
+		int listCount = searchMapper.mainSearchCount(countMap);
 
 		// 2. PageInfo 객체 만들기
 		PageInfo pi = new PageInfo(nowPage, listCount, 10, 5);
@@ -110,6 +112,7 @@ public class SearchServiceImpl implements SearchService{
 		map.put("fc", fc);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		map.put("type", typeArr);
 				
 		// 페이징 처리 된 게시글 목록 조회
 		List<SearchCamp> campFindSearch = searchMapper.mainSearch(map);

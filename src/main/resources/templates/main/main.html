@@ -76,7 +76,7 @@
                 <div class="main-search-bottom">
                   <div class="main-typeBtn btmContainer">
                     <label class="checkbox-mainType">
-                      <input type="checkbox" class="main-camping-type" id="main-type" name="type" value="캠핑장"><span><img src="resources/images/main/campfire.png" class="main-type-icon">캠핑장</span></label>
+                      <input type="checkbox" class="main-camping-type" id="main-type" name="type" value="캠핑"><span><img src="resources/images/main/campfire.png" class="main-type-icon">캠핑장</span></label>
                     <label class="checkbox-mainType">
                       <input type="checkbox" class="main-glamping-type" id="main-type" name="type" value="글램핑"><span><img src="resources/images/main/tent.png" class="main-type-icon">글램핑</span></label>
                       <label class="checkbox-mainType">
@@ -215,7 +215,7 @@
 	 <script>
 	 var cc = jQuery.noConflict();
 	 cc('.main-search-sub').on('click', function(){
-		 if($('input[type="checkbox"]').is(":checked") == false){
+		 if(cc('input[type="checkbox"]').is(":checked") == false){
 			 alert("숙소 타입을 선택해 주세요.");
 			 return false;
 		 }
