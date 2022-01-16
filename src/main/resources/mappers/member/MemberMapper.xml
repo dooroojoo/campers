@@ -14,6 +14,7 @@
 		<result property="status" column="STATUS"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="failCount" column="FAIL_COUNT"/>
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
 	</resultMap>
 
@@ -51,7 +52,6 @@
 	    LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
 	    LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
     WHERE A.USER_ID = #{ userId }
-    AND STATUS = 'Y'
    </select>
    
    <insert id="insertMember" parameterType="com.cp.campers.member.model.vo.Member">
@@ -68,6 +68,7 @@
 			,STATUS
 			,CREATE_DATE
 			,MODIFY_DATE
+			,FAIL_COUNT
 		)
 		VALUES
 		(
@@ -92,6 +93,7 @@
 			, DEFAULT
 			, SYSDATE
 			, SYSDATE
+			, DEFAULT
 		)
    </insert>
    
@@ -132,6 +134,26 @@
    <select id="idCheck" parameterType="string" resultType="_int">
    SELECT COUNT(*) FROM MEMBER WHERE USER_ID = #{id}
    </select>
+   
+   <update id="loginFailCount" parameterType="string">
+   update member
+   set fail_count = fail_count+1
+   where user_id = #{username}
+   </update>
+   
+   <select id="checkFailCount"  parameterType="string" resultType="_int">
+   select 
+   fail_count
+   from member
+   where user_id = #{username}
+   </select>
+   
+   <update id="disabledMember">
+   update member
+   set status = 'L'
+   where user_id = #{username}
+   </update>
+   
    
    
 </mapper>

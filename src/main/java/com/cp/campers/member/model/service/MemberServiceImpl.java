@@ -164,5 +164,26 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.idCheck(id);
 	}
 
+	@Override
+	public Member loginFailure(String userId) {
+		return memberMapper.findMemberById(userId);
+	}
+
+	@Override
+	public void loginFailCount(String username) {
+		memberMapper.loginFailCount(username);
+		
+	}
+
+	@Override
+	public int checkFailCount(String username) {
+		return memberMapper.checkFailCount(username);
+	}
+
+	@Override
+	public void disabledMember(String username) {
+		memberMapper.disabledMember(username);
+	}
+
 
 }

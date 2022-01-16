@@ -341,33 +341,32 @@
 				})
 	</script>
 	<script>
-		  $(function() {
-			$('.preview1').on('click',function(e) {
+		  
+			$(document).on('click','.preview1',function(e) {
 				if (e.target != e.currentTarget) return;
 				$('.image1').click();
 			})
-			$('.preview2').on('click',function(e) {
+			$(document).on('click','.preview2',function(e) {
 				if (e.target != e.currentTarget) return;
 				$('.image2').click();
 			})
-			$('.preview3').on('click',function(e) {
+			$(document).on('click','.preview3',function(e) {
 				if (e.target != e.currentTarget) return;
 				$('.image3').click();
 			})
-			$('.preview1 .beforeInput').on('click',function(e) {
+			$(document).on('click','.preview1 .beforeInput',function(e) {
 				if (e.target != e.currentTarget) return;
 				$('.image1').click();
 			})
-			$('.preview2 .beforeInput').on('click',function(e) {
+			$(document).on('click','.preview2 .beforeInput',function(e) {
 				if (e.target != e.currentTarget) return;
 				$('.image2').click();
 			})
-			$('.preview3 .beforeInput').on('click',function(e) {
+			$(document).on('click','.preview3 .beforeInput',function(e) {
 				if (e.target != e.currentTarget) return;
 				$('.image3').click();
 			})
 
-		})  
 	</script>
 	<script src="/resources/js/board/imagePreview.js"></script>
 </body>

@@ -472,7 +472,7 @@ width: 60px;
 			</div>
 			<div class="freeBoard-content">
 				<div class="content-img" th:each="fileNo : ${boardFileNoList}">
-					<img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}">
+					<img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}" th:if="${fileNo.Attachment.status} == 'N'">
 				</div>
 				<p th:text="${board.content}"></p>
 				

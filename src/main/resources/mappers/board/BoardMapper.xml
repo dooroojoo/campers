@@ -85,14 +85,14 @@ VALUES
 SELECT *
 FROM (SELECT ROWNUM RNUM, A.*
 FROM (select 
-            bid, 
+            b.bid, 
             btitle, 
             bcontent, 
             b.modify_date, 
             b.create_date,
             nickName,
             bcount,
-            blike
+            (SELECT COUNT(*) FROM BOARD_LIKE WHERE BID = b.bid) blike
       from board b
       join member m on (b.writer = m.user_no)
       where b.status = 'N'
@@ -296,7 +296,8 @@ select
             file_no,
             file_route,
             file_name,
-            file_origin_name
+            file_origin_name,
+            file_status
       from board_file 
       join imagefile using (file_no)
       where bid = #{bid}
@@ -445,4 +446,12 @@ INTO BOARD_FILE
 VALUES
 (#{bid}, SEQ_FILE_NO.CURRVAL)
 </insert>
+
+<update id="deleteImgs" parameterType="list">
+UPDATE IMAGEFILE
+   SET FILE_STATUS = 'Y'
+WHERE FILE_NAME = #{deleteImg}
+</update>
+
+
 </mapper>

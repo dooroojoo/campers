@@ -11,7 +11,7 @@ function preview(){
 		let reader = new FileReader();
 		reader.readAsDataURL(this.files[0]);
 		reader.onload = function() {
-			imageArea[index].innerHTML = "<button type='button' class='cancleBtn index"+[index]+"'></button><img class='afterInput after"+[index]+"' src='" + reader.result + "'>";
+			imageArea[index].innerHTML = "<button hidden type='button' class='cancleBtn index"+[index]+"'></button><img class='afterInput after"+[index]+"' src='" + reader.result + "'>";
 		}
 	}
 }

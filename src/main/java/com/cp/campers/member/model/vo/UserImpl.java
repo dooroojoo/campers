@@ -11,6 +11,18 @@ import org.springframework.security.core.userdetails.User;
 public class UserImpl extends User{
 
 
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return super.isEnabled();
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return super.isAccountNonLocked();
+	}
+
 	private int userNo;
 	private String id;
 	private String pwd;

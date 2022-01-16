@@ -20,4 +20,12 @@ public interface MemberService extends UserDetailsService{
 
 	int idCheck(String id);
 
+	Member loginFailure(String userId);
+
+	void loginFailCount(String username);
+
+	int checkFailCount(String username);
+
+	void disabledMember(String username);
+
 }
