@@ -315,7 +315,7 @@ public class MypageServiceImpl implements MypageService{
 		return map;
 	}
 	
-	/* 사업자 예약내역 확인 */
+	/* 사업자 예약내역 확인  */
 	@Transactional
 	@Override
 	public Map<String, Object> selectMyHostReserveList(int userNo, int page) {
@@ -330,7 +330,7 @@ public class MypageServiceImpl implements MypageService{
 		Map<String, Object> param = new HashMap<>();
 		param.put("pi", pi);
 		param.put("userNo", userNo);
-		
+		 
 		log.info("param : " + param.toString());
 		
 		List<Camp> campList = mypageMapper.selectMyHostReserveList(param);

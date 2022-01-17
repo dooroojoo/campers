@@ -6,9 +6,9 @@ import java.util.List;
 import com.cp.campers.board.model.vo.BoardFileNo;
 
 import lombok.Data;
-
+ 
 @Data
-public class Board {
+public class Board { 
 
 	private String bid;
 	private String title;

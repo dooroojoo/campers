@@ -16,7 +16,7 @@
 		<result property="modifyDate" column="MODIFY_DATE"/>
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
 	</resultMap>
-
+ 
 	<resultMap type="com.cp.campers.member.model.vo.MemberRole" id="memberRoleResultMap">
 		<id property="memberNo" column="USER_NO"/>
 		<id property="authorityCode" column="AUTHORITY_CODE"/>

@@ -1,5 +1,5 @@
 package com.cp.campers.mypage.model.vo;
-
+ 
 import java.util.List;
 
 import lombok.Data;
@@ -19,6 +19,6 @@ public class Room {
 	private String roomForm;
 	private int roomCount;
 	private int campNo;
-	
+	 
 	//private List<RoomFileNo> roomFileNoList;
 }

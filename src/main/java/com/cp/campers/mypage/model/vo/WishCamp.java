@@ -8,3 +8,4 @@ public class WishCamp {
 	private int userNo;
 	private int campNo;
 }
+ 
