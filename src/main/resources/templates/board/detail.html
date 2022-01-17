@@ -62,8 +62,6 @@
 .freeBoard-aside {
 	font-size: 21px;
 	line-height: 50px;
-	margin-top: 255px;
-	margin-right: 30px;
 	border: 1px solid #e3e3e3;
 	height: 208px;
 	font-weight: 500;
@@ -72,8 +70,8 @@
 	box-shadow: rgb(0 0 0/ 8%) 10px 10px 6px;
 	position: fixed;
 	left: 80%;
-		background: white;
-  			z-index: 10000;
+	background: white;
+	z-index: 10;
 }
 
 .freeBoard-aside a {
@@ -472,7 +470,7 @@ width: 60px;
 			</div>
 			<div class="freeBoard-content">
 				<div class="content-img" th:each="fileNo : ${boardFileNoList}">
-					<img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}" th:if="${fileNo.Attachment.status} == 'N'">
+					<img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}">
 				</div>
 				<p th:text="${board.content}"></p>
 				

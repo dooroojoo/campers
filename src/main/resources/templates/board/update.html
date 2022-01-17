@@ -338,21 +338,18 @@
 	</script>
 	<script>
 		$(document).on("click",".index0", function(e){
-			$(".image1").val("");
 			$(".index0").remove();
 			$(".after0").remove();
 			$(".preview1").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
 		});
 	
 		$(document).on("click",".index1", function(e){
-			$(".image2").val("");
 			$(".index1").remove();
 			$(".after1").remove();
 			$(".preview2").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
 		});
 		
 		$(document).on("click",".index2", function(e){
-			$(".image3").val("");
 			$(".index2").remove();
 			$(".after2").remove();
 			$(".preview3").html('<img class="beforeInput" src="/resources/images/board/cameraImg.png">');
@@ -360,9 +357,6 @@
 		
 	</script>
  	<script>
- 	$(document).on("ready", ".index0",function(){
- 		$(".index0").css("display","none");
- 	});
  	
 		$(".preview1").mouseenter(function(){
 			$(".index0").fadeIn(100);
