@@ -16,7 +16,7 @@ public class Camp {
 	private String campPath;
 	private String campPolicy;
 	private String campStatus;
-	private String accountNum;
+	private String accountNum; 
 	private String bank;
 	private String checkin;
 	private String checkout;

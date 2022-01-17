@@ -19,6 +19,6 @@ public class Room {
 	private String roomForm;
 	private int roomCount;
 	private int campNo;
-	
+	 
 	//private List<RoomFileNo> roomFileNoList;
 }

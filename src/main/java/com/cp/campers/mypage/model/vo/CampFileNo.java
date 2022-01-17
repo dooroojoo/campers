@@ -8,3 +8,4 @@ public class CampFileNo {
 	private Attachment attachment;
 
 }
+ 

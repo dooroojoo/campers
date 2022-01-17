@@ -8,4 +8,4 @@ public class RoomFile {
 	private int roomNo;
 	private int fileNo;
 	private ImageFile imageFile;
-}
+} 

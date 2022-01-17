@@ -9,3 +9,4 @@ public class Facility {
 	private String facilityName;	// 시설명
 	private int facilityType;		// 시설 구분
 }
+ 

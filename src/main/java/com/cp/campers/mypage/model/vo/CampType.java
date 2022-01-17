@@ -10,3 +10,4 @@ public class CampType {
 	private BusinessType businessType;
 
 }
+ 

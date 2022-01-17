@@ -9,3 +9,4 @@ public class CampFacility {
 	private int facilityNo;		// 시설 번호
 	private Facility facility;	// 시설
 }
+ 

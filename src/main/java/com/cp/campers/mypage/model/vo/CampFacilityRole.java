@@ -10,3 +10,4 @@ public class CampFacilityRole {
 	private CampFacility campFacility;
 	
 }
+ 

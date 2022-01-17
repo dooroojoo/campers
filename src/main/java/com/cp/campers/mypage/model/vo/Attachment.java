@@ -12,5 +12,5 @@ public class Attachment {
 	private String fileOriginName;
 	private String deletedName;
 	//private String fileNewName; 
-	
+	 
 }

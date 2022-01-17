@@ -330,7 +330,7 @@ public class MypageServiceImpl implements MypageService{
 		Map<String, Object> param = new HashMap<>();
 		param.put("pi", pi);
 		param.put("userNo", userNo);
-		
+		 
 		log.info("param : " + param.toString());
 		
 		List<Camp> campList = mypageMapper.selectMyHostReserveList(param);

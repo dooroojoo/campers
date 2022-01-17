@@ -13,7 +13,7 @@ public class PageInfo {
 	private int endPage;     // 하단에 보여질 페이지 목록 끝 값
 	private int startRow;
 	private int endRow;
-
+ 
 	
 	public PageInfo(int page, int listCount, int pageLimit, int boardLimit) {
 		this.page=page;

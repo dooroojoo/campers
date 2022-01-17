@@ -61,7 +61,7 @@ public interface MypageService{
 	/* 내 숙소 찾기 */
 	Map<String, Object> selectMyCampList(int userNo, int page);
 
-	/* 사업자 예약내역 확인  */
+	/* 사업자 예약내역 확인   */
 	Map<String, Object> selectMyHostReserveList(int userNo, int page);
 
 	/* 일반회원 예약내역 확인*/

@@ -10,3 +10,4 @@ public class CampBusinessType {
 	private BusinessType businessType;	// 사업장 타입
 	
 }
+ 
