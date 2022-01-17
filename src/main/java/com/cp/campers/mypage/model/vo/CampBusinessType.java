@@ -1,7 +1,7 @@
 package com.cp.campers.mypage.model.vo;
 
 import lombok.Data;
-
+ 
 @Data
 public class CampBusinessType {
 
@@ -10,3 +10,4 @@ public class CampBusinessType {
 	private BusinessType businessType;	// 사업장 타입
 	
 }
+ 

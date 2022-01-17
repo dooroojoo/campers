@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
-    
+     
 </head>
 <body>
 	<!-- header -->
@@ -45,7 +45,7 @@
                     <th class="mypage_camp_management_table_body"><p class="camp_address">김광중</p><small class="camp_name">아침고요 수목원</small></th>
                     <th class="mypage_camp_management_table_body"><p class="camp_date">운영상태</p></th>
                     <th class="mypage_camp_management_table_body2"><input class="mypage_camp_management_button" type="button" value="해지신청"></th>
-                </tr>
+                </tr> 
                 <tr>
                     <th class="mypage_camp_management_table_body"></th>
                     <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
@@ -53,11 +53,11 @@
                     <th class="mypage_camp_management_table_body"><p class="camp_date">대기중</p></th>
                     <th class="mypage_camp_management_table_body2"><input class="mypage_camp_management_button" type="button" value="신청완료"></th>
                 </tr>
-                <tr>
-                    <th class="mypage_camp_management_table_body"></th>
-                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
-                    <th class="mypage_camp_management_table_body"><p class="camp_address">김광중</p><small class="camp_name">아침고요 수목원</small></th>
-                    <th class="mypage_camp_management_table_body"><p class="camp_date">거절</p><label class="camp_date_reject">거절사유</label></th>
+                <tr th:each="camp : ${campList}">
+                    <th class="mypage_camp_management_table_body" th:text="${camp.campNo}"></th>
+                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="/resources/images/mypage/007.png"><p class="camp_name" th:text="${camp.campName}"></p></th>
+                    <th class="mypage_camp_management_table_body"><p class="camp_address" th:text="${camp.userNo}"></p><small class="camp_name" th:text="${camp.campAddress}"></small></th>
+                    <th class="mypage_camp_management_table_body"><p class="camp_date" th:text="${camp.campStatus}"></p><label class="camp_date_reject">거절사유</label></th>
                     <th class="mypage_camp_management_table_body2"><input class="mypage_camp_management_button" type="button" value="신청완료"></th>
                 </tr>
             </table>

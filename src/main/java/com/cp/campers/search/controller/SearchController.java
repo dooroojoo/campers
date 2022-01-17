@@ -85,11 +85,6 @@ public class SearchController {
 			nowPage = Integer.parseInt(page);
 		}
 		
-		// List로 넘어온 체크박스 String으로 합쳐주기
-//		String type =String.join(",", typeArr);
-//		String facility =String.join(",", facilityArr);
-//		String floor =String.join(",", floorArr);
-		
 		log.info(area);
 		log.info(daterange);
 		log.info("guest : " + quantity);
@@ -116,10 +111,24 @@ public class SearchController {
 		Map<String, Object> map = searchService.campFindSearch(fc, typeArr, facilityArr, floorArr, nowPage);
 		
 		
+		// List로 넘어온 체크박스 String으로 합쳐주기
+		String typeStr =String.join(",", typeArr);
+		String faciStr =String.join(",", facilityArr);
+		String floorStr =String.join(",", floorArr);
+		
+		
+		
 		mv.addObject("campFindSearch", map.get("campFindSearch"));
 		mv.addObject("searchSize", map.get("searchSize"));
 		mv.addObject("pi", map.get("pi"));
 		mv.addObject("fc", fc);
+		mv.addObject("type", typeArr);
+		mv.addObject("facility", facilityArr);
+		mv.addObject("floor", floorArr);
+		mv.addObject("typeStr", typeStr);
+		mv.addObject("faciStr", faciStr);
+		mv.addObject("floorStr", floorStr);
+		
 		mv.setViewName("search/findCamp");
 		
 		return mv;
@@ -129,25 +138,26 @@ public class SearchController {
 	// 메인페이지 캠핑장 검색 기능
 	@GetMapping("main")
 	public ModelAndView mainSearch( ModelAndView mv,
-									@RequestParam(value="page", required=false, defaultValue="1") int page,
+									@RequestParam(value="page", required=false, defaultValue="1") String page,
 									@RequestParam(value="area") String area,
 									@RequestParam(value="daterange") String daterange,
 									@RequestParam(value="guest") String quantity,
-									@RequestParam(value="type", required=false, defaultValue="null") List<String> typeArr
+									@RequestParam(value="type", required=false, defaultValue="") List<String> typeArr
 									) throws ParseException {
 		
 		
 		
 		int nowPage = 1;
 		
-		if(page != 1) {
-			nowPage = page;
+		if(page != null) {
+			nowPage = Integer.parseInt(page);
 		}
 		
 		log.info(area);
 		log.info(daterange);
 		log.info("guest : " + quantity);
 		log.info("page : " + page);
+		log.info("type : " + typeArr);
 		
 		
 		// 날짜 자르기
@@ -161,16 +171,18 @@ public class SearchController {
 		fc.setsGuest(quantity);
 		
 
-		Map<String, Object> map = searchService.mainSearch(fc, nowPage);
+		Map<String, Object> map = searchService.mainSearch(fc, nowPage, typeArr);
 		
 		
 		mv.addObject("campFindSearch", map.get("campFindSearch"));
 		mv.addObject("searchSize", map.get("searchSize"));
 		mv.addObject("pi", map.get("pi"));
 		mv.addObject("fc", fc);
+		mv.addObject("type", typeArr);
 		mv.setViewName("search/findCamp");
 		
 		return mv;
 	}
+	
 
 }

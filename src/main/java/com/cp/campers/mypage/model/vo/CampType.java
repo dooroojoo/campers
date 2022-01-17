@@ -1,5 +1,5 @@
 package com.cp.campers.mypage.model.vo;
-
+ 
 import lombok.Data;
 
 @Data
@@ -10,3 +10,4 @@ public class CampType {
 	private BusinessType businessType;
 
 }
+ 

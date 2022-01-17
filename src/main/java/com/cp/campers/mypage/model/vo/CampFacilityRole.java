@@ -1,7 +1,7 @@
 package com.cp.campers.mypage.model.vo;
 
 import lombok.Data;
-
+ 
 @Data
 public class CampFacilityRole {
 
@@ -10,3 +10,4 @@ public class CampFacilityRole {
 	private CampFacility campFacility;
 	
 }
+ 

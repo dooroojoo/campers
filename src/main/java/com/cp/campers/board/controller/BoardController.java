@@ -286,16 +286,11 @@ public class BoardController {
 			HttpServletRequest request, String[] changeName) {
 	
 		List<String> deleteList = new ArrayList<>();
-
-		if(deleteImgs != null) {
-		for(String deleteImg : deleteImgs) {
-			if(!deleteImg.equals("")) {
-				deleteList.add(deleteImg);
-			}
-		}
-		}
-		boardService.updateDeletedImage(deleteList);
 		
+		for(MultipartFile img : images) {
+			log.info("수정 후 들어온 파일"+img.getOriginalFilename());
+		}
+
 		// setFilePath 해줄 변수 선언
 		String filePath = uploadFilesPath + "/boardImg";
 		// 해당 파일 경로 존재 여부 확인
@@ -308,56 +303,53 @@ public class BoardController {
 		
 		for(String name : changeName) {
 			
-			System.out.println(name);
+			System.out.println("수정전에 있던 파일"+name);
 		}
-		
 
 		for (int i = 0; i < images.size(); i++) {
 			
-			
+			Map<String, String> file = new HashMap<>();
 			if(images.get(i).getSize() != 0) {
 				
-			// 파일명 변경 처리
-			String originFileName = images.get(i).getOriginalFilename();
-			String ext = originFileName.substring(originFileName.lastIndexOf("."));
-			String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
-
-			//파일에 관한 정보 추출 후 보관
-			Map<String, String> file = new HashMap<>();
-			file.put("filePath", filePath);
-			file.put("originFileName", originFileName);
-			file.put("savedName", savedName);
-			file.put("index", i+"");
-			file.put("isNew", "Y");
-			System.out.println("idx=="+file.get("index"));
-			if(i==0) {
-				file.put("fileLevel", "0");
+				// 파일명 변경 처리
+				String originFileName = images.get(i).getOriginalFilename();
+				String ext = originFileName.substring(originFileName.lastIndexOf("."));
+				String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+	
+				//파일에 관한 정보 추출 후 보관
+				file.put("filePath", filePath);
+				file.put("originFileName", originFileName);
+				file.put("savedName", savedName);
+				file.put("index", i+"");
+				file.put("isNew", "Y");
+				System.out.println("idx=="+file.get("index"));
+				
+				if(changeName.length >= i+1) {
+					file.put("deletedName", changeName[i]);
+				}
+				files.add(file);
+				
 			}else {
-				file.put("fileLevel", "1");
-			}
-			
-			if(changeName.length >= i+1) {
-				file.put("deletedName", changeName[i]);
-			}
-			files.add(file);
-			
-			}else {
-				Map<String, String> file = new HashMap<>();
 				file.put("index", i+"");
 				file.put("isNew", "N");
 				files.add(file);
-			}
+				}
+			
 		}
 
 		// 파일 저장
 		try {
-
 			// title, content 먼저 update
 			boardService.updateBoard(board);
 			
 			for (int i = 0; i < images.size(); i++) {
 				
 				Map<String, String> file = files.get(i);
+				if(file.get("index").equals("0")) {
+					file.put("fileLevel", "0");
+				}else {
+					file.put("fileLevel", "1");
+				}
 				if(file.get("isNew") == "Y") {
 					
 				// view에서 가져온 파일 수 만큼, 지정한 경로에, 변경된 이름으로 파일 생성
@@ -377,17 +369,17 @@ public class BoardController {
 					attachment.setFileLevel(1);
 				}
 				
+				log.info("@@@@@@@@"+attachment);
 				int result = boardService.updateBoardImage(attachment,board.getBid());
 				
-				
-				if(result > 0) {
-					for(Map<String, String> photo : files) {
-						if(photo.get("deletedName") != null) {
-							File deletedFile = new File(filePath+photo.get("deletedName"));
-							deletedFile.delete();
+					if(result > 0) {
+						for(Map<String, String> photo : files) {
+							if(photo.get("deletedName") != null) {
+								File deletedFile = new File(filePath+photo.get("deletedName"));
+								deletedFile.delete();
+							}
 						}
 					}
-				}
 				}
 			}
 
@@ -398,6 +390,16 @@ public class BoardController {
 				new File(file.get("filePath") + "\\" + file.get("savedName")).delete();
 			}
 		}
+		if(deleteImgs != null) {
+			for(String deleteImg : deleteImgs) {
+				if(!deleteImg.equals("")) {
+					deleteList.add(deleteImg);
+				}
+				log.info("삭제된 이미지"+deleteImg);
+			}
+		}
+		boardService.updateDeletedImage(deleteList);
+		
 		return "redirect:/board/detail?bid="+board.getBid();
 	}
 	

@@ -1,7 +1,7 @@
 package com.cp.campers.mypage.model.vo;
 
 import lombok.Data;
-
+ 
 @Data
 public class CampFile {
 
@@ -9,3 +9,4 @@ public class CampFile {
 	private int fileNo;				// 파일 번호
 	private ImageFile imageFile;	// 이미지 파일
 }
+ 

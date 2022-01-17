@@ -58,9 +58,14 @@
     height: 2.5rem;
 }
 
-.changinfoPwdModify_pwd_form, .changinfoPwdModify_newpwd_form, .changinfoPwdModify_newpwd_form2{
-    margin-left : 40px;
-    width : 12rem
+.changinfoPwdModify_pwd_form{
+	margin-left : 35px;
+    width : 12rem;
+}
+
+.changinfoPwdModify_newpwd_form, .changinfoPwdModify_newpwd_form2{
+	margin-left : 40px;
+	width : 12rem;
 }
 
 small{

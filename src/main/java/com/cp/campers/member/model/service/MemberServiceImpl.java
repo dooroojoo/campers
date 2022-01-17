@@ -85,11 +85,11 @@ public class MemberServiceImpl implements MemberService{
 	public String sendEmail(Member vo, String div) throws Exception {
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com"; //네이버 이용시 smtp.naver.com
-		String hostSMTPid = "chuchu1226";
+		String hostSMTPid = "callsx3500";
 		String hostSMTPpwd = "chj0099";
 
 		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = "chuchu1226@naver.com";
+		String fromEmail = "callsx3500@naver.com";
 		String fromName = "Campers";
 		String subject = "";
 		String msg = "";

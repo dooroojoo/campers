@@ -1,5 +1,5 @@
 package com.cp.campers.mypage.model.vo;
-
+ 
 import lombok.Data;
 @Data
 public class CampFileNo {
@@ -8,3 +8,4 @@ public class CampFileNo {
 	private Attachment attachment;
 
 }
+ 

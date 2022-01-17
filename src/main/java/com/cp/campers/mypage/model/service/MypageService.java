@@ -13,6 +13,7 @@ import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.CampBusinessType;
 import com.cp.campers.mypage.model.vo.CampFacility;
+import com.cp.campers.mypage.model.vo.Room;
 
 public interface MypageService{
 
@@ -22,7 +23,7 @@ public interface MypageService{
 	List<Board> findAllBoard();
 		
 	/* 회원정보 수정 */
-	Member changeInfoModify(Member member/*, String email, String phone, String nickName*/);
+	Member changeInfoModify(Member member);
 
 	/* 비밀번호 변경 */
 	void changeInfoPwdModify(Member member);
@@ -31,16 +32,13 @@ public interface MypageService{
 	int nickNameCheck(String nickName);
 
 	/* 회원 탈퇴 */
-	void changeInfoMemberout(Member member);
+	Member changeInfoMemberout(Member member);
 
 	/* 내 게시판 목록 */
 	Map<String, Object> selectMyBoardList(int writer, int page);
 
 	/* 내 정보 목록 */
 	Map<String, Object> selectMyMemberList(int userNo, int page);
-
-	/* 숙소 등록 */
-	void mypage_camp_enrollment_room(Camp camp);
 
 	/* 캠프장 사진 등록 */
 	void insertCampImage(Attachment attachment);
@@ -56,8 +54,31 @@ public interface MypageService{
 	void mypageCampEnrollment(Camp camp, List<String> btypeList, 
 			List<String> ftypeList, Attachment attachment, Attachment atta2);
 
-	/* 사업자 예약내역 확인 */
+
+	/* 숙소 등록 */
+	void mypageCampEnrollmentRoom(List<Room> roomList, Attachment atta2);
+
+	/* 내 숙소 찾기 */
+	Map<String, Object> selectMyCampList(int userNo, int page);
+
+	/* 사업자 예약내역 확인   */
 	Map<String, Object> selectMyHostReserveList(int userNo, int page);
+
+	/* 일반회원 예약내역 확인*/
+	Map<String, Object> selectMyGuestReserveList(int userNo, int page);
+
+	/* 프로필 사진 변경 */
+	Member updateProfilePath(Member member);
+
+	void deleteMember(Member member);
+
+	void pwdUpdate(String userId, String pwd, String newPwd);
+
+	/*
+	Member pwdCheck(Member member);
+
+	void pwdUpdate(String id, String hashedPwd);
+	*/
 
 	
 }

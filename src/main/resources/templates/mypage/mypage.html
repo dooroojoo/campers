@@ -14,8 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
-    
-</head>
+     
+</head> 
 <body>
 	<!-- header -->
     <!-- 
@@ -30,19 +30,21 @@
 
     <div class="mypage_content"> 
         <div class="mypage_content_1">
+            <form class="mypageProfileImage" th:action="@{/mypage}" method="post" enctype="multipart/form-data">
             <div class="mypage_content_top">프로필 사진</div>
 	            <div class="image_area" th:each="member : ${memberList}">
-		            <!-- 
-		            <img class="mypage_character" src="/resources/images/uploadFiles/profileImg/62ff8cb417354f9ba8ec84e8ee834444.jpg"><br>
-		             -->
-		            <img class="mypage_character" th:src="${member.profilePath}">
-		            <!-- 
-		            <img class="mypage_character" src="sec:authentication='principal.profilePath'"><br>
-		             -->
+		            <div class="image_area">
+		            	<img class="profileImg" th:src="${member.profilePath}">
+		            </div>
 	        	</div>
-		        	<input type="file" class="profileInput" name="singleFile"/>
-		            <p class="mypage_content_p2">회원님을 알릴 수 있는 사진을 등록해주세요.</p>        
+		        	<input type="file" class="profileInput" name="singleFile" accept="image/*" hidden>
+		            <p class="mypage_content_p2">플로필 사진을 변경 할 수 있습니다.</p>
+		    <div>
+		    	<lebel class="mypageProfileImageLebel">사진을 먼저 선택해주세요</lebel>
+		     	<input class="mypageProfileImageButton" type="submit" value="변경하기"/>       	
+		    </div>       
 	        </div>
+	        </form>
         
         <div class="mypage_content_2">
             <div class="mypage_content_top">찜한 캠핑장</div>
@@ -85,35 +87,34 @@
     
     <script>
     $(function(){
-   		$('.mypage_character').click(function (e){
+   		$('.profileImg').click(function (e){
    			$('.profileInput').click();
    		})
     })
     </script>
-    
-   <script>
+         
+    <script>
     $(function() {
     	$('.profileInput').change(function (e) {
     		document.querySelector('.image_area').className = "image_area div_after";
     	})
-    })
-    </script>
-    
+     })
+    </script>     
+    <!-- 
+    <script src="/resources/js/member/imagePreview.js"></script>
+     -->
     <script>
-    /* input type file 요소들 */
-    const fileElements = document.querySelectorAll("[type=file]");
-    /* div image_area 요소들 */
-    const imageArea = document.querySelectorAll(".inputImgPreview");
-    /* input type file 요소에 change 이벤트 발생 시 (파일 첨부 발생) */
+    const fileElements = document.querySelectorAll("[type=file]");    
+    const imageArea = document.querySelectorAll(".image_area");   
     fileElements.forEach(item => item.addEventListener('change', preview));
 
     function preview(){
-    	let index = Array.from(fileElements).indexOf(this);   //input type="file" 이게 this
+    	let index = Array.from(fileElements).indexOf(this);
     	if(this.files && this.files[0]) {
     		let reader = new FileReader();
     		reader.readAsDataURL(this.files[0]);
     		reader.onload = function() {
-    			imageArea[index].innerHTML = "<img class='afterInput' src='" + reader.result + "'>";
+    			imageArea[index].innerHTML = "<img class='profileImg after' src='" + reader.result + "'>";
     		}
     	}
     }

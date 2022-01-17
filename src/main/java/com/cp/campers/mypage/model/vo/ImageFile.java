@@ -1,5 +1,5 @@
 package com.cp.campers.mypage.model.vo;
-
+ 
 import lombok.Data;
 
 @Data
@@ -12,4 +12,4 @@ public class ImageFile {
 	private String fileLevel;
 	private String fileOriginName;
 	
-}
+} 
