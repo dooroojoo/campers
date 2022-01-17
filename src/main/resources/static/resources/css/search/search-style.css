@@ -259,6 +259,7 @@ input[type="number"] {
 
 .list-col-img{
     height: 180px;
+    width: 100%;
     margin : 5% 2% 2% 2%;
     display: flex;
     padding-bottom: 5%;
@@ -267,7 +268,7 @@ input[type="number"] {
 .list-col-img img{
     border: 1px solid #dfdfdf;
     border-radius: 15px;
-    height: 180px;
+    width: 100%;
 }
 
 .list-col-text li{
