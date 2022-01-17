@@ -47,8 +47,8 @@
                 </tr>                
                 <tr>
                   	<th>캠핑장 선택</th>
-                	<td><select class="campCheck" name="campCheck">
-                			<option th:each="camp : ${campList}" th:value="${camp.campNo}" name="campNo" id="campName" th:text="${camp.campName}"></option>
+                	<td><select class="campCheck" name="campNo">
+                			<option th:each="camp : ${campList}" th:value="${camp.campNo}" th:text="${camp.campName}"></option>
                 			
                 		</select>
                 	</td>

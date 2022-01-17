@@ -17,7 +17,7 @@
     border-bottom: 3px solid lightgray;
     margin-top: 30px;
     margin-left: 15%;
-    width: 1150px;
+    width: 1100px;
 }
 
 .mypage_camp_management_table{
@@ -31,23 +31,23 @@
 }
 
 .mypage_camp_management_table_header_no{
-    width: 12%;
+    width: 150px;
 }
 
 .mypage_camp_management_table_header_camp{
-    width: 15%;
+    width: 200px;
 }
 
 .mypage_camp_management_table_header_address{
-    width: 44%;
+    width: 400px;
 }
 
 .mypage_camp_management_table_header_date{
-    width: 15%;
+    width: 140px;
 }
 
 .mypage_camp_management_table_header_status{
-    width: 14%;
+    width: 180px;
 }
 
 .mypage_camp_management_table_body{
@@ -58,12 +58,12 @@
 }
 
 .mypage_camp_management_table_img{
-    width : 100px;
-    height : 100px;
+    width : 160px;
+    height : 110px;
 }
 
 .camp_name{
-    font-size : 1.1rem;
+    font-size : 20px;
 }
 
 .camp_address{
@@ -99,9 +99,13 @@
 }
 
 .mypage_camp_management_button{
-    background : black;
-    color : white;
-    font-weight : bold;
+    background-color : black;
+    width: 100px;
+    height: 30px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
 .room_plus{
@@ -115,6 +119,7 @@
     margin-top: 20px;
     padding-top: 10px;
     margin-left: 401px;
+    border-radius: 10px;
 }
 
 .room_plus_p{

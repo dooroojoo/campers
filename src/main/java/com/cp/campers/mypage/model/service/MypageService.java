@@ -55,8 +55,8 @@ public interface MypageService{
 			List<String> ftypeList, Attachment attachment, Attachment atta2);
 
 
-	/* 숙소 등록 */
-	void mypageCampEnrollmentRoom(List<Room> roomList, Attachment atta2);
+	/* 숙소 등록 List<Room> roomList */
+	void mypageCampEnrollmentRoom(Room room, Attachment atta2);
 
 	/* 내 숙소 찾기 */
 	Map<String, Object> selectMyCampList(int userNo, int page);

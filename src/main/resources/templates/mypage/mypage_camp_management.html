@@ -39,13 +39,44 @@
                     <th class="mypage_camp_management_table_header_date">등록상태</th>
                     <th class="mypage_camp_management_table_header_status">캠핑장 해지신청</th>
                 </tr>
-                <tr>
-                    <th class="mypage_camp_management_table_body"></th>
-                    <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
-                    <th class="mypage_camp_management_table_body"><p class="camp_address">김광중</p><small class="camp_name">아침고요 수목원</small></th>
-                    <th class="mypage_camp_management_table_body"><p class="camp_date">운영상태</p></th>
-                    <th class="mypage_camp_management_table_body2"><input class="mypage_camp_management_button" type="button" value="해지신청"></th>
+                <tr th:each="camp : ${ campList }">
+                    <th class="mypage_camp_management_table_body" th:text="${ camp.campNo }"></th>
+                    <th class="mypage_camp_management_table_body">
+	                    
+	                    <!--  -->
+	                    
+	                    <div th:if="${ camp.campNo == campImage.campNo }" th:each="campImage : ${ campImageList }">
+	                    	<img class="mypage_camp_management_table_img" th:src="${ campImage.fileRoute }+${ campImage.fileName }"><p class="camp_name" th:text="${ camp.campName }"></p>
+	                    </div>
+	                    
+	                    </th>
+                    <th class="mypage_camp_management_table_body">
+	                    <p class="camp_address" th:text="${ camp.campAddress }"></p>
+	                    <small class="camp_name" th:text="${ camp.campPhone }"></small>
+	                </th>
+                    
+                    <th class="mypage_camp_management_table_body">                    
+	                    <th:block th:if="${ camp.campStatus } == Y">
+	                    	<p class="camp_date">등록</p>
+	                    </th:block>
+	                     <th:block th:if="${ camp.campStatus } == N">
+	                    	<p class="camp_date">대기</p>
+	                    </th:block>
+	                     <th:block th:if="${ camp.campStatus } == R">
+	                    	<p class="camp_date">거절</p>
+	                    </th:block>
+	                     <th:block th:if="${ camp.campStatus } == X">
+	                    	<p class="camp_date">삭제</p>
+	                    </th:block>
+                    </th>                    
+                    
+                    <th class="mypage_camp_management_table_body2">
+                    	
+                    		<input class="mypage_camp_management_button" type="button" value="해지신청">
+                    
+                    </th>
                 </tr> 
+                <!-- 
                 <tr>
                     <th class="mypage_camp_management_table_body"></th>
                     <th class="mypage_camp_management_table_body"><img class="mypage_camp_management_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
@@ -60,6 +91,7 @@
                     <th class="mypage_camp_management_table_body"><p class="camp_date" th:text="${camp.campStatus}"></p><label class="camp_date_reject">거절사유</label></th>
                     <th class="mypage_camp_management_table_body2"><input class="mypage_camp_management_button" type="button" value="신청완료"></th>
                 </tr>
+                 -->
             </table>
             <div class="room_plus">
                 <a class="room_plus_p" href="/mypage/mypageCampEnrollmentRoom"><img class="room_plus_img" src="/resources/images/mypage/plus.png">객실 추가하기</a>

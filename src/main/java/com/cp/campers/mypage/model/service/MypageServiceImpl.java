@@ -107,9 +107,10 @@ public class MypageServiceImpl implements MypageService{
 	/* 숙소 등록 */
 	@Transactional
 	@Override
-	public void mypageCampEnrollmentRoom(List<Room> roomList, Attachment atta2) {
+	public void mypageCampEnrollmentRoom(Room room, Attachment atta2) {
 				
 		/*
+		 * List<Room> roomList
 			생각해보니 room에다가 insert 해야될듯...
 			mypageMapper.insertCamp(room);
 			
@@ -117,14 +118,14 @@ public class MypageServiceImpl implements MypageService{
 			value due to being declared as a primitive type. Consider declaring it as object 
 			wrapper for the corresponding primitive type.
 			
-		*/		
 		for(Room room : roomList) {
+		}
+		 */		
 			/* 숙소 등록 */
-			mypageMapper.insertRoom(room);
+			mypageMapper.insertRoom2(room);
 			/* 숙소 이미지 등록 */
 			mypageMapper.insertRoomImage(atta2);
 			mypageMapper.insertImageNo2();
-		}
 	}
 
 	/* 캠핑장 사진 등록*/
@@ -228,7 +229,7 @@ public class MypageServiceImpl implements MypageService{
 	public Map<String, Object> selectMyBoardList(int writer, int page) {
 		int listCount = mypageMapper.getListCountMyBoard(writer);
         
-        log.info(listCount+"");
+        //log.info(listCount+"");
 		
 		PageInfo pi = new PageInfo(page,listCount, 1, 3);
 		pi.setStartRow(page, pi.getBoardLimit());
@@ -240,7 +241,11 @@ public class MypageServiceImpl implements MypageService{
 		
 		List<Board> boardList = mypageMapper.selectMyBoardList(param);
 		
+		//log.info("boardList : " + boardList.toString());
+		
 		List<Board> thumbnailList = mypageMapper.selectThumbnailList();
+		
+		//log.info("thumbnailList : " + thumbnailList.toString());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
@@ -270,7 +275,11 @@ public class MypageServiceImpl implements MypageService{
 		
 		List<Member> memberList = mypageMapper.selectMyMemberList(param);
 		
-		List<Member> thumbnailList = mypageMapper.selectThumbnailList2();
+		log.info("memberList : " + memberList.toString());
+		
+		List<Camp> thumbnailList = mypageMapper.selectThumbnailList2();
+		
+		log.info("thumbnailList : " + thumbnailList.toString());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberList", memberList);
@@ -301,8 +310,7 @@ public class MypageServiceImpl implements MypageService{
 		
 		List<Camp> campList = mypageMapper.selectMyCampList(param);
 		
-		List<ImageFile> campImageList = mypageMapper.selectCampImageList();
-		
+		List<Camp> campImageList = mypageMapper.selectCampImageList();		
 		
 		log.info("campList : " + campList.toString());
 		log.info("campImageList : " + campImageList.toString());
@@ -335,19 +343,19 @@ public class MypageServiceImpl implements MypageService{
 		
 		List<Camp> campList = mypageMapper.selectMyHostReserveList(param);
 		
-		List<ImageFile> campImageList = mypageMapper.selectCampImageList();
+		List<Camp> campImageList = mypageMapper.selectCampImageList();
 		
-		List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
+		//List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
 				
 		log.info("campList : " + campList.toString());
 		log.info("campImageList : " + campImageList.toString());
-		log.info("reserveList : " + reserveList.toString());
+		//log.info("reserveList : " + reserveList.toString());
 				
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
 		map.put("campList", campList);
 		map.put("campImageList", campImageList);
-		map.put("reserveList", reserveList);
+		//map.put("reserveList", reserveList);
 		
 		return map;
 	}
@@ -373,7 +381,7 @@ public class MypageServiceImpl implements MypageService{
 		
 		List<Camp> campList = mypageMapper.selectMyGuestReserveList(param);
 		
-		List<ImageFile> campImageList = mypageMapper.selectCampImageList();
+		List<Camp> campImageList = mypageMapper.selectCampImageList();
 		
 		List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
 				

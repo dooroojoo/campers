@@ -241,11 +241,14 @@ body {
 
 .mypageProfileImageButton{
     width: 100px;
-    height: 30px;
+    height: 35px;
     background: black;
-    color: wheat;
+    color: white;
+    font-size : 15px;
     font-weight: bold;
     margin-left: 93px;
+    border-radius: 12px;
+    margin-top : 10px;
 }
 
 .mypageProfileImageLebel{
@@ -310,6 +313,7 @@ body {
   margin-top: 20px;
   width: 12rem;
   height: 9rem;
+  border-radius: 12px;
 }
 
 .mypage_wishlist{
