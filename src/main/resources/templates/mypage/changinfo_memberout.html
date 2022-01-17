@@ -46,9 +46,12 @@
             <div class="changinfo_privacy">
                 <form class="changinfo_memberout_form" id="changinfo_modify_form" 
                 th:action="@{/mypage/changinfo/changinfoMemberout}" method="post" onsubmit="return validate();">
+                    
                     <h4 class="check_id">아 이 디<input type="text" class="check_id_form" id="id" name="id"></input></h4>
+                    
                     <h4 class="check_pwd">비밀번호 확인<input type="password" class="check_pwd_form" id="pwd" name="pwd"></input>
                     <div class="check_font" id="user_check"></div>
+                    
                     <button type="submit" id="submit" name="submit" class="changinfoPwdModify_pwdbutton">회원탈퇴</button>
                 </form>
             </div>
@@ -59,25 +62,45 @@
     <!-- footer -->
     <div th:replace="common/footer.html"></div>    
     
-    <!-- 
     <script>
-    $('#userPwd2').blur(function(){
-		if($('#userPwd').val() != $(this).val()){
-			$('#userPwd2_check').text('비밀번호가 일치하지 않습니다');
-			$('#userPwd2_check').css('color', 'red');
-		} else {
-			$('#userPwd2_check').text('');
-		}
-	});    
+    
+    $(function(){
+    	$("#submit").on('click', function(){
+    		let user = {};
+    		user.id = $(".changinfo_memberout_form [name=id]").val();
+    		user.pwd = $(".changinfo_memberout_form [name=pwd]").val();
+    		
+    		$.ajax({
+    			url : "/mypage/changinfo/changinfoMemberout",
+    			date : user,
+    			type : "post",
+    			success : function(data){
+    				console.log(data);
+    				if(data != ""){
+    				alert("회원 탈퇴가 완료되었습니다.")	
+    				} else {
+    					alert("입력한 회원 정보가 없습니다. ID와 PASSWORD를 다시 확인해주세요.")
+    					$(".check_id_form").focus();
+    				}
+    			},
+    			error : function(e){
+    				alert('실패');
+    			}
+    		})
+    	})
+    })    
     </script>
-     -->
+    
+    
+    
+    
     
     <script>
     function validate(){
 		return true;
 	}
     
-    $("#submit").on('click', function(){
+    $(".changinfoPwdModify_pwdbutton").on('click', function(){
 			if(changinfo_memberout_form.id.value == ""){
 				alert("아이디를 입력하지 않았습니다")
 				changinfo_memberout_form.id.focus();

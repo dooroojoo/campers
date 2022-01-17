@@ -47,18 +47,29 @@
                 
                 <form th:action="@{/mypage/changinfo/changinfoModify/changinfoPwdModify}" role="form"
                 	th:Object="${PasswordForm}" method="post">
+                    
                     <h4 class="changinfoPwdModify_pwd">현재 비밀번호
                     <input type="password" class="changinfoPwdModify_pwd_form" 
                     name="pwd" id="pwd" placeholder="비밀번호를 입력하세요"></input></h4>
+                    <label class="pwdRedCheck"></label>
                    
-                    <h4 class="changinfoPwdModify_newpwd">변경 비밀번호<input type="password" class="changinfoPwdModify_newpwd_form" name="newPwd" id="newPwd"></input>
+                    <h4 class="changinfoPwdModify_newpwd">변경 비밀번호<input type="password" class="changinfoPwdModify_newpwd_form" name="newPwd" id="newPwd" maxlength="12" required></input>
                     <br></h4>
+                    <!-- 
                     <div class="check_font" id="newPwd_check"></div>
+                     비밀번호는 영문 대소문자와 숫자, 특수문자 포함 8~12자로 입력하세요. 
+                     -->
+                    <label class="pwdRedCheck2"></label>
                    
-                    <h4 class="changinfoPwdModify_newpwd2">비밀번호 확인<input type="password" class="changinfoPwdModify_newpwd_form2" name="newPwd2" id="newPwd2"></input>
+                    <h4 class="changinfoPwdModify_newpwd2">비밀번호 확인<input type="password" class="changinfoPwdModify_newpwd_form2" name="newPwd2" id="newPwd2" maxlength="12" required></input>
                     <br></h4>                    
+                    <!-- 
                     <div class="check_font" id="newPwd2_check"></div>
-                    <button type="submit" class="changinfoPwdModify_pwdbutton" id="updatePwdBtn">비밀번호 변경</button>
+                     비밀번호가 일치하지 않습니다.
+                     -->
+                    <label class="pwdRedCheck3"></label>
+                    
+                    <button type="submit" class="changinfoPwdModify_pwdbutton" name="changinfoPwdModify_pwdbutton" id="updatePwdBtn">비밀번호 변경</button>
                 </form>
             </div>
         </div>
@@ -105,27 +116,70 @@
 		}); */
     </script>
      -->
+    
+    <script>
+    let 
+    </script>
      
     <script>
-		$("#updatePwdBtn").on('click', function(){
-			const pwd = document.getElementById('pwd');
-			const newPwd = document.getElementById('newPwd');
-			const newPwd2 = document.getElementById('newPwd2');
+		function validate(){
+			return true;
+		}
+	
+		$(document).on('keyup',".changinfoPwdModify_pwd_form", function(){
 			
-			/* 하나라도 공란으로 입력 시 alert 후 submit 하지 않음 */
-	        if(pwd.value == "" || newPwd.value == "" || newPwd2.value == "") {
-	            alert("비밀번호를 입력해주세요.");
-	            return false;
-	        }
-	        
-	         /* 비밀번호와 비밀번호 확인의 값이 다를 시 alert 후 submit 하지 않음 */
-	        if(newPwd.value != newPwd2.value) {
-	            alert("비밀번호와 비밀번호 확인이 다릅니다.");
-	            return false;
-	        }	         
-	        return true;
-		});
-	</script>	
+			let pwd = $("[name=pwd]");
+			let isUsable = false;
+			let pCheck = false;
+			
+				$.ajax({
+					url : "/mypage/pwdCheck",
+					type : "post",
+					data : { pwd : pwd.val() },
+					success : function(result){
+						console.log(result);
+						if(result == "fail"){							
+							$(".pwdRedCheck").text("비밀번호가 일치하지 않습니다").css("color", "red");
+							pCheck = true;
+						} else {
+							$(".pwdRedCheck").
+							pCheck = false;
+						}												
+					},
+					error : function(e){
+						console.log(e);
+					}
+				});					
+		});		
+	</script> 
+	
+	<script>
+    
+    let pCheck2 = false;
+    let pCheck3 = false;
+    
+    $(document).on("keyup",".changinfoPwdModify_newpwd_form", function(){
+    	let regExp = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}/;
+    	if(regExp.test($(".changinfoPwdModify_newpwd_form").val())){
+    		$(".pwdRedCheck2").text("").css("color", "blue");
+    		pCheck2 = true;
+    	}else {
+	    	$(".pwdRedCheck2").text("영문 대소문자와 숫자, 특수문자를 포함한 8~12자로 입력하세요.").css("color", "red");
+	    	pCheck2 = false;
+    	}
+    })
+    
+    $(document).on("keyup",".changinfoPwdModify_newpwd_form2", function() {
+    	if($(".changinfoPwdModify_newpwd_form2").val()==$(".changinfoPwdModify_newpwd_form").val()){
+    		$(".pwdRedCheck3").text("사용가능한 비밀번호입니다.").css("color", "blue");
+    		pCheck3 = true;
+    	}else {
+    		$(".pwdRedCheck3").text("비밀번호 확인이 일치하지 않습니다").css("color", "red");
+    		pCheck3 = false;
+    	}
+    })    
+    </script>
+        	
 
 </body>
 </html>

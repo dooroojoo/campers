@@ -194,13 +194,12 @@ body {
 
 .image_area{
 	width: 7.5rem;
-  height: 7.5rem;
+    height: 7.5rem;
 }
 
 .image_area div_after{
-	width: 13remrem;
-    height: 8.5rem;
-    margin-left: 50%;
+	width: 7.5rem;
+    height: 7.5rem;
 }
 
 .profileInput{
@@ -209,10 +208,27 @@ body {
 	margin-left : 25%;
 }
 
-.profileImg after{
-	width: 13remrem;
-    height: 8.5rem;
-    margin-left: 50%;
+
+.afterInput{
+	margin-left: 55px;
+	margin-top: 20px;
+	width: 12rem;
+	height: 9rem;
+}
+
+
+.profileImg2 after{
+	margin-left: 55px;
+    margin-top: 20px;
+    width: 12rem;
+    height: 9rem;
+}
+
+.mypage_character2{
+	margin-left: 55px;
+    margin-top: 20px;
+    width: 12rem;
+    height: 9rem;
 }
 
 .mypage_content_1, .mypage_content_2, .mypage_content_4{
@@ -221,6 +237,22 @@ body {
   border: 0px solid gray;
   margin-top : 10rem;
   margin-left : 50px;
+}
+
+.mypageProfileImageButton{
+    width: 100px;
+    height: 30px;
+    background: black;
+    color: wheat;
+    font-weight: bold;
+    margin-left: 93px;
+}
+
+.mypageProfileImageLebel{
+	font-size: 8px;
+    font-weight: bold;
+    color: gray;
+    margin-left: 83px;
 }
 
 .mypage_content_1{
@@ -269,7 +301,11 @@ body {
   margin-left: 20px;
 }
 
-.mypage_character{
+.inputImgPreview preview{
+	
+}
+
+.profileImg{
   margin-left: 55px;
   margin-top: 20px;
   width: 12rem;
