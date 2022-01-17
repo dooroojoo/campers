@@ -1,5 +1,5 @@
 package com.cp.campers.mypage.model.vo;
-
+ 
 import java.util.List;
 
 import lombok.Data;

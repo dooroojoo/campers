@@ -27,7 +27,7 @@ public interface MypageMapper {
 	// 게시물 조회
 	List<Board> findAllBoard();
 	
-	// 찜한 회원 목록
+	// 찜한 회원 목록 
 	List<WishCamp> findAllWishCamp();
 		
 	/* 캠핑장 등록 */

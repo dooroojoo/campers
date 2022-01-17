@@ -315,7 +315,7 @@ public class MypageServiceImpl implements MypageService{
 		return map;
 	}
 	
-	/* 사업자 예약내역 확인 */
+	/* 사업자 예약내역 확인  */
 	@Transactional
 	@Override
 	public Map<String, Object> selectMyHostReserveList(int userNo, int page) {

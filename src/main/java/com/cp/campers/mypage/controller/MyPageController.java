@@ -803,7 +803,7 @@ public class MyPageController {
 
 		// camp.setUserNo(user.getUserNo());
 		// camp.setUserNo(user.getUserNo());
-		// model.toString();
+		// model.toString();  
 
 		int userNo = user.getUserNo();
 

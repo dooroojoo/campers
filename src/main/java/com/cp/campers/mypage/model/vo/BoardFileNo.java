@@ -8,3 +8,4 @@ public class BoardFileNo {
 	private Attachment attachment;
 
 }
+ 
