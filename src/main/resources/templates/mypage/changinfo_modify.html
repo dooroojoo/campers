@@ -59,7 +59,7 @@
                     <h4 class="changinfo_phone">전화번호(<label class="changinfo_content_star">*</label>)<input type="text" class="changinfo_phone_form2" id="phone" name="phone" maxlength="11" required placeholder="전화번호" th:value="${ member.phone }"></input></h4>
                     <div class="check_font" id="phone_check"></div>
                     
-                    <h4 class="changinfo_nickname">닉네임<input type="text" class="changinfo_nickname_form2" id="nickName" name="nickName" placeholder="닉네임" maxlength="8" oninput="checkNickName"></input><button type="button" class="changinfo_pwdbutton" name="nickNameCheck_btn" id="nickNameCheck">중복확인</button></h4>
+                    <h4 class="changinfo_nickname">닉네임<input type="text" class="changinfo_nickname_form2" id="nickName" name="nickName" placeholder="닉네임" maxlength="8" oninput="checkNickName" th:value="${ member.nickName }"></input><button type="button" class="changinfo_pwdbutton" name="nickNameCheck_btn" id="nickNameCheck">중복확인</button></h4>
                      
                     <span class="id_ok">사용 가능한 닉네임 입니다.</span>
                     <span class="id_already">사용 불가능한 닉네임 입니다.</span>
@@ -190,7 +190,6 @@
     </script>
      -->
      
-    
     <script>
 		function validate(){
 			return true;
@@ -224,14 +223,7 @@
 								isUsable = false;
 							}
 						}
-						
-						/*
-						if(isUsable){
-							$("#submit").removeAttr("disabled");
-						} else {
-							$("#submit").attr("disabled", true);
-						}
-						*/
+												
 					},
 					error : function(e){
 						console.log(e);

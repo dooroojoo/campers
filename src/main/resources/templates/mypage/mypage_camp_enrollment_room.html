@@ -46,6 +46,14 @@
                     <th colspan="2">객실 추가 등록 신청서</th>
                 </tr>                
                 <tr>
+                  	<th>캠핑장 선택</th>
+                	<td><select class="campCheck" name="campCheck">
+                			<option th:each="camp : ${campList}" th:value="${camp.campNo}" name="campNo" id="campName" th:text="${camp.campName}"></option>
+                			
+                		</select>
+                	</td>
+                </tr>
+                <tr>
                     <th>객실 최대인원</th>
                     <td><input class="textbox" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요."></td>
                 </tr>
@@ -65,9 +73,22 @@
                     <th>객실 소개</th>
                     <td><input class="textbox" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."></td>
                 </tr>
-                <tr>
+                 <tr>
                     <th>객실 사진</th>
-                    <td><input type="file" name="roomMultiFiles" multiple>
+                    <td>
+                		<input type="file" class="imageinput image21" name="roomMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image22" name="roomMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image23" name="roomMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image24" name="roomMultiFiles"  accept="image/*" hidden>
+	                    <input type="file" class="imageinput image25" name="roomMultiFiles"  accept="image/*" hidden>
+	                  
+	                    <div class="previewBox">
+	                        <div class="inputImgPreview preview21"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                        <div class="inputImgPreview preview22"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                        <div class="inputImgPreview preview23"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                        <div class="inputImgPreview preview24"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                        <div class="inputImgPreview preview25"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    </div>
                 </tr>
                 <tr>
                     <th>객실 바닥 형태</th><!-- name="roomFloor"  -->
@@ -138,13 +159,28 @@
                 <button type="button" id="room_plus_button" class="room_plus_button"><img class="room_plus_img" src="/resources/images/mypage/plus.png">객실 추가하기</button>
             </div>
             <div class="camp_plus">
-                <input class="camp_plus_button" type="submit" value="객실 등록하기">
+                <input class="camp_plus_button" id="submit" type="submit" value="객실 등록하기">
             </div> 
             </form>
         </div>
     </div>
     <!-- footer -->
     <div th:replace="common/footer.html"></div>
+    
+    <script>
+    $(function(){
+    	let campNo = $('#campNo').val();
+    	
+    	$('submit').on('click', function(){
+    		$('#enrollForm').submit();
+    	})
+    })
+    
+    </script>
+    
+    
+    
+    
     
     <script>
     $("#room_plus_button").on("click", function(e){
@@ -163,6 +199,65 @@
 		"<tr><th>객실 수량</th><td><input class='textbox2' name='roomAmount' type='number' placeholder='1'></td></tr>"
 		);   
     });
+    </script>
+    
+    <script>
+    $(function(){
+    	$('.preview01').click(function (e){
+   			$('.image01').click();
+   		}) 
+   		$('.preview1').click(function (e){
+   			$('.image1').click();
+   		}) 
+   		$('.preview2').click(function (e){
+   			$('.image2').click();
+   		}) 	
+   		$('.preview3').click(function (e){
+   			$('.image3').click();
+   		})
+   		$('.preview4').click(function (e){
+   			$('.image4').click();
+   		}) 	
+   		$('.preview5').click(function (e){
+   			$('.image5').click();
+   		})
+   		$('.preview21').click(function (e){		// 이미지 감싸는 div profileInput
+   			$('.image21').click();				// 파일타입 preview1
+   		}) 
+   		$('.preview22').click(function (e){
+   			$('.image22').click();
+   		}) 	
+   		$('.preview23').click(function (e){
+   			$('.image23').click();
+   		})
+   		$('.preview24').click(function (e){
+   			$('.image24').click();
+   		}) 	
+   		$('.preview25').click(function (e){
+   			$('.image25').click();
+   		}) 	
+   
+    })
+    </script>
+    
+    <script>
+    /* input type file 요소들 */
+    const fileElements = document.querySelectorAll("[type=file]");
+    /* div image_area 요소들 */
+    const imageArea = document.querySelectorAll(".inputImgPreview");
+    /* input type file 요소에 change 이벤트 발생 시 (파일 첨부 발생) */
+    fileElements.forEach(item => item.addEventListener('change', preview));
+
+    function preview(){
+    	let index = Array.from(fileElements).indexOf(this);   //input type="file" 이게 this
+    	if(this.files && this.files[0]) {
+    		let reader = new FileReader();
+    		reader.readAsDataURL(this.files[0]);
+    		reader.onload = function() {
+    			imageArea[index].innerHTML = "<img class='afterInput' src='" + reader.result + "'>";
+    		}
+    	}
+    }
     </script>
     
     <!-- <script>
