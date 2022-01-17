@@ -85,10 +85,10 @@
 
                 <!-- 4. 경고 메시지 -->
                 <div class="report_message">
-                    <div class="report_img">
+                    <div class="report_img warning">
                         <img src="/resources/images/admin/report/icon-warning.png">
                     </div>
-                    <p>허위 신고일 경우 서비스의 이용제한 등 불이익을 받을 수 있으니 <br> 신중하게 판단하신 후 신고해주세요.</p>
+                    <p class="warning-p">허위 신고일 경우 서비스의 이용제한 등  <br> 불이익을 받을 수 있으니 신중히 신고해주세요</p>
                 </div>
 
 
@@ -106,17 +106,13 @@
             <script>
 		    $(function(){
 		        $("#reportBtn").on('click',function(){
-		        	
 					let param = {};
-					// {} : key와 value로 이루어진 객체 생성 
 					param.id = $("#reportForm [name=id]").val();
 					param.reason = $("#reportForm [name=reason]:checked").val();
 					param.content = $("#reportForm [name=content]").val();
 					param.victim = $("#reportForm [name=victim]").val();
 					param.suspect = $("#reportForm [name=suspect]").val();
 					param.reportType = $("#reportForm [name=reportType]").val();
-					
-					console.log(param);
 					
 					let etc = "기타";
 					
@@ -154,7 +150,6 @@
 			         });
 			     });
 			</script>
-
         </div>
     </div>
 </div>

@@ -16,14 +16,14 @@
 /*----- 모달창 크기 고정 -----*/
 .report_modal{
     position: absolute;
-    top: -25%; left: 50%;
+    top: -27%; left: 50%;
     background-color: white;
     display: flex;
     flex-direction: column;
     justify-content:flex-start;
     align-items: center;
     border-radius: 10px;
-    width: 600px;
+    width: 530px;
     height: 720px;
     text-align: center;
     border-radius: 12px;
@@ -56,7 +56,7 @@
 /*----- 창닫기 -----*/
 .close_icon{
     width: 90%;
-    height: 12%;
+    height: 9%;
     text-align: right; 
     font-size: 23px;
 }
@@ -71,7 +71,12 @@
     width: 35px;
     height: 35px;
 }
-
+.warning img {
+	margin-top: 13px;
+}
+.warning-p {
+	margin-right: 40px;
+}
 
 /*----- 신고하기 -----*/
 /* 1. 신고하기 */
@@ -80,6 +85,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.report_title h2 {
+	margin: 15px 35px 15px 0px;
 }
 
 /* 2. 작성자 */
@@ -97,7 +106,7 @@
     margin: auto;
     padding: 15px;
     width: 290px;
-    height: 290px;
+    height: 310px;
     border: 1px solid #dadada;
 }
 
@@ -116,7 +125,7 @@
 }
 
 .etc_area textarea {
-    margin: 5px 15px;
+    margin: 5px 0px;
     padding: 5px;
     border: 1px solid #dadada;
 }
