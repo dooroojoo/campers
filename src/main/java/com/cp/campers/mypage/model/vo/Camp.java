@@ -21,6 +21,9 @@ public class Camp {
 	private String checkin;
 	private String checkout;
 	private String refusal;
+	private int fileLevel;
+	private String fileRoute;
+	private String fileName;
 	
 	/* BusinessType 연결 */
 	/* 한 캠프는 여러 사업장 형태를 가질 수 있음 - BUSINESS_TYPE 조인한 결과 값 */

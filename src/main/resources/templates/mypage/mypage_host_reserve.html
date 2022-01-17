@@ -38,20 +38,27 @@
                     <th class="mypage_host_reserve_table_header_status">예약 상태</th>
                 </tr>
                  
-                <tr th:each="camp : ${ campList }">
+                <tr>
                     <th class="mypage_host_reserve_table_body"></th>
                     <th class="mypage_host_reserve_table_body">
                     	<img class="mypage_host_reserve_table_img">			<!--  th:src="${ camp.fileNo }" -->
-                    	<p class="camp_name" th:text="${ camp.campName }"></p></th>
+                    	<p class="camp_name">캠핑장이름 camp.campName</p>						<!--  th:text="${ camp.campName }" -->
+                    	<p class="camp_name">객실이름 room.roomName</p>
+                    </th>
                     <th class="mypage_host_reserve_table_body">
-                    	<p class="guest_name"></p>							<!-- th:text="${ reserve.reserName }" -->
-                    	<small class="guest_phone"></small></th>			<!--  th:text="${ reserve.phone }" -->
-                    <th class="mypage_host_reserve_table_body"></th>
+                    	<p class="guest_name">예약회원 이름 member.userName</p>							<!-- th:text="${ reserve.reserName }" -->
+                    	<small class="guest_phone">회원 전화번호 member.phone</small>				<!--  th:text="${ reserve.phone }" -->
+                    </th>			
                     <th class="mypage_host_reserve_table_body">
-                    	<p class="camp_date"></p> ~ <p class="camp_date"></p>	<!--  th:text="${ reserve.checkIn }" --> <!--  th:text="${ reserve.checkOut }" -->
-                        <small class="camp_room" th:text="${ camp.campAddress }"></small></th>
+                    	<p class="camp_name">요청사항 reserve.request</p>
+                    </th>
+                    <th class="mypage_host_reserve_table_body">
+                    	<p class="camp_date">입실날짜 reserve.checkIn</p> ~ <p class="camp_date">퇴실날짜 reserve.checkOut</p>	<!--  th:text="${ reserve.checkIn }" --> <!--  th:text="${ reserve.checkOut }" -->
+                        <small class="camp_room" th:text="${ camp.campAddress }"></small>
+                    </th>
                     <th class="mypage_host_reserve_table_body2">
-                    	<input class="mypage_host_reserve_button" type="button" value="입금완료"></th>
+                    	<input class="mypage_host_reserve_button" type="button" value="입금완료">
+                    </th>
                 </tr>
                  
                 <tr>

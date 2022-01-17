@@ -31,14 +31,13 @@
     height: 500px;
     margin-top: 30px;
     margin-left: 30%;
-    background: lightgray;
 }
 
 .changinfo_content_header{
     padding : 10px;
     font-weight: bold;
     font-size: 1.2rem;
-    border-bottom: 3px solid gray;
+    border-bottom: 3px solid lightgray;
     text-align: center;
 }
 
@@ -52,12 +51,14 @@
 }
 
 .changeinfo_changebutton{
-    margin-left: 130px;
-    background : black;
+    font-size: 15px;
+    margin-left: 110px;
+    background: black;
     color: white;
     font-weight: bold;
-    width: 6rem;
-    height: 2.3rem;
+    width: 7rem;
+    height: 35px;
+    border-radius: 10px;
 }
 
 .changeinfo_outbutton{
@@ -70,12 +71,14 @@
 }
 
 .changinfo_pwdbutton{
-    font-size : 0.7rem;
+    font-size: 15px;
     margin-left: 44px;
-    background : black;
+    background: black;
     color: white;
     font-weight: bold;
     width: 7rem;
+    height: 35px;
+    border-radius: 10px;
 }
 
 .changinfo_check{
@@ -115,26 +118,53 @@
 
 .changinfo_id_form2{
     margin-left : 65px;
+    font-size: 15px;    
+    font-weight: bold;
+    height: 35px;
+    
 }
 
 .changinfo_name_form2{
     margin-left: 81px;
+    font-size: 15px;    
+    font-weight: bold;
+    height: 35px;
+    
 }
 
 .changinfo_pwd_form2{
     margin-left : 31px;
+    font-size: 15px;    
+    font-weight: bold;
+    height: 35px;
+    
 }
 
 .changinfo_email_form2{
     margin-left : 47px;
+    font-size: 15px;    
+    border-radius: 10px;
+    height: 35px;
+    padding-left: 10px;
+    border : 1px solid;
 }
 
 .changinfo_phone_form2{
     margin-left: 31px;
+    font-size: 15px;    
+    border-radius: 10px;
+    height: 35px;
+    padding-left: 10px;
+    border : 1px solid;
 }
 
 .changinfo_nickname_form2{
     margin-left : 65px;
+    font-size: 15px;    
+    border-radius: 10px;
+    height: 35px;
+    padding-left: 10px;
+    border : 1px solid;
 }
 
 .id_ok{

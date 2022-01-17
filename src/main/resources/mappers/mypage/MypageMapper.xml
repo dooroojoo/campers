@@ -44,10 +44,13 @@
 		<result property="checkin" column="CHECKIN"/>
 		<result property="checkout" column="CHECKOUT"/>
 		<result property="refusal" column="REFUSAL"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="fileRoute" column="FILE_ROUTE"/>
+		<result property="fileName" column="FILE_NAME"/>
 		<collection property="campBusinessTypeList" resultMap="CampBusinessTypeResultMap"/>
 		<collection property="campFacilityList" resultMap="CampFacilityResultMap"/>
 		<collection property="campFileNoList" resultMap="CampFileNoResultMap"/>
-		<!-- <collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/> -->
+		<collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/>
 	</resultMap>
 		<!-- 
 		<collection property="imgFileList" resultMap="imageFileResultMap"/>
@@ -118,7 +121,7 @@
 		<result property="campNo" column="CAMP_NO"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.camp.model.vo.ImageFile" id="imageFileResultMap">
+	<resultMap type="com.cp.campers.mypage.model.vo.ImageFile" id="imageFileResultMap">
 		<id property="fileNo" column="FILE_NO"/>
 		<result property="fileName" column="FILE_NAME"/>
 		<result property="fileRoute" column="FILE_ROUTE"/>
@@ -160,7 +163,6 @@
 		<result property="status" column="FILE_STATUS"/>
 		<result property="fileLevel" column="FILE_LEVEL"/>
 		<result property="fileOriginName" column="FILE_ORIGIN_NAME"/>
-		<result property="deletedName" column="DELETED_NAME"/>
 	</resultMap>
 	
 	<resultMap id="reserPayResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
@@ -326,39 +328,7 @@
 			, #{ checkout }
 		)
    </insert>
-   <!-- 
-   <insert id="insertCampBusinessType">
-   	INSERT
-   	INTO CAMP_BUSINESS_TYPE
-   	(
-   		  CAMP_NO
-   		, BUSINESS_NO
-   		
-   	)
-   	VALUES
-   	(
-   		SEQ_CAMP_NO.CURRVAL
-   		, #{ businessNo }
-   	)
-   </insert>
-    -->
-   <!-- 
-   <insert id="insertCampFacility">
-   	INSERT
-   	INTO CAMP_FACILITY
-   	(
-   		  CAMP_NO
-   		, FACILITY_NO
-   		
-   	)
-   	VALUES
-   	(
-   		SEQ_CAMP_NO.CURRVAL
-   		, #{ facilityNo }
-   	)
-   </insert>
-    -->
-    
+   
    <!-- 캠핑장 사진 -->
    <insert id="insertCampFile">
    INSERT
@@ -391,6 +361,7 @@
    	)
    </insert>
    
+   <!-- 캠핑장 등록할때 숙소 등록 -->
    <insert id="insertRoom" parameterType="com.cp.campers.mypage.model.vo.Room">
    	INSERT
    	INTO ROOM
@@ -424,7 +395,43 @@
    		, SEQ_CAMP_NO.CURRVAL
    	)
    </insert>
+   
+   <!-- 캠핑장 관리에서의 숙소등록 -->
+   <insert id="insertRoom2" parameterType="com.cp.campers.mypage.model.vo.Room">
+   	INSERT
+   	INTO ROOM
+   	(
+   		  ROOM_NO
+   		, ROOM_NAME
+   		, ROOM_MEMBER
+   		, ROOM_PRICE
+   		, ROOM_SIZE
+   		, ROOM_FLOOR
+   		, ROOM_PARKING
+   		, ROOM_INFO
+   		, ROOM_AMOUNT
+   		, ROOM_FORM
+   		, ROOM_COUNT
+   		, CAMP_NO
+   	)
+   	VALUES
+   	(
+   		  SEQ_ROOM_NO.NEXTVAL
+   		, #{ roomName, jdbcType=VARCHAR }
+   		, #{ roomMember, jdbcType=VARCHAR }
+   		, #{ roomPrice, jdbcType=VARCHAR }
+   		, #{ roomSize, jdbcType=VARCHAR }
+   		, #{ roomFloor, jdbcType=VARCHAR }
+   		, #{ roomParking, jdbcType=VARCHAR }
+   		, #{ roomInfo, jdbcType=VARCHAR }
+   		, #{ roomAmount, jdbcType=VARCHAR }
+   		, #{ roomForm, jdbcType=VARCHAR }
+   		, #{ roomCount, jdbcType=VARCHAR }
+   		, #{ campNo }
+   	)
+   </insert>
       
+   <!-- 회원 정보 수정 -->   
    <update id="changeInfoModify" parameterType="com.cp.campers.member.model.vo.Member">
 		UPDATE MEMBER
 		   SET EMAIL = #{ email }
@@ -433,19 +440,15 @@
 		WHERE USER_NO = #{ userNo }
 	</update>
 	
+	<!-- 비밀번호 변경 미구현 -->
 	<update id="changeInfoPwdModify" parameterType="com.cp.campers.member.model.vo.Member">
 		UPDATE MEMBER
 		   SET USER_PWD = #{ pwd }		     
 		 WHERE USER_NO = #{ userNo }
 		   AND USER_PWD = #{ pwd }
 	</update>
-      
-   <select id="nickNameCheck" parameterType="String" resultType="int">
-		SELECT COUNT(NICKNAME)
-		FROM MEMBER
-		WHERE NICKNAME = #{ nickName }
-	</select>
-	
+   
+	<!-- 비밀번호 체크 미구현 -->
 	<select id="pwdCheck" parameterType="com.cp.campers.member.model.vo.Member" resultType="String">
 		SELECT 
 			   USER_PWD
@@ -453,14 +456,23 @@
 		 WHERE USER_ID = #{ id }
 	</select>
 	
+	<!-- 비밀번호 업데이트 미구현 -->
 	<!-- parameterType="com.cp.campers.member.model.vo.Member" -->
 	<update id="pwdUpdate" parameterType="map">
 		UPDATE MEMBER
 		   SET USER_PWD = #{ pwd }
 		 WHERE USER_ID = #{ id }
 		   AND USER_PWD = #{ pwd }
-	</update>
+	</update>	
 	
+   <!-- 닉네임 체크 -->   
+   <select id="nickNameCheck" parameterType="String" resultType="int">
+		SELECT COUNT(NICKNAME)
+		FROM MEMBER
+		WHERE NICKNAME = #{ nickName }
+	</select>
+	
+	<!-- 회원탈퇴 미구현 -->
 	<update id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
 		UPDATE MEMBER
 		   SET STATUS = 'X'
@@ -476,8 +488,9 @@
    </delete>
     -->
  
- 	<!--   -->
- 	<select id="selectMyBoardList" parameterType="hashmap" resultMap="boardResultMap">
+ 	<!-- parameterType="hashmap"   -->
+ 
+ 	<select id="selectMyBoardList" resultMap="boardResultMap">
 	SELECT *
 	FROM (SELECT ROWNUM RNUM, A.*
 	FROM (select 
@@ -563,9 +576,9 @@
 		where writer = #{writer}
 		and status ='N'
 	</select>
- 	 
- 	 <select id="selectThumbnailList" resultMap="boardResultMap">
-	select
+ 	
+ 	<select id="selectThumbnailList" resultMap="boardResultMap">
+		select
 	        bid,
 	        file_level,
 	        file_route,
@@ -576,9 +589,9 @@
 	  where file_level = 0
 	  and file_status = 'N'
 	  order by bid desc
-	</select>
-	
-	<select id="selectCampImageList" resultMap="imageFileResultMap">
+	</select> 
+ 	 	
+	<select id="selectCampImageList" resultMap="CampResultMap">
 		select
 		        camp_no,
 		        file_level,
@@ -587,24 +600,24 @@
 		    from camp
 		    join camp_file using(camp_no)
 		    join imagefile using(file_no)
-		  where file_level = 1
-		  and file_status = 'N'
+		  where file_level = 0
+		  and file_status = 'Y' <!-- N으로 하면 오류  -->
 		  order by camp_no desc
 	</select>
 	
 	
-	 <select id="selectThumbnailList2" resultMap="boardResultMap">
+	 <select id="selectThumbnailList2" resultMap="CampResultMap">
 	select
-	        bid,
-	        file_level,
-	        file_route,
-	        file_name
-	    from board
-	    join board_file using(bid)
-	    join imagefile using(file_no)
-	  where file_level = 0
-	  and file_status = 'N'
-	  order by bid desc
+		        camp_no,
+		        file_level,
+		        file_route,
+		        file_name
+		    from camp
+		    join camp_file using(camp_no)
+		    join imagefile using(file_no)
+		  where file_level = 0
+		  and file_status = 'Y' <!-- N으로 하면 오류 -->
+		  order by camp_no desc
 	</select>
 	
 	<select id="selectMyCampList" resultMap="CampResultMap">
@@ -682,7 +695,7 @@
  	 	      ORDER BY USER_NO DESC) A) 	 
  	 </select>
  	 
- 	 <select id="selectHostReserveList" resultMap="reserPayResultMap">
+ 	 <!-- <select id="selectReserveList" resultMap="reserPayResultMap">
  	 	SELECT *
 	 	 	FROM (SELECT ROWNUM RNUM, A.*
 	 	 	FROM (SELECT
@@ -704,7 +717,7 @@
 	 	 	      WHERE R.RESER_STATE = 'Y'
 	 	 	        AND R.USER_NO = #{ userNo }
 	 	 	      ORDER BY USER_NO DESC) A)
- 	 </select>
+ 	 </select> -->
  	 
  	  	 
  	<select id="selectMyMemberList" parameterType="hashmap" resultMap="memberResultMap">

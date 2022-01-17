@@ -53,6 +53,9 @@ public interface MypageMapper {
 
 	// 캠프장 등록시 객실 등록
 	void insertRoom(Room room);
+	
+	// 객실만 등록
+	void insertRoom2(Room room);
 		
 	// 캠핑장 사진 파일 등록
 	void insertCampFile(CampFile campFile);
@@ -77,7 +80,7 @@ public interface MypageMapper {
 
 	List<Board> selectThumbnailList();
 	
-	List<Member> selectThumbnailList2();
+	List<Camp> selectThumbnailList2();
 
 	int getListCountMyBoard(int writer);
 
@@ -107,7 +110,7 @@ public interface MypageMapper {
 	/* 사업자 예약내역 */
 	List<Camp> selectMyHostReserveList(Map<String, Object> param);
 
-	List<ImageFile> selectCampImageList();
+	List<Camp> selectCampImageList();
 
 
 	/* 내 캠핑장 찾기 */

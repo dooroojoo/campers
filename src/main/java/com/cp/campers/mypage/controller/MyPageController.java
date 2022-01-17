@@ -83,11 +83,11 @@ public class MyPageController {
 
 		// 보류
 		Map<String, Object> map2 = mypageService.selectMyMemberList(userNo, page);
-		log.info("map2 : " + map2.toString());
+		//log.info("map2 : " + map2.toString());
 
 		Date today = new Date();
 
-		log.info("date : " + today);
+		//log.info("date : " + today);
 
 		mv.addObject("boardList", map.get("boardList"));
 		mv.addObject("pi", map.get("pi"));
@@ -98,7 +98,7 @@ public class MyPageController {
 		model.addAttribute("memberList", map2.get("memberList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("standardDate", new Date());
-		model.addAttribute("thumbnailList", map.get("thumbnailList"));
+		//model.addAttribute("thumbnailList", map.get("thumbnailList"));
 		mv.setViewName("mypage/mypage");
 
 		return mv;
@@ -329,27 +329,39 @@ public class MyPageController {
 		return "mypage/mypage_camp_enrollment";
 	}
 
+	/* 숙소 등록 */
 	@GetMapping("/mypageCampEnrollmentRoom")
-	public String mypage_camp_enrollment_roomForm(@AuthenticationPrincipal UserImpl user, Model model) {
+	public String mypage_camp_enrollment_roomForm(Camp camp, @AuthenticationPrincipal UserImpl user, Model model) {
 
 		int userNo = user.getUserNo();
 		int page = 1;
+		
+		// log.info("page : " + page);
+		// log.info("user : " + user.toString());
+		
 		Map<String, Object> map = mypageService.selectMyCampList(userNo, page);
 
 		model.addAttribute("campList", map.get("campList"));
+		model.addAttribute("pi", map.get("pi"));
+		model.addAttribute("campImageList", map.get("campImageList"));
 
+		log.info("map : " + map.toString());
+		log.info("model : " + model.toString());
+		
 		return "mypage/mypage_camp_enrollment_room";
 	}
 
-	/* 숙소 등록 */
+	/* 숙소 등록 form */
 	@PostMapping("/mypageCampEnrollmentRoom")
-	public String mypage_camp_enrollment_room(Member member, Camp camp, @RequestParam(value="roomList[]") List<Room> roomList, @AuthenticationPrincipal UserImpl user,
+	public String mypage_camp_enrollment_room(Member member, Camp camp, Room room, @AuthenticationPrincipal UserImpl user,
 			@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
 			@RequestParam MultipartFile[] roomMultiFiles, HttpServletRequest request, RedirectAttributes rttr,
-			Locale locale) {
+			Locale locale, int campNo) {
 
 		/* 
+		 * @RequestParam(value="roomList[]") List<Room> roomList
 		 * @RequestParam(value="CampBusinessTypeList") List<String> value
+		 * 
 		 * There is no getter for property named 'CampBusinessType' in 'class
 		 * com.cp.campers.mypage.model.vo.Camp' 검색 결과 vo와 Mapper.xml 에서 parameterType타입
 		 
@@ -386,11 +398,14 @@ public class MyPageController {
 		/* insertRoom에 campNo를 room에 넣어줌 */
 				
 		camp.setUserNo(user.getUserNo());
+		//room.setCampNo(campNo);
 		// camp.setCampNo(campNo);
 		// room.setCampNo(camp.getCampNo());
 		// room.setCampNo(camp.getCampNo(camp.setUserNo(user.getUserNo())));
 		
-		log.info("숙소 등록에 room : " + roomList.toString());
+		log.info("------------------------------------------------------------------");
+		
+		log.info("숙소 등록에 room : " + room.toString());
 		
 		/*
 		 * List<String> values = value; for(int i = 0; i < value.size(); i++) {
@@ -401,7 +416,7 @@ public class MyPageController {
 		// room.setUserNo(camp.getCampNo());
 		log.info("user : " + user.toString());
 		log.info("camp : " + camp.toString());
-		log.info("room : " + roomList.toString());
+		log.info("room : " + room.toString());
 
 		// camp.setUserNo(user.getUserNo());
 
@@ -486,7 +501,7 @@ public class MyPageController {
 		/* 캠프, 캠프 타입, 시설 타입, 객실 등록한 로그 파일 받아오기 */
 		// log.info("camp : " + camp.toString());
 
-		mypageService.mypageCampEnrollmentRoom(roomList, atta2);
+		mypageService.mypageCampEnrollmentRoom(room, atta2);
 
 		/* 숙소 등록 메세지 */
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
@@ -753,7 +768,23 @@ public class MyPageController {
 
 	/* 캠핑장 관리(사업자용) */
 	@GetMapping("/mypageCampManagement")
-	public String mypageCampManagement() {
+	public String mypageCampManagement(Camp camp, @AuthenticationPrincipal UserImpl user, Model model) {
+		
+		int userNo = user.getUserNo();
+		int page = 1;
+		
+		log.info("page : " + page);
+		log.info("user : " + user.toString());
+		
+		Map<String, Object> map = mypageService.selectMyCampList(userNo, page);
+
+		model.addAttribute("campList", map.get("campList"));
+		model.addAttribute("pi", map.get("pi"));
+		model.addAttribute("campImageList", map.get("campImageList"));
+
+		log.info("map : " + map.toString());
+		log.info("model : " + model.toString());
+				
 		return "mypage/mypage_camp_management";
 	}
 
@@ -767,11 +798,7 @@ public class MyPageController {
 	@GetMapping("/mypageGuestReserve")
 	public String mypageGuestReserve(Member member, ReserveInfo reserveInfo, @AuthenticationPrincipal UserImpl user,
 			Model model) {
-
-		// camp.setUserNo(user.getUserNo());
-		// camp.setUserNo(user.getUserNo());
-		// model.toString();
-
+	
 		int userNo = user.getUserNo();
 
 		int page = 1;
@@ -800,10 +827,6 @@ public class MyPageController {
 	/* 사업자 예약 내역 */
 	@GetMapping("/mypageHostReserve")
 	public String mypageHostReserve(Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
-
-		// camp.setUserNo(user.getUserNo());
-		// camp.setUserNo(user.getUserNo());
-		// model.toString();   
 
 		int userNo = user.getUserNo();
 

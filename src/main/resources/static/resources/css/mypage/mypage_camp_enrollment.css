@@ -67,10 +67,19 @@
 
 .textbox{
     height: 30px;
+    border-radius: 10px;
+    border : 1px solid;
 }
 
 .textbox2{
     height: 36px;
+    border-radius: 10px;
+    border : 1px solid;
+}
+
+.campCheck{
+	height: 40px;
+	border-radius: 10px;
 }
 
 input[type=number]:hover::-webkit-inner-spin-button {  
@@ -89,49 +98,48 @@ th{
 
 
 .room_plus{
-    display: flex;
-    background-color : black;
+    display: flex;    
     width: 180px;
     height: 30px;
     color: white;
-    font-size: 1.2rem;
     font-weight: bold;
     margin-top: 20px;
-    margin-left: 167px;
+    margin-left: 259px;
     padding-top: 10px;
+    border-radius: 10px;
     
 }
 
 .room_plus_button{
-	background-color : black;
-    width: 180px;
-    height: 30px;
+	background-color: black;
+    width: 200px;
+    height: 40px;
     color: white;
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: bold;
-    border: 1px;
-    
+    border-radius: 10px;    
 }
 
 .room_plus_img{
     width: 20px;
     height: 20px;
-    padding-top : 2px;
-    padding-left : 15px;
+    padding-top: 6px;
+    padding-left: 10px;
     padding-right: 10px;
 }
 
 .camp_plus{
-    margin-left : 50%;
+    margin-left : 38%;
 }
 
 .camp_plus_button{
-    background: black;
-    color : white;
-    font-weight: bold;
-    font-size: 1.2rem;
-    width : 180px;
+    background-color: black;
+    width: 200px;
     height: 40px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
 /* 푸터 */

@@ -28,15 +28,14 @@
     width: 600px;
     height: 250px;
     margin-top: 30px;
-    margin-left: 35%;
-    background: lightgray;
+    margin-left: 35%;    
 }
 
 .changinfo_content_header{
     padding : 10px;
     font-weight: bold;
     font-size: 1.2rem;
-    border-bottom: 3px solid gray;
+    border-bottom: 3px solid lightgray;
     text-align: center;
     color: red;
 }
@@ -56,14 +55,25 @@
     font-weight: bold;
     width: 10rem;
     height: 2.5rem;
+    border-radius: 10px;
 }
 
 .check_id_form{
     margin-left: 55px;
+    width: 13rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    border : 1px solid;
+    padding-left : 10px;
 }
 
 .check_pwd_form{
     margin-left: 13px;
+    width: 13rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    border : 1px solid;
+    padding-left : 10px;
 }
 
 /* 푸터 */
