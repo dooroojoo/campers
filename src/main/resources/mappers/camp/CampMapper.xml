@@ -30,7 +30,7 @@
       <result property="authorityDesc" column="AUTHORITY_DESC"/>
    </resultMap>
    
-   <!-- 회원 --> 
+   <!-- 숙소 --> 
    <resultMap type="com.cp.campers.camp.model.vo.Camp" id="campResultMap">
 		<id property="campNo" column="CAMP_NO"/>
 		<result property="campName" column="CAMP_NAME"/>
@@ -223,6 +223,12 @@
               , #{ reserNo }
               , #{ campNo })
 	</insert>
+	
+	<update id="reserveWrite">
+		UPDATE RESERVE
+		   SET WRITE_OR_NOT = 'Y'
+		 WHERE RESER_NO = #{reserNo}
+	</update>
 	
 	<update id="reviewDelete" parameterType="_int">
 		 UPDATE REVIEW

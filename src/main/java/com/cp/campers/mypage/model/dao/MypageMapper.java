@@ -123,6 +123,9 @@ public interface MypageMapper {
 	/* 회원 예약내역 */
 	List<ReserveInfo> selectMyGuestReserveList(Map<String, Object> param);
 
+	/* 예약 취소 */
+	int reserveCancle(int reserNo);
+	
 	/* 프로필 사진 변경 */
 	void updateProfilePath(Member member);
 
@@ -136,7 +139,6 @@ public interface MypageMapper {
 	List<BusinessReservation> selectBusinessReservationList(int userNo);
 
 	List<ReserveInfo> selectReserveInfoList();
-
 
 
 	void campImageNo();

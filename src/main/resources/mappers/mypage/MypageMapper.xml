@@ -172,6 +172,8 @@
 		<result property="bank" column="BANK"/>
 		<result property="roomQua" column="ROOM_QUA"/>
 		<result property="roomNo" column="ROOM_NO"/>
+		<result property="roomName" column="ROOM_NAME"/>
+		<result property="writeOrNot" column="WRITE_OR_NOT"/>
 		<association property="camp" resultMap="CampResultMap"/>
 	</resultMap>
 	
@@ -633,7 +635,7 @@
  	 	      WHERE C.CAMP_STATUS = 'Y'
  	 	        AND C.USER_NO = #{ userNo }
  	 	      ORDER BY USER_NO DESC) A) 	 
- 	 </select>
+ 	</select>
 	
  	<select id="selectMyHostReserveList" resultMap="CampResultMap">
  	 	SELECT *
@@ -671,7 +673,8 @@
 						     , RV.CHECKOUT
 						     , FLOOR(SYSDATE - to_date(RV.CHECKOUT, 'YYYY-MM-DD')) DEADLINE
 						     , RV.ROOM_NO
-						     , R.ROOM_NAME
+						     , ROOM_NAME
+						     , WRITE_OR_NOT
 						     , C.CAMP_NO
 						     , CAMP_NAME
 						     , CAMP_ADDRESS
@@ -691,6 +694,12 @@
 						     AND I.FILE_LEVEL = 0) A)
 		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
  	 </select>
+ 	 
+ 	 <update id="reserveCancle">
+ 	 	UPDATE RESERVE
+ 	 	   SET RESER_STATE = 'N'
+ 	 	 WHERE RESER_NO = #{reserNo}
+ 	 </update>
  	 	 
  	  	 
  	<select id="selectMyMemberList" parameterType="hashmap" resultMap="memberResultMap">

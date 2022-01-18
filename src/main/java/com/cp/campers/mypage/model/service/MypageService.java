@@ -75,6 +75,9 @@ public interface MypageService{
 
 	void pwdUpdate(String userId, String pwd, String newPwd);
 
+	/* 예약 취소 */
+	int reserveCancle(int reserNo);
+
 	void campImageInsert(Attachment attachment);
 
 	String roomInsert(Room room);

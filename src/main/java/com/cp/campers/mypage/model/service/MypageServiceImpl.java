@@ -354,6 +354,7 @@ public class MypageServiceImpl implements MypageService{
 		
 		log.info("listCount : {}", listCount);
 		
+		// page 객체
 		PageInfo pi = new PageInfo(page, listCount, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
 		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
@@ -362,6 +363,7 @@ public class MypageServiceImpl implements MypageService{
 		param.put("pi", pi);
 		param.put("userNo", userNo);
 		
+		// 예약리스트
 		List<ReserveInfo> reserveList = mypageMapper.selectMyGuestReserveList(param);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -372,7 +374,13 @@ public class MypageServiceImpl implements MypageService{
 		
 		return map;
 	}
-
+	
+	@Override
+	@Transactional
+	public int reserveCancle(int reserNo) {
+		return mypageMapper.reserveCancle(reserNo);
+	}
+	
 	/* 프로필 사진 변경 */
 	@Transactional
 	@Override
@@ -396,8 +404,6 @@ public class MypageServiceImpl implements MypageService{
 		mypageMapper.pwdUpdate(userId, pwd, newPwd);		
 	}
 
-	
-	
 	/*
 	@Override
 	public String pwdCheck(String id) {
