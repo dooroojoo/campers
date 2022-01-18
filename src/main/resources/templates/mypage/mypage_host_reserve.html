@@ -38,38 +38,36 @@
                     <th class="mypage_host_reserve_table_header_status">예약 상태</th>
                 </tr>
                  
-                <tr>
-                    <th class="mypage_host_reserve_table_body"></th>
+                 <!--
+                 		 th:each="businessReservation : ${ businessReservationList }"
+                 		 th:each="reserveInfo : ${ reserveInfoList }"		
+                  -->
+                 
+                <tr th:each="businessReservation : ${ businessReservationList }">
                     <th class="mypage_host_reserve_table_body">
-                    	<img class="mypage_host_reserve_table_img">			<!--  th:src="${ camp.fileNo }" -->
-                    	<p class="camp_name">캠핑장이름 camp.campName</p>						<!--  th:text="${ camp.campName }" -->
-                    	<p class="camp_name">객실이름 room.roomName</p>
+                    	<p class="camp_name" th:text="${ businessReservation.roomNo }"></p>
                     </th>
                     <th class="mypage_host_reserve_table_body">
-                    	<p class="guest_name">예약회원 이름 member.userName</p>							<!-- th:text="${ reserve.reserName }" -->
-                    	<small class="guest_phone">회원 전화번호 member.phone</small>				<!--  th:text="${ reserve.phone }" -->
+                    	<img class="mypage_host_reserve_table_img" th:src="${ businessReservation.fileRoute }+${ businessReservation.fileName }">		
+                    	<p class="camp_name" th:text="${ businessReservation.campName }"></p>					
+                    	<p class="camp_name" th:text="${ businessReservation.roomName }"></p>
+                    </th>
+                    <th class="mypage_host_reserve_table_body">
+                    	<p class="guest_name" th:text="${ businessReservation.userName }"></p>				
+                    	<small class="guest_phone" th:text="${ businessReservation.userPhone }"></small>				
                     </th>			
                     <th class="mypage_host_reserve_table_body">
-                    	<p class="camp_name">요청사항 reserve.request</p>
-                    </th>
+                    	<p class="camp_name"  th:text="${ businessReservation.request }"></p>	
+                    </th>								
                     <th class="mypage_host_reserve_table_body">
-                    	<p class="camp_date">입실날짜 reserve.checkIn</p> ~ <p class="camp_date">퇴실날짜 reserve.checkOut</p>	<!--  th:text="${ reserve.checkIn }" --> <!--  th:text="${ reserve.checkOut }" -->
-                        <small class="camp_room" th:text="${ camp.campAddress }"></small>
+                    	<lebel class="camp_name" th:text="${ businessReservation.checkIn }"/> ~ <label class="camp_name" th:text="${ businessReservation.checkOut }"/>	
+                        <small class="camp_room"></small>
                     </th>
                     <th class="mypage_host_reserve_table_body2">
                     	<input class="mypage_host_reserve_button" type="button" value="입금완료">
                     </th>
                 </tr>
-                 
-                <tr>
-                    <th class="mypage_host_reserve_table_body"></th>
-                    <th class="mypage_host_reserve_table_body"><img class="mypage_host_reserve_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
-                    <th class="mypage_host_reserve_table_body"><p class="guest_name">김광중</p><small class="guest_phone">010-1234-5678</small></th>
-                    <th class="mypage_host_reserve_table_body"></th>
-                    <th class="mypage_host_reserve_table_body"><p class="camp_date">2021.12.01(수) ~ 2021.12.02(목)</p>
-                        <small class="camp_room">아침고요수목원 101번 캠핑장</small></th>
-                    <th class="mypage_host_reserve_table_body2"><input class="mypage_host_reserve_button" type="button" value="신청취소"></th>
-                </tr>
+                
             </table>
         <!-- 페이징 처리 -->
      <div class="member_pages">

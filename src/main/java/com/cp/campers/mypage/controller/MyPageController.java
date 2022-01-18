@@ -40,7 +40,6 @@ import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
 import com.cp.campers.mypage.model.vo.Camp;
-import com.cp.campers.mypage.model.vo.CampFile;
 import com.cp.campers.mypage.model.vo.Room;
 import com.cp.campers.mypage.model.vo.RoomFile;
 import com.cp.campers.reservePayment.model.vo.ReserveInfo;
@@ -145,6 +144,8 @@ public class MyPageController {
 		mypageService.updateProfilePath(member);
 		log.info("마지막 member : " + member.toString());
 
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("mypageProfile", null, locale));
+		
 		// 리다이렉트
 		return "redirect:/mypage";
 	}
@@ -505,7 +506,6 @@ public class MyPageController {
 
 		/* 숙소 등록 메세지 */
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
-
 		return "redirect:/mypage/mypageCampManagement";
 	}
 
@@ -518,6 +518,7 @@ public class MyPageController {
 	/* 캠핑장 등록 입력폼 */
 	/* @AuthenticationPrincipal UserImpl user 유저 정보 가져오기 */
 	@PostMapping("/mypageCampEnrollment")
+
 	public String mypageCampEnrollment(Camp camp, @AuthenticationPrincipal UserImpl user, @Value("${custom.path.upload-images}") String uploadFilesPath,
 			Model model, @RequestParam MultipartFile singleFile, @RequestParam MultipartFile[] campMultiFiles,
 			@RequestParam List<MultipartFile> roomMultiFiles, HttpServletRequest request, CampRecord campRecord,
@@ -777,30 +778,16 @@ public class MyPageController {
 
 	/* 회원 예약 내역 */
 	@GetMapping("/mypageGuestReserve")
-	public String mypageGuestReserve(Member member, ReserveInfo reserveInfo, @AuthenticationPrincipal UserImpl user,
-			Model model) {
+	public String mypageGuestReserve(@AuthenticationPrincipal UserImpl user, Model model) {
 	
-		int userNo = user.getUserNo();
-
 		int page = 1;
-
-		log.info("page : " + page);
-
-		log.info("user : " + user.toString());
-		// log.info("camp : " + camp.toString());
-		// log.info("model : " + model.toString());
+		int userNo = user.getUserNo();
+		log.info("userNo : {}", userNo);
 
 		Map<String, Object> map = mypageService.selectMyGuestReserveList(userNo, page);
 
-		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
-		model.addAttribute("campImageList", map.get("campImageList"));
 		model.addAttribute("reserveList", map.get("reserveList"));
-
-		// model.addAttribute("user", user.getUserNo());
-
-		log.info("map : " + map.toString());
-		log.info("model : " + model.toString());
 
 		return "mypage/mypage_guest_reserve";
 	}
@@ -810,12 +797,11 @@ public class MyPageController {
 	public String mypageHostReserve(Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
 
 		int userNo = user.getUserNo();
-
 		int page = 1;
-
-		log.info("page : " + page);
-
+		
+				
 		log.info("user : " + user.toString());
+		
 		// log.info("camp : " + camp.toString());
 		// log.info("model : " + model.toString());
 
@@ -824,12 +810,15 @@ public class MyPageController {
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("campImageList", map.get("campImageList"));
-		model.addAttribute("reserveList", map.get("reserveList"));
+		model.addAttribute("reserveInfoList", map.get("reserveInfoList"));
+		model.addAttribute("businessReservationList", map.get("businessReservationList"));
 
+		
+		
 		// model.addAttribute("user", user.getUserNo());
 
-		log.info("map : " + map.toString());
-		log.info("model : " + model.toString());
+		//log.info("map : " + map.toString());
+		//log.info("model : " + model.toString());
 
 		return"mypage/mypage_host_reserve";
 	}

@@ -2,6 +2,8 @@ package com.cp.campers.mypage.model.vo;
 
 import java.util.List;
 
+import com.cp.campers.camp.model.vo.ImageFile;
+
 import lombok.Data;
  
 @Data

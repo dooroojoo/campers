@@ -19,6 +19,7 @@ import com.cp.campers.member.model.dao.MemberMapper;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.dao.MypageMapper;
+import com.cp.campers.mypage.model.vo.BusinessReservation;
 import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.CampBusinessType;
@@ -270,11 +271,11 @@ public class MypageServiceImpl implements MypageService{
 	@Transactional
 	@Override
 	public Map<String, Object> selectMyCampList(int userNo, int page) {
-		int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
+		// int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
 		/* 등록한 캠프장 수 */
-		log.info("listCount : " + listCount+"");
+		// log.info("listCount : " + listCount+"");
 		
-		PageInfo pi = new PageInfo(page, listCount, 10, 5);
+		PageInfo pi = new PageInfo(page, 10, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
 		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
 				
@@ -304,11 +305,11 @@ public class MypageServiceImpl implements MypageService{
 	@Transactional
 	@Override
 	public Map<String, Object> selectMyHostReserveList(int userNo, int page) {
-		int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
+		// int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
 		
-		log.info("listCount : " + listCount+"");
+		// log.info("listCount : " + listCount+"");
 		
-		PageInfo pi = new PageInfo(page, listCount, 10, 5);
+		PageInfo pi = new PageInfo(page, 10, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
 		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
 		
@@ -316,35 +317,42 @@ public class MypageServiceImpl implements MypageService{
 		param.put("pi", pi);
 		param.put("userNo", userNo);
 		 
-		log.info("param : " + param.toString());
+		// log.info("param : " + param.toString());
 		
 		List<Camp> campList = mypageMapper.selectMyHostReserveList(param);
 		
 		List<Camp> campImageList = mypageMapper.selectCampImageList();
 		
+		//List<ReserveInfo> reserveInfoList = mypageMapper.selectReserveInfoList();
+		
+		List<BusinessReservation> businessReservationList = mypageMapper.selectBusinessReservationList(userNo);
+		
 		//List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
-				
-		log.info("campList : " + campList.toString());
-		log.info("campImageList : " + campImageList.toString());
+						
+		//log.info("campList : " + campList.toString());		
+		//log.info("reserveInfoList : " + reserveInfoList.toString());
+		log.info("businessReservationList : " + businessReservationList.toString());
 		//log.info("reserveList : " + reserveList.toString());
 				
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
 		map.put("campList", campList);
 		map.put("campImageList", campImageList);
-		//map.put("reserveList", reserveList);
+		//map.put("reserveInfoList", reserveInfoList);
+		map.put("businessReservationList", businessReservationList);
 		
 		return map;
 	}
 
 
 	/* 회원 예약내역 찾기 */
-	@Transactional
 	@Override
 	public Map<String, Object> selectMyGuestReserveList(int userNo, int page) {
-		int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
 		
-		log.info("listCount : " + listCount+"");
+		// 회원 총 예약 개수
+		int listCount = mypageMapper.getCountMyGuestReserveList(userNo);
+		
+		log.info("listCount : {}", listCount);
 		
 		PageInfo pi = new PageInfo(page, listCount, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
@@ -354,23 +362,13 @@ public class MypageServiceImpl implements MypageService{
 		param.put("pi", pi);
 		param.put("userNo", userNo);
 		
-		log.info("param : " + param.toString());
+		List<ReserveInfo> reserveList = mypageMapper.selectMyGuestReserveList(param);
 		
-		List<Camp> campList = mypageMapper.selectMyGuestReserveList(param);
-		
-		List<Camp> campImageList = mypageMapper.selectCampImageList();
-		
-		List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
-				
-		log.info("campList : " + campList.toString());
-		log.info("campImageList : " + campImageList.toString());
-		log.info("reserveList : " + reserveList.toString());
-				
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
-		map.put("campList", campList);
-		map.put("campImageList", campImageList);
 		map.put("reserveList", reserveList);
+		
+		log.info("reserveList : {}", reserveList);
 		
 		return map;
 	}
@@ -379,15 +377,7 @@ public class MypageServiceImpl implements MypageService{
 	@Transactional
 	@Override
 	public Member updateProfilePath(Member member) {
-		/*
-		member.setUserNo(user.getUserNo());
-		
-		
-		mypageMapper.updateProfilePath(member);
-		
-		return updateProfilePath(member, user);
-		//return memberMapper.findMemberById(member.getId());
-		*/
+
 		log.info("impl member : " + member.toString());
 		
 		mypageMapper.updateProfilePath(member);		

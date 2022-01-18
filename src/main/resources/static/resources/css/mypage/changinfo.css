@@ -66,6 +66,14 @@
     border-radius: 10px;
 }
 
+.changeinfo_changebutton:hover{
+	transform: scale(1.1);
+}
+
+.changeinfo_outbutton:hover{
+	transform: scale(1.1);
+}
+
 .changinfo_pwdbutton{
     font-size : 0.7rem;
     margin-left: 10px;

@@ -9,9 +9,9 @@ import org.apache.ibatis.annotations.Param;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.vo.Member;
+import com.cp.campers.mypage.model.vo.BusinessReservation;
 import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
-import com.cp.campers.mypage.model.vo.CampFile;
 import com.cp.campers.mypage.model.vo.ImageFile;
 import com.cp.campers.mypage.model.vo.Room;
 import com.cp.campers.mypage.model.vo.RoomFile;
@@ -60,7 +60,7 @@ public interface MypageMapper {
 	void insertRoom2(Room room);
 		
 	// 캠핑장 사진 파일 등록
-	void insertCampFile(CampFile campFile);
+	// void insertCampFile(CampFile campFile);
 	//void insertCampFile(Integer fileNo);
 	
 	// 숙소 사진 파일 등록
@@ -106,14 +106,13 @@ public interface MypageMapper {
 
 	List<Member> selectMyMemberList(Map<String, Object> param);
 
-	/* 사업자 예약내역 확인 리스트 */
-	int getListCountMyHostReserveList(int userNo);
+	/* 회원 총 예약개수 */
+	int getCountMyGuestReserveList(int userNo);
 
 	/* 사업자 예약내역 */
 	List<Camp> selectMyHostReserveList(Map<String, Object> param);
 
 	List<Camp> selectCampImageList();
-
 
 	/* 내 캠핑장 찾기 */
 	List<Camp> selectMyCampList(Map<String, Object> param);
@@ -121,8 +120,8 @@ public interface MypageMapper {
 	/* 사업자 캠핑장 찾기 */
 	List<ReserveInfo> selectHostReserveList(Map<String, Object> param);
 	
-	/* 회원 캠핑장 찾기 */
-	List<Camp> selectMyGuestReserveList(Map<String, Object> param);
+	/* 회원 예약내역 */
+	List<ReserveInfo> selectMyGuestReserveList(Map<String, Object> param);
 
 	/* 프로필 사진 변경 */
 	void updateProfilePath(Member member);
@@ -131,7 +130,14 @@ public interface MypageMapper {
 
 	void pwdUpdate(@Param("userId") String userId, @Param("pwd") String pwd, @Param("newPwd") String newPwd);
 
+
 	void campImageInsert(Attachment attachment);
+
+	List<BusinessReservation> selectBusinessReservationList(int userNo);
+
+	List<ReserveInfo> selectReserveInfoList();
+
+
 
 	void campImageNo();
 

@@ -251,6 +251,14 @@ body {
     margin-top : 10px;
 }
 
+.mypageProfileImageButton:hover{
+    transform: scale(1.1);
+}
+
+.profileImg:hover{
+	transform: scale(1.1);
+}
+
 .mypageProfileImageLebel{
 	font-size: 8px;
     font-weight: bold;
@@ -262,8 +270,8 @@ body {
 
 }
 
-.mypage_content_2{
-
+.mypage_content_4_li:hover {
+	transform: scale(1.1);
 }
 
 .mypage_content_3{
