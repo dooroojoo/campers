@@ -37,7 +37,7 @@ public class Camp {
 	/* Room 연결 
 	 * 한개 말고 다수 일시 List로 변경
 	 * List<Room> roomList;*/
-	private Room room;
+	private List<Room> roomList;
 	
 	/* CampFile 연결 */
 	private List<CampFileNo> campFileNoList;

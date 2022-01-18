@@ -21,6 +21,8 @@ import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 @Mapper
 public interface MypageMapper {
 	
+
+
 	// 회원 목록
 	List<Member> findAllMember();
 	
@@ -92,7 +94,7 @@ public interface MypageMapper {
 
 	void insertImageNo();
 
-	void insertImageNo2();
+	void insertImageNo2(int roomNo);
 
 	int selectCampNo();
 
@@ -129,12 +131,17 @@ public interface MypageMapper {
 
 	void pwdUpdate(@Param("userId") String userId, @Param("pwd") String pwd, @Param("newPwd") String newPwd);
 
-	
-	
+	void campImageInsert(Attachment attachment);
 
-	
+	void campImageNo();
 
-	
+	void roomInsert(Room room);
+
+	void roomImageInsert(Attachment atta2);
+
+	void roomImageNo();
+
+	String selectRoomNoList();
 
 	
 	// public Map<String, Object> findAllMember();
