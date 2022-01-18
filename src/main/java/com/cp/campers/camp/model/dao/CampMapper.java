@@ -27,9 +27,13 @@ public interface CampMapper {
 	// 리뷰 등록
 	void insertReview(Review review);
 	
+	// 리뷰작성 여부
+	void reserveWrite(int reserNo);
+
 	// 리뷰 삭제
 	void reviewDelete(int rid);
 
 	// 예약건수 조회
 	int reserveCount(Map<String, Object> param);
+
 }

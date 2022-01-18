@@ -4,74 +4,125 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>mypage_reserve</title>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<title>예약 내역</title>
+<script>
+	const successMessage = '[[${ successMessage }]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
 <!-- 외부 css -->
 <link href="/resources/css/mypage/mypage_guest_reserve.css" rel="stylesheet" type="text/css">
-<!-- 외부 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
 <div th:replace="mypage/mypage_category.html"></div>
 
-    <div class="content">
-    
-        <div>
-	        <div class="mypage_guest_reserve">
-	            <header class="mypage_guest_reserve_header">
-	                <h1 class="mypage_guest_reserve_h1">회원 예약내역 확인</h1>
-	            </header>
+    <div class="reserve-content">
+        <div class="reserve-wrap">
+	        <div class="guest-reserve">
+                <h2>예약 내역</h2>
 	        </div>
 	        
             <table class="mypage_guest_reserve_table">
-                <tr class="mypage_guest_reserve_table_header">
-                    <th class="mypage_guest_reserve_table_header_no">NO</th>
-                    <th>예약 캠핑장</th>
-                    <th>캠핑장 주소</th>
-                    <th>예약 날짜</th>
-                    <th class="mypage_guest_reserve_table_header_status">예약 상태</th>
+                <tr class="mgr-theader">
+                    <th class="mgr-theader-no">NO</th>
+                    <th class="camp_name">예약 캠핑장</th>
+                    <th class="camp_address">캠핑장 주소</th>
+                    <th class="check-in-out">예약 날짜</th>
+                    <th class="reserve-status">예약 상태</th>
                 </tr>
                 <tr th:each="reserve : ${reserveList}" th:with="sysdate=${#dates.createToday()}">
-                    <th class="mypage_guest_reserve_table_body" th:text="${reserve.reserNo}"></th>
-                    <th class="mypage_guest_reserve_table_body" th:each="imgfile : ${reserve.camp.imageFileList}">
+                    <td class="mypage_guest_reserve_table_body" th:text="${reserve.reserNo}"></td>
+                    <td class="mypage_guest_reserve_table_body" th:each="imgfile : ${reserve.camp.imageFileList}">
                     	<img class="mypage_guest_reserve_table_img" th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }">
-                    	<p class="camp_name" th:text="${reserve.camp.campName}"></p>
-                    </th>
-                    <th class="mypage_guest_reserve_table_body"><p class="camp_address" th:text="${reserve.camp.campAddress}"></p>
-                        <small class="camp_phone" th:text="${reserve.camp.campPhone}"></small></th>
-                    <th class="mypage_guest_reserve_table_body">
-                    	<p class="camp_date" th:text="|${reserve.checkIn} ~ ${reserve.checkOut}|"></p>
+                    	<h5 th:text="${reserve.camp.campName}"></h5>
+                    </td>
+                    <td class="mypage_guest_reserve_table_body">
+                    	<p class="camp_address" th:text="${reserve.camp.campAddress}"></p>
+                        <small class="camp_phone" th:text="${reserve.camp.campPhone}"></small></td>
+                    <td class="mypage_guest_reserve_table_body">
                         <small class="camp_room" th:text="${reserve.roomName}"></small>
-                    </th>
-                    <th class="mypage_guest_reserve_table_body2">
-                    	<h6>예약 완료</h6>
-                    	<input class="mypage_guest_reserve_button" type="button" value="예약취소">
-                    </th>
-                    <th class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} <= 7">
-                    	<input class="mypage_guest_reserve_button" type="button"
-                    	th:onclick="|location.href='@{/camp/review(userNo=${#authentication.principal.userNo}, campNo=${reserve.camp.campNo}, reserNo=${reserve.reserNo})}'|" 
-                    	value="리뷰쓰기">
-                    	<h6>체크 아웃으로부터 7일 이내에 <br> 리뷰 작성이 가능합니다</h6>
-                    </th>
-                    <th class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} > 7">
-                    	<h6>리뷰작성 완료</h6>
-                    </th>
-                    <th class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} > 7">
-                    	<h6>이용 완료</h6>
-                    </th>
+                    	<p class="camp_date" th:text="|${reserve.checkIn} ~ ${reserve.checkOut}|"></p>
+                    </td>
+                    <td class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} < 0">
+                    	<div th:if="${reserve.reserState} == 'Y'">
+                    		<h6>예약 완료</h6>
+                    		<input class="mypage_guest_reserve_button" type="button" th:onclick="'cancle('+${reserve.reserNo}+');'" value="예약취소">
+                    	</div>
+                    	<h5 th:if="${reserve.reserState} == 'N'">예약 취소</h5>
+                    </td>
+                    <td class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} <= 7 AND ${reserve.deadLine} >0">
+	                    <div th:if="${reserve.writeOrNot} == 'N'">
+	                    	<h6>체크 아웃으로부터 7일 이내에 <br> 리뷰 작성이 가능합니다</h6>
+	                    	<input class="mypage_guest_reserve_button" type="button" th:onclick="|location.href='@{/camp/review(userNo=${#authentication.principal.userNo}, campNo=${reserve.camp.campNo}, reserNo=${reserve.reserNo})}'|" 
+	                    	value="리뷰쓰기">
+	                    </div>
+                    	<h5 th:if="${reserve.writeOrNot} == 'Y'">리뷰작성<br>완료</h5>
+                    </td>
+                    <td class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} > 7">
+                    	<h5>이용 완료</h5>
+                    </td>
+                </tr>
+                <tr th:if="${not #strings.isEmpty(noResult)}">
+                	<td colspan="5">
+	                	<div class="noResult-div">
+	                		<i class="far fa-calendar-times" style="font-size: 30px;"></i>
+	                		<div th:text="${noResult}"></div>
+	                	</div>
+                	</td>
                 </tr>
             </table>
         </div>
         
         <!-- 페이징 처리 -->
-
-
-</div>
+        <div class="guestReserve_pages" th:if="${#strings.isEmpty(noResult)}">
+	        <ul class="guestReserve_paging">
+	            <!-- 맨 처음으로 이동하는 버튼(<<) -->
+	            <li><a href="/mypage/mypageGuestReservePage?page=1">&lt;&lt;</a></li>
+	            
+	
+	
+	            <!-- 이전 페이지로(<) -->
+	            <li th:if="${ pi.page > 1 }"><a th:href="@{/mypage/mypageGuestReservePage(page=${pi.page-1})}">&lt;</a></li>
+	            <li th:unless="${ pi.page > 1 }"><a href="#">&lt;</a></li>
+	            
+	
+	
+	            <!-- 최대 10개의 페이지 목록 -->
+	            <li th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
+	                <div class="current_page" th:if="${ p == pi.page }">
+	                    <a href="#" th:text="${ p }"></a>
+	                </div>
+	                <div th:if="${ p != pi.page }">
+	                    <a th:href="@{/mypage/mypageGuestReservePage(page=${p})}" th:text="${ p }"></a>
+	                </div>
+	            </li>
+	
+	
+	            <!-- 다음 페이지로(>) -->
+	            <li th:if="${ pi.page < pi.maxPage }"><a th:href="@{/mypage/mypageGuestReservePage(page=${pi.page+1})}">&gt;</a></li>
+	            <li th:unless="${ pi.page < pi.maxPage }"><a href="#">&gt;</a></li>
+	
+	
+	
+	            <!-- 맨 끝으로 이동하는 버튼(>>) -->
+	            <li><a th:href="@{/mypage/mypageGuestReservePage(page=${pi.maxPage})}">&gt;&gt;</a></li>
+	        </ul>
+	     </div>
+	</div>
 
 <!-- footer -->
-<div th:replace="common/footer.html"></div> 
+<div th:replace="common/footer.html"></div>
+<script>
+function cancle(reserNo){
+	
+	if(confirm("정말로 예약을 취소하시겠습니까?")){
+		location.href="/mypage/reserveCancle?reserNo=" + reserNo;
+	}
+}
+</script>
+
 </body>
 </html>

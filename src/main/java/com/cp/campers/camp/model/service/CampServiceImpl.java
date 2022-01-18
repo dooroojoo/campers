@@ -1,6 +1,5 @@
 package com.cp.campers.camp.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cp.campers.camp.controller.CampController;
 import com.cp.campers.camp.model.dao.CampMapper;
 import com.cp.campers.camp.model.vo.Camp;
 import com.cp.campers.camp.model.vo.Review;
@@ -70,6 +68,8 @@ public class CampServiceImpl implements CampService{
 	@Transactional
 	public void insertReview(Review review) {
 		campMapper.insertReview(review);
+		
+		campMapper.reserveWrite(review.getReserNo());
 	}
 	
 	/* 리뷰 삭제 */

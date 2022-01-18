@@ -806,8 +806,43 @@ public class MyPageController {
 
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("reserveList", map.get("reserveList"));
+		
+		if (map.get("reserveList").toString().equals("[]")) {
+			model.addAttribute("noResult", "아직 예약 내역이 없습니다.");
+		}
 
 		return "mypage/mypage_guest_reserve";
+	}
+	
+	/* 회원 예약 내역 + 페이징*/
+	@GetMapping("/mypageGuestReservePage")
+	public String mypageGuestReservePage(@AuthenticationPrincipal UserImpl user, int page, Model model) {
+	
+		int userNo = user.getUserNo();
+		log.info("userNo : {}", userNo);
+
+		Map<String, Object> map = mypageService.selectMyGuestReserveList(userNo, page);
+
+		model.addAttribute("pi", map.get("pi"));
+		model.addAttribute("reserveList", map.get("reserveList"));
+		
+		if (map.get("reserveList").toString().equals("[]")) {
+			model.addAttribute("noResult", "아직 예약 내역이 없습니다.");
+		}
+
+		return "mypage/mypage_guest_reserve";
+	}
+	
+	@GetMapping("/reserveCancle")
+	public String reserveCancle(int reserNo, RedirectAttributes rttr, Locale locale) {
+		
+		int result = mypageService.reserveCancle(reserNo);
+		
+		if(result > 0) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("reserveCancle", null, locale));
+		}
+		
+		return "redirect:/mypage/mypageGuestReserve";
 	}
 
 	/* 사업자 예약 내역 */
