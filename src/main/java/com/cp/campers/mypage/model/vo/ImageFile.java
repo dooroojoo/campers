@@ -12,4 +12,4 @@ public class ImageFile {
 	private String fileLevel;
 	private String fileOriginName;
 	
-} 
+}

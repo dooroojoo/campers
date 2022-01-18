@@ -362,9 +362,9 @@ public class MypageServiceImpl implements MypageService{
 
 
 	/* 회원 예약내역 찾기 */
-	@Transactional
 	@Override
 	public Map<String, Object> selectMyGuestReserveList(int userNo, int page) {
+		
 		int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
 		
 		log.info("listCount : " + listCount+"");
@@ -377,22 +377,10 @@ public class MypageServiceImpl implements MypageService{
 		param.put("pi", pi);
 		param.put("userNo", userNo);
 		
-		log.info("param : " + param.toString());
+		List<ReserveInfo> reserveList = mypageMapper.selectMyGuestReserveList(param);
 		
-		List<Camp> campList = mypageMapper.selectMyGuestReserveList(param);
-		
-		List<Camp> campImageList = mypageMapper.selectCampImageList();
-		
-		List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
-				
-		log.info("campList : " + campList.toString());
-		log.info("campImageList : " + campImageList.toString());
-		log.info("reserveList : " + reserveList.toString());
-				
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
-		map.put("campList", campList);
-		map.put("campImageList", campImageList);
 		map.put("reserveList", reserveList);
 		
 		return map;
@@ -402,15 +390,7 @@ public class MypageServiceImpl implements MypageService{
 	@Transactional
 	@Override
 	public Member updateProfilePath(Member member) {
-		/*
-		member.setUserNo(user.getUserNo());
-		
-		
-		mypageMapper.updateProfilePath(member);
-		
-		return updateProfilePath(member, user);
-		//return memberMapper.findMemberById(member.getId());
-		*/
+
 		log.info("impl member : " + member.toString());
 		
 		mypageMapper.updateProfilePath(member);		
