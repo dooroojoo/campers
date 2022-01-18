@@ -27,7 +27,14 @@
           <section id="menu-section">
             <ul class="sidebar-list">
               <li class="sidebar"><a href="/search/camp">캠핑장 검색</a></li>
-              <li class="sidebar"><a href="#">예약 확인</a></li>
+              
+              <th:block sec:authorize="hasRole('MEMBER')">
+             	<li class="sidebar"><a href="/mypage/mypageGuestReserve">예약 확인</a></li>
+              </th:block>
+              <th:block sec:authorize="hasRole('COMPANY')">
+              	<li class="sidebar"><a href="/mypage/mypageHostReserve">예약 확인</a></li>
+              </th:block>
+              
               <li class="sidebar"><a th:href="@{/board/list}">자유게시판</a></li>
               <li class="sidebar"><a href="/company/csCenter">고객센터</a></li>
             </ul>

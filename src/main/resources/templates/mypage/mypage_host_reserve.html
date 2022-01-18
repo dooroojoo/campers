@@ -39,9 +39,11 @@
                 </tr>
                  
                 <tr>
-                    <th class="mypage_host_reserve_table_body"></th>
                     <th class="mypage_host_reserve_table_body">
-                    	<img class="mypage_host_reserve_table_img">			<!--  th:src="${ camp.fileNo }" -->
+                    	<p class="camp_name">객실번호 room.roomNo</p>
+                    </th>
+                    <th class="mypage_host_reserve_table_body">
+                    	<img class="mypage_host_reserve_table_img" value="campImage.fileRoute">			<!--  th:src="${ camp.fileNo }" -->
                     	<p class="camp_name">캠핑장이름 camp.campName</p>						<!--  th:text="${ camp.campName }" -->
                     	<p class="camp_name">객실이름 room.roomName</p>
                     </th>
@@ -53,7 +55,7 @@
                     	<p class="camp_name">요청사항 reserve.request</p>
                     </th>
                     <th class="mypage_host_reserve_table_body">
-                    	<p class="camp_date">입실날짜 reserve.checkIn</p> ~ <p class="camp_date">퇴실날짜 reserve.checkOut</p>	<!--  th:text="${ reserve.checkIn }" --> <!--  th:text="${ reserve.checkOut }" -->
+                    	<p class="camp_name">입실날짜 reserve.checkIn</p> ~ <p class="camp_name">퇴실날짜 reserve.checkOut</p>	<!--  th:text="${ reserve.checkIn }" --> <!--  th:text="${ reserve.checkOut }" -->
                         <small class="camp_room" th:text="${ camp.campAddress }"></small>
                     </th>
                     <th class="mypage_host_reserve_table_body2">

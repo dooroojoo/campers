@@ -58,6 +58,10 @@
     border-radius: 10px;
 }
 
+.changinfoPwdModify_pwdbutton:hover{
+	transform: scale(1.1);
+}
+
 .check_id_form{
     margin-left: 55px;
     width: 13rem;
