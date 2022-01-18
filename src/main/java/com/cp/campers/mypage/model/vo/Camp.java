@@ -2,6 +2,8 @@ package com.cp.campers.mypage.model.vo;
 
 import java.util.List;
 
+import com.cp.campers.camp.model.vo.ImageFile;
+
 import lombok.Data;
  
 @Data
@@ -46,6 +48,6 @@ public class Camp {
 	private List<RoomFileNo> roomFileNoList;
 	
 	/* ImageFile 연결 */
-	private List<ImageFile> imageFileList;
+	private List<ImageFile> imgFileList;
 	
 }

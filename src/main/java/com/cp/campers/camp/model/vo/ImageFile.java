@@ -10,4 +10,5 @@ public class ImageFile {
 	private String fileRoute;
 	private String fileStatus;
 	private String fileLevel;
+	private String fileOriginName;
 }
