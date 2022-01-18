@@ -142,6 +142,10 @@ th{
     border-radius: 10px;
 }
 
+.camp_plus_button:hover{
+	transform: scale(1.1);
+}
+
 /* 푸터 */
 .footer {
   width: 100%;

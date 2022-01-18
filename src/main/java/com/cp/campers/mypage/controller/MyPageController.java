@@ -145,6 +145,8 @@ public class MyPageController {
 		mypageService.updateProfilePath(member);
 		log.info("마지막 member : " + member.toString());
 
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("mypageProfile", null, locale));
+		
 		// 리다이렉트
 		return "redirect:/mypage";
 	}
@@ -505,7 +507,6 @@ public class MyPageController {
 
 		/* 숙소 등록 메세지 */
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
-
 		return "redirect:/mypage/mypageCampManagement";
 	}
 
@@ -829,12 +830,11 @@ public class MyPageController {
 	public String mypageHostReserve(Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
 
 		int userNo = user.getUserNo();
-
 		int page = 1;
-
-		log.info("page : " + page);
-
+		
+				
 		log.info("user : " + user.toString());
+		
 		// log.info("camp : " + camp.toString());
 		// log.info("model : " + model.toString());
 
@@ -843,12 +843,15 @@ public class MyPageController {
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("campImageList", map.get("campImageList"));
-		model.addAttribute("reserveList", map.get("reserveList"));
+		model.addAttribute("reserveInfoList", map.get("reserveInfoList"));
+		model.addAttribute("businessReservationList", map.get("businessReservationList"));
 
+		
+		
 		// model.addAttribute("user", user.getUserNo());
 
-		log.info("map : " + map.toString());
-		log.info("model : " + model.toString());
+		//log.info("map : " + map.toString());
+		//log.info("model : " + model.toString());
 
 		return"mypage/mypage_host_reserve";
 	}
