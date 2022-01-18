@@ -757,7 +757,7 @@
 	   WHERE C.USER_NO = #{ userNo }
  	</select>
  	
- 	
+ 	<!-- 
  	<select id="selectReserveInfoList" resultMap="reserPayResultMap">
  		SELECT
  				RESER_NO
@@ -775,5 +775,5 @@
  				, ROOM_NO
  		   FROM RESERVE
  	</select>
-  
+  	 -->
 </mapper>

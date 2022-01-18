@@ -346,14 +346,14 @@ public class MypageServiceImpl implements MypageService{
 		
 		List<Camp> campImageList = mypageMapper.selectCampImageList();
 		
-		List<ReserveInfo> reserveInfoList = mypageMapper.selectReserveInfoList();
+		//List<ReserveInfo> reserveInfoList = mypageMapper.selectReserveInfoList();
 		
 		List<BusinessReservation> businessReservationList = mypageMapper.selectBusinessReservationList(userNo);
 		
 		//List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
 						
 		//log.info("campList : " + campList.toString());		
-		log.info("reserveInfoList : " + reserveInfoList.toString());
+		//log.info("reserveInfoList : " + reserveInfoList.toString());
 		log.info("businessReservationList : " + businessReservationList.toString());
 		//log.info("reserveList : " + reserveList.toString());
 				
@@ -361,7 +361,7 @@ public class MypageServiceImpl implements MypageService{
 		map.put("pi", pi);
 		map.put("campList", campList);
 		map.put("campImageList", campImageList);
-		map.put("reserveInfoList", reserveInfoList);
+		//map.put("reserveInfoList", reserveInfoList);
 		map.put("businessReservationList", businessReservationList);
 		
 		return map;
