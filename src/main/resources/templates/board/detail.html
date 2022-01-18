@@ -120,6 +120,7 @@
 	margin-bottom: 80px;
 	    max-width: 800px;
     overflow-wrap: break-word;
+        margin-top: 50px;
 }
 
 .content-img img {
@@ -175,7 +176,17 @@ margin-top: 6px;
 	border-radius: 10px 0 0 10px;
 	font-size: 14px;
 	padding: 5px 5px;
+	overflow: overlay;
 }
+.comment-box p {
+overflow-wrap: break-word;
+    width: 698px;
+
+}.refcomment-box p {
+overflow-wrap: break-word;
+    width: 534px;
+    
+ }
 
 .comment-textarea:focus, .refComment-textarea:focus {
 	outline: none;
@@ -807,7 +818,7 @@ width: 60px;
 				</div>
 				<div th:unless="${commentList} != null">
 					<div>
-						<p style="text-align:center; color:grey;">댓글이 없습니다.</p>
+						<p style="text-align:center; color:grey; margin:50px;">댓글이 없습니다.</p>
 					</div>
 				</div>
 			</div>

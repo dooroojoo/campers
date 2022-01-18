@@ -146,7 +146,7 @@ FROM (select
             b.create_date,
             nickName,
             bcount,
-            blike
+            (SELECT COUNT(*) FROM BOARD_LIKE WHERE BID = b.bid) blike
       from board b
       join member m on (b.writer = m.user_no)
       where b.status = 'N'
@@ -371,7 +371,7 @@ FROM (select
             b.create_date,
             nickName,
             bcount,
-            blike
+            (SELECT COUNT(*) FROM BOARD_LIKE WHERE BID = b.bid) blike
       from board b
       join member m on (b.writer = m.user_no)
       where b.status = 'N'
@@ -448,8 +448,8 @@ VALUES
 </insert>
 
 <update id="deleteImgs" parameterType="list">
-UPDATE IMAGEFILE
-   SET FILE_STATUS = 'Y'
+update  IMAGEFILE
+set file_status = 'Y'
 WHERE FILE_NAME = #{deleteImg}
 </update>
 
