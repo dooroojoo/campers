@@ -391,7 +391,7 @@
    		, #{ roomInfo, jdbcType=VARCHAR }
    		, #{ roomAmount, jdbcType=VARCHAR }
    		, #{ roomForm, jdbcType=VARCHAR }
-   		, #{ roomCount, jdbcType=VARCHAR }
+   		, #{ roomAmount, jdbcType=VARCHAR }
    		, SEQ_CAMP_NO.CURRVAL
    	)
    </insert>
