@@ -12,16 +12,12 @@
 		alert(successMessage);
 	} 
 	</script>    
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 외부 css -->
     <link href="/resources/css/mypage/changinfo_memberout.css" rel="stylesheet" type="text/css">
     <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
-    <!-- jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<!-- header -->
@@ -44,16 +40,14 @@
                 회원탈퇴 버튼을 클릭해 주세요.    
             </header>        
             <div class="changinfo_privacy">
-                <form class="changinfo_memberout_form" id="changinfo_modify_form" 
-                th:action="@{/mypage/changinfo/changinfoMemberout}" method="post" onsubmit="return validate();">
+                    <form>
+                    <h4 class="check_id">아 이 디<input type="text" class="check_id_form" id="idInput" name="id"></input></h4>
                     
-                    <h4 class="check_id">아 이 디<input type="text" class="check_id_form" id="id" name="id"></input></h4>
-                    
-                    <h4 class="check_pwd">비밀번호 확인<input type="password" class="check_pwd_form" id="pwd" name="pwd"></input>
+                    <h4 class="check_pwd">비밀번호 확인<input type="password" class="check_pwd_form" id="pwdInput" name="pwd"></input>
                     <div class="check_font" id="user_check"></div>
                     
-                    <button type="submit" id="submit" name="submit" class="changinfoPwdModify_pwdbutton">회원탈퇴</button>
-                </form>
+                    <button type="button" id="submit" name="submit" class="changinfoPwdModify_pwdbutton">회원탈퇴</button>
+                    </form>
             </div>
         </div>
     </div>
@@ -64,37 +58,34 @@
     
     <script>
     
-    $(function(){
-    	$("#submit").on('click', function(){
+    	$(document).on('click',"#submit", function(){
+    		
     		let user = {};
-    		user.id = $(".changinfo_memberout_form [name=id]").val();
-    		user.pwd = $(".changinfo_memberout_form [name=pwd]").val();
+    		user.id = $("#idInput").val();
+    		user.pwd = $("#pwdInput").val();
     		
     		$.ajax({
     			url : "/mypage/changinfo/changinfoMemberout",
-    			date : user,
+    			data : user,
     			type : "post",
     			success : function(data){
     				console.log(data);
-    				if(data != ""){
-    				alert("회원 탈퇴가 완료되었습니다.")	
+    				if(data == "success"){
+    				alert("회원 탈퇴가 완료되었습니다.")
+    				location.href="/member/logout";
     				} else {
     					alert("입력한 회원 정보가 없습니다. ID와 PASSWORD를 다시 확인해주세요.")
     					$(".check_id_form").focus();
     				}
-    			},
-    			error : function(e){
-    				alert('실패');
     			}
     		})
     	})
-    })    
     </script>
     
     
     
     
-    
+<!--     
     <script>
     function validate(){
 		return true;
@@ -115,7 +106,7 @@
 			return true;
 	    });
     </script>
-    
+     -->
     
 </body>
 </html>

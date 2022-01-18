@@ -452,9 +452,8 @@
    <!-- parameterType="com.cp.campers.member.model.vo.Member" -->
    <update id="pwdUpdate" parameterType="map">
       UPDATE MEMBER
-         SET USER_PWD = #{ pwd }
-       WHERE USER_ID = #{ id }
-         AND USER_PWD = #{ pwd }
+         SET USER_PWD = #{ newPwd }
+       WHERE USER_ID = #{ userId }
    </update>   
    
    <!-- 닉네임 체크 -->   
@@ -469,7 +468,6 @@
       UPDATE MEMBER
          SET STATUS = 'X'
        WHERE USER_ID = #{ id }
-         AND USER_PWD = #{ pwd }  
    </update>
   
     <!-- 
@@ -791,5 +789,9 @@
  		   FROM RESERVE
  	</select>
   	 -->
+  	 <select id="selectPwd" parameterType="com.cp.campers.member.model.vo.Member" resultType="string">
+  	 select user_pwd from member where user_id = #{id}
+  	 
+  	 </select>
 
 </mapper>
