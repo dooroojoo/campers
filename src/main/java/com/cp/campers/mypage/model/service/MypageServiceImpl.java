@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -166,13 +167,17 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	/* 회원 탈퇴 */
-	@Transactional
 	@Override
-	public Member changeInfoMemberout(Member member) {
-	
-		mypageMapper.changeInfoMemberout(member);
+	public int changeInfoMemberout(Member member) {
+		String pwd = mypageMapper.selectPwd(member);
 		
-		return member;
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if(encoder.matches(member.getPwd(), pwd)) {
+			return mypageMapper.changeInfoMemberout(member);
+		}
+		
+		return 0;
 	}
 
 
@@ -401,7 +406,12 @@ public class MypageServiceImpl implements MypageService{
 
 	@Override
 	public void pwdUpdate(String userId, String pwd, String newPwd) {
-		mypageMapper.pwdUpdate(userId, pwd, newPwd);		
+		Map<String,String> param = new HashMap<>();
+		param.put("userId", userId);
+		param.put("pwd", pwd);
+		param.put("newPwd", newPwd);
+		log.info("param"+param);
+		mypageMapper.pwdUpdate(param);		
 	}
 
 	/*

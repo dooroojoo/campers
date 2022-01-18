@@ -33,7 +33,7 @@ public interface MypageService{
 	int nickNameCheck(String nickName);
 
 	/* 회원 탈퇴 */
-	Member changeInfoMemberout(Member member);
+	int changeInfoMemberout(Member member);
 
 	/* 내 게시판 목록 */
 	Map<String, Object> selectMyBoardList(int writer, int page);
