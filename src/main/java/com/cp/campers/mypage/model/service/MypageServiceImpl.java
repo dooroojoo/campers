@@ -19,6 +19,7 @@ import com.cp.campers.member.model.dao.MemberMapper;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.dao.MypageMapper;
+import com.cp.campers.mypage.model.vo.BusinessReservation;
 import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.CampBusinessType;
@@ -339,23 +340,29 @@ public class MypageServiceImpl implements MypageService{
 		param.put("pi", pi);
 		param.put("userNo", userNo);
 		 
-		log.info("param : " + param.toString());
+		// log.info("param : " + param.toString());
 		
 		List<Camp> campList = mypageMapper.selectMyHostReserveList(param);
 		
 		List<Camp> campImageList = mypageMapper.selectCampImageList();
 		
+		List<ReserveInfo> reserveInfoList = mypageMapper.selectReserveInfoList();
+		
+		List<BusinessReservation> businessReservationList = mypageMapper.selectBusinessReservationList(userNo);
+		
 		//List<ReserveInfo> reserveList = mypageMapper.selectHostReserveList(param);
-				
-		log.info("campList : " + campList.toString());
-		log.info("campImageList : " + campImageList.toString());
+						
+		//log.info("campList : " + campList.toString());		
+		log.info("reserveInfoList : " + reserveInfoList.toString());
+		log.info("businessReservationList : " + businessReservationList.toString());
 		//log.info("reserveList : " + reserveList.toString());
 				
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
 		map.put("campList", campList);
 		map.put("campImageList", campImageList);
-		//map.put("reserveList", reserveList);
+		map.put("reserveInfoList", reserveInfoList);
+		map.put("businessReservationList", businessReservationList);
 		
 		return map;
 	}

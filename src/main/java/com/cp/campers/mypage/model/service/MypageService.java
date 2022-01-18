@@ -14,6 +14,7 @@ import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.CampBusinessType;
 import com.cp.campers.mypage.model.vo.CampFacility;
 import com.cp.campers.mypage.model.vo.Room;
+import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 
 public interface MypageService{
 

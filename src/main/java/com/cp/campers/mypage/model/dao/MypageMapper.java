@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.member.model.vo.Member;
+import com.cp.campers.mypage.model.vo.BusinessReservation;
 import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.ImageFile;
@@ -126,6 +127,10 @@ public interface MypageMapper {
 	void deleteMember(Member member);
 
 	void pwdUpdate(@Param("userId") String userId, @Param("pwd") String pwd, @Param("newPwd") String newPwd);
+
+	List<BusinessReservation> selectBusinessReservationList(int userNo);
+
+	List<ReserveInfo> selectReserveInfoList();
 
 	
 	

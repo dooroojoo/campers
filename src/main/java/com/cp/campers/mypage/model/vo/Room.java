@@ -20,5 +20,5 @@ public class Room {
 	private int roomCount;
 	private int campNo;
 	 
-	//private List<RoomFileNo> roomFileNoList;
+	private List<RoomFileNo> roomFileNoList;
 }

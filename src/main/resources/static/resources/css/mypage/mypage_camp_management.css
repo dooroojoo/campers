@@ -122,6 +122,10 @@
     border-radius: 10px;
 }
 
+.room_plus:hover{
+	transform: scale(1.1);
+}
+
 .room_plus_p{
 	color: white;
 	text-decoration: none;
