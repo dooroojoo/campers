@@ -48,6 +48,6 @@ public class Camp {
 	private List<RoomFileNo> roomFileNoList;
 	
 	/* ImageFile 연결 */
-	private List<ImageFile> imgFileList;
+	private List<ImageFile> imageFileList;
 	
 }

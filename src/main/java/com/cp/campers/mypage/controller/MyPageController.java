@@ -799,11 +799,10 @@ public class MyPageController {
 	
 		int page = 1;
 		int userNo = user.getUserNo();
-		log.info("user : {}", user);
+		log.info("userNo : {}", userNo);
 
 		Map<String, Object> map = mypageService.selectMyGuestReserveList(userNo, page);
 
-		model.addAttribute("camp", map.get("camp"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("reserveList", map.get("reserveList"));
 

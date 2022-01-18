@@ -103,8 +103,8 @@ public interface MypageMapper {
 
 	List<Member> selectMyMemberList(Map<String, Object> param);
 
-	/* 사업자 예약내역 확인 리스트 */
-	int getListCountMyHostReserveList(int userNo);
+	/* 회원 총 예약개수 */
+	int getCountMyGuestReserveList(int userNo);
 
 	/* 사업자 예약내역 */
 	List<Camp> selectMyHostReserveList(Map<String, Object> param);

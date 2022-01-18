@@ -3,32 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>REVIEW</title>
-	<!-- css -->
-	<link href="/resources/css/camp/review.css" rel="stylesheet" type="text/css">
-	<!-- css -->
-	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/camp/review.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div th:replace="common/adminHeader.html"></div>
+<div th:replace="mypage/mypage_category.html"></div>
 <div class="review_outer">
     <div class="review_wrap">
         <div class="review_area">
-
 
             <!-- 1. 리뷰 타이틀 영역 -->
             <div class="review_title">
                 <h3>REVIEW</h3>
             </div>
 
-
-
             <!-- 2. 리뷰 작성 영역 -->
             <div class="writeArea_wrap">
-
                 <h5>리뷰쓰기</h5>
 
                 <form action="/camp/review" method="post">
-
                     <div class="writeArea">
                         <textarea id="replyCont" rows="5" cols="60" style="resize:none;border:none;" maxlength="100" 
                         name="rcontent" placeholder="100자 이내로 작성해주세요"></textarea>
@@ -39,12 +31,10 @@
 					<input type="hidden" name="reserNo" th:value="${param.reserNo}">
                     
                     <div class="btnArea">
-                        <button class="btnBefore" onclick="/mypage/">이전</button>
+                        <button class="btnBefore" type="button" onclick="location.href='javascript:history.back();'">이전</button>
                         <button class="btnSubmit" type="submit">등록</button>
                     </div>
-
                 </form>
-
             </div>
         </div>
     </div>
