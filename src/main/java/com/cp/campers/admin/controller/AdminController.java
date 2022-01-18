@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cp.campers.admin.model.service.AdminService;
+import com.cp.campers.admin.model.vo.CalculateInfo;
 import com.cp.campers.admin.model.vo.Report;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
@@ -293,7 +294,7 @@ public class AdminController {
 			page = pageValue;
 		}
 		
-		log.info("page 확인 : {}", page);
+		//log.info("page 확인 : {}", page);
 		
 		// 페이징과 관련 된 데이터, 조회 된 calculateList를 map에 담아 리턴 
 		Map<String, Object> map = adminService.calculateList(page);
@@ -305,11 +306,24 @@ public class AdminController {
 			model.addAttribute("noResult", "정산 내역이 없습니다.");
 		}
 		
-		log.info("map 확인 : {} ", map.get("calculateList"));
-		log.info("map 확2인 : {} ", map.get("pi"));
+		//log.info("map 확인 : {} ", map.get("calculateList"));
+		//log.info("map 확2인 : {} ", map.get("pi"));
 		
 		return "admin/calculate";
 	}
+	
+	
+//	@GetMapping("/paySelect")
+//	public String paySelect(int month, int campNo, Model model) {
+//		
+//		log.info("month  확인 : {} ", month);
+//		log.info("campNo 확인 : {} ", campNo);
+//		
+//		List<CalculateInfo> calList = adminService.paySelect(month, campNo);
+//		
+//		
+//		return "admin/calculate";
+//	}
 	
 	
 

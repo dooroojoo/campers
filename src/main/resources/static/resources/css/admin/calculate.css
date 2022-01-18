@@ -35,11 +35,13 @@ ul, li {
 .calculate_list>ul {
     min-height: 60px;
 	display: flex;
-	justify-content: space-around;
 	list-style: none;
     text-align: center;
     border-bottom: 1px solid rgb(213, 213, 213);
 }
+
+
+
 .calculate_list>ul>li {
     padding: 5px;
     /* white-space: pre-wrap; */
@@ -67,10 +69,59 @@ ul, li {
     width: 10%;
 }
 
+.calculate_list .monInq{
+	width: 10%;
+}
+
+.calculate_list .month{
+	width: 10%;
+}
+
+.select_wrap{ /* 화살표 대체 */
+    display: inline-block;
+    position: relative;
+}
+
+.select_wrap:before{
+    content:'';
+    display: block;
+    position: absolute;
+    top: 55%;
+    right: 8px;
+    transform: translate(0,-50%);
+    width: 0;
+    height: 0;
+    border:9px solid darkgray;
+    border-left:6px solid transparent;
+    border-right:6px solid transparent;
+    border-bottom:none;
+}
+
+#monInq{
+    width: 75px;
+    height: 32px;
+}
+
+.calculate_list select{
+    -webkit-appearance: none;
+    /* 네이티브 외형 감추기 */
+    -moz-appearance: none; 
+    appearance: none;
+    /* label 여백 주기 */
+    padding-left: 0.6em;;
+    border: 1px solid #dadada;
+    /* 패딩 */
+    padding-left: 25px;
+}
+
+.calculate_list .status {
+    width: 12%;
+}
+
+
 .calculate_list .settlement_amount {
     width: 10%;
 }
-
 
 
 /* 페이징 */
@@ -110,15 +161,6 @@ ul, li {
 }
 
 /* select 설정 */
-.search_area select{
-    -webkit-appearance: none;
-    /* 네이티브 외형 감추기 */
-    -moz-appearance: none; 
-    appearance: none;
-    /* label 여백 주기 */
-    padding-left: 0.6em;;
-    border: 1px solid #dadada;
-}
 .select_wrap{ /* 화살표 대체 */
     display: inline-block;
     position: relative;
@@ -137,6 +179,8 @@ ul, li {
     border-right:6px solid transparent;
     border-bottom:none;
 }
+
+
 
 /* 검색 영역 */
 .search_area {

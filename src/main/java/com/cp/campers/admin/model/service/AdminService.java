@@ -1,9 +1,12 @@
 package com.cp.campers.admin.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.cp.campers.admin.model.vo.CalculateInfo;
 import com.cp.campers.admin.model.vo.Report;
 import com.cp.campers.admin.model.vo.Search;
 import com.cp.campers.member.model.vo.Member;
@@ -49,6 +52,9 @@ public interface AdminService {
 
 	// 정산관리목록
 	Map<String, Object> calculateList(int page);
+
+	// 월별정산내역조회 
+	//List<CalculateInfo> paySelect(int month, int campNo);
 	
 
 
