@@ -70,6 +70,8 @@
     height: 2.3rem;
 }
 
+
+
 .changinfo_pwdbutton{
     font-size: 15px;
     margin-left: 44px;
@@ -80,6 +82,13 @@
     height: 35px;
     border-radius: 10px;
 }
+.changeinfo_changebutton:hover{
+	transform: scale(1.1);
+}
+
+.changinfo_pwdbutton:hover{
+	transform: scale(1.1);
+}
 
 .changinfo_check{
     font-size: 0.7rem;
@@ -89,6 +98,8 @@
     font-weight: bold;
     width: 5rem;
 }
+
+
 
 .changinfo_id_form{
     margin-left : 47px;

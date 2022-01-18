@@ -70,6 +70,11 @@
     border-radius: 10px;
 }
 
+.changinfoPwdModify_pwdbutton:hover{
+	transform: scale(1.1);
+}
+
+
 .changinfoPwdModify_pwd_form{
 	margin-left : 35px;
     width : 12rem;
