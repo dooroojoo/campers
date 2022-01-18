@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cp.campers.mypage.model.dao.MypageMapper">
-		
-	<resultMap type="com.cp.campers.member.model.vo.Member" id="memberResultMap">
-		<id property="userNo" column="USER_NO"/>
-		<result property="id" column="USER_ID"/>
-		<result property="pwd" column="USER_PWD"/>
-		<result property="userName" column="USER_NAME"/>
-		<result property="nickName" column="NICKNAME"/>
-		<result property="profilePath" column="PROFILE_PATH"/>
-		<result property="email" column="EMAIL"/>
-		<result property="phone" column="USER_PHONE"/>
-		<result property="status" column="STATUS"/>
-		<result property="createDate" column="CREATE_DATE"/>
-		<result property="modifyDate" column="MODIFY_DATE"/>
-		<collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
-	</resultMap>
+      
+   <resultMap type="com.cp.campers.member.model.vo.Member" id="memberResultMap">
+      <id property="userNo" column="USER_NO"/>
+      <result property="id" column="USER_ID"/>
+      <result property="pwd" column="USER_PWD"/>
+      <result property="userName" column="USER_NAME"/>
+      <result property="nickName" column="NICKNAME"/>
+      <result property="profilePath" column="PROFILE_PATH"/>
+      <result property="email" column="EMAIL"/>
+      <result property="phone" column="USER_PHONE"/>
+      <result property="status" column="STATUS"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="modifyDate" column="MODIFY_DATE"/>
+      <collection property="memberRoleList" resultMap="memberRoleResultMap"></collection>
+   </resultMap>
  
-	<resultMap type="com.cp.campers.member.model.vo.MemberRole" id="memberRoleResultMap">
-		<id property="memberNo" column="USER_NO"/>
-		<id property="authorityCode" column="AUTHORITY_CODE"/>
-		<association property="authority" resultMap="authorityResultMap"/>
-	</resultMap>
-	
+   <resultMap type="com.cp.campers.member.model.vo.MemberRole" id="memberRoleResultMap">
+      <id property="memberNo" column="USER_NO"/>
+      <id property="authorityCode" column="AUTHORITY_CODE"/>
+      <association property="authority" resultMap="authorityResultMap"/>
+   </resultMap>
+   
    <resultMap type="com.cp.campers.member.model.vo.Authority" id="authorityResultMap">      <!-- 위의 association(1대 1)에서의 resultMap이랑 여기서 id랑 일치시키기 -->
       <id property="authorityCode" column="AUTHORITY_CODE"/>
       <result property="authorityName" column="AUTHORITY_NAME"/>
@@ -195,59 +195,60 @@
 		<result property="checkOut" column="CHECKOUT"/>
 	</resultMap>
 			    
+
    <select id="findMemberById" resultMap="memberResultMap">
-   	SELECT
-		    A.USER_NO,
-		    A.USER_ID, 
-		    A.USER_PWD, 
-		    A.USER_NAME, 
-		    A.NICKNAME, 
-		    A.PROFILE_PATH, 
-		    A.EMAIL, 
-		    A.USER_PHONE, 
-		    A.STATUS, 
-		    A.CREATE_DATE, 
-		    A.MODIFY_DATE,
-		    B.USER_NO REF_MEMBER_NO,
-		    B.AUTHORITY_CODE REF_AUTHORITY_CODE, 
-		    C.AUTHORITY_CODE REF_AUTHORITY_CODE2, 
-		    C.AUTHORITY_NAME, 
-		    C.AUTHORITY_DESC
-	    FROM MEMBER A
-	    LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
-	    LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+      SELECT
+          A.USER_NO,
+          A.USER_ID, 
+          A.USER_PWD, 
+          A.USER_NAME, 
+          A.NICKNAME, 
+          A.PROFILE_PATH, 
+          A.EMAIL, 
+          A.USER_PHONE, 
+          A.STATUS, 
+          A.CREATE_DATE, 
+          A.MODIFY_DATE,
+          B.USER_NO REF_MEMBER_NO,
+          B.AUTHORITY_CODE REF_AUTHORITY_CODE, 
+          C.AUTHORITY_CODE REF_AUTHORITY_CODE2, 
+          C.AUTHORITY_NAME, 
+          C.AUTHORITY_DESC
+       FROM MEMBER A
+       LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
+       LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
     WHERE A.USER_ID = #{ userId }
     AND STATUS = 'Y'
    </select>
           
    <select id="selectMember" resultType="com.cp.campers.member.model.vo.Member">
-   		SELECT *
-   		FROM MEMBER
+         SELECT *
+         FROM MEMBER
    </select>  
      
    <select id="getListCount" resultType="_int">
-   		SELECT
-		      COUNT(A.USER_NO)
-		 FROM MEMBER A
-		 LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
-		 LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+         SELECT
+            COUNT(A.USER_NO)
+       FROM MEMBER A
+       LEFT JOIN AUTHORITY_ROLE B ON(A.USER_NO = B.USER_NO)
+       LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
    </select>  
    <!-- resultType="com.cp.campers.member.model.vo.Member" -->         
    <select id="findAllMember" resultMap="memberResultMap">
-   	  SELECT *
+        SELECT *
       FROM (SELECT ROWNUM RNUM, A.*
       FROM (select 
-   	  		 USER_NO
-   	  	   , USER_ID
-   	  	   , USER_PWD
-   	  	   , USER_NAME
-   	  	   , NICKNAME
-   	  	   , PROFILE_PATH
-   	  	   , EMAIL
-   	  	   , USER_PHONE
-   	  	   , STATUS
-   	  	   , CREATE_DATE
-   	  	   , MODIFY_DATE
+               USER_NO
+              , USER_ID
+              , USER_PWD
+              , USER_NAME
+              , NICKNAME
+              , PROFILE_PATH
+              , EMAIL
+              , USER_PHONE
+              , STATUS
+              , CREATE_DATE
+              , MODIFY_DATE
       FROM MEMBER
       WHERE STATUS = 'Y'
         AND USER_NO = #{ userNo }
@@ -255,292 +256,297 @@
    </select>
           
    <select id="findAllBoard" resultMap="boardResultMap">
-   	SELECT *
-   	FROM (SELECT ROWNUM RNUM, A.*
-   	FROM (SELECT
-   		   B.BID
-   		 , B.BTITLE
-   		 , B.BCONTENT
-   		 , B.MODIFY_DATE
-   		 , B.CREATE_DATE
-   		 , B.STATUS
-   		 , B.WRITER
-   		 , B.BCOUNT
-   		 , B.BLIKE
-   		 , NEXTID
-   		 , NEXTTITLE
-   		 , RREVID
-   		 , PREVTITLE
-   	 FROM BOARD B
-   	 JOIN MEMBER M ON (B.WRITER = M.USER_NO)
-   	 WHERE STATUS = 'N'
-   	   AND WRITER = #{ writer }
-   	 ORDER BY BID DESC) A)
+      SELECT *
+      FROM (SELECT ROWNUM RNUM, A.*
+      FROM (SELECT
+            B.BID
+          , B.BTITLE
+          , B.BCONTENT
+          , B.MODIFY_DATE
+          , B.CREATE_DATE
+          , B.STATUS
+          , B.WRITER
+          , B.BCOUNT
+          , B.BLIKE
+          , NEXTID
+          , NEXTTITLE
+          , RREVID
+          , PREVTITLE
+       FROM BOARD B
+       JOIN MEMBER M ON (B.WRITER = M.USER_NO)
+       WHERE STATUS = 'N'
+         AND WRITER = #{ writer }
+       ORDER BY BID DESC) A)
    </select>
      
    <insert id="insertCamp" parameterType="com.cp.campers.mypage.model.vo.Camp">
-   	INSERT 
-   		INTO CAMP
-		(
-			CAMP_NO
-			, CAMP_NAME
-			, USER_NO
-			, CAMP_ADDRESS
-			, CAMP_PHONE
-			, CAMP_INTRO
-			, CAMP_PATH
-			, CAMP_POLICY
-			, CAMP_STATUS
-			, ACCOUNT_NUM
-			, BANK
-			, CHECKIN
-			, CHECKOUT
-		)
-		VALUES
-		(
-			SEQ_CAMP_NO.NEXTVAL
-			, #{ campName }
-			, #{ userNo }
-			, #{ campAddress }
-			, #{ campPhone }
-			, #{ campIntro }
-			, #{ campPath }
-			, #{ campPolicy }
-			, DEFAULT
-			, #{ accountNum }
-			, #{ bank }
-			, #{ checkin }
-			, #{ checkout }
-		)
+      INSERT 
+         INTO CAMP
+      (
+         CAMP_NO
+         , CAMP_NAME
+         , USER_NO
+         , CAMP_ADDRESS
+         , CAMP_PHONE
+         , CAMP_INTRO
+         , CAMP_PATH
+         , CAMP_POLICY
+         , CAMP_STATUS
+         , ACCOUNT_NUM
+         , BANK
+         , CHECKIN
+         , CHECKOUT
+      )
+      VALUES
+      (
+         SEQ_CAMP_NO.NEXTVAL
+         , #{ campName }
+         , #{ userNo }
+         , #{ campAddress }
+         , #{ campPhone }
+         , #{ campIntro }
+         , #{ campPath }
+         , #{ campPolicy }
+         , DEFAULT
+         , #{ accountNum }
+         , #{ bank }
+         , #{ checkin }
+         , #{ checkout }
+      )
    </insert>
    
    <!-- 캠핑장 사진 -->
    <insert id="insertCampFile">
    INSERT
-   	INTO CAMP_FILE
-   	(
-   		  CAMP_NO
-   		, FILE_NO
-   		
-   	)
-   	VALUES
-   	(
-   		SEQ_CAMP_NO.CURRVAL
-   		, #{ fileNo, jdbcType=VARCHAR }
-   	)
+      INTO CAMP_FILE
+      (
+           CAMP_NO
+         , FILE_NO
+         
+      )
+      VALUES
+      (
+         SEQ_CAMP_NO.CURRVAL
+         , #{ fileNo, jdbcType=VARCHAR }
+      )
    </insert>
    
    <!-- 숙소 사진 -->
    <insert id="insertRoomFile">
-   	INSERT
-   	INTO ROOM_FILE
-   	(
-   		  CAMP_NO
-   		, FILE_NO
-   		
-   	)
-   	VALUES
-   	(
-   		SEQ_CAMP_NO.CURRVAL
-   		, #{ fileNo, jdbcType=VARCHAR }
-   	)
+      INSERT
+      INTO ROOM_FILE
+      (
+           CAMP_NO
+         , FILE_NO
+         
+      )
+      VALUES
+      (
+         SEQ_CAMP_NO.CURRVAL
+         , #{ fileNo, jdbcType=VARCHAR }
+      )
    </insert>
    
    <!-- 캠핑장 등록할때 숙소 등록 -->
    <insert id="insertRoom" parameterType="com.cp.campers.mypage.model.vo.Room">
-   	INSERT
-   	INTO ROOM
-   	(
-   		  ROOM_NO
-   		, ROOM_NAME
-   		, ROOM_MEMBER
-   		, ROOM_PRICE
-   		, ROOM_SIZE
-   		, ROOM_FLOOR
-   		, ROOM_PARKING
-   		, ROOM_INFO
-   		, ROOM_AMOUNT
-   		, ROOM_FORM
-   		, ROOM_COUNT
-   		, CAMP_NO
-   	)
-   	VALUES
-   	(
-   		  SEQ_ROOM_NO.NEXTVAL
-   		, #{ roomName, jdbcType=VARCHAR }
-   		, #{ roomMember, jdbcType=VARCHAR }
-   		, #{ roomPrice, jdbcType=VARCHAR }
-   		, #{ roomSize, jdbcType=VARCHAR }
-   		, #{ roomFloor, jdbcType=VARCHAR }
-   		, #{ roomParking, jdbcType=VARCHAR }
-   		, #{ roomInfo, jdbcType=VARCHAR }
-   		, #{ roomAmount, jdbcType=VARCHAR }
-   		, #{ roomForm, jdbcType=VARCHAR }
-   		, #{ roomAmount, jdbcType=VARCHAR }
-   		, SEQ_CAMP_NO.CURRVAL
-   	)
+
+      INSERT
+      INTO ROOM
+      (
+           ROOM_NO
+         , ROOM_NAME
+         , ROOM_MEMBER
+         , ROOM_PRICE
+         , ROOM_SIZE
+         , ROOM_FLOOR
+         , ROOM_PARKING
+         , ROOM_INFO
+         , ROOM_AMOUNT
+         , ROOM_FORM
+         , ROOM_COUNT
+         , CAMP_NO
+      )
+      VALUES
+      (
+           SEQ_ROOM_NO.NEXTVAL
+         , #{ roomName, jdbcType=VARCHAR }
+         , #{ roomMember, jdbcType=VARCHAR }
+         , #{ roomPrice, jdbcType=VARCHAR }
+         , #{ roomSize, jdbcType=VARCHAR }
+         , #{ roomFloor, jdbcType=VARCHAR }
+         , #{ roomParking, jdbcType=VARCHAR }
+         , #{ roomInfo, jdbcType=VARCHAR }
+         , #{ roomAmount, jdbcType=VARCHAR }
+         , #{ roomForm, jdbcType=VARCHAR }
+         , #{ roomCount, jdbcType=VARCHAR }
+         , SEQ_CAMP_NO.CURRVAL
+      )
+
    </insert>
+   
+   <select id="selectRoomNoList" resultType="string">
+   SELECT SEQ_ROOM_NO.CURRVAL FROM DUAL
+   </select>
    
    <!-- 캠핑장 관리에서의 숙소등록 -->
    <insert id="insertRoom2" parameterType="com.cp.campers.mypage.model.vo.Room">
-   	INSERT
-   	INTO ROOM
-   	(
-   		  ROOM_NO
-   		, ROOM_NAME
-   		, ROOM_MEMBER
-   		, ROOM_PRICE
-   		, ROOM_SIZE
-   		, ROOM_FLOOR
-   		, ROOM_PARKING
-   		, ROOM_INFO
-   		, ROOM_AMOUNT
-   		, ROOM_FORM
-   		, ROOM_COUNT
-   		, CAMP_NO
-   	)
-   	VALUES
-   	(
-   		  SEQ_ROOM_NO.NEXTVAL
-   		, #{ roomName, jdbcType=VARCHAR }
-   		, #{ roomMember, jdbcType=VARCHAR }
-   		, #{ roomPrice, jdbcType=VARCHAR }
-   		, #{ roomSize, jdbcType=VARCHAR }
-   		, #{ roomFloor, jdbcType=VARCHAR }
-   		, #{ roomParking, jdbcType=VARCHAR }
-   		, #{ roomInfo, jdbcType=VARCHAR }
-   		, #{ roomAmount, jdbcType=VARCHAR }
-   		, #{ roomForm, jdbcType=VARCHAR }
-   		, #{ roomCount, jdbcType=VARCHAR }
-   		, #{ campNo }
-   	)
+      INSERT
+      INTO ROOM
+      (
+           ROOM_NO
+         , ROOM_NAME
+         , ROOM_MEMBER
+         , ROOM_PRICE
+         , ROOM_SIZE
+         , ROOM_FLOOR
+         , ROOM_PARKING
+         , ROOM_INFO
+         , ROOM_AMOUNT
+         , ROOM_FORM
+         , ROOM_COUNT
+         , CAMP_NO
+      )
+      VALUES
+      (
+           SEQ_ROOM_NO.NEXTVAL
+         , #{ roomName, jdbcType=VARCHAR }
+         , #{ roomMember, jdbcType=VARCHAR }
+         , #{ roomPrice, jdbcType=VARCHAR }
+         , #{ roomSize, jdbcType=VARCHAR }
+         , #{ roomFloor, jdbcType=VARCHAR }
+         , #{ roomParking, jdbcType=VARCHAR }
+         , #{ roomInfo, jdbcType=VARCHAR }
+         , #{ roomAmount, jdbcType=VARCHAR }
+         , #{ roomForm, jdbcType=VARCHAR }
+         , #{ roomCount, jdbcType=VARCHAR }
+         , #{ campNo }
+      )
    </insert>
       
    <!-- 회원 정보 수정 -->   
    <update id="changeInfoModify" parameterType="com.cp.campers.member.model.vo.Member">
-		UPDATE MEMBER
-		   SET EMAIL = #{ email }
-		     , USER_PHONE = #{ phone }
-		     , NICKNAME = #{ nickName }
-		WHERE USER_NO = #{ userNo }
-	</update>
-	
-	<!-- 비밀번호 변경 미구현 -->
-	<update id="changeInfoPwdModify" parameterType="com.cp.campers.member.model.vo.Member">
-		UPDATE MEMBER
-		   SET USER_PWD = #{ pwd }		     
-		 WHERE USER_NO = #{ userNo }
-		   AND USER_PWD = #{ pwd }
-	</update>
+      UPDATE MEMBER
+         SET EMAIL = #{ email }
+           , USER_PHONE = #{ phone }
+           , NICKNAME = #{ nickName }
+      WHERE USER_NO = #{ userNo }
+   </update>
    
-	<!-- 비밀번호 체크 미구현 -->
-	<select id="pwdCheck" parameterType="com.cp.campers.member.model.vo.Member" resultType="String">
-		SELECT 
-			   USER_PWD
-		  FROM MEMBER
-		 WHERE USER_ID = #{ id }
-	</select>
-	
-	<!-- 비밀번호 업데이트 미구현 -->
-	<!-- parameterType="com.cp.campers.member.model.vo.Member" -->
-	<update id="pwdUpdate" parameterType="map">
-		UPDATE MEMBER
-		   SET USER_PWD = #{ pwd }
-		 WHERE USER_ID = #{ id }
-		   AND USER_PWD = #{ pwd }
-	</update>	
-	
+   <!-- 비밀번호 변경 미구현 -->
+   <update id="changeInfoPwdModify" parameterType="com.cp.campers.member.model.vo.Member">
+      UPDATE MEMBER
+         SET USER_PWD = #{ pwd }           
+       WHERE USER_NO = #{ userNo }
+         AND USER_PWD = #{ pwd }
+   </update>
+   
+   <!-- 비밀번호 체크 미구현 -->
+   <select id="pwdCheck" parameterType="com.cp.campers.member.model.vo.Member" resultType="String">
+      SELECT 
+            USER_PWD
+        FROM MEMBER
+       WHERE USER_ID = #{ id }
+   </select>
+   
+   <!-- 비밀번호 업데이트 미구현 -->
+   <!-- parameterType="com.cp.campers.member.model.vo.Member" -->
+   <update id="pwdUpdate" parameterType="map">
+      UPDATE MEMBER
+         SET USER_PWD = #{ pwd }
+       WHERE USER_ID = #{ id }
+         AND USER_PWD = #{ pwd }
+   </update>   
+   
    <!-- 닉네임 체크 -->   
    <select id="nickNameCheck" parameterType="String" resultType="int">
-		SELECT COUNT(NICKNAME)
-		FROM MEMBER
-		WHERE NICKNAME = #{ nickName }
-	</select>
-	
-	<!-- 회원탈퇴 미구현 -->
-	<update id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
-		UPDATE MEMBER
-		   SET STATUS = 'X'
-		 WHERE USER_ID = #{ id }
-		   AND USER_PWD = #{ pwd }  
-	</update>
+      SELECT COUNT(NICKNAME)
+      FROM MEMBER
+      WHERE NICKNAME = #{ nickName }
+   </select>
+   
+   <!-- 회원탈퇴 미구현 -->
+   <update id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
+      UPDATE MEMBER
+         SET STATUS = 'X'
+       WHERE USER_ID = #{ id }
+         AND USER_PWD = #{ pwd }  
+   </update>
   
- 	<!-- 
- 	<delete id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
-   	DELETE
-   		FROM MEMBER
-   		WHERE USER_PWD = #{ pwd }   
+    <!-- 
+    <delete id="changeInfoMemberout" parameterType="com.cp.campers.member.model.vo.Member">
+      DELETE
+         FROM MEMBER
+         WHERE USER_PWD = #{ pwd }   
    </delete>
     -->
  
- 	<!-- parameterType="hashmap"   -->
+    <!-- parameterType="hashmap"   -->
  
- 	<select id="selectMyBoardList" resultMap="boardResultMap">
-	SELECT *
-	FROM (SELECT ROWNUM RNUM, A.*
-	FROM (select 
-	            bid, 
-	            btitle, 
-	            bcontent, 
-	            b.modify_date, 
-	            b.create_date,
-	            nickName,
-	            bcount,
-	            blike
-	      from board b
-	      join member m on (b.writer = m.user_no)
-	      where b.status = 'N'
-	      and writer = #{ writer }
-	      ORDER BY bid DESC) A)
-	where RNUM between #{pi.startRow} and #{pi.endRow}
-	</select>
- 
- 	<insert id="insertCampImage" parameterType="com.cp.campers.mypage.model.vo.Attachment">
-		INSERT
-		INTO IMAGEFILE
-		VALUES
-		(
-				SEQ_FILE_NO.NEXTVAL,
-				#{fileName},
-				#{fileRoute},
-				DEFAULT,
-				#{fileLevel},
-				#{fileOriginName}
-		)
-	</insert>
-	
- 	<insert id="insertImageNo" parameterType="_int">
-		INSERT
-		INTO CAMP_FILE
-		VALUES
-		(SEQ_CAMP_NO.CURRVAL, SEQ_FILE_NO.CURRVAL)
-	</insert>
-	
-	<insert id="insertRoomImage" parameterType="com.cp.campers.mypage.model.vo.Attachment">
-		INSERT
-		INTO IMAGEFILE
-		VALUES
-		(
-				SEQ_FILE_NO.NEXTVAL,
-				#{fileName},
-				#{fileRoute},
-				DEFAULT,
-				#{fileLevel},
-				#{fileOriginName}
-		)
-	</insert>
-	
-	<insert id="insertImageNo2" parameterType="_int">
-		INSERT
-		INTO ROOM_FILE
-		VALUES
-		(SEQ_ROOM_NO.CURRVAL, SEQ_FILE_NO.CURRVAL)
-	</insert>
- 	
- 	<select id="selectCampNo" resultType="int">
- 		SELECT SEQ_CAMP_NO.CURRVAL, FROM DUAL
- 	</select>
- 	
+    <select id="selectMyBoardList" resultMap="boardResultMap">
+   SELECT *
+   FROM (SELECT ROWNUM RNUM, A.*
+   FROM (select 
+               bid, 
+               btitle, 
+               bcontent, 
+               b.modify_date, 
+               b.create_date,
+               nickName,
+               bcount,
+               blike
+         from board b
+         join member m on (b.writer = m.user_no)
+         where b.status = 'N'
+         and writer = #{ writer }
+         ORDER BY bid DESC) A)
+   where RNUM between #{pi.startRow} and #{pi.endRow}
+   </select>
+
+  <insert id="insertCampImage" parameterType="com.cp.campers.mypage.model.vo.Attachment">
+      INSERT
+      INTO IMAGEFILE
+      VALUES
+      (
+            SEQ_FILE_NO.NEXTVAL,
+            #{fileName},
+            #{fileRoute},
+            DEFAULT,
+            #{fileLevel},
+            #{fileOriginName}
+      )
+   </insert>
+   
+    <insert id="insertImageNo" parameterType="_int">
+      INSERT
+      INTO CAMP_FILE
+      VALUES
+      (SEQ_CAMP_NO.CURRVAL, SEQ_FILE_NO.CURRVAL)
+   </insert>
+   
+   <insert id="insertRoomImage" parameterType="com.cp.campers.mypage.model.vo.Attachment">
+      INSERT
+      INTO IMAGEFILE
+      VALUES
+      (
+            SEQ_FILE_NO.NEXTVAL,
+            #{fileName},
+            #{fileRoute},
+            DEFAULT,
+            #{fileLevel},
+            #{fileOriginName}
+      )
+   </insert>
+    <select id="selectCampNo" resultType="int">
+       SELECT SEQ_CAMP_NO.CURRVAL FROM DUAL
+    </select>
+   
+   <insert id="insertImageNo2" parameterType="_int">
+      INSERT
+      INTO ROOM_FILE
+      VALUES
+      (#{roomNo}, SEQ_FILE_NO.CURRVAL)
+   </insert>
+    
  	<select id="getListCountMyMember" resultType="int">
  		select count(*)
  		from member
@@ -785,4 +791,5 @@
  		   FROM RESERVE
  	</select>
   	 -->
+
 </mapper>

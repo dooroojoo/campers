@@ -2,6 +2,8 @@ package com.cp.campers.mypage.model.vo;
  
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -20,5 +22,7 @@ public class Room {
 	private int roomCount;
 	private int campNo;
 	 
+	private List<MultipartFile> roomFileList;
+	
 	private List<RoomFileNo> roomFileNoList;
 }

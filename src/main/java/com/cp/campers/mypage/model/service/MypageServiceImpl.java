@@ -47,63 +47,40 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	/* 캠프장 등록 */
-	@Transactional
 	@Override
-	public void mypageCampEnrollment(Camp camp, List<String> btypeList,
-			List<String> ftypeList, Attachment attachment, Attachment atta2) {
-		
-		/* CAMP TABLE INSERT */
+	public void mypageCampEnrollment(Camp camp, List<String> btypeList,List<String> ftypeList) {
 		mypageMapper.insertCamp(camp);
-		
-		/* CAMP_BUSINESS_TYPE INSERT */
-		/* 반복문으로 Integer 선택한 체크박스 businessNo 를 캠프 비즈니스 타입으로
-		 * mypageMapper에 CampBusinessType 에 businessNo 입력 */
-		//for(Integer businessNo : camp.getBusinessType()) {
-	    //	mypageMapper.insertCampBusinessType(businessNo);			
-		//}
-		//log.info("camp : " + camp.toString());
 		
 		for(String btype : btypeList ) {
 			mypageMapper.insertCampBusinessType(btype);
 		}
-		
-		/* CAMP_FACILITY INSERT */
-		//for(Integer facilityNo : camp.getFacilityNo()) {
-		//	mypageMapper.insertCampFacility(facilityNo);
-		//}
-		
 		for(String ftype : ftypeList ) {
 			mypageMapper.insertCampFacility(ftype);
 		}
 		
-		//mypageMapper.insertCampFacility(camp.getCampNo());
-		
-		/* ROOM INSERT */
-		//for(Room room : camp.getRoomList()) {
-		//	mypageMapper.insertRoom(room);
-		// }			
-		mypageMapper.insertRoom(camp.getRoom());	
-		
-		mypageMapper.insertCampImage(attachment);
-		mypageMapper.insertImageNo();
-		
-		mypageMapper.insertRoomImage(atta2);
-		mypageMapper.insertImageNo2();
-				
-		
-		/* CAMP_FILE INSERT */
-		//mypageMapper.insertCampFile(camp.getCampFile());
-		//for(Integer fileNo : camp.getCampFile()) {
-		//	mypageMapper.insertCampFile(fileNo);
-		//}
-		
-		/* ROOM_FILE INSERT */
-		//mypageMapper.insertRoomFile(camp.getRoomFile());
-		
 		/* 신규업체 신청 시 이력테이블 */
 		adminMapper.recordToNew(camp.getCampNo());
 	
-	}	
+	}
+	
+	@Override
+	public void campImageInsert(Attachment attachment) {
+		mypageMapper.insertCampImage(attachment);
+		mypageMapper.insertImageNo();
+	}
+
+	@Override
+	public String roomInsert(Room room) {
+		mypageMapper.insertRoom(room);
+		return mypageMapper.selectRoomNoList();
+		
+	}
+
+	@Override
+	public void roomImageInsert(Attachment atta2) {
+		mypageMapper.insertRoomImage(atta2);
+		mypageMapper.insertImageNo2(atta2.getRoomNo());
+	}
 
 	/* 숙소 등록 */
 	@Transactional
@@ -126,7 +103,7 @@ public class MypageServiceImpl implements MypageService{
 			mypageMapper.insertRoom2(room);
 			/* 숙소 이미지 등록 */
 			mypageMapper.insertRoomImage(atta2);
-			mypageMapper.insertImageNo2();
+			//mypageMapper.insertImageNo2();
 	}
 
 	/* 캠핑장 사진 등록*/
@@ -142,7 +119,7 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public void insertRoomImage(Attachment atta2) {
 		mypageMapper.insertRoomImage(atta2);
-		mypageMapper.insertImageNo2();	
+		//mypageMapper.insertImageNo2();	
 	}
 
 	
@@ -427,8 +404,6 @@ public class MypageServiceImpl implements MypageService{
 		mypageMapper.pwdUpdate(userId, pwd, newPwd);		
 	}
 
-
-	
 	/*
 	@Override
 	public String pwdCheck(String id) {

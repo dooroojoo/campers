@@ -11,4 +11,5 @@ public class Attachment {
 	private int fileLevel;
 	private String fileOriginName;
 	private String deletedName;
+	private int roomNo;
 }
