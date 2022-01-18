@@ -368,7 +368,8 @@ public class BoardController {
 				}else {
 					attachment.setFileLevel(1);
 				}
-				
+			
+			
 				log.info("@@@@@@@@"+attachment);
 				int result = boardService.updateBoardImage(attachment,board.getBid());
 				

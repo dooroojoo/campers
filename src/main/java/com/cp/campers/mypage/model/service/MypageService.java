@@ -53,7 +53,7 @@ public interface MypageService{
 
 	/* 캠핑장 등록 */
 	void mypageCampEnrollment(Camp camp, List<String> btypeList, 
-			List<String> ftypeList, Attachment attachment, Attachment atta2);
+			List<String> ftypeList);
 
 
 	/* 숙소 등록 List<Room> roomList */
@@ -74,6 +74,12 @@ public interface MypageService{
 	void deleteMember(Member member);
 
 	void pwdUpdate(String userId, String pwd, String newPwd);
+
+	void campImageInsert(Attachment attachment);
+
+	String roomInsert(Room room);
+
+	void roomImageInsert(Attachment atta2);
 
 	/*
 	Member pwdCheck(Member member);

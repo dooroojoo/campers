@@ -47,15 +47,15 @@
                 </tr>
                 <tr>
                     <th>캠핑장 이름</th>
-                    <td><input class="textbox" name="campName" type="text" placeholder="캠핑장 이름을 입력하세요."></td>
+                    <td><input class="textbox" name="campName" type="text" placeholder="캠핑장 이름을 입력하세요." required></td>
                 </tr>
                 <tr>
                     <th>캠핑장 주소</th>
-                    <td><input class="textbox" name="campAddress" type="text" placeholder="캠핑장 주소를 입력하세요."></td>
+                    <td><input class="textbox" name="campAddress" type="text" placeholder="캠핑장 주소를 입력하세요." required></td>
                 </tr>
                 <tr>
                     <th>사업장 대표번호</th>
-                    <td><input class="textbox" name="campPhone" type="text" placeholder="사업장 대표번호를 입력하세요."></td>
+                    <td><input class="textbox" name="campPhone" type="text" placeholder="사업장 대표번호를 입력하세요." required></td>
                 </tr>
                 <tr>
                     <th>사업장 형태</th>
@@ -76,37 +76,38 @@
 								Required request part 'multiFiles' is not present
 								org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'multiFiles' is not present 
                     -->
-                    <td><input type="file" class="imageinput image01" name="singleFile" accept="image/*" hidden>
+                    <td>
                 		<div class="previewBox">
                 			<div class="inputImgPreview preview01"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                    		<input type="file" class="imageinput image01" name="singleFile" accept="image/*" hidden required>
                 		</div>
                 	</td>	
                 </tr>
                 <tr>
                     <th>사업장 사진</th>
                     <td><!-- <input type="file" name="campMultiFiles" multiple> -->
-                		<input type="file" class="imageinput image1" name="campMultiFiles"  accept="image/*" hidden>
-	                    <input type="file" class="imageinput image2" name="campMultiFiles"  accept="image/*" hidden>
-	                    <input type="file" class="imageinput image3" name="campMultiFiles"  accept="image/*" hidden>
-	                    <input type="file" class="imageinput image4" name="campMultiFiles"  accept="image/*" hidden>
-	                    <input type="file" class="imageinput image5" name="campMultiFiles"  accept="image/*" hidden>
 	                  
                     <div class="previewBox">
                         <div class="inputImgPreview preview1"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                		<input type="file" class="imageinput image1" name="campMultiFiles"  accept="image/*" hidden>
                         <div class="inputImgPreview preview2"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    <input type="file" class="imageinput image2" name="campMultiFiles"  accept="image/*" hidden>
                         <div class="inputImgPreview preview3"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    <input type="file" class="imageinput image3" name="campMultiFiles"  accept="image/*" hidden>
                         <div class="inputImgPreview preview4"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    <input type="file" class="imageinput image4" name="campMultiFiles"  accept="image/*" hidden>
                         <div class="inputImgPreview preview5"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    <input type="file" class="imageinput image5" name="campMultiFiles"  accept="image/*" hidden>
                     </div>
                 </tr>
                 <tr>
                     <th>사업장 계좌번호</th>
-                    <td><select class="textbox2" name="bank" placeholder="은행">
+                    <td><select class="textbox2" name="bank" placeholder="은행" required>
                             <option value="농협">농협</option>
                             <option value="신한은행">신한은행</option>
                             <option value="국민은행">국민은행</option>
                         </select>
-                        <input class="textbox" name="accountNum" type="text" placeholder="계좌번호">
+                        <input class="textbox" name="accountNum" type="text" placeholder="계좌번호" required>
                     </td>
                 </tr>
                 <tr>
@@ -192,65 +193,65 @@
 7. 바베큐비용 : 바베큐 그릴 + 숯 + 석쇠 현장결제 가격
 8. 장작 : 장작 현장결제 가격
 9. 샤워장 이용 규칙 : 온수 유무, 사용시간 등등
-10. 차량주차유무 : 차량 추가 주차 가능여부 입력 해주세요. (차량 추가 시 금액)"></textarea>
+10. 차량주차유무 : 차량 추가 주차 가능여부 입력 해주세요. (차량 추가 시 금액)" required></textarea>
                     </td>
                 </tr>
                 <tr>
                     <th>사업장 소개</th>
-                    <td><textarea name="campIntro" cols="90" rows="10" placeholder="사업장 소개를 입력 해주세요."></textarea></td>
+                    <td><textarea name="campIntro" cols="90" rows="10" placeholder="사업장 소개를 입력 해주세요." required></textarea></td>
                 </tr>
                 <tr>
                     <th>객실 최대인원</th>
-                    <td><input class="textbox" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요."></td>
+                    <td><input class="textbox" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요." required></td>
                 </tr>
                 <tr>
                     <th>객실 이름(호수)</th>
-                    <td><input class="textbox" name="roomName" type="text" placeholder="객실 이름을 입력해주세요."></td>
+                    <td><input class="textbox" name="roomName" type="text" placeholder="객실 이름을 입력해주세요." required></td>
                 </tr>
                 <tr>
                     <th>객실 가격</th>
-                    <td><input class="textbox" name="roomPrice" type="text" placeholder="객실 가격을 입력해주세요."></td>
+                    <td><input class="textbox" name="roomPrice" type="text" placeholder="객실 가격을 입력해주세요." required></td>
                 </tr>
                 <tr>
                     <th>객실 크기</th>
-                    <td><input class="textbox" name="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요."></td>
+                    <td><input class="textbox" name="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요." required></td>
                 </tr>
                 <tr>
                     <th>객실 소개</th>
-                    <td><input class="textbox" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."></td>
+                    <td><input class="textbox" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요." required></td>
                 </tr>
                 <tr>
                     <th>객실 사진</th>
                     <td>
-                		<input type="file" class="imageinput image21" name="roomMultiFiles"  accept="image/*" hidden>
-	                    <input type="file" class="imageinput image22" name="roomMultiFiles"  accept="image/*" hidden>
-	                    <input type="file" class="imageinput image23" name="roomMultiFiles"  accept="image/*" hidden>
-	                    <input type="file" class="imageinput image24" name="roomMultiFiles"  accept="image/*" hidden>
-	                    <input type="file" class="imageinput image25" name="roomMultiFiles"  accept="image/*" hidden>
 	                  
 	                    <div class="previewBox">
 	                        <div class="inputImgPreview preview21"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+                		<input type="file" class="imageinput image21" name="roomMultiFiles"  accept="image/*" hidden>
 	                        <div class="inputImgPreview preview22"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    <input type="file" class="imageinput image22" name="roomMultiFiles"  accept="image/*" hidden>
 	                        <div class="inputImgPreview preview23"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    <input type="file" class="imageinput image23" name="roomMultiFiles"  accept="image/*" hidden>
 	                        <div class="inputImgPreview preview24"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    <input type="file" class="imageinput image24" name="roomMultiFiles"  accept="image/*" hidden>
 	                        <div class="inputImgPreview preview25"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
+	                    <input type="file" class="imageinput image25" name="roomMultiFiles"  accept="image/*" hidden>
 	                    </div>
                 </tr>
                 <tr>
                     <th>객실 바닥 형태</th><!-- name="roomFloor"  -->
-                    <td><input type="radio" name="roomFloor" value="데크" checked>데크 <input type="radio" name="roomFloor" value="잔디">잔디 <input type="radio" name="roomFloor" value="파쇄석">파쇄석 </td>
+                    <td><input type="checkbox" name="roomFloor" value="데크" checked>데크 <input type="checkbox" name="roomFloor" value="잔디">잔디 <input type="checkbox" name="roomFloor" value="파쇄석">파쇄석 </td>
                 </tr>
                 <tr>
                     <th>객실 주차 여부</th><!-- name="roomParking"  -->
-                    <td><input type="radio" name="roomParking" value="텐트 옆 주차" checked>텐트 옆 주차 <input type="radio" name="roomParking" value="주차장 주차">주차장 주차 <input type="radio" name="roomParking" value="외부 주차">외부 주차</td>
+                    <td><input type="checkbox" name="roomParking" value="텐트 옆 주차" checked>텐트 옆 주차 <input type="checkbox" name="roomParking" value="주차장 주차">주차장 주차 <input type="checkbox" name="roomParking" value="외부 주차">외부 주차</td>
                 </tr>
                 <tr>
                     <th>객실 형태</th><!-- name="roomForm" -->
-                    <td><input type="radio" name="roomForm" value="카라반" checked>카라반 <input type="radio" name="roomForm" value="캠핑">캠핑 <input type="radio" name="roomForm" value="글램핑">글램핑</td>
+                    <td><input type="checkbox" name="roomForm" value="카라반" checked>카라반 <input type="checkbox" name="roomForm" value="캠핑">캠핑 <input type="checkbox" name="roomForm" value="글램핑">글램핑</td>
                 </tr>
                 <tr>
                     <th>객실 수량</th>
-                    <td><input class="textbox2" name="roomAmount" type="number" placeholder="1"></td>
+                    <td><input class="textbox2" name="roomAmount" type="number" placeholder="1" required></td>
                 </tr>                
                 <tbody></tbody>
             </table>
@@ -266,63 +267,63 @@
     </div>
     <!-- footer -->
     <div th:replace="common/footer.html"></div>
+    <script>
+    	$(document).on("click","input[name='roomFloor']",function(e){
+    		if($(this).prop('checked')){
+    			$(this).siblings().prop('checked',false);
+    			$(this).prop('checked',true);
+    		}
+    	})
+    	$(document).on("click","input[name='roomParking']",function(e){
+    		if($(this).prop('checked')){
+    			$(this).siblings().prop('checked',false);
+    			$(this).prop('checked',true);
+    		}
+    	})
+    	$(document).on("click","input[name='roomForm']",function(e){
+    		if($(this).prop('checked')){
+    			$(this).siblings().prop('checked',false);
+    			$(this).prop('checked',true);
+    		}
+    	})
+    </script>
     
     <script>
-    $("#room_plus_button").on("click", function(e){
+    $(document).on("click","#room_plus_button", function(e){
     	//$(".clon_table").clone().appendTo(".room_plus");
 		$(".mypage_camp_enrollment_table > tbody:last").append
 		("<tr><th><hr width='100%' color='lightgray'></th><td><hr width='100%' color='lightgray'></td></tr>" +
-		"<tr><th>객실 최대인원</th><td><input class='textbox' name='roomMember' type='text' placeholder='객실 최대인원을 입력해주세요.'></td></tr>" +
-		"<tr><th>객실 이름(호수)</th><td><input class='textbox' name='roomName' type='text' placeholder='객실 이름을 입력해주세요.'></td></tr>" +
-		"<tr><th>객실 가격</th><td><input class='textbox' name='roomPrice' type='text' placeholder='객실 가격을 입력해주세요.'></td></tr>" +
-		"<tr><th>객실 크기</th><td><input class='textbox' name='roomSize' type='text' placeholder='㎡ 기준(평수) 수치를 입력 해주세요.'></td></tr>" +
-		"<tr><th>객실 소개</th><td><input class='textbox' name='roomInfo' type='text' placeholder='객실 소개 및 구비물품 을 입력해주세요.'></td></tr>" +
-		"<tr><th>객실 사진</th><td><input type='file' name='roomMultiFiles' multiple></tr>" +
-		"<tr><th>객실 바닥 형태</th><td><input type='radio' name='roomFloor' value='데크' checked>데크 <input type='radio' name='roomFloor' value='잔디'>잔디 <input type='radio' name='roomFloor' value='파쇄석'>파쇄석 </td></tr>" +
-		"<tr><th>객실 주차 여부</th><td><input type='radio' name='roomParking' value='텐트 옆 주차' checked>텐트 옆 주차 <input type='radio' name='roomParking' value='주차장 주차'>주차장 주차 <input type='radio' name='roomParking' value='외부 주차'>외부 주차</td></tr>" +
-		"<tr><th>객실 형태</th><td><input type='radio' name='roomForm' value='카라반' checked>카라반 <input type='radio' name='roomForm' value='캠핑'>캠핑 <input type='radio' name='roomForm' value='글램핑'>글램핑</td></tr>" +
-		"<tr><th>객실 수량</th><td><input class='textbox2' name='roomAmount' type='number' placeholder='1'></td></tr>"
+		"<tr><th>객실 최대인원</th><td><input required class='textbox' name='roomMember' type='text' placeholder='객실 최대인원을 입력해주세요.'></td></tr>" +
+		"<tr><th>객실 이름(호수)</th><td><input required class='textbox' name='roomName' type='text' placeholder='객실 이름을 입력해주세요.'></td></tr>" +
+		"<tr><th>객실 가격</th><td><input required class='textbox' name='roomPrice' type='text' placeholder='객실 가격을 입력해주세요.'></td></tr>" +
+		"<tr><th>객실 크기</th><td><input required class='textbox' name='roomSize' type='text' placeholder='㎡ 기준(평수) 수치를 입력 해주세요.'></td></tr>" +
+		"<tr><th>객실 소개</th><td><input required class='textbox' name='roomInfo' type='text' placeholder='객실 소개 및 구비물품 을 입력해주세요.'></td></tr>" +
+		"<tr><th>객실 사진</th><td>"+
+		"<div class='previewBox'>"+
+		"<div class='inputImgPreview preview26'><img class='beforeInput' src='/resources/images/board/cameraImg.png'></div>"+
+		"<input type='file' class='imageinput image26' name='roomMultiFiles'  accept='image/*' hidden>" +
+		"<div class='inputImgPreview preview27'><img class='beforeInput' src='/resources/images/board/cameraImg.png'></div>"+
+		"<input type='file' class='imageinput image27' name='roomMultiFiles'  accept='image/*' hidden>" +
+		"<div class='inputImgPreview preview28'><img class='beforeInput' src='/resources/images/board/cameraImg.png'></div>"+
+		"<input type='file' class='imageinput image28' name='roomMultiFiles'  accept='image/*' hidden>" +
+		"<div class='inputImgPreview preview29'><img class='beforeInput' src='/resources/images/board/cameraImg.png'></div>"+
+		"<input type='file' class='imageinput image29' name='roomMultiFiles'  accept='image/*' hidden>" +
+		"<div class='inputImgPreview preview30'><img class='beforeInput' src='/resources/images/board/cameraImg.png'></div>"+
+		"<input type='file' class='imageinput image30' name='roomMultiFiles'  accept='image/*' hidden>" +
+		"<tr><th>객실 바닥 형태</th><td><input type='checkbox' name='roomFloor' value='데크' checked>데크 <input type='checkbox' name='roomFloor' value='잔디'>잔디 <input type='checkbox' name='roomFloor' value='파쇄석'>파쇄석 </td></tr>" +
+		"<tr><th>객실 주차 여부</th><td><input type='checkbox' name='roomParking' value='텐트 옆 주차' checked>텐트 옆 주차 <input type='checkbox' name='roomParking' value='주차장 주차'>주차장 주차 <input type='checkbox' name='roomParking' value='외부 주차'>외부 주차</td></tr>" +
+		"<tr><th>객실 형태</th><td><input type='checkbox' name='roomForm' value='카라반' checked>카라반 <input type='checkbox' name='roomForm' value='캠핑'>캠핑 <input type='checkbox' name='roomForm' value='글램핑'>글램핑</td></tr>" +
+		"<tr><th>객실 수량</th><td><input required class='textbox2' name='roomAmount' type='number' placeholder='1'></td></tr>"
 		);   
     });
     </script>
     
     <script>
-    $(function(){
-    	$('.preview01').click(function (e){
-   			$('.image01').click();
+
+   		$(document).on('click','.inputImgPreview',function (e){
+   			$(this).next().click();
    		}) 
-   		$('.preview1').click(function (e){
-   			$('.image1').click();
-   		}) 
-   		$('.preview2').click(function (e){
-   			$('.image2').click();
-   		}) 	
-   		$('.preview3').click(function (e){
-   			$('.image3').click();
-   		})
-   		$('.preview4').click(function (e){
-   			$('.image4').click();
-   		}) 	
-   		$('.preview5').click(function (e){
-   			$('.image5').click();
-   		})
-   		$('.preview21').click(function (e){
-   			$('.image21').click();
-   		}) 
-   		$('.preview22').click(function (e){
-   			$('.image22').click();
-   		}) 	
-   		$('.preview23').click(function (e){
-   			$('.image23').click();
-   		})
-   		$('.preview24').click(function (e){
-   			$('.image24').click();
-   		}) 	
-   		$('.preview25').click(function (e){
-   			$('.image25').click();
-   		}) 	
-   
-    })
+   	
     </script>
     
     <script>
@@ -331,18 +332,19 @@
     /* div image_area 요소들 */
     const imageArea = document.querySelectorAll(".inputImgPreview");
     /* input type file 요소에 change 이벤트 발생 시 (파일 첨부 발생) */
-    fileElements.forEach(item => item.addEventListener('change', preview));
+    //fileElements.forEach(item => item.addEventListener('change', preview));
 
-    function preview(){
-    	let index = Array.from(fileElements).indexOf(this);   //input type="file" 이게 this
+    $(document).on("change","[type=file]", function () {
+    	let index = Array.from($("[type=file]")).indexOf(this);
     	if(this.files && this.files[0]) {
     		let reader = new FileReader();
     		reader.readAsDataURL(this.files[0]);
     		reader.onload = function() {
-    			imageArea[index].innerHTML = "<img class='afterInput' src='" + reader.result + "'>";
+    			$(".inputImgPreview")[index].innerHTML = "<img class='afterInput' src='" + reader.result + "'>";
     		}
     	}
-    }
+    })
+
     </script>
     
     <!-- <script>
