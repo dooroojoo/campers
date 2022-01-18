@@ -104,11 +104,6 @@
 		<result property="fType" column="FACILITY_TYPE"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.mypage.model.vo.CampFile" id="campFileResultMap">
-		<id property="campNo" column="CAMP_NO"/>
-		<result property="fileNo" column="FILE_NO"/>
-	</resultMap>
-	
 	<resultMap type="com.cp.campers.camp.model.vo.Review" id="reviewResultMap">
 		<id property="rid" column="REVIEW_NO"/>
 		<result property="writer" column="USER_NO"/>
@@ -120,7 +115,6 @@
 		<result property="campNo" column="CAMP_NO"/>
 		<result property="profilePath" column="PROFILE_PATH"/>
 	</resultMap>
-	
 
 	<select id="campDetail" parameterType="_int" resultMap="campResultMap">
 		SELECT

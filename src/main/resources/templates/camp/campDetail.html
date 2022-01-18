@@ -40,13 +40,11 @@
         <div class="slide_accomd">
             <div class="swiper_acconmd campSwiper">
                 <div class="swiper-wrapper">
-
                     <div class="swiper-slide" th:each="imgfile : ${camp.imgFileList}">
                         <div class="div-accomdImg">
                             <img th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }">
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -86,14 +84,9 @@
 
             });
         </script>
-        
-
-
 
         <!-- 3. 숙소 예약 및 연락정보 -->
         <div class="accom_info">
-
-
             <!-- 연락정보 -->
             <div class="accom_profile">
                 <div class="accom_address">
@@ -171,7 +164,6 @@
                    	                 "drops": "down",
                   	                  maxDate: 0,
                   	                  minDate: 0});
-		                         
 	                       	  });
 	                       	</script>
 							<label class="search-date search-container">
@@ -221,8 +213,6 @@
 					    </th:block>
                 </form>
             </div>
-
-
         </div>
 
 
@@ -658,8 +648,6 @@ function changeLoad() {
 	let campNo = $('input[name=campNo]').val();
 	let dateIn = dateRange.substr(0, 10);
 	let dateOut = dateRange.substring(13, dateRange.length);
-	
-	console.log("location.href=/camp/detail?campNo="+campNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest);
 	
 	location.href="/camp/detail?campNo="+campNo+"&dateIn="+dateIn+"&dateOut="+dateOut+"&guest="+guest;
 }

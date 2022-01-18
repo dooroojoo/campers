@@ -44,17 +44,22 @@
 		<result property="checkin" column="CHECKIN"/>
 		<result property="checkout" column="CHECKOUT"/>
 		<result property="refusal" column="REFUSAL"/>
-		<result property="fileLevel" column="FILE_LEVEL"/>
-		<result property="fileRoute" column="FILE_ROUTE"/>
-		<result property="fileName" column="FILE_NAME"/>
+		<collection property="imageFileList" resultMap="imageFileResultMap"/>
 		<collection property="campBusinessTypeList" resultMap="CampBusinessTypeResultMap"/>
 		<collection property="campFacilityList" resultMap="CampFacilityResultMap"/>
-		<collection property="campFileNoList" resultMap="CampFileNoResultMap"/>
-		<collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/>
 	</resultMap>
-		<!-- 
-		<collection property="imgFileList" resultMap="imageFileResultMap"/>
-		 -->
+		<!-- <collection property="campFileNoList" resultMap="CampFileNoResultMap"/>
+		<collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/> -->
+	
+	<!-- 사진 -->
+	<resultMap type="com.cp.campers.mypage.model.vo.ImageFile" id="imageFileResultMap">
+		<id property="fileNo" column="FILE_NO"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileRoute" column="FILE_ROUTE"/>
+		<result property="fileStatus" column="FILE_STATUS"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+	</resultMap>
+	
 	<resultMap type="com.cp.campers.mypage.model.vo.CampFileNo" id="CampFileNoResultMap">
 		<id property="campNo" column="CAMP_No"/>
 		<id property="fileNo" column="FILE_NO"/>
@@ -90,11 +95,6 @@
 		<result property="facilityType" column="FACILITY_TYPE"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.mypage.model.vo.CampFile" id="CampFileResultMap">
-		<id property="campNo" column="CAMP_NO"/>
-		<result property="fileNo" column="FILE_NO"/>
-	</resultMap>
-	
 	<resultMap type="com.cp.campers.mypage.model.vo.Room" id="RoomResultMap">
 		<id property="roomNo" column="ROOM_NO"/>
 		<result property="roomName" column="ROOM_NAME"/>
@@ -121,14 +121,6 @@
 		<result property="campNo" column="CAMP_NO"/>
 	</resultMap>
 	
-	<resultMap type="com.cp.campers.mypage.model.vo.ImageFile" id="imageFileResultMap">
-		<id property="fileNo" column="FILE_NO"/>
-		<result property="fileName" column="FILE_NAME"/>
-		<result property="fileRoute" column="FILE_ROUTE"/>
-		<result property="fileStatus" column="FILE_STATUS"/>
-		<result property="fileLevel" column="FILE_LEVEL"/>
-	</resultMap>
-	     
     <resultMap type="com.cp.campers.board.model.vo.Board" id="boardResultMap">
 		<id property="bid" column="BID"/>
 		<result property="title" column="BTITLE"/>
@@ -165,7 +157,7 @@
 		<result property="fileOriginName" column="FILE_ORIGIN_NAME"/>
 	</resultMap>
 	
-	<resultMap id="reserPayResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
+	<resultMap id="reserveResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
 		<id property="reserNo" column="RESER_NO"/>
 		<result property="userNo" column="USER_NO"/>
 		<result property="reserName" column="RESER_NAME"/>
@@ -174,11 +166,13 @@
 		<result property="request" column="REQUEST"/>
 		<result property="checkIn" column="CHECKIN"/>
 		<result property="checkOut" column="CHECKOUT"/>
+		<result property="deadLine" column="DEADLINE"/>
 		<result property="accountNum" column="ACCOUNT_NUM"/>
 		<result property="accountHol" column="ACCOUNT_HOL"/>
 		<result property="bank" column="BANK"/>
 		<result property="roomQua" column="ROOM_QUA"/>
 		<result property="roomNo" column="ROOM_NO"/>
+		<association property="camp" resultMap="CampResultMap"/>
 	</resultMap>
 	
 	<resultMap id="BusinessReservationResultMap" type="com.cp.campers.mypage.model.vo.BusinessReservation">
@@ -552,11 +546,12 @@
  		  and status = 'Y'
  	</select>
  	 
- 	 <select id="getListCountMyHostReserveList" resultType="int">
- 	 	SELECT COUNT(*)
- 	 	FROM CAMP
- 	 	WHERE USER_NO = #{userNo}
- 	 	AND CAMP_STATUS = 'Y'
+ 	 <select id="getCountMyGuestReserveList" parameterType="_int" resultType="_int">
+	 	 SELECT COUNT(*)
+	 	   FROM RESERVE
+	       JOIN MEMBER USING(USER_NO)
+	 	  WHERE USER_NO = #{userNo}
+	 	 	AND RESER_STATE = 'Y'
  	 </select>
  	 
  	 <select id="getListCountMyBoard" resultType="int">
@@ -659,29 +654,36 @@
  	 	      ORDER BY USER_NO DESC) A) 	 
  	 </select>
  	 
- 	 <select id="selectMyGuestReserveList" resultMap="CampResultMap">
- 	 	SELECT *
- 	 	FROM (SELECT ROWNUM RNUM, A.*
- 	 	FROM (SELECT
- 	 			    C.CAMP_NO
- 	 			  , C.CAMP_NAME
- 	 			  , C.USER_NO
- 	 			  , C.CAMP_ADDRESS
- 	 			  , C.CAMP_PHONE
- 	 			  , C.CAMP_INTRO
- 	 			  , C.CAMP_PATH
- 	 			  , C.CAMP_POLICY
- 	 			  , C.CAMP_STATUS
- 	 			  , C.ACCOUNT_NUM
- 	 			  , C.BANK
- 	 			  , C.CHECKIN
- 	 			  , C.CHECKOUT
- 	 			  , C.REFUSAL
- 	 	       FROM CAMP C
- 	 	       JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
- 	 	      WHERE C.CAMP_STATUS = 'Y'
- 	 	        AND C.USER_NO = #{ userNo }
- 	 	      ORDER BY USER_NO DESC) A) 	 
+ 	 <select id="selectMyGuestReserveList" parameterType="hashmap" resultMap="reserveResultMap">
+ 	 SELECT * 
+	      FROM (SELECT ROWNUM RNUM, A.*
+			      FROM (SELECT RESER_NO
+						     , RV.USER_NO
+						     , RESER_NAME
+						     , RESER_STATE
+						     , RV.CHECKIN
+						     , RV.CHECKOUT
+						     , FLOOR(SYSDATE - to_date(RV.CHECKOUT, 'YYYY-MM-DD')) DEADLINE
+						     , RV.ROOM_NO
+						     , R.ROOM_NAME
+						     , C.CAMP_NO
+						     , CAMP_NAME
+						     , CAMP_ADDRESS
+						     , CAMP_PHONE
+						     , I.FILE_NO
+						     , I.FILE_NAME
+						     , I.FILE_ROUTE
+						     , I.FILE_LEVEL
+						    FROM RESERVE RV
+						    LEFT JOIN MEMBER M ON(RV.USER_NO = M.USER_NO)
+						    LEFT JOIN ROOM R ON(RV.ROOM_NO = R.ROOM_NO)
+						    LEFT JOIN CAMP C ON(R.CAMP_NO = C.CAMP_NO)
+						    LEFT JOIN CAMP_FILE CF ON(C.CAMP_NO = CF.CAMP_NO)
+						    LEFT JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
+						   WHERE RV.USER_NO = #{userNo}
+						     AND I.FILE_STATUS = 'N'
+						     AND I.FILE_LEVEL = 0) A)
+		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
  	 </select>
  	 	 
  	  	 
@@ -728,8 +730,8 @@
  		   SET PROFILE_PATH = #{ profilePath }
  		 WHERE USER_NO = #{ userNo } 	
  	</update>
- 	
- 	<!-- 사업자 예약회원 내역 조회 -->
+
+  	<!-- 사업자 예약회원 내역 조회 -->
  	<select id="selectBusinessReservationList" resultMap="BusinessReservationResultMap">
  		SELECT
  		      B.RESER_NO
@@ -773,5 +775,5 @@
  				, ROOM_NO
  		   FROM RESERVE
  	</select>
- 	
+  
 </mapper>
