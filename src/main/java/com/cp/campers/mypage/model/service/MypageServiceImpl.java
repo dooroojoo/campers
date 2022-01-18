@@ -293,11 +293,11 @@ public class MypageServiceImpl implements MypageService{
 	@Transactional
 	@Override
 	public Map<String, Object> selectMyCampList(int userNo, int page) {
-		int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
+		// int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
 		/* 등록한 캠프장 수 */
-		log.info("listCount : " + listCount+"");
+		// log.info("listCount : " + listCount+"");
 		
-		PageInfo pi = new PageInfo(page, listCount, 10, 5);
+		PageInfo pi = new PageInfo(page, 10, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
 		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
 				
@@ -327,11 +327,11 @@ public class MypageServiceImpl implements MypageService{
 	@Transactional
 	@Override
 	public Map<String, Object> selectMyHostReserveList(int userNo, int page) {
-		int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
+		// int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
 		
-		log.info("listCount : " + listCount+"");
+		// log.info("listCount : " + listCount+"");
 		
-		PageInfo pi = new PageInfo(page, listCount, 10, 5);
+		PageInfo pi = new PageInfo(page, 10, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
 		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
 		
@@ -365,9 +365,10 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public Map<String, Object> selectMyGuestReserveList(int userNo, int page) {
 		
-		int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
+		// 회원 총 예약 개수
+		int listCount = mypageMapper.getCountMyGuestReserveList(userNo);
 		
-		log.info("listCount : " + listCount+"");
+		log.info("listCount : {}", listCount);
 		
 		PageInfo pi = new PageInfo(page, listCount, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
@@ -382,6 +383,8 @@ public class MypageServiceImpl implements MypageService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
 		map.put("reserveList", reserveList);
+		
+		log.info("reserveList : {}", reserveList);
 		
 		return map;
 	}

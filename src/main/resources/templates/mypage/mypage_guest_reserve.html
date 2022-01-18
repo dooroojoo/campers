@@ -1,37 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mypage_reserve</title>
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- 외부 css -->
-    <link href="/resources/css/mypage/mypage_guest_reserve.css" rel="stylesheet" type="text/css">
-    <!-- 외부 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
-      
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mypage_reserve</title>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- 외부 css -->
+<link href="/resources/css/mypage/mypage_guest_reserve.css" rel="stylesheet" type="text/css">
+<!-- 외부 폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
 </head>
 <body>
-	<!-- header -->
-    <!-- 
-    <div th:replace="common/header.html"></div>
- 	-->
-    <!-- category -->
-	<div th:replace="mypage/mypage_category.html"></div>
+<div th:replace="mypage/mypage_category.html"></div>
 
     <div class="content">
     
         <div>
+	        <div class="mypage_guest_reserve">
+	            <header class="mypage_guest_reserve_header">
+	                <h1 class="mypage_guest_reserve_h1">회원 예약내역 확인</h1>
+	            </header>
+	        </div>
+	        
             <table class="mypage_guest_reserve_table">
-        <div class="mypage_guest_reserve">
-            <header class="mypage_guest_reserve_header">
-                <h1 class="mypage_guest_reserve_h1">회원 예약내역 확인</h1>
-            </header>
-        </div>
                 <tr class="mypage_guest_reserve_table_header">
                     <th class="mypage_guest_reserve_table_header_no">NO</th>
                     <th>예약 캠핑장</th>
@@ -39,89 +34,44 @@
                     <th>예약 날짜</th>
                     <th class="mypage_guest_reserve_table_header_status">예약 상태</th>
                 </tr>
-                <tr>
-                    <th class="mypage_guest_reserve_table_body"></th>
-                    <th class="mypage_guest_reserve_table_body"><img class="mypage_guest_reserve_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
-                    <th class="mypage_guest_reserve_table_body"><p class="camp_address">강원도 춘천시 동내면 장학리 108-7 아침고요 수목원</p>
-                        <small class="camp_phone">010-1234-5678</small></th>
-                    <th class="mypage_guest_reserve_table_body"><p class="camp_date">2021.12.01(수) ~ 2021.12.02(목)</p>
-                        <small class="camp_room">아침고요수목원 101번 캠핑장</small></th>
-                    <th class="mypage_guest_reserve_table_body2"><input class="mypage_guest_reserve_button" type="button" value="예약취소"></th>
-                </tr>
-                <tr>
-                    <th class="mypage_guest_reserve_table_body"></th>
-                    <th class="mypage_guest_reserve_table_body"><img class="mypage_guest_reserve_table_img" src="/resources/images/mypage/007.png"><p class="camp_name">아침고요 수목원</p></th>
-                    <th class="mypage_guest_reserve_table_body"><p class="camp_address">강원도 춘천시 동내면 장학리 108-7 아침고요 수목원</p>
-                        <small class="camp_phone">010-1234-5678</small></th>
-                    <th class="mypage_guest_reserve_table_body"><p class="camp_date">2021.12.01(수) ~ 2021.12.02(목)</p>
-                        <small class="camp_room">아침고요수목원 101번 캠핑장</small></th>
-                    <th class="mypage_guest_reserve_table_body2">
-                    	<input class="mypage_guest_reserve_button" type="button" value="예약취소">
-                    	<input class="mypage_guest_reserve_button" type="button" 
-                    	th:onclick="|location.href='@{/camp/review(userNo=${#authentication.principal.userNo}, campNo=40, reserNo=1)}'|" 
-                    	value="리뷰쓰기">
+                <tr th:each="reserve : ${reserveList}" th:with="sysdate=${#dates.createToday()}">
+                    <th class="mypage_guest_reserve_table_body" th:text="${reserve.reserNo}"></th>
+                    <th class="mypage_guest_reserve_table_body" th:each="imgfile : ${reserve.camp.imageFileList}">
+                    	<img class="mypage_guest_reserve_table_img" th:src="@{ ${imgfile.fileRoute} + ${imgfile.fileName} }">
+                    	<p class="camp_name" th:text="${reserve.camp.campName}"></p>
                     </th>
-                    
+                    <th class="mypage_guest_reserve_table_body"><p class="camp_address" th:text="${reserve.camp.campAddress}"></p>
+                        <small class="camp_phone" th:text="${reserve.camp.campPhone}"></small></th>
+                    <th class="mypage_guest_reserve_table_body">
+                    	<p class="camp_date" th:text="|${reserve.checkIn} ~ ${reserve.checkOut}|"></p>
+                        <small class="camp_room" th:text="${reserve.roomName}"></small>
+                    </th>
+                    <th class="mypage_guest_reserve_table_body2">
+                    	<h6>예약 완료</h6>
+                    	<input class="mypage_guest_reserve_button" type="button" value="예약취소">
+                    </th>
+                    <th class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} <= 7">
+                    	<input class="mypage_guest_reserve_button" type="button"
+                    	th:onclick="|location.href='@{/camp/review(userNo=${#authentication.principal.userNo}, campNo=${reserve.camp.campNo}, reserNo=${reserve.reserNo})}'|" 
+                    	value="리뷰쓰기">
+                    	<h6>체크 아웃으로부터 7일 이내에만 <br> 리뷰 작성이 가능합니다</h6>
+                    </th>
+                    <th class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} > 7">
+                    	<h6>리뷰작성 완료</h6>
+                    </th>
+                    <th class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} > 7">
+                    	<h6>이용 완료</h6>
+                    </th>
                 </tr>
             </table>
-        <!-- 페이징 처리 -->
-     <div class="member_pages">
-        <ul class="member_paging">
-
-
-            <!-- 맨 처음으로 이동하는 버튼(<<) -->
-            <li><a href="">&lt;&lt;</a></li>
-            
-
-
-            <!-- 이전 페이지로(<) -->
-            <li>
-                <c:choose>
-                    <c:when test="${ pi.page > 1 }"><a href="">&lt;</a></c:when>
-                    <!-- <c:otherwise><a href="#">&lt;</a></c:otherwise> -->
-                </c:choose>
-            </li>
-            
-
-
-            <!-- 최대 10개의 페이지 목록 -->
-            <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-                <li>
-                    <c:choose>
-                        <c:when test="">
-                            <div class="current_page">
-                                <a href="#">1</a>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <!-- <a href="${contextPath }/board/list?page=${ p }${ searchParam }">${ p }</a> -->
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-            </c:forEach>
-
-
-
-            <!-- 다음 페이지로(>) -->
-            <li>
-                <c:choose>
-                    <c:when test=""><a href="">&gt;</a></c:when>
-                    <!-- <c:otherwise><a href ="#">&gt;</a></c:otherwise> -->
-                </c:choose>
-            </li>
-
-
-
-            <!-- 맨 끝으로 이동하는 버튼(>>) -->
-            <li><a href="">&gt;&gt;</a></li>
-        </ul>
-    </div>
         </div>
+        
+        <!-- 페이징 처리 -->
 
 
 </div>
-    </div>
-    <!-- footer -->
-    <div th:replace="common/footer.html"></div> 
+
+<!-- footer -->
+<div th:replace="common/footer.html"></div> 
 </body>
 </html>

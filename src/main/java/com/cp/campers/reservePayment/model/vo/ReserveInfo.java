@@ -21,6 +21,7 @@ public class ReserveInfo {
 	private String request;			// 예약요청사항
 	private String checkIn; 		// 체크인
 	private String checkOut; 		// 체크아웃
+	private int deadLine;			// 리뷰기한
 	private String accountNum;  	// 환불계좌번호
 	private String accountHol;      // 예금주
 	private String bank;  			// 은행
