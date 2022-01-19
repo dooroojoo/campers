@@ -50,7 +50,7 @@
 		   	, #{ accountHol }
 		   	, #{ bank }
 		   	, #{ roomQua }
-		   	, 1 <!-- 임시값. 예약하기 버튼 눌렀을 때 숙소번호 reservePay.html로 가져와서 결제하기 클릭 시 hidden으로 같이 넘기기  --> 
+		   	, #{roomNo} <!-- 임시값. 예약하기 버튼 눌렀을 때 숙소번호 reservePay.html로 가져와서 결제하기 클릭 시 hidden으로 같이 넘기기  --> 
 		   )
 	</insert>
 	
