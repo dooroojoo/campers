@@ -22,7 +22,16 @@
         <li><a href="/company/introduce">회사소개</a></li>
         <li><a href="/company/policy">이용약관</a></li>
         <li><a href="/company/privacy">개인정보처리방침</a></li>
-        <li><a href="/mypage/mypageCampEnrollment">신규 업체 등록</a></li>
+        <li>
+        	<!-- 로그인 안한 경우 -->
+	        <th:block sec:authorize="isAnonymous()">
+	        <a onclick="loginPlz();">신규 업체 등록</a>
+	       	</th:block>
+	       	<!-- 로그인한 경우 -->
+       		<th:block sec:authorize="isAuthenticated()">
+        		<a href="/mypage/mypageCampEnrollment">신규 업체 등록</a>
+    		</th:block>
+        </li>
         <li><a href="/company/csCenter">고객센터</a></li>
       </ul>
       <ul class="footer-text">
@@ -31,11 +40,15 @@
         <li>주소 : 서울시 강남구 태헤안로</li>
         <li>메일 : campers@cs.co.kr</li>
       </ul>
-      
     </div>
-
-  </div>
-	
+</div>
+<script>
+function loginPlz(){
+	if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
+		location.href="/member/login";
+	}
+}
+</script>
 
 </body>
 </html>

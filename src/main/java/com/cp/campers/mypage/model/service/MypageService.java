@@ -33,7 +33,7 @@ public interface MypageService{
 	int nickNameCheck(String nickName);
 
 	/* 회원 탈퇴 */
-	Member changeInfoMemberout(Member member);
+	int changeInfoMemberout(Member member);
 
 	/* 내 게시판 목록 */
 	Map<String, Object> selectMyBoardList(int writer, int page);
@@ -74,6 +74,9 @@ public interface MypageService{
 	void deleteMember(Member member);
 
 	void pwdUpdate(String userId, String pwd, String newPwd);
+
+	/* 예약 취소 */
+	int reserveCancle(int reserNo);
 
 	void campImageInsert(Attachment attachment);
 

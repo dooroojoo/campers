@@ -1,5 +1,7 @@
 package com.cp.campers.camp.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class CampController {
 	public CampController(CampService campService) {
 		this.campService = campService;
 	}
-
+	
 	/* 숙소 상세 */
 	@GetMapping("detail")
 	public String campDetail(int campNo, String dateIn, String dateOut, Model model) {
@@ -38,9 +40,12 @@ public class CampController {
 		model.addAttribute("roomList", map.get("roomList"));
 		model.addAttribute("reviewList", map.get("reviewList"));
 		model.addAttribute("newReply", '\n');
+
 		log.info("camp : {}", map.get("camp"));
 		// log.info(map.get("reviewList").toString());
 		// log.info("reserveCount : ", map.get("reserveCount"));
+		log.info("reserveCount : ", map.get("reserveCount"));
+
 		
 		if (map.get("roomList").toString().equals("[]")) {
 			model.addAttribute("noRoom", "예약할 수 있는 객실이 없어요!");
@@ -51,7 +56,6 @@ public class CampController {
 		}
 		
 		return "camp/campDetail";
-		
 	}
 	
 	/* 객실 상세 : ajax */
@@ -73,16 +77,19 @@ public class CampController {
 		
 		campService.insertReview(review);
 		
-		return "camp/review";
+		return "redirect:/mypage/mypageGuestReserve";
 	}
 	
 	/* 리뷰 삭제 */
 	@GetMapping("/reviewDelete")
 	public String reviewDelete(int rid, int campNo) {
 		
+		Date today = new Date();
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		
 		campService.reviewDelete(rid);
 		
-		return "redirect:/camp/detail?campNo=" + campNo;
+		return "redirect:/camp/detail?campNo=" + campNo + "&dateIn=" + date.format(today) + "&dateOut=" + date.format(today) + "&guest=0";
 	}
 	
 }

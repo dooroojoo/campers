@@ -126,10 +126,9 @@ ul, li {
 .admin_paging .current_page {
     background-color: black;
     border-radius: 100%;
-    margin: 17px auto;
-    width: 25px;
-    height: 25px;
-    color: white;
+    margin: auto;
+    width: 28px;
+    height: 28px;
 }
 .admin_paging .current_page a{
     color: white;

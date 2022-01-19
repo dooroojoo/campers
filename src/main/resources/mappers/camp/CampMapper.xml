@@ -30,7 +30,7 @@
       <result property="authorityDesc" column="AUTHORITY_DESC"/>
    </resultMap>
    
-   <!-- 회원 --> 
+   <!-- 숙소 --> 
    <resultMap type="com.cp.campers.camp.model.vo.Camp" id="campResultMap">
 		<id property="campNo" column="CAMP_NO"/>
 		<result property="campName" column="CAMP_NAME"/>
@@ -167,12 +167,12 @@
             , R.ROOM_FORM
             , I.FILE_NAME
             , I.FILE_ROUTE
+            , I.FILE_LEVEL
 		 FROM ROOM R
 		 JOIN ROOM_FILE RF ON(R.ROOM_NO = RF.ROOM_NO)
 		 JOIN IMAGEFILE I ON(I.FILE_NO = RF.FILE_NO)
 		WHERE R.CAMP_NO = #{ campNo }
 		  AND I.FILE_STATUS = 'N'
-		  AND I.FILE_LEVEL = '1'
 	</select>
 	
 	<select id="roomDetail" parameterType="_int" resultMap="roomResultMap">
@@ -223,6 +223,12 @@
               , #{ reserNo }
               , #{ campNo })
 	</insert>
+	
+	<update id="reserveWrite">
+		UPDATE RESERVE
+		   SET WRITE_OR_NOT = 'Y'
+		 WHERE RESER_NO = #{reserNo}
+	</update>
 	
 	<update id="reviewDelete" parameterType="_int">
 		 UPDATE REVIEW

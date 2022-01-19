@@ -73,7 +73,7 @@ public interface MypageMapper {
 	int changeInfoPwdModify(Member member);
 	
 	// 회원 탈퇴
-	void changeInfoMemberout(Member member);
+	int changeInfoMemberout(Member member);
 
 	/* 닉네임 체크 */
 	int nickNameCheck(String nickName);
@@ -123,12 +123,15 @@ public interface MypageMapper {
 	/* 회원 예약내역 */
 	List<ReserveInfo> selectMyGuestReserveList(Map<String, Object> param);
 
+	/* 예약 취소 */
+	int reserveCancle(int reserNo);
+	
 	/* 프로필 사진 변경 */
 	void updateProfilePath(Member member);
 
 	void deleteMember(Member member);
 
-	void pwdUpdate(@Param("userId") String userId, @Param("pwd") String pwd, @Param("newPwd") String newPwd);
+	void pwdUpdate(Map<String,String> param);
 
 
 	void campImageInsert(Attachment attachment);
@@ -136,7 +139,6 @@ public interface MypageMapper {
 	List<BusinessReservation> selectBusinessReservationList(int userNo);
 
 	List<ReserveInfo> selectReserveInfoList();
-
 
 
 	void campImageNo();
@@ -148,6 +150,8 @@ public interface MypageMapper {
 	void roomImageNo();
 
 	String selectRoomNoList();
+
+	String selectPwd(Member member);
 
 	
 	// public Map<String, Object> findAllMember();

@@ -17,11 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,8 +41,6 @@ import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
 import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.Room;
-import com.cp.campers.mypage.model.vo.RoomFile;
-import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -176,10 +174,17 @@ public class MyPageController {
 	@ResponseBody
 	public String changeInfoMemberout(Model model, Member member,
 			RedirectAttributes rttr, Locale locale) {
+		
+		log.info("@@@@@@@@member="+member);
 				
-		mypageService.changeInfoMemberout(member);
-				
-		log.info("회원탈퇴 member : " + member.toString());
+		int result = mypageService.changeInfoMemberout(member);
+			
+		String message = "";
+		if(result > 0) {
+			message = "success";
+		}else {
+			message = "fail";
+		}
 		
 		//log.info(member.getId(), member.getPwd());
 		//log.info("회원탈퇴 member : " + member.toString());
@@ -189,7 +194,7 @@ public class MyPageController {
 		//rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoMemberout", null, locale));
 
 		//return mypageService.deleteMember(member);
-		return "redirect:/main";		
+		return message;		
 	}
 
 	/* 닉네임 중복 체크 */
@@ -307,14 +312,17 @@ public class MyPageController {
 		String newPwd = request.getParameter("newPwd");
 		String userId = user.getId();
 		
-		log.info("비밀번호변경 member 정보 : " + member.toString());
-		//log.info("newPwd 정보 : " + newPwd.toString());
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 		
-		log.info("pwd : " + pwd.toString());
-		log.info("newPwd : " + newPwd.toString());
-		log.info("userId : " + userId.toString());
+//		log.info("비밀번호변경 member 정보 : " + member.toString());
+//		//log.info("newPwd 정보 : " + newPwd.toString());
+//		
+//		log.info("pwd : " + pwd.toString());
+//		log.info("newPwd : " + newPwd.toString());
+//		log.info("userId : " + userId.toString());
 		
-		mypageService.pwdUpdate(userId, pwd, newPwd);
+		mypageService.pwdUpdate(userId, pwd, passwordEncoder.encode(newPwd));
 
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("changeInfoPwdModify", null, locale));
 
@@ -535,7 +543,7 @@ public class MyPageController {
 		
 		camp.setUserNo(user.getUserNo());
 
-		/*-----------------------1. 캠핑장 먼저 insert 하는 로직(완료)----------------------------*/
+		/*-----------------------1. 캠핑장 먼저 insert 하는 로직 ----------------------------*/
 		String filePath = uploadFilesPath + "businessImg";
 		
 		File mkdir = new File(filePath);
@@ -554,7 +562,7 @@ public class MyPageController {
 			e.printStackTrace();
 		}
 		
-		// 현재 campNo를 가져가서 이력만들기 위함(구현완료)
+		// 현재 campNo를 가져가서 이력만들기 위함
 		campRecord.setCampNo(camp.getCampNo());
 
 		// 캠핑장 타입, 부대시설 insert하기 위함(구현완료)
@@ -573,7 +581,7 @@ public class MyPageController {
 		
 		mypageService.mypageCampEnrollment(camp, btypeList, ftypeList);
 
-		/* ---------------------------2. 사업장 사진 여러개 (구현완료) ------------------------------ */
+		/* ---------------------------2. 사업장 사진 여러개 ------------------------------ */
 		String campFilePath = uploadFilesPath + "/campImg";
 
 		File mkdir2 = new File(campFilePath);
@@ -631,7 +639,7 @@ public class MyPageController {
 			}
 		}
 
-		/* ---------------------------5. 객실 먼저 insert (미완) ---------------------------- */
+		/* ---------------------------5. 객실 먼저 insert ---------------------------- */
 		
 		String[] roomName = request.getParameterValues("roomName");
 		String[] roomMember = request.getParameterValues("roomMember");
@@ -661,7 +669,7 @@ public class MyPageController {
 		}
 		
 		
-		/* ---------------------------4. 객실 사진 여러개(미완성) ------------------------------ */
+		/* ---------------------------4. 객실 사진 여러개 ------------------------------ */
 
 		String roomFilePath = uploadFilesPath + "/roomImg";
  
@@ -704,7 +712,7 @@ public class MyPageController {
 				
 				if(file3.get("isEmpty") == "N") {
 					
-				roomMultiFiles.get(i).transferTo(new File(file3.get("roomFilePath") + "\\" + file3.get("savedName")));
+				roomMultiFiles.get(i).transferTo(new File(file3.get("roomFilePath") + "\\" + file3.get("savedName3")));
 
 				Attachment atta2 = new Attachment();
 				atta2.setFileName(file3.get("savedName3"));
@@ -718,12 +726,12 @@ public class MyPageController {
 				}
 					
 				atta2.setRoomNo(index);
-				if(Integer.parseInt(file3.get("index")) % 5 == 0) {
-					index++;
-				}
 			
 				mypageService.roomImageInsert(atta2);
 				
+				}
+				if(Integer.parseInt(file3.get("index")) % 5 == 0) {
+					index++;
 				}
 				
 				
@@ -737,10 +745,7 @@ public class MyPageController {
 			}
 		}
 
-		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
-		return "redirect:/mypage";
-		
-	}
+
 
 	/* 캠핑장 해지 */
 	@GetMapping("/mypageCampManagementOut")
@@ -788,8 +793,43 @@ public class MyPageController {
 
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("reserveList", map.get("reserveList"));
+		
+		if (map.get("reserveList").toString().equals("[]")) {
+			model.addAttribute("noResult", "아직 예약 내역이 없습니다.");
+		}
 
 		return "mypage/mypage_guest_reserve";
+	}
+	
+	/* 회원 예약 내역 + 페이징*/
+	@GetMapping("/mypageGuestReservePage")
+	public String mypageGuestReservePage(@AuthenticationPrincipal UserImpl user, int page, Model model) {
+	
+		int userNo = user.getUserNo();
+		log.info("userNo : {}", userNo);
+
+		Map<String, Object> map = mypageService.selectMyGuestReserveList(userNo, page);
+
+		model.addAttribute("pi", map.get("pi"));
+		model.addAttribute("reserveList", map.get("reserveList"));
+		
+		if (map.get("reserveList").toString().equals("[]")) {
+			model.addAttribute("noResult", "아직 예약 내역이 없습니다.");
+		}
+
+		return "mypage/mypage_guest_reserve";
+	}
+	
+	@GetMapping("/reserveCancle")
+	public String reserveCancle(int reserNo, RedirectAttributes rttr, Locale locale) {
+		
+		int result = mypageService.reserveCancle(reserNo);
+		
+		if(result > 0) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("reserveCancle", null, locale));
+		}
+		
+		return "redirect:/mypage/mypageGuestReserve";
 	}
 
 	/* 사업자 예약 내역 */

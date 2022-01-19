@@ -30,5 +30,5 @@ public class ReserveInfo {
 	private String roomName;		// 객실이름
 	
 	private Camp camp;				// 예약 숙소 정보
-	
+	private String writeOrNot;		// 리뷰 작성여부
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -166,13 +167,17 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	/* 회원 탈퇴 */
-	@Transactional
 	@Override
-	public Member changeInfoMemberout(Member member) {
-	
-		mypageMapper.changeInfoMemberout(member);
+	public int changeInfoMemberout(Member member) {
+		String pwd = mypageMapper.selectPwd(member);
 		
-		return member;
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if(encoder.matches(member.getPwd(), pwd)) {
+			return mypageMapper.changeInfoMemberout(member);
+		}
+		
+		return 0;
 	}
 
 
@@ -354,6 +359,7 @@ public class MypageServiceImpl implements MypageService{
 		
 		log.info("listCount : {}", listCount);
 		
+		// page 객체
 		PageInfo pi = new PageInfo(page, listCount, 10, 5);
 		pi.setStartRow(page, pi.getBoardLimit());
 		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
@@ -362,6 +368,7 @@ public class MypageServiceImpl implements MypageService{
 		param.put("pi", pi);
 		param.put("userNo", userNo);
 		
+		// 예약리스트
 		List<ReserveInfo> reserveList = mypageMapper.selectMyGuestReserveList(param);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -372,7 +379,13 @@ public class MypageServiceImpl implements MypageService{
 		
 		return map;
 	}
-
+	
+	@Override
+	@Transactional
+	public int reserveCancle(int reserNo) {
+		return mypageMapper.reserveCancle(reserNo);
+	}
+	
 	/* 프로필 사진 변경 */
 	@Transactional
 	@Override
@@ -393,11 +406,14 @@ public class MypageServiceImpl implements MypageService{
 
 	@Override
 	public void pwdUpdate(String userId, String pwd, String newPwd) {
-		mypageMapper.pwdUpdate(userId, pwd, newPwd);		
+		Map<String,String> param = new HashMap<>();
+		param.put("userId", userId);
+		param.put("pwd", pwd);
+		param.put("newPwd", newPwd);
+		log.info("param"+param);
+		mypageMapper.pwdUpdate(param);		
 	}
 
-	
-	
 	/*
 	@Override
 	public String pwdCheck(String id) {
