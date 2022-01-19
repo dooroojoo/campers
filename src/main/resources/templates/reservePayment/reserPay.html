@@ -25,22 +25,22 @@
     <!-- 예약 및 결제 html -->
     <div class="reserPay_Outer">
         <div class="reserPay_Wrap">
-            <div class="reser_tit">텐타우스*라바력셔리글램핑</div>
+            <div class="reser_tit" th:text="|${param.campName}&${param.roomName}|"></div>
          <form  id="reserPayForm" method="post">
-         <input type="hidden" name="roomNo" value="1"><!-- 가데이터  -->
+<!--           <input type="hidden" name="roomNo" value="1">
          <input type="hidden" name="checkIn" value="1/4">
-         <input type="hidden" name="checkOut" value="1/7">
+         <input type="hidden" name="checkOut" value="1/7">  -->
             <div class="reserPay_flex1">
                 <div class="reser_check">
                     <div class="reser_box">
                         <div class="reser_date">
-                        <span class="checkIn">1/4(화)</span>
-                        <span class="checkOut">1/7(금)</span> 
+                        <span class="checkIn"  id="dateIn" th:text="${param.dateIn}+' ~'"></span>
+                        <span class="checkOut" th:text="${param.dateOut}"></span> 
                         </div>
-                        <div class="inwonsu">인원 : 5 명</div>
+                        <div class="inwonsu" th:text="'인원 : ' + ${param.guestNum}+ ' 명'"></div>
                         <div class="camDate_flex">
                            <img class="camcon" src="/resources/images/reservePayment/camping_Icon.png">
-                            <div class="befor_date">캠핑가기 <span class="camRedDate">1</span>일 전 </div>
+                            <div class="befor_date">캠핑가기 <span class="camRedDate" ></span>일 전 </div>
                         </div>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
             <div class="payText">
                 <div class="tit">[객실요금]</div>
                 <div class="addr">예약 날짜 :  2021년 12월 07일 (화)</div>
-                <div class="reserRoomSu">예약 객실 수량 :   159,000원 * 2개 = 318,000원</div>		
+                <div class="reserRoomSu">예약 객실 수량 :   <span th:text="${roomPrice}"></span> * 2개 = 318,000원</div>		
                 <div class="totalPay">총 결제 금액 :  318,000 원</div>		
             </div>
             <div class="title1">
@@ -196,6 +196,21 @@
 	
 	
 		<div th:include="common/footer.html"></div>
+
+<script>
+
+	/* const dateIn = document.querySelector("#dateIn");
+	console.log(dateIn);
+	
+	var today = new Date();
+	var dday = new Date(2020,10,30);
+	var gap = dday.getTime() - today.getTime();
+	var result = Math.ceil(gap / (1000 * 60 * 60 * 24));
+	
+	console.log(result); */
+
+</script>		
+		
 	
 <!-- JS -->
  <script>
@@ -271,7 +286,6 @@
 		 let agreeChk2 = document.querySelector('#agreeChk2');
 		 let agreeChk3 = document.querySelector('#agreeChk3');
 		 let agreeChk4 = document.querySelector('#agreeChk4');
-		 let chk1 = document.querySelector('#chk1');
 		 let chk2 = document.querySelector('#chk2');
 		 
 	     
