@@ -744,6 +744,10 @@ public class MyPageController {
 				new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
 			}
 		}
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
+	      return "redirect:/mypage";
+	      
+	   }
 
 
 
