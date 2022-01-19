@@ -84,6 +84,8 @@ public interface MypageService{
 
 	void roomImageInsert(Attachment atta2);
 
+	Map<String, Object> selectwishCampList(int userNo, int page);
+
 	/*
 	Member pwdCheck(Member member);
 
