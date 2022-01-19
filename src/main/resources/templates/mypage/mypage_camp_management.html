@@ -45,8 +45,9 @@
 	                    
 	                    <!--  -->
 	                    
-	                    <div th:if="${ camp.campNo == campImage.campNo }" th:each="campImage : ${ campImageList }">
-	                    	<img class="mypage_camp_management_table_img" th:src="${ campImage.fileRoute }+${ campImage.fileName }"><p class="camp_name" th:text="${ camp.campName }"></p>
+	                    <div th:if="${ camp.campNo == mypageCampManagement.campNo }" th:each="mypageCampManagement : ${ mypageCampManagementList }">
+	                    	<img class="mypage_camp_management_table_img" th:src="${ mypageCampManagement.fileRoute }+${ mypageCampManagement.fileName }">
+	                    	<p class="camp_name" th:text="${ camp.campName }"></p>
 	                    </div>
 	                    
 	                    </th>

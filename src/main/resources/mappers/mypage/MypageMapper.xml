@@ -47,9 +47,9 @@
       <collection property="imageFileList" resultMap="imageFileResultMap"/>
       <collection property="campBusinessTypeList" resultMap="CampBusinessTypeResultMap"/>
       <collection property="campFacilityList" resultMap="CampFacilityResultMap"/>
+      <collection property="campFileNoList" resultMap="CampFileNoResultMap"/>
    </resultMap>
-      <!-- <collection property="campFileNoList" resultMap="CampFileNoResultMap"/>
-      <collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/> -->
+     <!-- <collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/> -->
    
    <!-- 사진 -->
    <resultMap type="com.cp.campers.mypage.model.vo.ImageFile" id="imageFileResultMap">
@@ -61,7 +61,7 @@
    </resultMap>
    
    <resultMap type="com.cp.campers.mypage.model.vo.CampFileNo" id="CampFileNoResultMap">
-      <id property="campNo" column="CAMP_No"/>
+      <id property="campNo" column="CAMP_NO"/>
       <id property="fileNo" column="FILE_NO"/>
       <association property="attachment" resultMap="attachmentResultMap"/>
    </resultMap>
@@ -115,11 +115,7 @@
       <id property="roomNo" column="ROOM_NO"/>
       <result property="fileNo" column="FILE_NO"/>
    </resultMap>
-   
-   <resultMap type="com.cp.campers.mypage.model.vo.WishCamp" id="WishCampResultMap">
-      <id property="userNo" column="USER_NO"/>
-      <result property="campNo" column="CAMP_NO"/>
-   </resultMap>
+
    
     <resultMap type="com.cp.campers.board.model.vo.Board" id="boardResultMap">
       <id property="bid" column="BID"/>
@@ -203,6 +199,26 @@
 		<result property="campAddress" column="CAMP_ADDRESS"/>
 		<result property="campPhone" column="CAMP_PHONE"/>
 		<result property="campStatus" column="CAMP_STATUS"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="fileRoute" column="FILE_ROUTE"/>
+		<result property="fileName" column="FILE_NAME"/>		
+	</resultMap>
+	
+	<resultMap id="MypageCampManagementResultMap" type="com.cp.campers.mypage.model.vo.MypageCampManagement">
+		<result property="campNo" column="CAMP_NO"/>
+		<result property="campName" column="CAMP_NAME"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="campAddress" column="CAMP_ADDRESS"/>
+		<result property="campPhone" column="CAMP_PHONE"/>
+		<result property="campIntro" column="CAMP_INTRO"/>
+		<result property="userPath" column="USER_PATH"/>
+		<result property="campPolicy" column="CAMP_POLICY"/>
+		<result property="campStatus" column="CAMP_STATUS"/>
+		<result property="accountNum" column="ACCOUNT_NUM"/>
+		<result property="bank" column="BANK"/>
+		<result property="checkIn" column="CHECKIN"/>
+		<result property="checkOut" column="CHECKOUT"/>
+		<result property="refusal" column="REFUSAL"/>
 		<result property="fileLevel" column="FILE_LEVEL"/>
 		<result property="fileRoute" column="FILE_ROUTE"/>
 		<result property="fileName" column="FILE_NAME"/>		
@@ -601,6 +617,8 @@
      order by bid desc
    </select> 
         
+  <!--  <select id="selectCampImageList" resultMap="CampFileNoResultMap">
+   --> 
    <select id="selectCampImageList" resultMap="CampResultMap">
       select
               camp_no,
@@ -788,6 +806,56 @@
        JOIN CAMP_FILE F ON (F.CAMP_NO = C.CAMP_NO)
        JOIN IMAGEFILE I ON (I.FILE_NO = F.FILE_NO)
       WHERE C.USER_NO = #{ userNo }
+    </select>
+    
+    <select id="selectWishCampList" resultMap="WishCampListResultMap">
+    	SELECT
+                    
+                 W.USER_NO
+                , C.CAMP_NO 
+                , C.CAMP_NAME
+                , C.CAMP_ADDRESS
+                , C.CAMP_PHONE
+                , C.CAMP_STATUS
+                , I.FILE_LEVEL
+                , I.FILE_ROUTE
+                , I.FILE_NAME
+             FROM CAMP C
+             JOIN WISH_CAMP W ON (W.CAMP_NO = C.CAMP_NO)
+             JOIN CAMP_FILE F ON (F.CAMP_NO = C.CAMP_NO)
+             JOIN IMAGEFILE I ON (I.FILE_NO = F.FILE_NO)
+            WHERE C.CAMP_STATUS = 'Y'
+              AND W.USER_NO = #{ userNo }
+    </select>
+    
+    <select id="selectmypageCampManagementList" resultMap="MypageCampManagementResultMap">
+    	SELECT *
+        FROM (SELECT ROWNUM RNUM, A.*
+        FROM (SELECT
+                  C.CAMP_NO
+                , C.CAMP_NAME
+                , C.USER_NO
+                , C.CAMP_ADDRESS
+                , C.CAMP_PHONE
+                , C.CAMP_INTRO
+                , C.CAMP_PATH
+                , C.CAMP_POLICY
+                , C.CAMP_STATUS
+                , C.ACCOUNT_NUM
+                , C.BANK
+                , C.CHECKIN
+                , C.CHECKOUT
+                , C.REFUSAL
+                , I.FILE_LEVEL
+                , I.FILE_ROUTE
+                , I.FILE_NAME                
+               FROM CAMP C
+               JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+               JOIN CAMP_FILE CF ON (C.CAMP_NO = CF.CAMP_NO)
+               JOIN IMAGEFILE I ON (CF.FILE_NO = I.FILE_NO)
+              WHERE C.CAMP_STATUS = 'Y'
+                AND C.USER_NO = #{ userNo }
+              ORDER BY C.USER_NO DESC) A)    
     </select>
     
     <!-- 
