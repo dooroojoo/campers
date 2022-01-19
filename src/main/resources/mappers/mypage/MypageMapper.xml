@@ -411,6 +411,10 @@
       )
    </insert>
    
+   <select id="selectRoomNoList" resultType="string">
+	 	SELECT SEQ_ROOM_NO.CURRVAL FROM DUAL
+   </select>
+   
    <!-- 캠핑장 관리에서의 숙소등록 -->
    <insert id="insertRoom2" parameterType="com.cp.campers.mypage.model.vo.Room">
 
@@ -579,6 +583,13 @@
       INTO ROOM_FILE
       VALUES
       (#{roomNo}, SEQ_FILE_NO.CURRVAL)
+   </insert>
+   
+   <insert id="insertImageNo3" parameterType="_int">
+      INSERT
+      INTO ROOM_FILE
+      VALUES
+      (SEQ_ROOM_NO.CURRVAL, SEQ_FILE_NO.CURRVAL)
    </insert>
     
     <select id="getListCountMyMember" resultType="int">

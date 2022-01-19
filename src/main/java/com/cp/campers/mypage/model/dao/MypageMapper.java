@@ -157,6 +157,8 @@ public interface MypageMapper {
 	Camp campDetail(int campNo);
 	
 	List<MypageCampManagement> selectmypageCampManagementList(Map<String, Object> param);
+
+	void insertImageNo3(int roomNo);
 	
 	// public Map<String, Object> findAllMember();
 }
