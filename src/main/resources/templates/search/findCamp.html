@@ -216,6 +216,9 @@
                     <li th:if="${pi.page < pi.maxPage}">
                         <a class="next-paging" style="cursor:pointer">&gt;</a>
                     </li>
+                    <li th:unless="${ pi.page < pi.maxPage }">
+                        	<a href="#">&gt;</a>
+                        </li>
 
                     <!-- 맨 끝으로 이동하는 버튼(>>) -->
                    <li>

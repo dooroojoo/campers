@@ -209,6 +209,9 @@
                     <li th:if="${pi.page < pi.maxPage}">
                         <a th:href="@{/search/camp(page=${pi.page + 1})}">&gt;</a>
                     </li>
+                      <li th:unless="${ pi.page < pi.maxPage }">
+                        	<a href="#">&gt;</a>
+                        </li>
 
                     <!-- 맨 끝으로 이동하는 버튼(>>) -->
                    <li>
