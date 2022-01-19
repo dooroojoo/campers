@@ -39,7 +39,7 @@
 		   VALUES
 		   (
 		      SEQ_RESER_NO.NEXTVAL
-		   	, 35    <!-- 임시값. 예약 쪽페이지 구현된 후 로그인한 유저의 회원번호 세션에 담아 파라미터로 넘겨줘서 insert 처리하기  -->
+		   	, #{ userNo }    <!-- 임시값. 예약 쪽페이지 구현된 후 로그인한 유저의 회원번호 세션에 담아 파라미터로 넘겨줘서 insert 처리하기  -->
 		   	, #{ reserName }
 		   	, #{ phone }
 		   	, DEFAULT

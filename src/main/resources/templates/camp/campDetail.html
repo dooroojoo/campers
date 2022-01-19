@@ -113,7 +113,7 @@
 
             <!-- 예약 -->
             <div class="accom_reservation">
-                <form action="/reserPay" method="post">
+                <form name="reserForm" action="/reserPay" method="get">
                     <div class="rvArea">
                         <div class="rv_top">
                             <div class="check_left">
@@ -126,9 +126,11 @@
                         </div>
                         
 						<div class="rv-middle">
-							<input type="hidden" id="campNo" name="campNo" th:value="${camp.campNo}">
-							<input type="hidden" id="dateIn" th:value="${param.dateIn}">
-							<input type="hidden" id="dateOut" th:value="${param.dateOut}">
+							<input type="hidden" id="campName" name="campName" th:value="${camp.campName}">
+							<input type="hidden" id="roomPrice" name="roomPrice">
+ 							<input type="hidden" id="campNo" name="campNo" th:value="${camp.campNo}">
+							<input type="hidden" id="dateIn" name="dateIn" th:value="${param.dateIn}">
+							<input type="hidden" id="dateOut" name="dateOut" th:value="${param.dateOut}"> 
 	                        <script>
 	                       	$(function() {
 	                       		
@@ -479,6 +481,8 @@
 		                    	$(".room_exp p").text(data.roomMember + "(인)");
 		                    	
 		                    	let roomPrice = data.roomPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+		                    	
+		                    	$("input[name=roomPrice]").value(roomPrice);
 		                    	
 		                    	$(".room_price h2").html(roomPrice);
 		                    	

@@ -748,10 +748,7 @@ public class MyPageController {
 			}
 		}
 
-		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
-		return "redirect:/mypage";
-		
-	}
+
 
 	/* 캠핑장 해지 */
 	@GetMapping("/mypageCampManagementOut")

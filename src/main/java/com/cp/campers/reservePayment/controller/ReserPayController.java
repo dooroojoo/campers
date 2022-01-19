@@ -1,5 +1,6 @@
 package com.cp.campers.reservePayment.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cp.campers.reservePayment.model.service.ReserPayService;
@@ -32,7 +34,10 @@ public class ReserPayController {
 	
 	
 	@GetMapping("/reserPay")
-	public String reserPay() {
+	public String reserPay(Model model, @RequestParam("roomPrice") String roomPrice) {
+		
+		model.addAttribute("roomPrice", roomPrice);
+		
 		return "reservePayment/reserPay";
 	}
 	
@@ -43,6 +48,7 @@ public class ReserPayController {
 			@ModelAttribute PaymentInfo paymentInfo) {
 		
 		log.info("예약 정보 : {}", reserveInfo);
+		log.info("결제 정보 : {}", paymentInfo);
 		
 		String msg = reserPayService.insertReserPay(reserveInfo, paymentInfo) > 0 ? "예약 insert" : "NO";
 		

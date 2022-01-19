@@ -26,12 +26,12 @@
 
 
 .reserPay_Wrap .reser_check{
-    width: 293px;
+    width: 315px;  /*293*/
     height: 165px;
     background-color: rgb(235, 237, 243);
     border-radius: 20px;
     margin-top: 50px;
-    margin-left: 237px;
+    margin-left: 203px; /*237*/
  
 }
 
@@ -54,8 +54,9 @@
 }
 
 .reserPay_Wrap .reser_box{
-    padding: 28px 55px;
+    padding: 25px 41px; /* padding: 28px 55px;*/
     font-size: 21px;
+    
 }
 
 .reserPay_Wrap .reser_box > div{
