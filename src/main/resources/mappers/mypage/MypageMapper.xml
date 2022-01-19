@@ -28,173 +28,173 @@
       <result property="authorityName" column="AUTHORITY_NAME"/>
       <result property="authorityDesc" column="AUTHORITY_DESC"/>
    </resultMap>
-		
-	<resultMap type="com.cp.campers.mypage.model.vo.Camp" id="CampResultMap">
-		<id property="campNo" column="CAMP_NO"/>
-		<result property="campName" column="CAMP_NAME"/>
-		<result property="userNo" column="USER_NO"/>
-		<result property="campAddress" column="CAMP_ADDRESS"/>
-		<result property="campPhone" column="CAMP_PHONE"/>
-		<result property="campIntro" column="CAMP_INTRO"/>
-		<result property="campPath" column="CAMP_PATH"/>
-		<result property="campPolicy" column="CAMP_POLICY"/>
-		<result property="campStatus" column="CAMP_STATUS"/>
-		<result property="accountNum" column="ACCOUNT_NUM"/>
-		<result property="bank" column="BANK"/>
-		<result property="checkin" column="CHECKIN"/>
-		<result property="checkout" column="CHECKOUT"/>
-		<result property="refusal" column="REFUSAL"/>
-		<collection property="imageFileList" resultMap="imageFileResultMap"/>
-		<collection property="campBusinessTypeList" resultMap="CampBusinessTypeResultMap"/>
-		<collection property="campFacilityList" resultMap="CampFacilityResultMap"/>
-	</resultMap>
-		<!-- <collection property="campFileNoList" resultMap="CampFileNoResultMap"/>
-		<collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/> -->
-	
-	<!-- 사진 -->
-	<resultMap type="com.cp.campers.mypage.model.vo.ImageFile" id="imageFileResultMap">
-		<id property="fileNo" column="FILE_NO"/>
-		<result property="fileName" column="FILE_NAME"/>
-		<result property="fileRoute" column="FILE_ROUTE"/>
-		<result property="fileStatus" column="FILE_STATUS"/>
-		<result property="fileLevel" column="FILE_LEVEL"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.CampFileNo" id="CampFileNoResultMap">
-		<id property="campNo" column="CAMP_No"/>
-		<id property="fileNo" column="FILE_NO"/>
-		<association property="attachment" resultMap="attachmentResultMap"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.RoomFileNo" id="RoomFileNoResultMap">
-		<id property="roomNo" column="ROOM_NO"/>
-		<id property="fileNo" column="FILE_NO"/>
-		<association property="attachment" resultMap="attachmentResultMap"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="BusinessTypeResultMap">
-		<id property="businessNo" column="BUSINESS_NO"/>
-		<result property="businessType" column="BUSINESS_TYPE"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.CampBusinessType" id="CampBusinessTypeResultMap">
-		<id property="campNo" column="CAMP_NO"/>
-		<id property="businessNo" column="BUSINESS_NO"/>
-		<association property="businessType" resultMap="BusinessTypeResultMap"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.CampFacility" id="CampFacilityResultMap">
-		<id property="campNo" column="CAMP_NO"/>
-		<id property="facilityNo" column="FACILITY_NO"/>
-		<association property="facility" resultMap="FacilityResultMap"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.Facility" id="FacilityResultMap">
-		<id property="facilityNo" column="FACILITY_NO"/>
-		<result property="facilityName" column="FACILITY_NAME"/>
-		<result property="facilityType" column="FACILITY_TYPE"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.Room" id="RoomResultMap">
-		<id property="roomNo" column="ROOM_NO"/>
-		<result property="roomName" column="ROOM_NAME"/>
-		<result property="roomMember" column="ROOM_MEMBER"/>
-		<result property="roomPrice" column="ROOM_PRICE"/>
-		<result property="roomSize" column="ROOM_SIZE"/>
-		<result property="roomFloor" column="ROOM_FLOOR"/>
-		<result property="roomParking" column="ROOM_PARKING"/>
-		<result property="roomInfo" column="ROOM_INFO"/>
-		<result property="roomAmount" column="ROOM_AMOUNT"/>
-		<result property="roomForm" column="ROOM_FORM"/>
-		<result property="roomCount" column="ROOM_COUNT"/>
-		<result property="campNo" column="CAMP_NO"/>	
-		<collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.RoomFile" id="RoomFileResultMap">
-		<id property="roomNo" column="ROOM_NO"/>
-		<result property="fileNo" column="FILE_NO"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.mypage.model.vo.WishCamp" id="WishCampResultMap">
-		<id property="userNo" column="USER_NO"/>
-		<result property="campNo" column="CAMP_NO"/>
-	</resultMap>
-	
+      
+   <resultMap type="com.cp.campers.mypage.model.vo.Camp" id="CampResultMap">
+      <id property="campNo" column="CAMP_NO"/>
+      <result property="campName" column="CAMP_NAME"/>
+      <result property="userNo" column="USER_NO"/>
+      <result property="campAddress" column="CAMP_ADDRESS"/>
+      <result property="campPhone" column="CAMP_PHONE"/>
+      <result property="campIntro" column="CAMP_INTRO"/>
+      <result property="campPath" column="CAMP_PATH"/>
+      <result property="campPolicy" column="CAMP_POLICY"/>
+      <result property="campStatus" column="CAMP_STATUS"/>
+      <result property="accountNum" column="ACCOUNT_NUM"/>
+      <result property="bank" column="BANK"/>
+      <result property="checkin" column="CHECKIN"/>
+      <result property="checkout" column="CHECKOUT"/>
+      <result property="refusal" column="REFUSAL"/>
+      <collection property="imageFileList" resultMap="imageFileResultMap"/>
+      <collection property="campBusinessTypeList" resultMap="CampBusinessTypeResultMap"/>
+      <collection property="campFacilityList" resultMap="CampFacilityResultMap"/>
+   </resultMap>
+      <!-- <collection property="campFileNoList" resultMap="CampFileNoResultMap"/>
+      <collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/> -->
+   
+   <!-- 사진 -->
+   <resultMap type="com.cp.campers.mypage.model.vo.ImageFile" id="imageFileResultMap">
+      <id property="fileNo" column="FILE_NO"/>
+      <result property="fileName" column="FILE_NAME"/>
+      <result property="fileRoute" column="FILE_ROUTE"/>
+      <result property="fileStatus" column="FILE_STATUS"/>
+      <result property="fileLevel" column="FILE_LEVEL"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.CampFileNo" id="CampFileNoResultMap">
+      <id property="campNo" column="CAMP_No"/>
+      <id property="fileNo" column="FILE_NO"/>
+      <association property="attachment" resultMap="attachmentResultMap"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.RoomFileNo" id="RoomFileNoResultMap">
+      <id property="roomNo" column="ROOM_NO"/>
+      <id property="fileNo" column="FILE_NO"/>
+      <association property="attachment" resultMap="attachmentResultMap"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.BusinessType" id="BusinessTypeResultMap">
+      <id property="businessNo" column="BUSINESS_NO"/>
+      <result property="businessType" column="BUSINESS_TYPE"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.CampBusinessType" id="CampBusinessTypeResultMap">
+      <id property="campNo" column="CAMP_NO"/>
+      <id property="businessNo" column="BUSINESS_NO"/>
+      <association property="businessType" resultMap="BusinessTypeResultMap"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.CampFacility" id="CampFacilityResultMap">
+      <id property="campNo" column="CAMP_NO"/>
+      <id property="facilityNo" column="FACILITY_NO"/>
+      <association property="facility" resultMap="FacilityResultMap"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.Facility" id="FacilityResultMap">
+      <id property="facilityNo" column="FACILITY_NO"/>
+      <result property="facilityName" column="FACILITY_NAME"/>
+      <result property="facilityType" column="FACILITY_TYPE"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.Room" id="RoomResultMap">
+      <id property="roomNo" column="ROOM_NO"/>
+      <result property="roomName" column="ROOM_NAME"/>
+      <result property="roomMember" column="ROOM_MEMBER"/>
+      <result property="roomPrice" column="ROOM_PRICE"/>
+      <result property="roomSize" column="ROOM_SIZE"/>
+      <result property="roomFloor" column="ROOM_FLOOR"/>
+      <result property="roomParking" column="ROOM_PARKING"/>
+      <result property="roomInfo" column="ROOM_INFO"/>
+      <result property="roomAmount" column="ROOM_AMOUNT"/>
+      <result property="roomForm" column="ROOM_FORM"/>
+      <result property="roomCount" column="ROOM_COUNT"/>
+      <result property="campNo" column="CAMP_NO"/>   
+      <collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.RoomFile" id="RoomFileResultMap">
+      <id property="roomNo" column="ROOM_NO"/>
+      <result property="fileNo" column="FILE_NO"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.mypage.model.vo.WishCamp" id="WishCampResultMap">
+      <id property="userNo" column="USER_NO"/>
+      <result property="campNo" column="CAMP_NO"/>
+   </resultMap>
+   
     <resultMap type="com.cp.campers.board.model.vo.Board" id="boardResultMap">
-		<id property="bid" column="BID"/>
-		<result property="title" column="BTITLE"/>
-		<result property="content" column="BCONTENT"/>
-		<result property="createDate" column="CREATE_DATE"/>
-		<result property="modifyDate" column="MODIFY_DATE"/>
-		<result property="status" column="STATUS"/>
-		<result property="writer" column="WRITER"/>
-		<result property="bcount" column="BCOUNT"/>
-		<result property="blike" column="BLIKE"/>
-		<result property="nickName" column="NICKNAME"/>
-		<result property="fileLevel" column="FILE_LEVEL"/>
-		<result property="fileRoute" column="FILE_ROUTE"/>
-		<result property="fileName" column="FILE_NAME"/>
-		<result property="prevId" column="PREVID"/>
-		<result property="prevTitle" column="PREVTITLE"/>
-		<result property="nextId" column="NEXTID"/>
-		<result property="nextTitle" column="NEXTTITLE"/>
-		<collection property="boardFileNoList" resultMap="boardFileNoResultMap"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.board.model.vo.BoardFileNo" id="boardFileNoResultMap">
-		<id property="bid" column="BID"/>
-		<id property="fileNo" column="FILE_NO"/>
-		<association property="attachment" resultMap="attachmentResultMap"/>
-	</resultMap>
-	
-	<resultMap type="com.cp.campers.board.model.vo.Attachment" id="attachmentResultMap">
-		<id property="fileNo" column="FILE_NO"/>
-		<result property="fileName" column="FILE_NAME"/>
-		<result property="fileRoute" column="FILE_ROUTE"/>
-		<result property="status" column="FILE_STATUS"/>
-		<result property="fileLevel" column="FILE_LEVEL"/>
-		<result property="fileOriginName" column="FILE_ORIGIN_NAME"/>
-	</resultMap>
-	
-	<resultMap id="reserveResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
-		<id property="reserNo" column="RESER_NO"/>
-		<result property="userNo" column="USER_NO"/>
-		<result property="reserName" column="RESER_NAME"/>
-		<result property="phone" column="PHONE"/>
-		<result property="reserState" column="RESER_STATE"/>
-		<result property="request" column="REQUEST"/>
-		<result property="checkIn" column="CHECKIN"/>
-		<result property="checkOut" column="CHECKOUT"/>
-		<result property="deadLine" column="DEADLINE"/>
-		<result property="accountNum" column="ACCOUNT_NUM"/>
-		<result property="accountHol" column="ACCOUNT_HOL"/>
-		<result property="bank" column="BANK"/>
-		<result property="roomQua" column="ROOM_QUA"/>
-		<result property="roomNo" column="ROOM_NO"/>
-		<result property="roomName" column="ROOM_NAME"/>
-		<result property="writeOrNot" column="WRITE_OR_NOT"/>
-		<association property="camp" resultMap="CampResultMap"/>
-	</resultMap>
-	
-	<resultMap id="BusinessReservationResultMap" type="com.cp.campers.mypage.model.vo.BusinessReservation">
-		<id property="reserNo" column="RESER_NO"/>
-		<result property="roomNo" column="ROOM_NO"/>
-		<result property="campName" column="CAMP_NAME"/>
-		<result property="campNo" column="CAMP_NO"/>
-		<result property="fileNo" column="FILE_NO"/>
-		<result property="fileLevel" column="FILE_LEVEL"/>
-		<result property="fileRoute" column="FILE_ROUTE"/>
-		<result property="fileName" column="FILE_NAME"/>
-		<result property="roomName" column="ROOM_NAME"/>
-		<result property="userName" column="USER_NAME"/>
-		<result property="userNo" column="USER_NO"/>
-		<result property="userPhone" column="USER_PHONE"/>
-		<result property="request" column="REQUEST"/>
-		<result property="checkIn" column="CHECKIN"/>
-		<result property="checkOut" column="CHECKOUT"/>
-	</resultMap>
-			    
+      <id property="bid" column="BID"/>
+      <result property="title" column="BTITLE"/>
+      <result property="content" column="BCONTENT"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="modifyDate" column="MODIFY_DATE"/>
+      <result property="status" column="STATUS"/>
+      <result property="writer" column="WRITER"/>
+      <result property="bcount" column="BCOUNT"/>
+      <result property="blike" column="BLIKE"/>
+      <result property="nickName" column="NICKNAME"/>
+      <result property="fileLevel" column="FILE_LEVEL"/>
+      <result property="fileRoute" column="FILE_ROUTE"/>
+      <result property="fileName" column="FILE_NAME"/>
+      <result property="prevId" column="PREVID"/>
+      <result property="prevTitle" column="PREVTITLE"/>
+      <result property="nextId" column="NEXTID"/>
+      <result property="nextTitle" column="NEXTTITLE"/>
+      <collection property="boardFileNoList" resultMap="boardFileNoResultMap"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.board.model.vo.BoardFileNo" id="boardFileNoResultMap">
+      <id property="bid" column="BID"/>
+      <id property="fileNo" column="FILE_NO"/>
+      <association property="attachment" resultMap="attachmentResultMap"/>
+   </resultMap>
+   
+   <resultMap type="com.cp.campers.board.model.vo.Attachment" id="attachmentResultMap">
+      <id property="fileNo" column="FILE_NO"/>
+      <result property="fileName" column="FILE_NAME"/>
+      <result property="fileRoute" column="FILE_ROUTE"/>
+      <result property="status" column="FILE_STATUS"/>
+      <result property="fileLevel" column="FILE_LEVEL"/>
+      <result property="fileOriginName" column="FILE_ORIGIN_NAME"/>
+   </resultMap>
+   
+   <resultMap id="reserveResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
+      <id property="reserNo" column="RESER_NO"/>
+      <result property="userNo" column="USER_NO"/>
+      <result property="reserName" column="RESER_NAME"/>
+      <result property="phone" column="PHONE"/>
+      <result property="reserState" column="RESER_STATE"/>
+      <result property="request" column="REQUEST"/>
+      <result property="checkIn" column="CHECKIN"/>
+      <result property="checkOut" column="CHECKOUT"/>
+      <result property="deadLine" column="DEADLINE"/>
+      <result property="accountNum" column="ACCOUNT_NUM"/>
+      <result property="accountHol" column="ACCOUNT_HOL"/>
+      <result property="bank" column="BANK"/>
+      <result property="roomQua" column="ROOM_QUA"/>
+      <result property="roomNo" column="ROOM_NO"/>
+      <result property="roomName" column="ROOM_NAME"/>
+      <result property="writeOrNot" column="WRITE_OR_NOT"/>
+      <association property="camp" resultMap="CampResultMap"/>
+   </resultMap>
+   
+   <resultMap id="BusinessReservationResultMap" type="com.cp.campers.mypage.model.vo.BusinessReservation">
+      <id property="reserNo" column="RESER_NO"/>
+      <result property="roomNo" column="ROOM_NO"/>
+      <result property="campName" column="CAMP_NAME"/>
+      <result property="campNo" column="CAMP_NO"/>
+      <result property="fileNo" column="FILE_NO"/>
+      <result property="fileLevel" column="FILE_LEVEL"/>
+      <result property="fileRoute" column="FILE_ROUTE"/>
+      <result property="fileName" column="FILE_NAME"/>
+      <result property="roomName" column="ROOM_NAME"/>
+      <result property="userName" column="USER_NAME"/>
+      <result property="userNo" column="USER_NO"/>
+      <result property="userPhone" column="USER_PHONE"/>
+      <result property="request" column="REQUEST"/>
+      <result property="checkIn" column="CHECKIN"/>
+      <result property="checkOut" column="CHECKOUT"/>
+   </resultMap>
+             
 
    <select id="findMemberById" resultMap="memberResultMap">
       SELECT
@@ -545,253 +545,253 @@
       (#{roomNo}, SEQ_FILE_NO.CURRVAL)
    </insert>
     
- 	<select id="getListCountMyMember" resultType="int">
- 		select count(*)
- 		from member
- 		where user_no = #{userNo}
- 		  and status = 'Y'
- 	</select>
- 	 
- 	 <select id="getCountMyGuestReserveList" parameterType="_int" resultType="_int">
-	 	 SELECT COUNT(*)
-	 	   FROM RESERVE
-	       JOIN MEMBER USING(USER_NO)
-	 	  WHERE USER_NO = #{userNo}
-	 	 	AND RESER_STATE = 'Y'
- 	 </select>
- 	 
- 	 <select id="getListCountMyBoard" resultType="int">
-		select count(*)
-		from board
-		where writer = #{writer}
-		and status ='N'
-	</select>
- 	
- 	<select id="selectThumbnailList" resultMap="boardResultMap">
-		select
-	        bid,
-	        file_level,
-	        file_route,
-	        file_name
-	    from board
-	    join board_file using(bid)
-	    join imagefile using(file_no)
-	  where file_level = 0
-	  and file_status = 'N'
-	  order by bid desc
-	</select> 
- 	 	
-	<select id="selectCampImageList" resultMap="CampResultMap">
-		select
-		        camp_no,
-		        file_level,
-		        file_route,
-		        file_name
-		    from camp
-		    join camp_file using(camp_no)
-		    join imagefile using(file_no)
-		  where file_level = 0
-		  and file_status = 'Y' <!-- N으로 하면 오류  -->
-		  order by camp_no desc
-	</select>
-	
-	
-	 <select id="selectThumbnailList2" resultMap="CampResultMap">
-	select
-		        camp_no,
-		        file_level,
-		        file_route,
-		        file_name
-		    from camp
-		    join camp_file using(camp_no)
-		    join imagefile using(file_no)
-		  where file_level = 0
-		  and file_status = 'Y' <!-- N으로 하면 오류 -->
-		  order by camp_no desc
-	</select>
-	
-	<select id="selectMyCampList" resultMap="CampResultMap">
- 	 	SELECT *
- 	 	FROM (SELECT ROWNUM RNUM, A.*
- 	 	FROM (SELECT
- 	 			    C.CAMP_NO
- 	 			  , C.CAMP_NAME
- 	 			  , C.USER_NO
- 	 			  , C.CAMP_ADDRESS
- 	 			  , C.CAMP_PHONE
- 	 			  , C.CAMP_INTRO
- 	 			  , C.CAMP_PATH
- 	 			  , C.CAMP_POLICY
- 	 			  , C.CAMP_STATUS
- 	 			  , C.ACCOUNT_NUM
- 	 			  , C.BANK
- 	 			  , C.CHECKIN
- 	 			  , C.CHECKOUT
- 	 			  , C.REFUSAL
- 	 	       FROM CAMP C
- 	 	       JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
- 	 	      WHERE C.CAMP_STATUS = 'Y'
- 	 	        AND C.USER_NO = #{ userNo }
- 	 	      ORDER BY USER_NO DESC) A) 	 
- 	</select>
-	
- 	<select id="selectMyHostReserveList" resultMap="CampResultMap">
- 	 	SELECT *
- 	 	FROM (SELECT ROWNUM RNUM, A.*
- 	 	FROM (SELECT
- 	 			    C.CAMP_NO
- 	 			  , C.CAMP_NAME
- 	 			  , C.USER_NO
- 	 			  , C.CAMP_ADDRESS
- 	 			  , C.CAMP_PHONE
- 	 			  , C.CAMP_INTRO
- 	 			  , C.CAMP_PATH
- 	 			  , C.CAMP_POLICY
- 	 			  , C.CAMP_STATUS
- 	 			  , C.ACCOUNT_NUM
- 	 			  , C.BANK
- 	 			  , C.CHECKIN
- 	 			  , C.CHECKOUT
- 	 			  , C.REFUSAL
- 	 	       FROM CAMP C
- 	 	       JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
- 	 	      WHERE C.CAMP_STATUS = 'Y'
- 	 	        AND C.USER_NO = #{ userNo }
- 	 	      ORDER BY USER_NO DESC) A) 	 
- 	 </select>
- 	 
- 	 <select id="selectMyGuestReserveList" parameterType="hashmap" resultMap="reserveResultMap">
- 	 SELECT * 
-	      FROM (SELECT ROWNUM RNUM, A.*
-			      FROM (SELECT RESER_NO
-						     , RV.USER_NO
-						     , RESER_NAME
-						     , RESER_STATE
-						     , RV.CHECKIN
-						     , RV.CHECKOUT
-						     , FLOOR(SYSDATE - to_date(RV.CHECKOUT, 'YYYY-MM-DD')) DEADLINE
-						     , RV.ROOM_NO
-						     , ROOM_NAME
-						     , WRITE_OR_NOT
-						     , C.CAMP_NO
-						     , CAMP_NAME
-						     , CAMP_ADDRESS
-						     , CAMP_PHONE
-						     , I.FILE_NO
-						     , I.FILE_NAME
-						     , I.FILE_ROUTE
-						     , I.FILE_LEVEL
-						    FROM RESERVE RV
-						    LEFT JOIN MEMBER M ON(RV.USER_NO = M.USER_NO)
-						    LEFT JOIN ROOM R ON(RV.ROOM_NO = R.ROOM_NO)
-						    LEFT JOIN CAMP C ON(R.CAMP_NO = C.CAMP_NO)
-						    LEFT JOIN CAMP_FILE CF ON(C.CAMP_NO = CF.CAMP_NO)
-						    LEFT JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
-						   WHERE RV.USER_NO = #{userNo}
-						     AND I.FILE_STATUS = 'N'
-						     AND I.FILE_LEVEL = 0) A)
-		 WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
- 	 </select>
- 	 
- 	 <update id="reserveCancle">
- 	 	UPDATE RESERVE
- 	 	   SET RESER_STATE = 'N'
- 	 	 WHERE RESER_NO = #{reserNo}
- 	 </update>
- 	 	 
- 	  	 
- 	<select id="selectMyMemberList" parameterType="hashmap" resultMap="memberResultMap">
- 		SELECT *
-	FROM (SELECT ROWNUM RNUM, A.*
-	FROM (select 
-	            user_no
-	          , user_id
-	          , user_pwd
-	          , user_name
-	          , nickName
-	          , profile_path
-	          , email
-	          , user_phone
-	          , status
-	          , create_Date
-	          , modify_date
-	      from member
-	      where status = 'Y'
-	       and user_no = #{ userNo }
-	ORDER BY user_no DESC) A)
-	where RNUM between #{pi.startRow} and #{pi.endRow}
- 	</select>
- 	
- 	<insert id="insertCampBusinessType" parameterType="string">
-		INSERT INTO CAMP_BUSINESS_TYPE 
-		VALUES (
-				SEQ_CAMP_NO.CURRVAL
-   			  , #{ btype }
-			    )
-	</insert>
-	
-	<insert id="insertCampFacility" parameterType="string">
-		INSERT INTO CAMP_FACILITY 
-		VALUES (
-				SEQ_CAMP_NO.CURRVAL
-   				, #{ ftype }
-   				)
-	</insert>
- 	
- 	<update id="updateProfilePath" parameterType="com.cp.campers.member.model.vo.Member">
- 		UPDATE MEMBER
- 		   SET PROFILE_PATH = #{ profilePath }
- 		 WHERE USER_NO = #{ userNo } 	
- 	</update>
+    <select id="getListCountMyMember" resultType="int">
+       select count(*)
+       from member
+       where user_no = #{userNo}
+         and status = 'Y'
+    </select>
+     
+     <select id="getCountMyGuestReserveList" parameterType="_int" resultType="_int">
+        SELECT COUNT(*)
+          FROM RESERVE
+          JOIN MEMBER USING(USER_NO)
+         WHERE USER_NO = #{userNo}
+           AND RESER_STATE = 'Y'
+     </select>
+     
+     <select id="getListCountMyBoard" resultType="int">
+      select count(*)
+      from board
+      where writer = #{writer}
+      and status ='N'
+   </select>
+    
+    <select id="selectThumbnailList" resultMap="boardResultMap">
+      select
+           bid,
+           file_level,
+           file_route,
+           file_name
+       from board
+       join board_file using(bid)
+       join imagefile using(file_no)
+     where file_level = 0
+     and file_status = 'N'
+     order by bid desc
+   </select> 
+        
+   <select id="selectCampImageList" resultMap="CampResultMap">
+      select
+              camp_no,
+              file_level,
+              file_route,
+              file_name
+          from camp
+          join camp_file using(camp_no)
+          join imagefile using(file_no)
+        where file_level = 0
+        and file_status = 'Y' <!-- N으로 하면 오류  -->
+        order by camp_no desc
+   </select>
+   
+   
+    <select id="selectThumbnailList2" resultMap="CampResultMap">
+   select
+              camp_no,
+              file_level,
+              file_route,
+              file_name
+          from camp
+          join camp_file using(camp_no)
+          join imagefile using(file_no)
+        where file_level = 0
+        and file_status = 'Y' <!-- N으로 하면 오류 -->
+        order by camp_no desc
+   </select>
+   
+   <select id="selectMyCampList" resultMap="CampResultMap">
+        SELECT *
+        FROM (SELECT ROWNUM RNUM, A.*
+        FROM (SELECT
+                  C.CAMP_NO
+                , C.CAMP_NAME
+                , C.USER_NO
+                , C.CAMP_ADDRESS
+                , C.CAMP_PHONE
+                , C.CAMP_INTRO
+                , C.CAMP_PATH
+                , C.CAMP_POLICY
+                , C.CAMP_STATUS
+                , C.ACCOUNT_NUM
+                , C.BANK
+                , C.CHECKIN
+                , C.CHECKOUT
+                , C.REFUSAL
+               FROM CAMP C
+               JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+              WHERE C.CAMP_STATUS = 'Y'
+                AND C.USER_NO = #{ userNo }
+              ORDER BY USER_NO DESC) A)     
+    </select>
+   
+    <select id="selectMyHostReserveList" resultMap="CampResultMap">
+        SELECT *
+        FROM (SELECT ROWNUM RNUM, A.*
+        FROM (SELECT
+                  C.CAMP_NO
+                , C.CAMP_NAME
+                , C.USER_NO
+                , C.CAMP_ADDRESS
+                , C.CAMP_PHONE
+                , C.CAMP_INTRO
+                , C.CAMP_PATH
+                , C.CAMP_POLICY
+                , C.CAMP_STATUS
+                , C.ACCOUNT_NUM
+                , C.BANK
+                , C.CHECKIN
+                , C.CHECKOUT
+                , C.REFUSAL
+               FROM CAMP C
+               JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+              WHERE C.CAMP_STATUS = 'Y'
+                AND C.USER_NO = #{ userNo }
+              ORDER BY USER_NO DESC) A)     
+     </select>
+     
+     <select id="selectMyGuestReserveList" parameterType="hashmap" resultMap="reserveResultMap">
+     SELECT * 
+         FROM (SELECT ROWNUM RNUM, A.*
+               FROM (SELECT RESER_NO
+                       , RV.USER_NO
+                       , RESER_NAME
+                       , RESER_STATE
+                       , RV.CHECKIN
+                       , RV.CHECKOUT
+                       , FLOOR(SYSDATE - to_date(RV.CHECKOUT, 'YYYY-MM-DD')) DEADLINE
+                       , RV.ROOM_NO
+                       , ROOM_NAME
+                       , WRITE_OR_NOT
+                       , C.CAMP_NO
+                       , CAMP_NAME
+                       , CAMP_ADDRESS
+                       , CAMP_PHONE
+                       , I.FILE_NO
+                       , I.FILE_NAME
+                       , I.FILE_ROUTE
+                       , I.FILE_LEVEL
+                      FROM RESERVE RV
+                      LEFT JOIN MEMBER M ON(RV.USER_NO = M.USER_NO)
+                      LEFT JOIN ROOM R ON(RV.ROOM_NO = R.ROOM_NO)
+                      LEFT JOIN CAMP C ON(R.CAMP_NO = C.CAMP_NO)
+                      LEFT JOIN CAMP_FILE CF ON(C.CAMP_NO = CF.CAMP_NO)
+                      LEFT JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
+                     WHERE RV.USER_NO = #{userNo}
+                       AND I.FILE_STATUS = 'N'
+                       AND I.FILE_LEVEL = 0) A)
+       WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
+     </select>
+     
+     <update id="reserveCancle">
+        UPDATE RESERVE
+           SET RESER_STATE = 'N'
+         WHERE RESER_NO = #{reserNo}
+     </update>
+         
+          
+    <select id="selectMyMemberList" parameterType="hashmap" resultMap="memberResultMap">
+       SELECT *
+   FROM (SELECT ROWNUM RNUM, A.*
+   FROM (select 
+               user_no
+             , user_id
+             , user_pwd
+             , user_name
+             , nickName
+             , profile_path
+             , email
+             , user_phone
+             , status
+             , create_Date
+             , modify_date
+         from member
+         where status = 'Y'
+          and user_no = #{ userNo }
+   ORDER BY user_no DESC) A)
+   where RNUM between #{pi.startRow} and #{pi.endRow}
+    </select>
+    
+    <insert id="insertCampBusinessType" parameterType="string">
+      INSERT INTO CAMP_BUSINESS_TYPE 
+      VALUES (
+            SEQ_CAMP_NO.CURRVAL
+              , #{ btype }
+             )
+   </insert>
+   
+   <insert id="insertCampFacility" parameterType="string">
+      INSERT INTO CAMP_FACILITY 
+      VALUES (
+            SEQ_CAMP_NO.CURRVAL
+               , #{ ftype }
+               )
+   </insert>
+    
+    <update id="updateProfilePath" parameterType="com.cp.campers.member.model.vo.Member">
+       UPDATE MEMBER
+          SET PROFILE_PATH = #{ profilePath }
+        WHERE USER_NO = #{ userNo }    
+    </update>
 
-  	<!-- 사업자 예약회원 내역 조회 -->
- 	<select id="selectBusinessReservationList" resultMap="BusinessReservationResultMap">
- 		SELECT
- 		      B.RESER_NO
-	        , C.CAMP_NAME
-	        , C.CAMP_NO
-	        , I.FILE_LEVEL
-	        , I.FILE_ROUTE
-	        , I.FILE_NAME
-	        , R.ROOM_NO
-	        , R.ROOM_NAME
-	        , M.USER_NAME
-	        , M.USER_NO
-	        , M.USER_PHONE
-	        , B.REQUEST
-	        , B.CHECKIN
-	        , B.CHECKOUT
-	    FROM MEMBER M
-	    JOIN RESERVE B ON (B.USER_NO = M.USER_NO)
-	    JOIN ROOM R ON (R.ROOM_NO = B.ROOM_NO)
-	    JOIN CAMP C ON (C.CAMP_NO = R.CAMP_NO)
-	    JOIN CAMP_FILE F ON (F.CAMP_NO = C.CAMP_NO)
-	    JOIN IMAGEFILE I ON (I.FILE_NO = F.FILE_NO)
-	   WHERE C.USER_NO = #{ userNo }
- 	</select>
- 	
- 	<!-- 
- 	<select id="selectReserveInfoList" resultMap="reserPayResultMap">
- 		SELECT
- 				RESER_NO
- 				, USER_NO
- 				, RESER_NAME
- 				, PHONE
- 				, RESER_STATE 				
- 				, REQUEST
- 				, CHECKIN
- 				, CHECKOUT
- 				, ACCOUNT_NUM
- 				, ACCOUNT_HOL
- 				, BANK
- 				, ROOM_QUA
- 				, ROOM_NO
- 		   FROM RESERVE
- 	</select>
-  	 -->
-  	 <select id="selectPwd" parameterType="com.cp.campers.member.model.vo.Member" resultType="string">
-  	 select user_pwd from member where user_id = #{id}
-  	 
-  	 </select>
+     <!-- 사업자 예약회원 내역 조회 -->
+    <select id="selectBusinessReservationList" resultMap="BusinessReservationResultMap">
+       SELECT
+             B.RESER_NO
+           , C.CAMP_NAME
+           , C.CAMP_NO
+           , I.FILE_LEVEL
+           , I.FILE_ROUTE
+           , I.FILE_NAME
+           , R.ROOM_NO
+           , R.ROOM_NAME
+           , M.USER_NAME
+           , M.USER_NO
+           , M.USER_PHONE
+           , B.REQUEST
+           , B.CHECKIN
+           , B.CHECKOUT
+       FROM MEMBER M
+       JOIN RESERVE B ON (B.USER_NO = M.USER_NO)
+       JOIN ROOM R ON (R.ROOM_NO = B.ROOM_NO)
+       JOIN CAMP C ON (C.CAMP_NO = R.CAMP_NO)
+       JOIN CAMP_FILE F ON (F.CAMP_NO = C.CAMP_NO)
+       JOIN IMAGEFILE I ON (I.FILE_NO = F.FILE_NO)
+      WHERE C.USER_NO = #{ userNo }
+    </select>
+    
+    <!-- 
+    <select id="selectReserveInfoList" resultMap="reserPayResultMap">
+       SELECT
+             RESER_NO
+             , USER_NO
+             , RESER_NAME
+             , PHONE
+             , RESER_STATE             
+             , REQUEST
+             , CHECKIN
+             , CHECKOUT
+             , ACCOUNT_NUM
+             , ACCOUNT_HOL
+             , BANK
+             , ROOM_QUA
+             , ROOM_NO
+          FROM RESERVE
+    </select>
+      -->
+      <select id="selectPwd" parameterType="com.cp.campers.member.model.vo.Member" resultType="string">
+      select user_pwd from member where user_id = #{id}
+      
+      </select>
 
 </mapper>

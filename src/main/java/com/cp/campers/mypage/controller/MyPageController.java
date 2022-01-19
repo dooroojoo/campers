@@ -524,231 +524,232 @@ public class MyPageController {
 	
 	
 	/* 캠핑장 등록 입력폼 */
-	/* @AuthenticationPrincipal UserImpl user 유저 정보 가져오기 */
-	@PostMapping("/mypageCampEnrollment")
+	   /* @AuthenticationPrincipal UserImpl user 유저 정보 가져오기 */
+	   @PostMapping("/mypageCampEnrollment")
 
-	public String mypageCampEnrollment(Camp camp, @AuthenticationPrincipal UserImpl user, @Value("${custom.path.upload-images}") String uploadFilesPath,
-			Model model, @RequestParam MultipartFile singleFile, @RequestParam MultipartFile[] campMultiFiles,
-			@RequestParam List<MultipartFile> roomMultiFiles, HttpServletRequest request, CampRecord campRecord,
-			RedirectAttributes rttr, Locale locale) {
+	   public String mypageCampEnrollment(Camp camp, @AuthenticationPrincipal UserImpl user, @Value("${custom.path.upload-images}") String uploadFilesPath,
+	         Model model, @RequestParam MultipartFile singleFile, @RequestParam MultipartFile[] campMultiFiles,
+	         @RequestParam List<MultipartFile> roomMultiFiles, HttpServletRequest request, CampRecord campRecord,
+	         RedirectAttributes rttr, Locale locale) {
 
-		
-		// Camp = 사업장 
-		// Room = 객실
-		// singleFile = 사업자등록증
-		// campMultiFiles = 사업장 사진들
-		// roomMultiFiles = 객실 사진들
-		// campRocord = 이력?
-		// rttr , locale = 숙소등록 메세지 보내기 위함
-		
-		camp.setUserNo(user.getUserNo());
+	      
+	      // Camp = 사업장 
+	      // Room = 객실
+	      // singleFile = 사업자등록증
+	      // campMultiFiles = 사업장 사진들
+	      // roomMultiFiles = 객실 사진들
+	      // campRocord = 이력?
+	      // rttr , locale = 숙소등록 메세지 보내기 위함
+	      
+	      camp.setUserNo(user.getUserNo());
 
-		/*-----------------------1. 캠핑장 먼저 insert 하는 로직 ----------------------------*/
-		String filePath = uploadFilesPath + "businessImg";
-		
-		File mkdir = new File(filePath);
-		
-		if (!mkdir.exists())
-			mkdir.mkdirs();
-		
-		String originFileName = singleFile.getOriginalFilename();
-		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
-		
-		try {
-			singleFile.transferTo(new File(filePath + "\\" + savedName));
-			camp.setCampPath("/resources/images/uploadFiles/businessImg/" + savedName);
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		
-		// 현재 campNo를 가져가서 이력만들기 위함
-		campRecord.setCampNo(camp.getCampNo());
+	      /*-----------------------1. 캠핑장 먼저 insert 하는 로직 ----------------------------*/
+	      String filePath = uploadFilesPath + "businessImg";
+	      
+	      File mkdir = new File(filePath);
+	      
+	      if (!mkdir.exists())
+	         mkdir.mkdirs();
+	      
+	      String originFileName = singleFile.getOriginalFilename();
+	      String ext = originFileName.substring(originFileName.lastIndexOf("."));
+	      String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+	      
+	      try {
+	         singleFile.transferTo(new File(filePath + "\\" + savedName));
+	         camp.setCampPath("/resources/images/uploadFiles/businessImg/" + savedName);
+	      } catch (IllegalStateException | IOException e) {
+	         e.printStackTrace();
+	      }
+	      
+	      // 현재 campNo를 가져가서 이력만들기 위함
+	      campRecord.setCampNo(camp.getCampNo());
 
-		// 캠핑장 타입, 부대시설 insert하기 위함(구현완료)
-		String[] businessTypeCheck = request.getParameterValues("businessType");
-		String[] facilityNoCheck = request.getParameterValues("facilityNo");
-		
-		List<String> btypeList = new ArrayList<>();
-		for (String check : businessTypeCheck) {
-			btypeList.add(check);
-		}
-		
-		List<String> ftypeList = new ArrayList<>();
-		for (String check2 : facilityNoCheck) {
-			ftypeList.add(check2);
-		}
-		
-		mypageService.mypageCampEnrollment(camp, btypeList, ftypeList);
+	      // 캠핑장 타입, 부대시설 insert하기 위함(구현완료)
+	      String[] businessTypeCheck = request.getParameterValues("businessType");
+	      String[] facilityNoCheck = request.getParameterValues("facilityNo");
+	      
+	      List<String> btypeList = new ArrayList<>();
+	      for (String check : businessTypeCheck) {
+	         btypeList.add(check);
+	      }
+	      
+	      List<String> ftypeList = new ArrayList<>();
+	      for (String check2 : facilityNoCheck) {
+	         ftypeList.add(check2);
+	      }
+	      
+	      mypageService.mypageCampEnrollment(camp, btypeList, ftypeList);
 
-		/* ---------------------------2. 사업장 사진 여러개 ------------------------------ */
-		String campFilePath = uploadFilesPath + "/campImg";
+	      /* ---------------------------2. 사업장 사진 여러개 ------------------------------ */
+	      String campFilePath = uploadFilesPath + "/campImg";
 
-		File mkdir2 = new File(campFilePath);
-		if (!mkdir2.exists())
-			mkdir2.mkdirs();
+	      File mkdir2 = new File(campFilePath);
+	      if (!mkdir2.exists())
+	         mkdir2.mkdirs();
 
-		List<Map<String, String>> files = new ArrayList<>();
-		List<MultipartFile> campMultiFileList = new ArrayList<>();
-		
-		// 이미지가 실제로 존재하는지 처리해서 다시 List로 담음
-		for (int i = 0; i < campMultiFiles.length; i++) {
-			if (campMultiFiles[i].getSize() != 0) {
-				campMultiFileList.add(campMultiFiles[i]);
-			}
-		}
+	      List<Map<String, String>> files = new ArrayList<>();
+	      List<MultipartFile> campMultiFileList = new ArrayList<>();
+	      
+	      // 이미지가 실제로 존재하는지 처리해서 다시 List로 담음
+	      for (int i = 0; i < campMultiFiles.length; i++) {
+	         if (campMultiFiles[i].getSize() != 0) {
+	            campMultiFileList.add(campMultiFiles[i]);
+	         }
+	      }
 
-		for (int i = 0; i < campMultiFileList.size(); i++) {
-			String originFileName2 = campMultiFileList.get(i).getOriginalFilename();
-			String ext2 = originFileName2.substring(originFileName2.lastIndexOf("."));
-			String savedName2 = UUID.randomUUID().toString().replace("-", "") + ext2;
+	      for (int i = 0; i < campMultiFileList.size(); i++) {
+	         String originFileName2 = campMultiFileList.get(i).getOriginalFilename();
+	         String ext2 = originFileName2.substring(originFileName2.lastIndexOf("."));
+	         String savedName2 = UUID.randomUUID().toString().replace("-", "") + ext2;
 
-			Map<String, String> file = new HashMap<>();
-			file.put("originFileName2", originFileName2);
-			file.put("savedName2", savedName2);
-			file.put("campFilePath", campFilePath);
-			files.add(file);
-		}
+	         Map<String, String> file = new HashMap<>();
+	         file.put("originFileName2", originFileName2);
+	         file.put("savedName2", savedName2);
+	         file.put("campFilePath", campFilePath);
+	         files.add(file);
+	      }
 
-		try {
-			for (int i = 0; i < campMultiFileList.size(); i++) {
+	      try {
+	         for (int i = 0; i < campMultiFileList.size(); i++) {
 
-				
-				Map<String, String> file = files.get(i);
-				campMultiFileList.get(i).transferTo(new File(file.get("campFilePath") + "\\" + file.get("savedName2")));
-				Attachment attachment = new Attachment();
-				attachment = new Attachment();
-				attachment.setFileName(file.get("savedName2"));
-				attachment.setFileOriginName(file.get("originFileName2"));
-				attachment.setFileRoute("/resources/images/uploadFiles/campImg/");
+	            
+	            Map<String, String> file = files.get(i);
+	            campMultiFileList.get(i).transferTo(new File(file.get("campFilePath") + "\\" + file.get("savedName2")));
+	            Attachment attachment = new Attachment();
+	            attachment = new Attachment();
+	            attachment.setFileName(file.get("savedName2"));
+	            attachment.setFileOriginName(file.get("originFileName2"));
+	            attachment.setFileRoute("/resources/images/uploadFiles/campImg/");
 
-				if (i == 0)
-					attachment.setFileLevel(0);
-				else
-					attachment.setFileLevel(1);
-				
-				mypageService.campImageInsert(attachment);
-				
-			}
+	            if (i == 0)
+	               attachment.setFileLevel(0);
+	            else
+	               attachment.setFileLevel(1);
+	            
+	            mypageService.campImageInsert(attachment);
+	            
+	         }
 
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-			for (int i = 0; i < campMultiFileList.size(); i++) {
-				Map<String, String> file = files.get(i);
-				new File(file.get("campFilePath") + "\\" + file.get("savedName")).delete();
-			}
-		}
+	      } catch (IllegalStateException | IOException e) {
+	         e.printStackTrace();
+	         for (int i = 0; i < campMultiFileList.size(); i++) {
+	            Map<String, String> file = files.get(i);
+	            new File(file.get("campFilePath") + "\\" + file.get("savedName")).delete();
+	         }
+	      }
 
-		/* ---------------------------5. 객실 먼저 insert ---------------------------- */
-		
-		String[] roomName = request.getParameterValues("roomName");
-		String[] roomMember = request.getParameterValues("roomMember");
-		String[] roomPrice = request.getParameterValues("roomPrice");
-		String[] roomSize = request.getParameterValues("roomSize");
-		String[] roomFloor = request.getParameterValues("roomFloor");
-		String[] roomParking = request.getParameterValues("roomParking");
-		String[] roomInfo = request.getParameterValues("roomInfo");
-		String[] roomAmount = request.getParameterValues("roomAmount");
-		String[] roomForm = request.getParameterValues("roomForm");
-		
-		List<String> roomNoList = new ArrayList<>();
-		for(int i = 0 ; i < roomName.length; i++) {
-			Room room = new Room();
-			room.setRoomName(roomName[i]);
-			room.setRoomMember(Integer.parseInt(roomMember[i]));
-			room.setRoomPrice(Integer.parseInt(roomPrice[i]));
-			room.setRoomSize(roomSize[i]);
-			room.setRoomFloor(roomFloor[i]);
-			room.setRoomParking(roomParking[i]);
-			room.setRoomInfo(roomInfo[i]);
-			room.setRoomAmount(Integer.parseInt(roomAmount[i]));
-			room.setRoomForm(roomForm[i]);
-			room.setCampNo(camp.getCampNo());
-			log.info("room = "+room);
-			roomNoList.add(mypageService.roomInsert(room));
-		}
-		
-		
-		/* ---------------------------4. 객실 사진 여러개 ------------------------------ */
+	      /* ---------------------------5. 객실 먼저 insert ---------------------------- */
+	      
+	      String[] roomName = request.getParameterValues("roomName");
+	      String[] roomMember = request.getParameterValues("roomMember");
+	      String[] roomPrice = request.getParameterValues("roomPrice");
+	      String[] roomSize = request.getParameterValues("roomSize");
+	      String[] roomFloor = request.getParameterValues("roomFloor");
+	      String[] roomParking = request.getParameterValues("roomParking");
+	      String[] roomInfo = request.getParameterValues("roomInfo");
+	      String[] roomAmount = request.getParameterValues("roomAmount");
+	      String[] roomForm = request.getParameterValues("roomForm");
+	      
+	      List<String> roomNoList = new ArrayList<>();
+	      for(int i = 0 ; i < roomName.length; i++) {
+	         Room room = new Room();
+	         room.setRoomName(roomName[i]);
+	         room.setRoomMember(Integer.parseInt(roomMember[i]));
+	         room.setRoomPrice(Integer.parseInt(roomPrice[i]));
+	         room.setRoomSize(roomSize[i]);
+	         room.setRoomFloor(roomFloor[i]);
+	         room.setRoomParking(roomParking[i]);
+	         room.setRoomInfo(roomInfo[i]);
+	         room.setRoomAmount(Integer.parseInt(roomAmount[i]));
+	         room.setRoomForm(roomForm[i]);
+	         room.setCampNo(camp.getCampNo());
+	         log.info("room = "+room);
+	         roomNoList.add(mypageService.roomInsert(room));
+	      }
+	      
+	      
+	      /* ---------------------------4. 객실 사진 여러개 ------------------------------ */
 
-		String roomFilePath = uploadFilesPath + "/roomImg";
- 
-		File mkdir3 = new File(roomFilePath);
-		if (!mkdir3.exists())
-			mkdir3.mkdirs();
+	      String roomFilePath = uploadFilesPath + "/roomImg";
+	 
+	      File mkdir3 = new File(roomFilePath);
+	      if (!mkdir3.exists())
+	         mkdir3.mkdirs();
 
-		List<Map<String, String>> files3 = new ArrayList<>();
+	      List<Map<String, String>> files3 = new ArrayList<>();
 
 
-		for (int i = 0; i < roomMultiFiles.size(); i++) {
-			
-			Map<String, String> file3 = new HashMap<>();
-			if(roomMultiFiles.get(i).getSize() > 0) {
-			String originFileName3 = roomMultiFiles.get(i).getOriginalFilename();
-			String ext3 = originFileName3.substring(originFileName3.lastIndexOf("."));
-			String savedName3 = UUID.randomUUID().toString().replace("-", "") + ext3;
+	      for (int i = 0; i < roomMultiFiles.size(); i++) {
+	         
+	         Map<String, String> file3 = new HashMap<>();
+	         if(roomMultiFiles.get(i).getSize() > 0) {
+	         String originFileName3 = roomMultiFiles.get(i).getOriginalFilename();
+	         String ext3 = originFileName3.substring(originFileName3.lastIndexOf("."));
+	         String savedName3 = UUID.randomUUID().toString().replace("-", "") + ext3;
 
-			
-			file3.put("originFileName3", originFileName3);
-			file3.put("savedName3", savedName3);
-			file3.put("roomFilePath", roomFilePath);
-			file3.put("thumbnail", i+"");
-			file3.put("index", i+1+"");
-			file3.put("isEmpty", "N");
-			files3.add(file3);
-			}else {
-			file3.put("thumbnail", i+"");
-			file3.put("index", i+1+"");
-			file3.put("isEmpty", "Y");
-			files3.add(file3);
-			}
-		}
-		try {
-			int index = Integer.parseInt(roomNoList.get(0));
-			
-			for (int i = 0; i < roomMultiFiles.size(); i++) {
-				
-				Map<String, String> file3 = files3.get(i);
-				
-				if(file3.get("isEmpty") == "N") {
-					
-				roomMultiFiles.get(i).transferTo(new File(file3.get("roomFilePath") + "\\" + file3.get("savedName3")));
+	         
+	         file3.put("originFileName3", originFileName3);
+	         file3.put("savedName3", savedName3);
+	         file3.put("roomFilePath", roomFilePath);
+	         file3.put("thumbnail", i+"");
+	         file3.put("index", i+1+"");
+	         file3.put("isEmpty", "N");
+	         files3.add(file3);
+	         }else {
+	         file3.put("thumbnail", i+"");
+	         file3.put("index", i+1+"");
+	         file3.put("isEmpty", "Y");
+	         files3.add(file3);
+	         }
+	      }
+	      try {
+	         int index = Integer.parseInt(roomNoList.get(0));
+	         
+	         for (int i = 0; i < roomMultiFiles.size(); i++) {
+	            
+	            Map<String, String> file3 = files3.get(i);
+	            
+	            if(file3.get("isEmpty") == "N") {
+	               
+	            roomMultiFiles.get(i).transferTo(new File(file3.get("roomFilePath") + "\\" + file3.get("savedName3")));
 
-				Attachment atta2 = new Attachment();
-				atta2.setFileName(file3.get("savedName3"));
-				atta2.setFileOriginName(file3.get("originFileName3"));
-				atta2.setFileRoute("/resources/images/uploadFiles/roomImg/");
+	            Attachment atta2 = new Attachment();
+	            atta2.setFileName(file3.get("savedName3"));
+	            atta2.setFileOriginName(file3.get("originFileName3"));
+	            atta2.setFileRoute("/resources/images/uploadFiles/roomImg/");
 
-				if (Integer.parseInt(file3.get("thumbnail")) % 5 == 0) {
-					atta2.setFileLevel(0);
-				}else {
-					atta2.setFileLevel(1);
-				}
-					
-				atta2.setRoomNo(index);
-				if(Integer.parseInt(file3.get("index")) % 5 == 0) {
-					index++;
-				}
-			
-				mypageService.roomImageInsert(atta2);
-				
-				}
-				
-				
-			}
+	            if (Integer.parseInt(file3.get("thumbnail")) % 5 == 0) {
+	               atta2.setFileLevel(0);
+	            }else {
+	               atta2.setFileLevel(1);
+	            }
+	               
+	            atta2.setRoomNo(index);
+	            if(Integer.parseInt(file3.get("index")) % 5 == 0) {
+	               index++;
+	            }
+	         
+	            mypageService.roomImageInsert(atta2);
+	            
+	            }
+	            
+	            
+	         }
 
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-			for (int i = 0; i < roomMultiFiles.size(); i++) {
-				Map<String, String> file3 = files3.get(i);
-				new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
-			}
-		}
+	      } catch (IllegalStateException | IOException e) {
+	         e.printStackTrace();
+	         for (int i = 0; i < roomMultiFiles.size(); i++) {
+	            Map<String, String> file3 = files3.get(i);
+	            new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
+	         }
+	      }
 
-		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
-		return "redirect:/mypage";
-		
-	}
+	      rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
+	      return "redirect:/mypage";
+	      
+	   }
+
 
 	/* 캠핑장 해지 */
 	@GetMapping("/mypageCampManagementOut")
