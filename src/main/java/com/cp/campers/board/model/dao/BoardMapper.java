@@ -84,5 +84,7 @@ public interface BoardMapper {
 
 	void deleteImgs(String deleteImg);
 
+	void updateFileLevel(String changeName);
+
 
 }

@@ -322,7 +322,6 @@ public class BoardController {
 				file.put("savedName", savedName);
 				file.put("index", i+"");
 				file.put("isNew", "Y");
-				System.out.println("idx=="+file.get("index"));
 				
 				if(changeName.length >= i+1) {
 					file.put("deletedName", changeName[i]);
@@ -331,9 +330,16 @@ public class BoardController {
 				
 			}else {
 				file.put("index", i+"");
+				System.out.println("idx=="+file.get("index"));
 				file.put("isNew", "N");
 				files.add(file);
 				}
+			
+			if(i == 0) {
+				file.put("fileLevel", "0");
+			}else {
+				file.put("fileLevel", "1");
+			}
 			
 		}
 
@@ -345,12 +351,10 @@ public class BoardController {
 			for (int i = 0; i < images.size(); i++) {
 				
 				Map<String, String> file = files.get(i);
-				if(file.get("index").equals("0")) {
-					file.put("fileLevel", "0");
-				}else {
-					file.put("fileLevel", "1");
-				}
+				
 				if(file.get("isNew") == "Y") {
+					
+				
 					
 				// view에서 가져온 파일 수 만큼, 지정한 경로에, 변경된 이름으로 파일 생성
 				images.get(i).transferTo(new File(file.get("filePath") + "\\" + file.get("savedName")));
@@ -368,11 +372,10 @@ public class BoardController {
 				}else {
 					attachment.setFileLevel(1);
 				}
-			
-			
-				log.info("@@@@@@@@"+attachment);
-				int result = boardService.updateBoardImage(attachment,board.getBid());
 				
+				int result = boardService.updateBoardImage(attachment,board.getBid());
+			
+				log.info("result="+result);
 					if(result > 0) {
 						for(Map<String, String> photo : files) {
 							if(photo.get("deletedName") != null) {
@@ -382,6 +385,14 @@ public class BoardController {
 						}
 					}
 				}
+//				else {
+//					int index = 0;
+//					index += Integer.parseInt(file.get("index"));
+//					if(index == 2) {
+//						log.info("changeName = "+changeName[0]);
+//						boardService.updateFileLevel(changeName[0]);
+//					}
+//				}
 			}
 
 		} catch (IllegalStateException | IOException e) {

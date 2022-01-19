@@ -726,12 +726,12 @@ public class MyPageController {
 				}
 					
 				atta2.setRoomNo(index);
-				if(Integer.parseInt(file3.get("index")) % 5 == 0) {
-					index++;
-				}
 			
 				mypageService.roomImageInsert(atta2);
 				
+				}
+				if(Integer.parseInt(file3.get("index")) % 5 == 0) {
+					index++;
 				}
 				
 				
