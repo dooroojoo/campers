@@ -453,5 +453,11 @@ set file_status = 'Y'
 WHERE FILE_NAME = #{deleteImg}
 </update>
 
+<update id="updateFileLevel" parameterType="string">
+UPDATE IMAGEFILE
+SET FILE_LEVEL = 0
+WHERE FILE_NAME = #{changeName}
+</update>
+
 
 </mapper>
