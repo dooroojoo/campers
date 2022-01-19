@@ -13,6 +13,7 @@ import com.cp.campers.mypage.model.vo.BusinessReservation;
 import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.ImageFile;
+import com.cp.campers.mypage.model.vo.MypageCampManagement;
 import com.cp.campers.mypage.model.vo.Room;
 import com.cp.campers.mypage.model.vo.RoomFile;
 import com.cp.campers.mypage.model.vo.WishCamp;
@@ -153,11 +154,9 @@ public interface MypageMapper {
 
 	List<WishCamp> selectWishCampList(int userNo);
 
-	List<Camp> campList(int userNo);
-
 	Camp campDetail(int campNo);
 	
-	List<Room> roomList(int campNo);
+	List<MypageCampManagement> selectmypageCampManagementList(Map<String, Object> param);
 	
 	// public Map<String, Object> findAllMember();
 }

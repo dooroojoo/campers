@@ -369,42 +369,7 @@ public class MyPageController {
 			@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
 			@RequestParam MultipartFile[] roomMultiFiles, HttpServletRequest request, RedirectAttributes rttr,
 			Locale locale, int campNo) {
-
-		/* 
-		 * @RequestParam(value="roomList[]") List<Room> roomList
-		 * @RequestParam(value="CampBusinessTypeList") List<String> value
-		 * 
-		 * There is no getter for property named 'CampBusinessType' in 'class
-		 * com.cp.campers.mypage.model.vo.Camp' 검색 결과 vo와 Mapper.xml 에서 parameterType타입
-		 
-		 * ? or property이름 불일치 해서 생기는 오류 인듯하다. CampBusinessType 를 처음에 getter 오류가 발생해서
-		 * getter이 없어서 생기는 오류 인가 생각해서 List<Integer> businessType 에서
-		 * List<CampBusinessType> campBusinessTypeList 변경 하였으나 같은 getter 오류가 발생. 반복문으로
-		 * CampBusinessType 에 btype를 분리해서 db에 저장해서 for(String btype : btypeList ) {
-		 * mypageMapper.insertCampBusinessType(btype); } 처리를 해줬는대 어떻게 수정해야 할지를 모르겠다...
-		 *
-		 * 추가
-		 * mypageMapper.xml 에서 com.cp.campers.mypage.model.vo.Camp에 CampBusinessType가
-		 * <collection property="CampBusinessType" resultMap="CampBusinessTypeResultMap"/>
-		 * 여서 문제인걸까 ? column이 아니 라서 ?
-		 * Pacage Explorer 에서 Camp에 vo 를 확인결과 CampBusinessType 가아니라
-		 * CampBusinessTypeList로 확인됨 이걸 
-		 */
-
-		/* room에 Camp에 campNo를 가져와서 room을 insert 해야될거 같다...?
-		 *  XXXX 이건 아닌듯 > 캠프에 유저정보 가져오기 camp.setUserNo(userNo);
-		 * 
-		 * room 에다가 campNo를 받아와서 room을 insert 해야됨. 사업자에 캠핑장을 여러개 등록할수 있으므로 등록할 캠핑장을 선택
-		 * 해야됨. (userNo 에 campList를 가져와서 select로 전체 조회목록 만들기) 목록에 campNo를 name값으로 줘서
-		 * room에 insert ? select ???
-		 * 
-		 * 로그인한 회원정보 user.getUserNo 로 캠프에 입력 캠프는 userNo 만 가지고 있음. 나머지 정보는 어떻게 가져올까 ?
-		 * 
-		 * 1. 사업자 회원 로그인 user.getUserNo
-		 * 2. 사업자 회원 캠프장 찾기 room.setCampNo(camp.getCampNo)    XXX camp.getUserNo(user.setUserNo)
-		 * 3. 캠프장에 숙소 추가하기 room.getCampNo(camp.setCampNo)
-		 * 
-		 */
+		
 		// room.setCampNo(camp.setCampNo());
 		
 		/* insertRoom에 campNo를 room에 넣어줌 */
@@ -775,6 +740,7 @@ public class MyPageController {
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("campImageList", map.get("campImageList"));
+		model.addAttribute("mypageCampManagementList", map.get("mypageCampManagementList"));
 
 		log.info("map : " + map.toString());
 		log.info("model : " + model.toString());
@@ -841,7 +807,7 @@ public class MyPageController {
 
 	/* 사업자 예약 내역 */
 	@GetMapping("/mypageHostReserve")
-	public String mypageHostReserve(int campNo, Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
+	public String mypageHostReserve(Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
 
 		int userNo = user.getUserNo();
 		int page = 1;
@@ -872,7 +838,7 @@ public class MyPageController {
 
 	/* 찜한 페이지 */
 	@GetMapping("/wishcamp")
-	public String wishCamp(int campNo, Camp camp, Model model, String dateIn, String dateOut, @AuthenticationPrincipal UserImpl user) {
+	public String wishCamp(Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
 		
 		int userNo = user.getUserNo();
 		int page = 1;
