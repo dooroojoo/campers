@@ -167,12 +167,12 @@
             , R.ROOM_FORM
             , I.FILE_NAME
             , I.FILE_ROUTE
+            , I.FILE_LEVEL
 		 FROM ROOM R
 		 JOIN ROOM_FILE RF ON(R.ROOM_NO = RF.ROOM_NO)
 		 JOIN IMAGEFILE I ON(I.FILE_NO = RF.FILE_NO)
 		WHERE R.CAMP_NO = #{ campNo }
 		  AND I.FILE_STATUS = 'N'
-		  AND I.FILE_LEVEL = '1'
 	</select>
 	
 	<select id="roomDetail" parameterType="_int" resultMap="roomResultMap">

@@ -89,7 +89,7 @@
 
 
                         <!-- 최대 10개의 페이지 목록 -->
-                        <li th:each="p : ${ #numbers.sequence(pi.startPage, pi.endPage)}">
+                        <li th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
                             <div class="current_page" th:if="${ p == pi.page }">
                                 <a href="#" th:text="${ p }"></a>
                             </div>
