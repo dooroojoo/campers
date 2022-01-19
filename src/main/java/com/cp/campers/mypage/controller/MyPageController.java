@@ -37,6 +37,8 @@ import com.cp.campers.board.model.service.BoardService;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.camp.model.service.CampService;
+import com.cp.campers.main.model.service.MainService;
+import com.cp.campers.main.model.vo.Recommend;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
@@ -55,15 +57,17 @@ public class MyPageController {
 	private BoardService boardService;
 	private AdminService adminService;
 	private CampService campService;
+	private MainService mainService;
 
 	@Autowired
 	public MyPageController(MessageSource messageSource, MypageService mypageService, BoardService boardService,
-			AdminService adminService, CampService campService) {
+			AdminService adminService, CampService campService, MainService mainService) {
 		this.messageSource = messageSource;
 		this.mypageService = mypageService;
 		this.boardService = boardService;
 		this.adminService = adminService;
 		this.campService = campService;
+		this.mainService = mainService;
 	}
 
 	/* 회원 목록 */
@@ -78,13 +82,15 @@ public class MyPageController {
 		int userNo = user.getUserNo();
 
 		int page = 1;
-
+		/* 내 게시물 검색 */
 		Map<String, Object> map = mypageService.selectMyBoardList(writer, page);
-
-		// 보류
+		/* 내 정보 검색 */
 		Map<String, Object> map2 = mypageService.selectMyMemberList(userNo, page);
-		//log.info("map2 : " + map2.toString());
-
+		/* 찜한 캠핑장 검색*/
+		Map<String, Object> map3 = mypageService.selectMyWishCampList(userNo, page);
+		// 슬라이더 캠핑장 추천 리스트
+		List<Recommend> mainSlider = mainService.mainSlider();
+		
 		Date today = new Date();
 
 		//log.info("date : " + today);
@@ -93,9 +99,11 @@ public class MyPageController {
 		mv.addObject("pi", map.get("pi"));
 		mv.addObject("memberList", map2.get("memberList"));
 		mv.addObject("campList", map.get("campList"));
+		mv.addObject("mainSlider", mainSlider);
 
 		model.addAttribute("boardList", map.get("boardList"));
 		model.addAttribute("memberList", map2.get("memberList"));
+		model.addAttribute("wishCampList", map3.get("wishCampList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("standardDate", new Date());
 		//model.addAttribute("thumbnailList", map.get("thumbnailList"));
@@ -369,17 +377,10 @@ public class MyPageController {
 			@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
 			@RequestParam MultipartFile[] roomMultiFiles, HttpServletRequest request, RedirectAttributes rttr,
 			Locale locale, int campNo) {
-		
-		// room.setCampNo(camp.setCampNo());
-		
-		/* insertRoom에 campNo를 room에 넣어줌 */
 				
+		/* insertRoom에 campNo를 room에 넣어줌 */			
 		camp.setUserNo(user.getUserNo());
-		//room.setCampNo(campNo);
-		// camp.setCampNo(campNo);
-		// room.setCampNo(camp.getCampNo());
-		// room.setCampNo(camp.getCampNo(camp.setUserNo(user.getUserNo())));
-		
+				
 		log.info("------------------------------------------------------------------");
 		
 		log.info("숙소 등록에 room : " + room.toString());
@@ -389,16 +390,6 @@ public class MyPageController {
 		 * model.addAttribute("value", values); log.info(values.toString());
 		 * log.info(value.toString()); }
 		 */
-
-		// room.setUserNo(camp.getCampNo());
-		log.info("user : " + user.toString());
-		log.info("camp : " + camp.toString());
-		log.info("room : " + room.toString());
-
-		// camp.setUserNo(user.getUserNo());
-
-		// log.info("user : " + user.toString());
-		// log.info("camp : " + camp.toString());
 
 		/* 객실 사진을 저장할 경로 */
 		String roomFilePath = uploadFilesPath + "/roomImg";
@@ -485,12 +476,6 @@ public class MyPageController {
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
 		return "redirect:/mypage/mypageCampManagement";
 	}
-
-	
-	
-	
-	
-	
 	
 	/* 캠핑장 등록 입력폼 */
 	/* @AuthenticationPrincipal UserImpl user 유저 정보 가져오기 */

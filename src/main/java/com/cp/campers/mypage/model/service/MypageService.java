@@ -86,6 +86,8 @@ public interface MypageService{
 
 	Map<String, Object> selectwishCampList(int userNo, int page);
 
+	Map<String, Object> selectMyWishCampList(int userNo, int page);
+
 	/*
 	Member pwdCheck(Member member);
 
