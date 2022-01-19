@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cp.campers.admin.model.dao.AdminMapper;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.camp.model.dao.CampMapper;
+import com.cp.campers.camp.model.vo.Review;
 import com.cp.campers.member.model.dao.MemberMapper;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
@@ -28,6 +30,7 @@ import com.cp.campers.mypage.model.vo.CampFacility;
 import com.cp.campers.mypage.model.vo.ImageFile;
 import com.cp.campers.mypage.model.vo.PageInfo;
 import com.cp.campers.mypage.model.vo.Room;
+import com.cp.campers.mypage.model.vo.WishCamp;
 import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,12 +42,14 @@ public class MypageServiceImpl implements MypageService{
 	private final MypageMapper mypageMapper;
 	private final MemberMapper memberMapper;
 	private final AdminMapper adminMapper;
+	private final CampMapper campMapper;
 	
 	@Autowired
-	public MypageServiceImpl(MypageMapper mypageMapper,  MemberMapper memberMapper, AdminMapper adminMapper) {
+	public MypageServiceImpl(MypageMapper mypageMapper,  MemberMapper memberMapper, AdminMapper adminMapper, CampMapper campMapper) {
 		this.mypageMapper = mypageMapper;
 		this.memberMapper = memberMapper;
 		this.adminMapper = adminMapper;
+		this.campMapper = campMapper;
 	}
 
 	/* 캠프장 등록 */
@@ -414,27 +419,41 @@ public class MypageServiceImpl implements MypageService{
 		mypageMapper.pwdUpdate(param);		
 	}
 
-	/*
 	@Override
-	public String pwdCheck(String id) {
-		HttpSession sqlsession = new HttpSession();
-		sqlsession.selectOne("mypageMapper.pwdCheck", id);
-		return mypageMapper.pwdCheck(id);
+	public Map<String, Object> selectwishCampList(int userNo, int page) {
+				
+		PageInfo pi = new PageInfo(page, 10, 10, 8);
+		pi.setStartRow(page, pi.getBoardLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
+		
+		List<Camp> campList2 = mypageMapper.campList(userNo);
+		
+		Map<String, Object> param = new HashMap<>();
+					
+			param.put("pi", pi);
+			param.put("userNo", userNo);				
+		
+		List<Camp> campList = mypageMapper.selectMyHostReserveList(param);
+		List<Camp> campImageList = mypageMapper.selectCampImageList();				
+		List<WishCamp> wishCampList = mypageMapper.selectWishCampList(userNo);
+		
+		
+		log.info("wishCampList : " + wishCampList.toString());
+						
+		Map<String, Object> map = new HashMap<>();
+		map.put("pi", pi);
+		/*
+		map.put("camp", camp2);
+		map.put("roomList", roomList);
+		map.put("reviewList", reviewList);
+		map.put("campList", campList);
+		*/
+		map.put("campList2", campList2);
+		map.put("campImageList", campImageList);
+		map.put("wishCampList", wishCampList);
+				
+		return map;
 	}
 
-	@Override
-	public void pwdUpdate(String id, String hashedPwd) {
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", id);
-		map.put("pwd", hashedPwd);
-		
-		id.get
-		
-		mypageMapper.pwdUpdate(id, hashedPwd);
-		return;
-	}
-	 */
-		
 	
 }

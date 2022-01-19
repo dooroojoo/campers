@@ -36,6 +36,7 @@ import com.cp.campers.admin.model.vo.CampRecord;
 import com.cp.campers.board.model.service.BoardService;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.camp.model.service.CampService;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
@@ -53,14 +54,16 @@ public class MyPageController {
 	private MypageService mypageService;
 	private BoardService boardService;
 	private AdminService adminService;
+	private CampService campService;
 
 	@Autowired
 	public MyPageController(MessageSource messageSource, MypageService mypageService, BoardService boardService,
-			AdminService adminService) {
+			AdminService adminService, CampService campService) {
 		this.messageSource = messageSource;
 		this.mypageService = mypageService;
 		this.boardService = boardService;
 		this.adminService = adminService;
+		this.campService = campService;
 	}
 
 	/* 회원 목록 */
@@ -837,7 +840,7 @@ public class MyPageController {
 
 	/* 사업자 예약 내역 */
 	@GetMapping("/mypageHostReserve")
-	public String mypageHostReserve(Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
+	public String mypageHostReserve(int campNo, Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
 
 		int userNo = user.getUserNo();
 		int page = 1;
@@ -868,7 +871,16 @@ public class MyPageController {
 
 	/* 찜한 페이지 */
 	@GetMapping("/wishcamp")
-	public String wishCamp() {
+	public String wishCamp(int campNo, Camp camp, Model model, String dateIn, String dateOut, @AuthenticationPrincipal UserImpl user) {
+		
+		int userNo = user.getUserNo();
+		int page = 1;
+		
+		Map<String, Object> map = mypageService.selectwishCampList(userNo, page);
+		
+		model.addAttribute("wishCampList", map.get("wishCampList"));
+		model.addAttribute("pi", map.get("pi"));
+		
 		return "mypage/wishCamp";
 	}
 

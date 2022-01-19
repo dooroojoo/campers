@@ -21,8 +21,6 @@ import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 @Mapper
 public interface MypageMapper {
 	
-
-
 	// 회원 목록
 	List<Member> findAllMember();
 	
@@ -153,6 +151,13 @@ public interface MypageMapper {
 
 	String selectPwd(Member member);
 
+	List<WishCamp> selectWishCampList(int userNo);
+
+	List<Camp> campList(int userNo);
+
+	Camp campDetail(int campNo);
+	
+	List<Room> roomList(int campNo);
 	
 	// public Map<String, Object> findAllMember();
 }

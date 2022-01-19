@@ -18,7 +18,7 @@
 
 .mypage_host_reserve_table{
     padding : 20px;
-    margin-left: 15%;
+    margin-left: 21%;
 }
 
 .mypage_host_reserve_table_header{
@@ -27,27 +27,27 @@
 }
 
 .mypage_host_reserve_table_header_no{
-    width: 6%;
+    width: 100px;
 }
 
 .mypage_host_reserve_table_header_camp{
-    width: 16%; 
+    width: 200px; 
 }
 
 .mypage_host_reserve_table_header_guset{
-    width: 18%;
+    width: 200px;
 }
 
 .mypage_host_reserve_table_header_request{
-    width: 18%;
+    width: 200px;
 }
 
 .mypage_host_reserve_table_header_date{
-    width: 24%;
+    width: 200px;
 }
 
 .mypage_host_reserve_table_header_status{
-    width: 16%;
+    width: 150px;
 }
 
 .mypage_host_reserve_table_body{

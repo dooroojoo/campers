@@ -100,29 +100,33 @@
 }
 
 .full_check{
-    width: 7rem;
-    height: 1.7rem;
-    font-size: 1.2rem;
+    width: 130px;
+    height: 35px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
     background: black;
-    color:white;
+    color: white;
+    padding-top: 5px;
+    border-radius: 10px;
 }
 
 .one_check{
-    width: 7rem;
-    height: 1.7rem;
-    font-size: 1.2rem;
+    width: 130px;
+    height: 35px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
     background: red;
     color:white;
+    padding-top: 5px;
+    border-radius: 10px;
     margin-left : 20px;
 }
 
 .button_content{
     display : flex;
-    margin-left : 39%;
+    margin-left : 27%;
     margin-top: 20px;
 }
 
@@ -138,7 +142,7 @@
     text-align: center;
     list-style: none;
     width: 480px;
-    margin-left: 25%;
+    margin-left: 18%;
     align-items: center;
 }
 .member_paging a {
