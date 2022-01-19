@@ -1,5 +1,6 @@
 .content{
     width: 1900px;
+    height: 940px;
     margin: auto;
     /*display: flex;*/
     float: left;
@@ -43,6 +44,11 @@
 .wishcam_content_controller{
 	display: flex;
     flex-wrap: wrap;
+    margin-left: 2%;
+}
+
+.wishcamp_content_1:hover{
+	transform: scale(1.1);
 }
 
 .wishcamp_content_1, .wishcamp_content_2, .wishcamp_content_3, .wishcamp_content_4, .wishcamp_content_5, .wishcamp_content_6, .wishcamp_content_7, .wishcamp_content_8{
@@ -64,7 +70,11 @@
 }
 
 .wcc_p{
-    background : lightblue;
+	height : 350px;
+    border : 1px solid lightgray;
+    border-radius: 12px;
+    /*
+	*/
 }
 
 .wishcamp_content_p{
@@ -75,8 +85,9 @@
 
 .wishcamp_content_address{
     font-size: 0.8rem;
+    height: 50px;
     text-align: center;
-    color : blue;
+    color : rgb(231, 111, 82);
 }
 
 .phone{
@@ -87,6 +98,10 @@
 
 .line{
     border: 1px solid silver;
+}
+
+.line2{
+	border: 1px solid white;
 }
 
 .remove{
@@ -127,7 +142,7 @@
 .button_content{
     display : flex;
     margin-left : 27%;
-    margin-top: 20px;
+    margin-top: 480px;
 }
 
 /* 페이징 */

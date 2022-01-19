@@ -270,6 +270,34 @@ public class MypageServiceImpl implements MypageService{
 		return map;
 	}
 	
+	@Transactional
+	@Override
+	public Map<String, Object> selectMyWishCampList(int userNo, int page) {
+		
+		int listCount = mypageMapper.getListCountMyWishCamp(userNo);
+		
+		log.info(listCount+"");
+		
+		PageInfo pi = new PageInfo(page, listCount, 1, 5);
+		pi.setStartRow(page, pi.getBoardLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("userNo", userNo);
+				
+		List<WishCamp> wishCampList = mypageMapper.selectWishCampList(userNo);
+		
+		log.info("wishCampList : " + wishCampList.toString());
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("wishCampList", wishCampList);
+		map.put("pi", pi);		
+		
+		return map;
+		
+	}
+	
 	/* 내 캠프장 리스트 */
 	@Transactional
 	@Override
@@ -450,6 +478,8 @@ public class MypageServiceImpl implements MypageService{
 				
 		return map;
 	}
+
+	
 
 	
 }

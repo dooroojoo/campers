@@ -598,6 +598,12 @@
        where user_no = #{userNo}
          and status = 'Y'
     </select>
+    
+    <select id="getListCountMyWishCamp" resultType="int">
+    	SELECT COUNT(*)
+        FROM WISH_CAMP 
+       WHERE USER_NO = #{userNo}
+    </select>
      
      <select id="getCountMyGuestReserveList" parameterType="_int" resultType="_int">
         SELECT COUNT(*)
@@ -769,6 +775,13 @@
           and user_no = #{ userNo }
    ORDER BY user_no DESC) A)
    where RNUM between #{pi.startRow} and #{pi.endRow}
+    </select>
+    
+    <select id="selectMyWishCampList" parameterType="hashmap" resultMap="WishCampListResultMap">
+    	  select
+            *
+            from wish_camp
+            where user_no = #{ userNo }
     </select>
     
     <insert id="insertCampBusinessType" parameterType="string">
