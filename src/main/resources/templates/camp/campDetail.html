@@ -410,12 +410,13 @@
 
                 <div class="rooms_area">
                 
-                    <div class="rooms_wrap" id="rooms_wrap" th:each="room : ${ roomList }">
-                     <div th:id="'rooms_img'+${room.roomNo}" class="rooms_img" th:each="imgfile : ${room.imgFileList}"
-                        th:style="'background-image: url(' + @{${imgfile.fileRoute} + ${imgfile.fileName}} + ');'" 
-                        th:onclick="|showRoom('${ room.roomNo }'); show();|">
-                        <input type="hidden" name="roomNo" th:value="${ room.roomNo }">   
-                        </div>
+                    <div class="rooms_wrap" id="rooms_wrap" th:each="room : ${roomList}">
+	                     <div th:id="'rooms_img'+${room.roomNo}" class="rooms_img" th:each="imgfile : ${room.imgFileList}"
+	                     	th:if="${imgfile.fileLevel} == '0'"
+	                        th:style="'background-image: url(' + @{${imgfile.fileRoute} + ${imgfile.fileName}} + ');'" 
+	                        th:onclick="|showRoom('${ room.roomNo }'); show();|">
+	                        <!-- <input type="text" name="roomNo" th:value="${imgfile.fileLevel}"> -->
+	                     </div>
                         
                         
                         <div class="rooms_info">
