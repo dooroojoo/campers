@@ -750,7 +750,6 @@ public class MyPageController {
 	   }
 
 
-
 	/* 캠핑장 해지 */
 	@GetMapping("/mypageCampManagementOut")
 	public String mypageCampManagementOut() {
