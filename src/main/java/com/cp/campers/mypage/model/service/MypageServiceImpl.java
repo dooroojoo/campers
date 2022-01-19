@@ -56,6 +56,7 @@ public class MypageServiceImpl implements MypageService{
 	/* 캠프장 등록 */
 	@Override
 	public void mypageCampEnrollment(Camp camp, List<String> btypeList,List<String> ftypeList) {
+		
 		mypageMapper.insertCamp(camp);
 		
 		for(String btype : btypeList ) {
@@ -98,8 +99,10 @@ public class MypageServiceImpl implements MypageService{
 			/* 숙소 등록 */
 			mypageMapper.insertRoom2(room);
 			/* 숙소 이미지 등록 */
+			log.info("IMPL에서 room : " + room.toString());
 			mypageMapper.insertRoomImage(atta2);
-			mypageMapper.insertImageNo2(atta2.getRoomNo());
+			mypageMapper.insertImageNo3(atta2.getRoomNo());
+			log.info("IMPL에서 atta2 : " + atta2.toString());
 	}
 
 	/* 캠핑장 사진 등록*/

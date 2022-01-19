@@ -469,7 +469,8 @@ public class MyPageController {
 		}
 
 		// log.info("atta2 : " + atta2.toString());
-		// log.info("room : " + room.toString());
+		log.info("-----------------------------------------------------------------------------------------------");
+		log.info("서버 올리기전 room : " + room.toString());
 
 		/* 숙소 등록 */
 		//camp.setRoom(room)//
@@ -494,7 +495,6 @@ public class MyPageController {
 	/* 캠핑장 등록 입력폼 */
 	/* @AuthenticationPrincipal UserImpl user 유저 정보 가져오기 */
 	@PostMapping("/mypageCampEnrollment")
-
 	public String mypageCampEnrollment(Camp camp, @AuthenticationPrincipal UserImpl user, @Value("${custom.path.upload-images}") String uploadFilesPath,
 			Model model, @RequestParam MultipartFile singleFile, @RequestParam MultipartFile[] campMultiFiles,
 			@RequestParam List<MultipartFile> roomMultiFiles, HttpServletRequest request, CampRecord campRecord,

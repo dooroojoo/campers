@@ -36,7 +36,7 @@
             	
             	<div class="wcc_p" th:each="wishCamp : ${ wishCampList }">
             		<img class="camping" th:src="${ wishCamp.fileRoute }+${ wishCamp.fileName }" 
-            		th:onclick="'location.href=\''+@{/camp/detail(campNo=${wishCamp.campNo})}&dateIn=2022-02-19&dateOut=2022-02-20&guest=2+'\''"
+            		th:onclick="|location.href='@{/camp/detail(campNo=${wishCamp.campNo})}&dateIn=2022-02-19&dateOut=2022-02-20&guest=2'|"
             		style="width:200px; height:150px;">
             		<p class="wishcamp_content_p" th:text="${ wishCamp.campName }">
             		<p class="wishcamp_content_address" th:text="${ wishCamp.campAddress }">
