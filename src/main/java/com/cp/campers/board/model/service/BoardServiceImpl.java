@@ -264,5 +264,10 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 
+	@Override
+	public void updateFileLevel(String changeName) {
+		boardMapper.updateFileLevel(changeName);
+	}
+
 
 }
