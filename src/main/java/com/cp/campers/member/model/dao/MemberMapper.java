@@ -32,4 +32,6 @@ public interface MemberMapper {
 	int checkFailCount(String username);
 
 	void disabledMember(String username);
+
+	void resetFailCount(int userNo);
 }

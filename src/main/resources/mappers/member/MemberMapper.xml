@@ -154,6 +154,10 @@
    where user_id = #{username}
    </update>
    
-   
+   <update id="resetFailCount">
+   update member
+   set fail_count = 0
+   where user_no = #{userNo}
+   </update>
    
 </mapper>
