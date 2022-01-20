@@ -185,5 +185,11 @@ public class MemberServiceImpl implements MemberService{
 		memberMapper.disabledMember(username);
 	}
 
+	@Override
+	public void resetFailCount(int userNo) {
+		memberMapper.resetFailCount(userNo);
+		
+	}
+
 
 }
