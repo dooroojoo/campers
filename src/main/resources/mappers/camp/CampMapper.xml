@@ -237,7 +237,7 @@
 	</update>
 	
 	<select id="reserveCount" parameterType="hashmap" resultType="_int">
-		SELECT COUNT(*)
+		SELECT SUM(ROOM_QUA)
 		  FROM RESERVE
 		 WHERE ROOM_NO = #{roomNo}
 		   AND
