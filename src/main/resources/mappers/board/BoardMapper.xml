@@ -452,11 +452,19 @@ update  IMAGEFILE
 set file_status = 'Y'
 WHERE FILE_NAME = #{deleteImg}
 </update>
+<select id="selectFileNo" parameterType="string" resultType="int">
+select min(file_no)
+from board
+join board_file using(bid)
+join imagefile using(file_no)
+where file_status = 'N'
+and bid = #{bid}
+</select>
 
-<update id="updateFileLevel" parameterType="string">
+<update id="updateFileLevel" parameterType="int">
 UPDATE IMAGEFILE
 SET FILE_LEVEL = 0
-WHERE FILE_NAME = #{changeName}
+WHERE FILE_NO = #{fileNo}
 </update>
 
 
