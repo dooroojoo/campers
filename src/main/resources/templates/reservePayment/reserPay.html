@@ -11,10 +11,10 @@
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js" type="text/javascript"></script>
     <!-- css -->
     <link type="text/css" rel="stylesheet" href="/resources/css/reservePayment/reserPay.css">
-    <!-- 웹폰트 -->
+    <!-- 외부 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
     <!-- JavaScript-->
     <!-- <script type="text/javascript" src="../resources/js/payment.js"></script> -->
 	
@@ -47,11 +47,11 @@
                 </div>
                 <div class="reser_roomselec">
                     <div class="reser_room_text">예약 객실 수 선택</div>
-                    <div class="inp_qty">
+                    <div class="inp_qty" onchange="inputValue">
                         <button type="button" onclick="qtyDown(this)" title="수량감소">
                             <span>-</span>
                         </button>
-                        <input type="text" name="roomQua" title="객실개수" value="1" id="roomQua" >
+                        <input type="text" name="roomQua" title="객실개수" value="1">
                         <button type="button" onclick="qtyUp(this)" title="수량추가">
                             <span>+</span>
                         </button>
@@ -178,7 +178,7 @@
             <div class="payText">
                 <div class="tit">[객실요금]</div>
                 <div class="addr">예약 날짜 :  2021년 12월 07일 (화)</div>
-                <div class="reserRoomSu">예약 객실 수량 :   <span th:text="${param.roomPirce} + ' *'"></span> <span id="su"></span> <span>= 318,000원</span> </div>		
+                <div class="reserRoomSu">예약 객실 수량 :   <span th:text="${param.roomPirce} + ' *'"></span> <span id="su"></span> <span> 318,000원 </span> </div>		
                 <div class="totalPay">총 결제 금액 :  318,000 원</div>		
             </div>
             <div class="title1">
@@ -270,15 +270,19 @@
         }
     }
     
-    
-     $("#roomQua").change(function(){
-    	 let roomQua = $('#roomQua').val();
-    	 $('#su').text(roomQua);
-     });$
      
+	     $("#roomQua").change(function(){
+	    	 let roomQua = $('#roomQua').val();
+	    	 $('#su').text(roomQua);
+	     });$
+   
+     
+     
+   
+   
     
     
-
+ 
     
     
          
