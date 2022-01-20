@@ -106,8 +106,18 @@
                 </div>
                 <div>
                     <span class="accom_profile_icon"><i class="fas fa-share-alt"></i></span>
-                    <span class="text_controller" id="share" onclick="share();">공유하기</span>
+                    <span class="text_controller" id="share" onclick="share();">공유하기</span><label class="likeCount" th:text="${likeCounts}"></label>
+	                    <div class="likeCountDiv">
+		                    <span class="heart likeUp" th:if="${likedCampNo} == null"></span>
+		                    <span class="heart likeDown is-active" th:unless="${likedCampNo} == null"></span>
+	                    	
+	                	</div>
                 </div>
+                <div>    
+                    <input class="hiddenCampNo" type="hidden" th:value="${camp.campNo}">
+                    <input class="hiddenUseNo" type="hidden" th:value="${#authentication.principal.userNo}">
+                </div>
+                
             </div>
 
 
@@ -659,5 +669,57 @@ function changeLoad() {
 }
 </script>
 <div th:replace="common/footer.html"></div>
+
+<!-- 찜 버튼 -->
+<script>
+	$(document).on("click",".likeUp",function(){
+							
+	$(this).attr('class','heart likeDown is-active');
+	   	let campNo = $(".hiddenCampNo").val();
+		    console.log(campNo);
+						    
+		    $.ajax({
+		    	url : "/camp/likeUp/"+campNo, /* wishCamp 에 campNo로*/
+		    	dataType : "json",
+		            contentType : "application/json; charset=utf-8",
+		    	type : "get",
+			    	success : function(data){
+			    		
+		    		console.log("count"+data);
+		    		$(".likeCount").text(data);
+						    	
+			    },
+		    	error: function(e){
+				console.log(e);
+		     }
+		 })						    
+	});					
+</script>
+
+ <script>
+	$(document).on("click",".likeDown",function(){
+		$(this).attr('class','heart likeUp');
+	   	let campNo = $(".hiddenCampNo").val();
+	            console.log(campNo);
+						    
+		$.ajax({
+			url : "/camp/likeDown/"+campNo, /* wishCamp 에 campNo 로*/
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			type : "get",
+			 	success : function(data){
+			 		
+					console.log("count"+data);
+					$(".likeCount").text(data);
+		 			
+			 	},
+		    	error: function(e){
+			console.log(e);
+		    	}
+		 })
+	})
+</script>
+
+
 </body>
 </html>

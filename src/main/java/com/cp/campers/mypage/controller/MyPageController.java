@@ -697,7 +697,7 @@ public class MyPageController {
 			e.printStackTrace();
 			for (int i = 0; i < roomMultiFiles.size(); i++) {
 				Map<String, String> file3 = files3.get(i);
-				new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
+				new File(file3.get(roomFilePath) + "\\" + file3.get("savedName3")).delete();
 			}
 		}
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
