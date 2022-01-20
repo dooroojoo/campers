@@ -237,7 +237,7 @@
 	</update>
 	
 	<select id="reserveCount" parameterType="hashmap" resultType="_int">
-		SELECT SUM(ROOM_QUA)
+		SELECT NVL(SUM(ROOM_QUA), 1)
 		  FROM RESERVE
 		 WHERE ROOM_NO = #{roomNo}
 		   AND
