@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cp.campers.admin.model.dao.AdminMapper;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.camp.model.dao.CampMapper;
+import com.cp.campers.camp.model.vo.Review;
 import com.cp.campers.member.model.dao.MemberMapper;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
@@ -26,8 +28,10 @@ import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.CampBusinessType;
 import com.cp.campers.mypage.model.vo.CampFacility;
 import com.cp.campers.mypage.model.vo.ImageFile;
+import com.cp.campers.mypage.model.vo.MypageCampManagement;
 import com.cp.campers.mypage.model.vo.PageInfo;
 import com.cp.campers.mypage.model.vo.Room;
+import com.cp.campers.mypage.model.vo.WishCamp;
 import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,17 +43,20 @@ public class MypageServiceImpl implements MypageService{
 	private final MypageMapper mypageMapper;
 	private final MemberMapper memberMapper;
 	private final AdminMapper adminMapper;
+	private final CampMapper campMapper;
 	
 	@Autowired
-	public MypageServiceImpl(MypageMapper mypageMapper,  MemberMapper memberMapper, AdminMapper adminMapper) {
+	public MypageServiceImpl(MypageMapper mypageMapper,  MemberMapper memberMapper, AdminMapper adminMapper, CampMapper campMapper) {
 		this.mypageMapper = mypageMapper;
 		this.memberMapper = memberMapper;
 		this.adminMapper = adminMapper;
+		this.campMapper = campMapper;
 	}
 
 	/* 캠프장 등록 */
 	@Override
 	public void mypageCampEnrollment(Camp camp, List<String> btypeList,List<String> ftypeList) {
+		
 		mypageMapper.insertCamp(camp);
 		
 		for(String btype : btypeList ) {
@@ -88,23 +95,14 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public void mypageCampEnrollmentRoom(Room room, Attachment atta2) {
 				
-		/*
-		 * List<Room> roomList
-			생각해보니 room에다가 insert 해야될듯...
-			mypageMapper.insertCamp(room);
-			
-			Optional int parameter 'campNo' is present but cannot be translated into a null
-			value due to being declared as a primitive type. Consider declaring it as object 
-			wrapper for the corresponding primitive type.
-			
-		for(Room room : roomList) {
-		}
-		 */		
+				
 			/* 숙소 등록 */
 			mypageMapper.insertRoom2(room);
 			/* 숙소 이미지 등록 */
+			log.info("IMPL에서 room : " + room.toString());
 			mypageMapper.insertRoomImage(atta2);
-			//mypageMapper.insertImageNo2();
+			mypageMapper.insertImageNo3(atta2.getRoomNo());
+			log.info("IMPL에서 atta2 : " + atta2.toString());
 	}
 
 	/* 캠핑장 사진 등록*/
@@ -272,6 +270,34 @@ public class MypageServiceImpl implements MypageService{
 		return map;
 	}
 	
+	@Transactional
+	@Override
+	public Map<String, Object> selectMyWishCampList(int userNo, int page) {
+		
+		int listCount = mypageMapper.getListCountMyWishCamp(userNo);
+		
+		log.info(listCount+"");
+		
+		PageInfo pi = new PageInfo(page, listCount, 1, 5);
+		pi.setStartRow(page, pi.getBoardLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("userNo", userNo);
+				
+		List<WishCamp> wishCampList = mypageMapper.selectWishCampList(userNo);
+		
+		log.info("wishCampList : " + wishCampList.toString());
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("wishCampList", wishCampList);
+		map.put("pi", pi);		
+		
+		return map;
+		
+	}
+	
 	/* 내 캠프장 리스트 */
 	@Transactional
 	@Override
@@ -291,17 +317,22 @@ public class MypageServiceImpl implements MypageService{
 		
 		log.info("param : " + param.toString());		
 		
+		List<MypageCampManagement> mypageCampManagementList = mypageMapper.selectmypageCampManagementList(param);
+		
 		List<Camp> campList = mypageMapper.selectMyCampList(param);
 		
-		List<Camp> campImageList = mypageMapper.selectCampImageList();		
+		List<Camp> campImageList = mypageMapper.selectCampImageList();	
+		
 		
 		log.info("campList : " + campList.toString());
 		log.info("campImageList : " + campImageList.toString());
+		log.info("mypageCampManagementList : "+mypageCampManagementList.toString());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);
 		map.put("campList", campList);
 		map.put("campImageList", campImageList);
+		map.put("mypageCampManagementList", mypageCampManagementList);
 		
 		return map;
 	}
@@ -414,27 +445,42 @@ public class MypageServiceImpl implements MypageService{
 		mypageMapper.pwdUpdate(param);		
 	}
 
-	/*
 	@Override
-	public String pwdCheck(String id) {
-		HttpSession sqlsession = new HttpSession();
-		sqlsession.selectOne("mypageMapper.pwdCheck", id);
-		return mypageMapper.pwdCheck(id);
+	public Map<String, Object> selectwishCampList(int userNo, int page) {
+				
+		PageInfo pi = new PageInfo(page, 10, 10, 8);
+		pi.setStartRow(page, pi.getBoardLimit());
+		pi.setEndRow(pi.getStartRow(), pi.getBoardLimit());
+		
+		
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("pi", pi);
+		param.put("userNo", userNo);				
+		
+		List<Camp> campList = mypageMapper.selectMyHostReserveList(param);
+		// List<Camp> campImageList = mypageMapper.selectCampImageList();				
+		List<WishCamp> wishCampList = mypageMapper.selectWishCampList(userNo);
+		
+		
+		log.info("wishCampList : " + wishCampList.toString());
+						
+		Map<String, Object> map = new HashMap<>();
+		map.put("pi", pi);
+		/*
+		map.put("camp", camp2);
+		map.put("roomList", roomList);
+		map.put("reviewList", reviewList);
+		map.put("campList", campList);
+		*/
+		
+		// map.put("campImageList", campImageList);
+		map.put("wishCampList", wishCampList);
+				
+		return map;
 	}
 
-	@Override
-	public void pwdUpdate(String id, String hashedPwd) {
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", id);
-		map.put("pwd", hashedPwd);
-		
-		id.get
-		
-		mypageMapper.pwdUpdate(id, hashedPwd);
-		return;
-	}
-	 */
-		
+	
+
 	
 }

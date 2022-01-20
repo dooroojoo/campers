@@ -34,13 +34,14 @@
                 <div class="reser_check">
                     <div class="reser_box">
                         <div class="reser_date">
+                        <input type="hidden" id="roomNo" name="roomNo" th:value="${param.roomNo}">
                         <span class="checkIn"  id="dateIn" th:text="${param.dateIn}+' ~'"></span>
-                        <span class="checkOut" th:text="${param.dateOut}"></span> 
+                        <span class="checkOut" id="dateOut" th:text="${param.dateOut}"></span> 
                         </div>
                         <div class="inwonsu" th:text="'인원 : ' + ${param.guestNum}+ ' 명'"></div>
                         <div class="camDate_flex">
                            <img class="camcon" src="/resources/images/reservePayment/camping_Icon.png">
-                            <div class="befor_date">캠핑가기 <span class="camRedDate" ></span>일 전 </div>
+                            <div class="befor_date">캠핑가기 <span class="camRedDate" ></span></div>
                         </div>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                         <button type="button" onclick="qtyDown(this)" title="수량감소">
                             <span>-</span>
                         </button>
-                        <input type="text" name="roomQua" title="객실개수" value="1" id="roomQua">
+                        <input type="text" name="roomQua" title="객실개수" value="1" id="roomQua" >
                         <button type="button" onclick="qtyUp(this)" title="수량추가">
                             <span>+</span>
                         </button>
@@ -177,7 +178,7 @@
             <div class="payText">
                 <div class="tit">[객실요금]</div>
                 <div class="addr">예약 날짜 :  2021년 12월 07일 (화)</div>
-                <div class="reserRoomSu">예약 객실 수량 :   <span th:text="${roomPrice}"></span> * 2개 = 318,000원</div>		
+                <div class="reserRoomSu">예약 객실 수량 :   <span th:text="${param.roomPirce} + ' *'"></span> <span id="su"></span> <span>= 318,000원</span> </div>		
                 <div class="totalPay">총 결제 금액 :  318,000 원</div>		
             </div>
             <div class="title1">
@@ -185,9 +186,7 @@
             </div>
             <div class="marginPay">
                 <input type="radio" id="card" name="payment" value="card" checked>
-                <label class="payBox" for="card">신용카드</label>
-<!--                 <input type="radio" id="kakaoPay"name="payment" value="kakaoPay" >
-                <label class="payBox" for="kakaoPay">카카오페이</label>  -->      
+                <label class="payBox" for="card">신용카드</label>      
             </div>
             <button class="goPay" id="" type="button" onclick="formChk()">결제하기</button>
             </form>
@@ -270,6 +269,18 @@
             $(num).parents('.inp_qty').find("input").val(value);
         }
     }
+    
+    
+     $("#roomQua").change(function(){
+    	 let roomQua = $('#roomQua').val();
+    	 $('#su').text(roomQua);
+     });$
+     
+    
+    
+
+    
+    
          
 </script> 
 
@@ -313,6 +324,7 @@
 	    	 alert("이용약관에 동의하셔야 합니다");
 	         return false;
 	     }
+	     	
 	     
 		     requestPay();
 	    /*  if($('#card').is(':checked') == true ) {
@@ -342,6 +354,8 @@
 	IMP.init("imp21661729"); // 예: imp00000000
 	
 	function requestPay() {
+		let roomNo = $('#roomNo').val();
+		
 	      // IMP.request_pay(param, callback) 결제창 호출
 			IMP.request_pay({
 			    pg : 'html5_inicis',
@@ -360,13 +374,13 @@
 			    			"reserName" : $('#reserName').val(),
 			    			"phone" : $("#phone").val(),
 			    			"request" : $("#request").val(),
-			    			"checkIn" : "2022년1월22일", //임시
-			    			"checkOut" : "2022년1월25일", //임시
+			    			"checkIn" : $("#dateIn").text(), 
+			    			"checkOut" : $("#dateOut").text(), 
 			    			"accountNum" : $("#accountNum").val(),
 			    			"accountHol" : $("#accountHol").val(),
 			    			"bank" : $("#bank").val(),
 			    			"roomQua" : $("#roomQua").val(),
-			    			"roomNo" : 1, // 임시  //"roomNo" : $("roomNo").val()
+			    			"roomNo" : roomNo,   
 			    			// 결제 insert : 
 			    			// 결제번호(NEXTVAL) 또는  rsp.imp_uid; - 아임포트 고유 결제번호
 			    			"payAmount" : rsp.paid_amount,    //- 결제 금액

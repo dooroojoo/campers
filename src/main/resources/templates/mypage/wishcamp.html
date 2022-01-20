@@ -31,16 +31,22 @@
                 <h1 class="wishcamp_h1">찜한 캠핑장</h1>
             </header>
         </div>
-        	<div th:each="camp : ${ campList }" class="wishcam_content_controller">                       
-            <div class="wishcamp_content_1">
+        	<div class="wishcam_content_controller">                       
+            <div class="wishcamp_content_1" th:each="wishCamp : ${ wishCampList }">
+            	            	
             	<div class="wcc_p">
-            		<img class="camping" th:src="${ camp.fileNo }">
-            		<p class="wishcamp_content_p" th:text="${ camp.campName }">
-            		<p class="wishcamp_content_address" th:text="${ camp.campAddress }">
-            		<p class="phone" th:text="${ camp.campPhone }">
+            		<img class="camping" th:src="${ wishCamp.fileRoute }+${ wishCamp.fileName }" 
+            		th:onclick="|location.href='@{/camp/detail(campNo=${wishCamp.campNo})}&dateIn=2022-02-19&dateOut=2022-02-20&guest=2'|"
+            		style="width:200px; height:150px;">
+            		<p class="wishcamp_content_p" th:text="${ wishCamp.campName }">
+            		<p class="wishcamp_content_address" th:text="${ wishCamp.campAddress }">
+            		<p class="phone" th:text="${ wishCamp.campPhone }">
             		<hr class="line">
             		<input class="checkbox" type="checkbox" name="wishBtn">
             	</div>
+            	
+            	<hr class="line2"> 
+            	 
             </div>
         </div>
         <div class="button_content">

@@ -165,7 +165,7 @@
                     </ul>
 				
                     <!-- 선택한 날짜에 예약가능할 시에 -->
-                    <div class="list-col-state" th:if="${find.rCount > 0}">
+                    <div class="list-col-state" th:if="${find.rAmount > 0}">
                       <p class="list-bookable" >예약가능</p>
                     </div>
 
@@ -216,6 +216,9 @@
                     <li th:if="${pi.page < pi.maxPage}">
                         <a class="next-paging" style="cursor:pointer">&gt;</a>
                     </li>
+                    <li th:unless="${ pi.page < pi.maxPage }">
+                        	<a href="#">&gt;</a>
+                        </li>
 
                     <!-- 맨 끝으로 이동하는 버튼(>>) -->
                    <li>

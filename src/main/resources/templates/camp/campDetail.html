@@ -125,12 +125,15 @@
                             </div>
                         </div>
                         
-						<div class="rv-middle">
+						<div class="rv-middle" id="inputs">
 							<input type="hidden" id="campName" name="campName" th:value="${camp.campName}">
-							<input type="hidden" id="roomPrice" name="roomPrice">
+							<!-- <input type="hidden" id="roomPrice" name="roomPrice"> -->
  							<input type="hidden" id="campNo" name="campNo" th:value="${camp.campNo}">
 							<input type="hidden" id="dateIn" name="dateIn" th:value="${param.dateIn}">
 							<input type="hidden" id="dateOut" name="dateOut" th:value="${param.dateOut}"> 
+							<input type="hidden" id="roomName" name="roomName" >
+							<input type="hidden" id="roomPirce" name="roomPirce" >
+							<input type="hidden" id="roomNo" name="roomNo">
 	                        <script>
 	                       	$(function() {
 	                       		
@@ -190,10 +193,11 @@
                             </div>
                             
                             <div class="rv_select">
-                                <select id="roomName" name="roomName">
+                                <select id="roomSelect" name="roomSelect">
                                     <option selected>객실을 선택해주세요</option>
-                                    <option th:each="room : ${roomList}" th:text="${room.roomName}"
-                                    th:if="${room.roomAmount} >= ${room.rCount} AND ${#numbers.formatInteger(param.guest, 1)} <= ${room.roomMember}"></option>
+                                    <option th:each="room : ${roomList}" th:text="${room.roomName}" th:value="|${room.roomName}-${room.roomPrice}-${room.roomNo}|"
+                                    th:if="${room.roomAmount} >= ${room.rCount} AND ${#numbers.formatInteger(param.guest, 1)} <= ${room.roomMember}">
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -211,10 +215,26 @@
                         <th:block sec:authorize="isAuthenticated()">
 	                        <div class="rvBtn">
 		                        <span><i class="far fa-calendar-alt"></i></span>
-		                        <button type="submit"><span>예약하기</span></button>
+		                        <button type="button" onclick="reservePay()"><span>예약하기</span></button>
 		                    </div>
 					    </th:block>
                 </form>
+                <script>
+                	function reservePay(){
+                		let roomInfo = $('select[name=roomSelect]').val();
+                		let roomSplit = roomInfo.split('-');
+                		
+                		let roomName = roomSplit[0];
+                		let roomPrice = roomSplit[1];
+                		let roomNo = roomSplit[2];
+                		
+                		$('input[name=roomName]').val(roomName);
+                		$('input[name=roomPirce]').val(roomPrice);
+                		$('input[name=roomNo]').val(roomNo);
+                		
+                		document.forms.reserForm.submit();
+                	}
+                </script>
             </div>
         </div>
 
@@ -481,8 +501,6 @@
 		                    	$(".room_exp p").text(data.roomMember + "(인)");
 		                    	
 		                    	let roomPrice = data.roomPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-		                    	
-		                    	$("input[name=roomPrice]").value(roomPrice);
 		                    	
 		                    	$(".room_price h2").html(roomPrice);
 		                    	

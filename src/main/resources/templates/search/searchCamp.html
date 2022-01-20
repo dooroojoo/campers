@@ -160,17 +160,6 @@
                       <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span>인</li>
                       <li class="list-col-price"><span th:text="${search.minPrice}+'~'+${search.maxPrice}"></span>원</li>
                     </ul>
-
-                     <!-- 객실 등록해서 예약가능할 시에 -->
-                    <div class="list-col-state" th:if="${search.rCount > 0}">
-                      <p class="list-bookable" >예약가능</p>
-                    </div>
-
-                     <!-- 객실 등록되어 있지 않아 예약불가 시에 -->
-                     <div class="list-col-state" th:if="${search.rCount == 0}">
-                      <p class="list-booked">예약불가</p>
-                    </div>
-
                   </div>
                 </div>
                 </div>
@@ -209,6 +198,9 @@
                     <li th:if="${pi.page < pi.maxPage}">
                         <a th:href="@{/search/camp(page=${pi.page + 1})}">&gt;</a>
                     </li>
+                      <li th:unless="${ pi.page < pi.maxPage }">
+                        	<a href="#">&gt;</a>
+                        </li>
 
                     <!-- 맨 끝으로 이동하는 버튼(>>) -->
                    <li>

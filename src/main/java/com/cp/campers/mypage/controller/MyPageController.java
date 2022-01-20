@@ -36,6 +36,9 @@ import com.cp.campers.admin.model.vo.CampRecord;
 import com.cp.campers.board.model.service.BoardService;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
+import com.cp.campers.camp.model.service.CampService;
+import com.cp.campers.main.model.service.MainService;
+import com.cp.campers.main.model.vo.Recommend;
 import com.cp.campers.member.model.vo.Member;
 import com.cp.campers.member.model.vo.UserImpl;
 import com.cp.campers.mypage.model.service.MypageService;
@@ -53,14 +56,18 @@ public class MyPageController {
 	private MypageService mypageService;
 	private BoardService boardService;
 	private AdminService adminService;
+	private CampService campService;
+	private MainService mainService;
 
 	@Autowired
 	public MyPageController(MessageSource messageSource, MypageService mypageService, BoardService boardService,
-			AdminService adminService) {
+			AdminService adminService, CampService campService, MainService mainService) {
 		this.messageSource = messageSource;
 		this.mypageService = mypageService;
 		this.boardService = boardService;
 		this.adminService = adminService;
+		this.campService = campService;
+		this.mainService = mainService;
 	}
 
 	/* 회원 목록 */
@@ -75,13 +82,18 @@ public class MyPageController {
 		int userNo = user.getUserNo();
 
 		int page = 1;
-
+		/* 내 게시물 검색 */
 		Map<String, Object> map = mypageService.selectMyBoardList(writer, page);
-
-		// 보류
+		/* 내 정보 검색 */
 		Map<String, Object> map2 = mypageService.selectMyMemberList(userNo, page);
-		//log.info("map2 : " + map2.toString());
-
+		/* 찜한 캠핑장 검색*/
+		Map<String, Object> map3 = mypageService.selectMyWishCampList(userNo, page);
+		/* 사업자용 내숙소 관리 */
+		Map<String, Object> map4 = mypageService.selectMyCampList(userNo, page);
+		
+		// 슬라이더 캠핑장 추천 리스트
+		List<Recommend> mainSlider = mainService.mainSlider();
+		
 		Date today = new Date();
 
 		//log.info("date : " + today);
@@ -90,11 +102,14 @@ public class MyPageController {
 		mv.addObject("pi", map.get("pi"));
 		mv.addObject("memberList", map2.get("memberList"));
 		mv.addObject("campList", map.get("campList"));
-
+		mv.addObject("mainSlider", mainSlider);
 		model.addAttribute("boardList", map.get("boardList"));
 		model.addAttribute("memberList", map2.get("memberList"));
+		model.addAttribute("wishCampList", map3.get("wishCampList"));
+		model.addAttribute("mypageCampManagementList", map4.get("mypageCampManagementList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("standardDate", new Date());
+		
 		//model.addAttribute("thumbnailList", map.get("thumbnailList"));
 		mv.setViewName("mypage/mypage");
 
@@ -366,52 +381,10 @@ public class MyPageController {
 			@Value("${custom.path.upload-images}") String uploadFilesPath, Model model,
 			@RequestParam MultipartFile[] roomMultiFiles, HttpServletRequest request, RedirectAttributes rttr,
 			Locale locale, int campNo) {
-
-		/* 
-		 * @RequestParam(value="roomList[]") List<Room> roomList
-		 * @RequestParam(value="CampBusinessTypeList") List<String> value
-		 * 
-		 * There is no getter for property named 'CampBusinessType' in 'class
-		 * com.cp.campers.mypage.model.vo.Camp' 검색 결과 vo와 Mapper.xml 에서 parameterType타입
-		 
-		 * ? or property이름 불일치 해서 생기는 오류 인듯하다. CampBusinessType 를 처음에 getter 오류가 발생해서
-		 * getter이 없어서 생기는 오류 인가 생각해서 List<Integer> businessType 에서
-		 * List<CampBusinessType> campBusinessTypeList 변경 하였으나 같은 getter 오류가 발생. 반복문으로
-		 * CampBusinessType 에 btype를 분리해서 db에 저장해서 for(String btype : btypeList ) {
-		 * mypageMapper.insertCampBusinessType(btype); } 처리를 해줬는대 어떻게 수정해야 할지를 모르겠다...
-		 *
-		 * 추가
-		 * mypageMapper.xml 에서 com.cp.campers.mypage.model.vo.Camp에 CampBusinessType가
-		 * <collection property="CampBusinessType" resultMap="CampBusinessTypeResultMap"/>
-		 * 여서 문제인걸까 ? column이 아니 라서 ?
-		 * Pacage Explorer 에서 Camp에 vo 를 확인결과 CampBusinessType 가아니라
-		 * CampBusinessTypeList로 확인됨 이걸 
-		 */
-
-		/* room에 Camp에 campNo를 가져와서 room을 insert 해야될거 같다...?
-		 *  XXXX 이건 아닌듯 > 캠프에 유저정보 가져오기 camp.setUserNo(userNo);
-		 * 
-		 * room 에다가 campNo를 받아와서 room을 insert 해야됨. 사업자에 캠핑장을 여러개 등록할수 있으므로 등록할 캠핑장을 선택
-		 * 해야됨. (userNo 에 campList를 가져와서 select로 전체 조회목록 만들기) 목록에 campNo를 name값으로 줘서
-		 * room에 insert ? select ???
-		 * 
-		 * 로그인한 회원정보 user.getUserNo 로 캠프에 입력 캠프는 userNo 만 가지고 있음. 나머지 정보는 어떻게 가져올까 ?
-		 * 
-		 * 1. 사업자 회원 로그인 user.getUserNo
-		 * 2. 사업자 회원 캠프장 찾기 room.setCampNo(camp.getCampNo)    XXX camp.getUserNo(user.setUserNo)
-		 * 3. 캠프장에 숙소 추가하기 room.getCampNo(camp.setCampNo)
-		 * 
-		 */
-		// room.setCampNo(camp.setCampNo());
-		
-		/* insertRoom에 campNo를 room에 넣어줌 */
 				
+		/* insertRoom에 campNo를 room에 넣어줌 */			
 		camp.setUserNo(user.getUserNo());
-		//room.setCampNo(campNo);
-		// camp.setCampNo(campNo);
-		// room.setCampNo(camp.getCampNo());
-		// room.setCampNo(camp.getCampNo(camp.setUserNo(user.getUserNo())));
-		
+				
 		log.info("------------------------------------------------------------------");
 		
 		log.info("숙소 등록에 room : " + room.toString());
@@ -421,16 +394,6 @@ public class MyPageController {
 		 * model.addAttribute("value", values); log.info(values.toString());
 		 * log.info(value.toString()); }
 		 */
-
-		// room.setUserNo(camp.getCampNo());
-		log.info("user : " + user.toString());
-		log.info("camp : " + camp.toString());
-		log.info("room : " + room.toString());
-
-		// camp.setUserNo(user.getUserNo());
-
-		// log.info("user : " + user.toString());
-		// log.info("camp : " + camp.toString());
 
 		/* 객실 사진을 저장할 경로 */
 		String roomFilePath = uploadFilesPath + "/roomImg";
@@ -472,7 +435,7 @@ public class MyPageController {
 		try {
 			for (int i = 0; i < roomMultiFileList.size(); i++) {
 				Map<String, String> file3 = files3.get(i);
-				roomMultiFileList.get(i).transferTo(new File(file3.get("roomFilePath") + "/" + file3.get("savedName")));
+				roomMultiFileList.get(i).transferTo(new File(file3.get("roomFilePath") + "/" + file3.get("savedName3")));
 
 				atta2 = new Attachment();
 				atta2.setFileName(file3.get("savedName3"));
@@ -496,12 +459,13 @@ public class MyPageController {
 			/* 실패 시 저장 된 파일 삭제 */
 			for (int i = 0; i < roomMultiFileList.size(); i++) {
 				Map<String, String> file3 = files3.get(i);
-				new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
+				new File(file3.get(roomFilePath) + "\\" + file3.get("savedName3")).delete();
 			}
 		}
 
 		// log.info("atta2 : " + atta2.toString());
-		// log.info("room : " + room.toString());
+		log.info("-----------------------------------------------------------------------------------------------");
+		log.info("서버 올리기전 room : " + room.toString());
 
 		/* 숙소 등록 */
 		//camp.setRoom(room)//
@@ -516,17 +480,10 @@ public class MyPageController {
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertCamp", null, locale));
 		return "redirect:/mypage/mypageCampManagement";
 	}
-
-	
-	
-	
-	
-	
 	
 	/* 캠핑장 등록 입력폼 */
 	/* @AuthenticationPrincipal UserImpl user 유저 정보 가져오기 */
 	@PostMapping("/mypageCampEnrollment")
-
 	public String mypageCampEnrollment(Camp camp, @AuthenticationPrincipal UserImpl user, @Value("${custom.path.upload-images}") String uploadFilesPath,
 			Model model, @RequestParam MultipartFile singleFile, @RequestParam MultipartFile[] campMultiFiles,
 			@RequestParam List<MultipartFile> roomMultiFiles, HttpServletRequest request, CampRecord campRecord,
@@ -679,7 +636,6 @@ public class MyPageController {
 
 		List<Map<String, String>> files3 = new ArrayList<>();
 
-
 		for (int i = 0; i < roomMultiFiles.size(); i++) {
 			
 			Map<String, String> file3 = new HashMap<>();
@@ -749,7 +705,6 @@ public class MyPageController {
 	      
 	   }
 
-
 	/* 캠핑장 해지 */
 	@GetMapping("/mypageCampManagementOut")
 	public String mypageCampManagementOut() {
@@ -771,6 +726,7 @@ public class MyPageController {
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("campImageList", map.get("campImageList"));
+		model.addAttribute("mypageCampManagementList", map.get("mypageCampManagementList"));
 
 		log.info("map : " + map.toString());
 		log.info("model : " + model.toString());
@@ -868,7 +824,16 @@ public class MyPageController {
 
 	/* 찜한 페이지 */
 	@GetMapping("/wishcamp")
-	public String wishCamp() {
+	public String wishCamp(Camp camp, Model model, @AuthenticationPrincipal UserImpl user) {
+		
+		int userNo = user.getUserNo();
+		int page = 1;
+		
+		Map<String, Object> map = mypageService.selectwishCampList(userNo, page);
+		
+		model.addAttribute("wishCampList", map.get("wishCampList"));
+		model.addAttribute("pi", map.get("pi"));
+		
 		return "mypage/wishCamp";
 	}
 

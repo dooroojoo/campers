@@ -13,6 +13,7 @@ import com.cp.campers.mypage.model.vo.BusinessReservation;
 import com.cp.campers.mypage.model.vo.BusinessType;
 import com.cp.campers.mypage.model.vo.Camp;
 import com.cp.campers.mypage.model.vo.ImageFile;
+import com.cp.campers.mypage.model.vo.MypageCampManagement;
 import com.cp.campers.mypage.model.vo.Room;
 import com.cp.campers.mypage.model.vo.RoomFile;
 import com.cp.campers.mypage.model.vo.WishCamp;
@@ -21,8 +22,6 @@ import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 @Mapper
 public interface MypageMapper {
 	
-
-
 	// 회원 목록
 	List<Member> findAllMember();
 	
@@ -153,6 +152,17 @@ public interface MypageMapper {
 
 	String selectPwd(Member member);
 
+	List<WishCamp> selectWishCampList(int userNo);
+
+	Camp campDetail(int campNo);
+	
+	List<MypageCampManagement> selectmypageCampManagementList(Map<String, Object> param);
+
+	void insertImageNo3(int roomNo);
+
+	int getListCountMyWishCamp(int userNo);
+
+	List<WishCamp> selectMyWishCampList(Map<String, Object> param);
 	
 	// public Map<String, Object> findAllMember();
 }
