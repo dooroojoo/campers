@@ -326,6 +326,7 @@ public class MypageServiceImpl implements MypageService{
 		
 		log.info("campList : " + campList.toString());
 		log.info("campImageList : " + campImageList.toString());
+		log.info("mypageCampManagementList : "+mypageCampManagementList.toString());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pi", pi);

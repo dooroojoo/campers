@@ -21,8 +21,13 @@ body{
     align-items: center;
     font-family: 'Noto Sans KR', sans-serif;
     margin-bottom: 5%;
+    
 
   }
+  
+.content{
+	float: left;
+}  
 
 /* 메뉴바 아이콘 */
 .sidebar-menu{
