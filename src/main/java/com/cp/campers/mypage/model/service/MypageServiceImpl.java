@@ -480,6 +480,30 @@ public class MypageServiceImpl implements MypageService{
 		return map;
 	}
 
+	@Override
+	public String campLikeUp(Map<String, Object> param) {
+		mypageMapper.campLikeUp(param);
+		return mypageMapper.selectLikeCount(param.get("campNo"));
+	}
+	
+	@Override
+	public String selectLikeCount(int campNo) {
+		
+		return mypageMapper.selectLikeCount(campNo);
+	}
+
+	@Override
+	public String campLikeDown(Map<String, Object> param) {
+		mypageMapper.campLikeDown(param);
+		return mypageMapper.selectLikeCount(param.get("campNo"));
+	}
+
+	@Override
+	public String selectLikedCampNo(Map<String, Object> campNoAndUserNo) {
+				
+		return mypageMapper.selectLikedCampNo(campNoAndUserNo);
+	}
+
 	
 
 	

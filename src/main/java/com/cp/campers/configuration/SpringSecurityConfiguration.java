@@ -52,6 +52,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.antMatchers("/admin/report").permitAll()	// /admin/report 경로만 허용
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().permitAll()
+				
 			.and()
 				.formLogin() //로그인 설정
 				.loginPage("/member/login") // 로그인페이지

@@ -163,6 +163,14 @@ public interface MypageMapper {
 	int getListCountMyWishCamp(int userNo);
 
 	List<WishCamp> selectMyWishCampList(Map<String, Object> param);
+
+	void campLikeUp(Map<String, Object> param);
+
+	String selectLikeCount(Object object);
+
+	void campLikeDown(Map<String, Object> param);
+
+	String selectLikedCampNo(Map<String, Object> campNoAndUserNo);
 	
 	// public Map<String, Object> findAllMember();
 }

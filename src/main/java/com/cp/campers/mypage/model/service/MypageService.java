@@ -88,6 +88,14 @@ public interface MypageService{
 
 	Map<String, Object> selectMyWishCampList(int userNo, int page);
 
+	String campLikeUp(Map<String, Object> param);
+
+	String selectLikeCount(int campNo);
+
+	String campLikeDown(Map<String, Object> param);
+
+	String selectLikedCampNo(Map<String, Object> campNoAndUserNo);
+
 	/*
 	Member pwdCheck(Member member);
 

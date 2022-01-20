@@ -848,6 +848,7 @@
              JOIN CAMP_FILE F ON (F.CAMP_NO = C.CAMP_NO)
              JOIN IMAGEFILE I ON (I.FILE_NO = F.FILE_NO)
             WHERE C.CAMP_STATUS = 'Y'
+              AND I.FILE_LEVEL = 0
               AND W.USER_NO = #{ userNo }
     </select>
     
@@ -876,7 +877,8 @@
                JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
                JOIN CAMP_FILE CF ON (C.CAMP_NO = CF.CAMP_NO)
                JOIN IMAGEFILE I ON (CF.FILE_NO = I.FILE_NO)
-              WHERE C.CAMP_STATUS = 'Y'
+              WHERE C.CAMP_STATUS = 'Y'              
+                AND I.FILE_LEVEL = 0
                 AND C.USER_NO = #{ userNo }
               ORDER BY C.USER_NO DESC) A)    
     </select>
@@ -901,9 +903,31 @@
     </select>
       -->
       <select id="selectPwd" parameterType="com.cp.campers.member.model.vo.Member" resultType="string">
-      select user_pwd from member where user_id = #{id}
-      
+      select user_pwd from member where user_id = #{id}      
       </select>
+      
+      <insert id="campLikeUp" parameterType="hashmap">
+		insert into WISH_Camp values(#{userNo}, #{campNo})
+	  </insert>
+	  
+	  <select id="selectLikeCount" resultType="String">
+		select count(*)
+		from WISH_CAMP
+		where CAMP_NO = #{campNo}
+	   </select>
+
+	<delete id="campLikeDown"  parameterType="hashmap">
+		delete from WISH_CAMP
+		where CAMP_NO = #{campNo}
+		and USER_NO = #{userNo}
+	</delete>
+
+	<select id="selectLikedCampNo" resultType="String">
+		select camp_no
+		from wish_camp
+		where user_no = #{userNo}
+		and camp_no = #{campNo}
+	</select>
 
 
 </mapper>
