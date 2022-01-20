@@ -74,10 +74,12 @@ public class MemberController {
 				 model.addAttribute("failureMessage","비밀번호 입력 오류 4회. 5번 연속 틀릴 시 계정이 비활성화 됩니다.");
 			 }else if(exception.equals("exceptionNo2Count5")) {
 				 model.addAttribute("failureMessage","비밀번호 입력 오류 5회. 계정이 비활성화 됩니다.");
+			 }else if(exception.equals("exceptionNo2")) {
+				 model.addAttribute("failureMessage","비밀번호 입력 실패로 비활성화된 계정입니다. 비밀번호 찾기를 이용하여 재활성화 할 수 있습니다.");
 			 }else if(exception.equals("exceptionNo3")) {
 				 model.addAttribute("failureMessage","관리자 권한에 의해 정지된 계정입니다.");
 			 }else if(exception.equals("exceptionNo3And2")) {
-				 model.addAttribute("failureMessage","탈퇴한 게정입니다.");
+				 model.addAttribute("failureMessage","탈퇴한 계정입니다.");
 			 }else if(exception.equals("exceptionNo4")) {
 				 model.addAttribute("failureMessage","잠긴 계정입니다. 비밀번호 찾기 후 다시 시도해주세요.");
 			 }

@@ -47,7 +47,7 @@ public class AuthSuccessureHandler implements AuthenticationSuccessHandler {
 		}else if(principal.getStatus().equals("X")) {
 			throw new DisabledException("exceptionNo3And2");
 		}else if(principal.getStatus().equals("L")) {
-			throw new LockedException("");
+			throw new LockedException("exceptionNo4");
 		}
 		
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
