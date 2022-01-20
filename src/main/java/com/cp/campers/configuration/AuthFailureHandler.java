@@ -45,6 +45,9 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
 		} else if (exception instanceof BadCredentialsException) {
 			int count = loginFailCount(userId);
 			msg = "exceptionNo2Count"+count;
+			if(count>5) {
+				msg = "exceptionNo2";
+			}
 		} else if (exception instanceof DisabledException) {
 			msg = exception.getMessage();
 		} else if (exception instanceof LockedException) {
