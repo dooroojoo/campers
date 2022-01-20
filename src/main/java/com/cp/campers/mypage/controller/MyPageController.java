@@ -88,6 +88,9 @@ public class MyPageController {
 		Map<String, Object> map2 = mypageService.selectMyMemberList(userNo, page);
 		/* 찜한 캠핑장 검색*/
 		Map<String, Object> map3 = mypageService.selectMyWishCampList(userNo, page);
+		/* 사업자용 내숙소 관리 */
+		Map<String, Object> map4 = mypageService.selectMyCampList(userNo, page);
+		
 		// 슬라이더 캠핑장 추천 리스트
 		List<Recommend> mainSlider = mainService.mainSlider();
 		
@@ -100,12 +103,13 @@ public class MyPageController {
 		mv.addObject("memberList", map2.get("memberList"));
 		mv.addObject("campList", map.get("campList"));
 		mv.addObject("mainSlider", mainSlider);
-
 		model.addAttribute("boardList", map.get("boardList"));
 		model.addAttribute("memberList", map2.get("memberList"));
 		model.addAttribute("wishCampList", map3.get("wishCampList"));
+		model.addAttribute("mypageCampManagementList", map4.get("mypageCampManagementList"));
 		model.addAttribute("pi", map.get("pi"));
 		model.addAttribute("standardDate", new Date());
+		
 		//model.addAttribute("thumbnailList", map.get("thumbnailList"));
 		mv.setViewName("mypage/mypage");
 
@@ -431,7 +435,7 @@ public class MyPageController {
 		try {
 			for (int i = 0; i < roomMultiFileList.size(); i++) {
 				Map<String, String> file3 = files3.get(i);
-				roomMultiFileList.get(i).transferTo(new File(file3.get("roomFilePath") + "/" + file3.get("savedName")));
+				roomMultiFileList.get(i).transferTo(new File(file3.get("roomFilePath") + "/" + file3.get("savedName3")));
 
 				atta2 = new Attachment();
 				atta2.setFileName(file3.get("savedName3"));
@@ -455,7 +459,7 @@ public class MyPageController {
 			/* 실패 시 저장 된 파일 삭제 */
 			for (int i = 0; i < roomMultiFileList.size(); i++) {
 				Map<String, String> file3 = files3.get(i);
-				new File(file3.get(roomFilePath) + "\\" + file3.get("savedName")).delete();
+				new File(file3.get(roomFilePath) + "\\" + file3.get("savedName3")).delete();
 			}
 		}
 
@@ -631,7 +635,6 @@ public class MyPageController {
 			mkdir3.mkdirs();
 
 		List<Map<String, String>> files3 = new ArrayList<>();
-
 
 		for (int i = 0; i < roomMultiFiles.size(); i++) {
 			

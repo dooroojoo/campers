@@ -34,7 +34,6 @@
       <result property="campName" column="CAMP_NAME"/>
       <result property="userNo" column="USER_NO"/>
       <result property="campAddress" column="CAMP_ADDRESS"/>
-      <result property="campPhone" column="CAMP_PHONE"/>
       <result property="campIntro" column="CAMP_INTRO"/>
       <result property="campPath" column="CAMP_PATH"/>
       <result property="campPolicy" column="CAMP_POLICY"/>

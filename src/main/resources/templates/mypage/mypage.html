@@ -49,46 +49,101 @@
             <form class="mypageProfileImage" th:action="@{/mypage}" method="post" enctype="multipart/form-data">
             <div class="mypage_content_top">프로필 사진</div>
 	            <div class="image_area" th:each="member : ${memberList}">
-		            <div class="image_area">
-		            	<img class="profileImg" th:src="${member.profilePath}">
-		            </div>
+		            
+		            <!-- 사진이 없으면 -->
+		            <th:block th:if="${member.profilePath} == null">		            
+			            <div class="image_area">
+		            	 	<img class="profileImg" src="/resources/images/member/profileInput.png">
+		            	 </div>
+		            </th:block>
+		            <!-- 사진이 있으면 -->
+		            <th:block th:unless="${member.profilePath} == null">
+		            	 <div class="image_area">
+			            	<img class="profileImg" th:src="${member.profilePath}">
+			            </div>		            	 
+		            </th:block>       
+	        	
 	        	</div>
 		        	<input type="file" class="profileInput" name="singleFile" accept="image/*" hidden>
-		            <p class="mypage_content_p2">플로필 사진을 변경 할 수 있습니다.</p>
+		            <p class="mypage_content_p2">프로필 사진을 변경 할 수 있습니다.</p>
 		    <div>
 		    	<lebel class="mypageProfileImageLebel">사진을 먼저 선택해주세요</lebel>
 		     	<input class="mypageProfileImageButton" type="submit" value="변경하기"/>       	
 		    </div>       
 	        </div>
 	        </form>
-                
-        <div class="mypage_content_2">            
-            <div class="mypage_content_top">찜한 캠핑장</div>
-        	 
-            <div class="main-slide-wrapper">
-                <div class="slide-container" th:each="slide : ${mainSlider}">                
-	                <div class="main-slide" id="slide">            
-	            	
-	            	<div class="slider">
-					    <div th:each="wishCamp : ${ wishCampList }">
-						    <img class="mypage_wishlist" th:src="${wishCamp.fileRoute}+${wishCamp.fileName}" style="cursor:pointer"
-					        th:onclick="|location.href='@{/camp/detail(campNo=${wishCamp.campNo})}&dateIn=2022-02-19&dateOut=2022-02-20&guest=2'|"><br>
-					        <p class="mypage_content_p" th:text="${wishCamp.campName}"></p> <!--   -->
-				        </div>
-				    <!-- <div>I am another slide.</div> -->
-            	</div> 
-        	
-                <input type="hidden" class="slide-cNo" th:value="${slide.cRNo}">
-             </div>
-        </div>
-        </div>
-        	
-        </div>
-        
-        
-        
-        
-        <div class="mypage_content_3">
+
+					<!-- 일반회원 -->
+					<div class="mypage_content_2">
+					<th:block sec:authorize="hasRole('MEMBER')">
+					<div class="mypage_content_top">찜한 캠핑장</div>
+					<div class="main-slide-wrapper">
+						<div class="slide-container" th:each="slide : ${mainSlider}">
+							<div class="main-slide" id="slide">
+								<div class="slider">
+									<div th:each="wishCamp : ${ wishCampList }">
+										<!-- 찜이 있으면 -->
+										<!-- <th:block th:if="${wishCamp.campLike} != null"> -->
+										<img class="mypage_wishlist"
+											th:src="${wishCamp.fileRoute}+${wishCamp.fileName}"
+											style="cursor: pointer"
+											th:onclick="|location.href='@{/camp/detail(campNo=${wishCamp.campNo})}&dateIn=2022-02-19&dateOut=2022-02-20&guest=2'|"><br>
+										<p class="mypage_content_p" th:text="${wishCamp.campName}"></p>
+										<!--   -->
+									</div>
+									<!-- </th:block> -->
+									<!-- <div>I am another slide.</div> -->
+									<!-- 찜이 없으면 -->
+									<!-- 
+									<th:block th:unless="${wishCamp.campLike} != null">    
+							            <img class="mypage_wishlist" th:src="/resources/images/member/profileInput.png" style="cursor:pointer"><br>
+									        <p class="mypage_content_p">찜한 목록이 없습니다.</p>
+								        </div>	            
+						            </th:block>
+						             -->
+								</div>
+								<input type="hidden" class="slide-cNo" th:value="${slide.cRNo}">
+							</div>
+						</div>
+					</div>
+					<th:block>
+					<!-- </div> -->
+					
+					<!-- 사업자 회원 -->					
+					<th:block sec:authorize="hasRole('COMPANY')">
+					<div class="mypage_content_top">내 숙소 리스트</div>
+					<div class="main-slide-wrapper">
+						<div class="slide-container" th:each="slide : ${mainSlider}">
+							<div class="main-slide" id="slide">
+								<div class="slider">
+									<div th:each="mypageCampManagement : ${ mypageCampManagementList }">
+										<!-- 찜이 있으면 -->
+										<!-- <th:block th:if="${wishCamp.campLike} != null"> -->
+										<img class="mypage_wishlist"
+											th:src="${ mypageCampManagement.fileRoute }+${ mypageCampManagement.fileName }"
+											style="cursor: pointer"><br>
+										<p class="mypage_content_p"></p>
+										<!--  th:text="${mypageCampManagement.campName}"  -->
+									</div>
+									<!-- </th:block> -->
+									<!-- <div>I am another slide.</div> -->
+									<!-- 찜이 없으면 -->
+									<!-- 
+									<th:block th:unless="${wishCamp.campLike} != null">    
+							            <img class="mypage_wishlist" th:src="/resources/images/member/profileInput.png" style="cursor:pointer"><br>
+									        <p class="mypage_content_p">찜한 목록이 없습니다.</p>
+								        </div>	            
+						            </th:block>
+						             -->
+								</div>
+								<input type="hidden" class="slide-cNo" th:value="${slide.cRNo}">
+							</div>
+						</div>
+					</div>
+					<th:block>
+					</div>
+					
+				<div class="mypage_content_3">
             <div class="mypage_content_top">회원님 정보</div>
             <ul class="mypage_content_3_ul">
                 <li class="mypage_content_3_li" th:each="member : ${ memberList }">                
