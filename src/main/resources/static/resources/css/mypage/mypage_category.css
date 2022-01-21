@@ -24,11 +24,7 @@ body{
     
 
   }
-  
-.content{
-	float: left;
-}  
-
+ 
 /* 메뉴바 아이콘 */
 .sidebar-menu{
   width: 30px;

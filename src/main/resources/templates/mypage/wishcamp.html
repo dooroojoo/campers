@@ -78,6 +78,8 @@
         	$(document).on("click",".selectDelete_btn",function(){
 						
         			let confirm_val = confirm("찜한 목록을 삭제 하시겠습니까 ?");
+        		  	let campNo = $(".hiddenCampNo").val();
+    	            	console.log(campNo);
         			
         			if(confirm_val){
         				let checkArr = new Array();
@@ -92,7 +94,6 @@
 							dataType : "json",
 							contentType : "application/json; charset=utf-8",
 							type : "get",
-							data : { wishBtn : checkArr },
 							success : function(data){
 							 		
 									console.log("wishBtn"+data);

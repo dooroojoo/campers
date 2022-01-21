@@ -185,6 +185,7 @@
       <result property="userName" column="USER_NAME"/>
       <result property="userNo" column="USER_NO"/>
       <result property="userPhone" column="USER_PHONE"/>
+      <result property="reserState" column="RESER_STATE"/>
       <result property="request" column="REQUEST"/>
       <result property="checkIn" column="CHECKIN"/>
       <result property="checkOut" column="CHECKOUT"/>
@@ -819,6 +820,7 @@
            , M.USER_NAME
            , M.USER_NO
            , M.USER_PHONE
+           , B.RESER_STATE
            , B.REQUEST
            , B.CHECKIN
            , B.CHECKOUT
