@@ -82,16 +82,20 @@
                 </span>
             </div>
             <div class="title1">
-                <span>예약자 정보</span>
+                <span>예약자 정보</span>   <!--  <span th:text="${userName}" id="reserName"></span> -->
             </div>
             <div class="reserPay_inner">
                 <div class="reserName">예약자명<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="홍길동"  name="reserName" id="reserName" />
+                    <span>
+	                    <input type="text" th:value="${userName}" name="reserName" id="reserName" readonly/>
+                    </span>
                 </div>
                 <div class="phone">휴대폰 번호<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="010-1234-5678"  name="phone" id="phone" />
+                	<span>
+	                    <input type="text" placeholder="010-1234-5678"  name="phone" id="phone"/>
+                	</span>
                 </div>
                 <div class="request">예약 요청사항(선택)</div>
                 <div class="textbox">
@@ -104,15 +108,21 @@
             <div class="reserPay_inner">
                 <div class="account_hol">예금주<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="홍길동"  name="accountHol" id="accountHol" />
+                	<span>
+	                    <input type="text" placeholder="홍길동"  name="accountHol" id="accountHol" />
+                	</span>
                 </div>
                 <div class="accountNum">계좌번호<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="환불 받으실 계좌번호를 입력해주세요."  name="accountNum" id="accountNum" />
+                	<span>
+	                    <input type="text" placeholder="환불 받으실 계좌번호를 입력해주세요."  name="accountNum" id="accountNum" />
+                	</span>
                 </div>
                 <div class="bank">은행<span class="red">(*)</span></div>
                 <div class="inp_text">
-                    <input type="text" placeholder="환불 받으실 계좌번호의 은행을 입력해주세요"  name="bank" id="bank" />
+                	<span>
+	                    <input type="text" placeholder="환불 받으실 계좌번호의 은행을 입력해주세요"  name="bank" id="bank" />
+                	</span>
                 </div>
             </div>
             <div class="title1">
@@ -200,17 +210,14 @@
 		<div th:include="common/footer.html"></div>
 
 <script>
-
-	/* const dateIn = document.querySelector("#dateIn");
-	console.log(dateIn);
+$(document).ready(function(){
+	function rineCss(input){
+		let span = $(input).closest(span);
+		alert(span);
+	}
 	
-	var today = new Date();
-	var dday = new Date(2020,10,30);
-	var gap = dday.getTime() - today.getTime();
-	var result = Math.ceil(gap / (1000 * 60 * 60 * 24));
+});
 	
-	console.log(result); */
-
 </script>		
 		
 	
