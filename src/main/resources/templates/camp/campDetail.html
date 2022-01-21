@@ -168,13 +168,13 @@
 	                       	                    },
 	                       	                 "drops": "down",
 	                       	                  maxDate: 0,
-	                       	                  minDate: 0,
-	                       	                  startDate: toDay.setDate(toDay.getDate()+1),
-	                       	                  endDate: toDay
+	                       	                  minDate: new Date(),
+		                       	              startDate: toDay.setDate(toDay.getDate()+1),
+		                                      endDate: toDay
 	                       	  		});
 	                       	    
 		                       	 $('input[name="daterange"]').datepicker();   
-		                         $('input[name="daterange"]').daterangepicker({startDate : new Date(dateIn), endDate : new Date(dateOut), 
+		                         $('input[name="daterange"]').daterangepicker({
 		                        	 locale:  {
 		                        		  "format": 'YYYY-MM-DD',
 		                        	      "separator": " ~ ",
@@ -185,7 +185,9 @@
                    	                    },
                    	                 "drops": "down",
                   	                  maxDate: 0,
-                  	                  minDate: 0});
+                  	                  minDate: new Date(),
+                  	                  startDate : new Date(dateIn),
+                  	                  endDate : new Date(dateOut)});
 	                       	  });
 	                       	</script>
 							<label class="search-date search-container">
