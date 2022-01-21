@@ -1,14 +1,13 @@
 @charset "UTF-8";
 
-html{
+html, body{
     width: 100%;
     font-size: 100%;
+	margin : 0px;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 
-body{
-  margin : 0px;
-}
 
 /* 헤더 */
 .header {
@@ -19,12 +18,9 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Noto Sans KR', sans-serif;
     margin-bottom: 5%;
-    
-
   }
- 
+
 /* 메뉴바 아이콘 */
 .sidebar-menu{
   width: 30px;
