@@ -20,7 +20,8 @@ public class Report {
 	private String susNickName;
 	private String reportStatus;
 	private int bid;
-	private String deleteStatus;
+	private String boardStatus;
+	private String replyStatus;
 	
 //	REPORT_NO	NUMBER
 //	REPORT_REASON	VARCHAR2(100 BYTE)

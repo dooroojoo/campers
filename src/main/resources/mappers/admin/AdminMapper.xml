@@ -132,8 +132,9 @@
 		<result property="reportStatus" column="REPORT_STATUS"/>
 		<result property="bid" column="BID1"/>
 		<result property="bid" column="BID2"/>
-		<result property="deleteStatus" column="STATUS1"/>
-		<result property="deleteStatus" column="STATUS2"/>
+		<result property="boardStatus" column="STATUS1"/>
+		<result property="boardStatus" column="STATUS2"/>
+		<result property="replyStatus" column="REPLY_STATUS"/>
 	</resultMap>
 
 	<insert id="insertReport" parameterType="com.cp.campers.admin.model.vo.Report">
@@ -184,6 +185,7 @@
                             , RP.BID BID2
                             , B1.STATUS STATUS1
                             , B2.STATUS STATUS2
+                            , RP.STATUS REPLY_STATUS
 						FROM REPORT R
 						JOIN MEMBER M1 ON(M1.USER_NO = VICTIM)
 						JOIN MEMBER M2 ON(M2.USER_NO = SUSPECT)

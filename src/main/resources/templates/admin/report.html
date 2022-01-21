@@ -55,10 +55,10 @@
                         <li class="reporter_nickname">
                         	<div th:text="${report.susNickName}"></div>
                         </li>
-                        <li class="report_reason" th:if="${report.deleteStatus}=='N'">
-                        	<div th:text="${report.reason}" th:onclick="|location.href='@{/board/detail(bid=${report.bid})}'|"></div>
+                        <li class="report_reason" th:if="${report.boardStatus}=='N'">
+                        	<div th:text="${report.replyStatus}" th:onclick="|location.href='@{/board/detail(bid=${report.bid})}'|"></div>
                         </li>
-                        <li class="delete" th:if="${report.deleteStatus}=='Y'">
+                        <li class="delete" th:if="${report.boardStatus}=='Y'">
                         	<div th:text="${report.reason}"></div>
                         </li>
                         <li class="report_date" th:text="${#dates.format(report.reportDate, 'yy-MM-dd') }" 
@@ -73,7 +73,7 @@
 					<div align="center"><p th:text="${noResult}"></p></div>
                 </div>
 
-
+				
 
                 <!-- 2. 페이징 처리 -->
                 <div class="admin_pages" th:if="${#strings.isEmpty(noResult)}">
