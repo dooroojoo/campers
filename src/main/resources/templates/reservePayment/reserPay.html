@@ -88,13 +88,13 @@
                 <div class="reserName">예약자명<span class="red">(*)</span></div>
                 <div class="inp_text">
                     <span>
-	                    <input type="text" th:value="${userName}" name="reserName" id="reserName" readonly/>
+	                    <input type="text" th:value="${userName}" name="reserName" id="reserName" readonly />
                     </span>
                 </div>
                 <div class="phone">휴대폰 번호<span class="red">(*)</span></div>
                 <div class="inp_text">
                 	<span>
-	                    <input type="text" placeholder="010-1234-5678"  name="phone" id="phone"/>
+	                    <input type="text" placeholder="010-1234-5678"  name="phone" id="phone" />
                 	</span>
                 </div>
                 <div class="request">예약 요청사항(선택)</div>
@@ -192,6 +192,7 @@
                 <div class="addr">예약 날짜 :  2021년 12월 07일 (화)</div>
                 <input type="hidden" id="roomPrice" name="roomPrice" th:value="${param.roomPrice}">
                 <div class="reserRoomSu">예약 객실 수량 :   <span id="date"></span>박 * <span th:text="${param.roomPrice} + '원 *'"></span> <span id="su"></span>(객실수) = <span id="total"></span>원</div>		
+                <input type="hidden" id="totalValue">
                 <div>총 결제 금액 : <b><span class="totalPay"></span>원</b></div>		
             </div>
             <div class="title1">
@@ -210,14 +211,17 @@
 		<div th:include="common/footer.html"></div>
 
 <script>
-$(document).ready(function(){
-	function rineCss(input){
-		let span = $(input).closest(span);
-		alert(span);
-	}
+
+	/* const dateIn = document.querySelector("#dateIn");
+	console.log(dateIn);
 	
-});
+	var today = new Date();
+	var dday = new Date(2020,10,30);
+	var gap = dday.getTime() - today.getTime();
+	var result = Math.ceil(gap / (1000 * 60 * 60 * 24));
 	
+	console.log(result); */
+
 </script>		
 		
 	
@@ -282,6 +286,7 @@ $(document).ready(function(){
 	    	let totalPrice = total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 			$("#total").text(totalPrice);
 			$(".totalPay").text(totalPrice); 
+			$("#totalValue").val(total);
 			$('#su').text(roomQua);
 			$("#date").text(dateResult);
 			
@@ -320,6 +325,7 @@ $(document).ready(function(){
     	
 		$("#total").text(totalPrice);
 		$(".totalPay").text(totalPrice);
+		$("#totalValue").val(total);
 		$("#date").text(dateResult);
     }
     
@@ -353,6 +359,7 @@ $(document).ready(function(){
 		
 		$("#total").text(totalPrice);
 		$(".totalPay").text(totalPrice);
+		$("#totalValue").val(total);
     }
     
    
@@ -428,13 +435,17 @@ $(document).ready(function(){
 	IMP.init("imp21661729"); // 예: imp00000000
 	
 	function requestPay() {
+		let amount = parseInt($('#totalValue').val());
+		alert(amount);
+		
 		 // IMP.request_pay(param, callback) 결제창 호출
 			IMP.request_pay({
 			    pg : 'html5_inicis',
 			    pay_method : 'card', //생략 가능
 			    merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
 			    name : '객실 결제', // 주문명:결제테스트
-			    amount : $('.totalPay').text(), // 가격
+			    amount : parseInt($('#totalValue').val()), // 가격
+			    buyer_email : 'onhwav4432@naver.com',
 			    buyer_name : $("#reserName").val(),  //구매자 이름
 			    buyer_tel : $("#phone").val(), // 구매자 휴대폰 번호 
 			    buyer_postcode : '123-456'
@@ -476,9 +487,8 @@ $(document).ready(function(){
 			    	//결제 시작 페이지로 리디렉션되기 전에 오류가 난 경우
 			        var msg = '오류로 인하여 결제가 시작되지 못하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
-
-			        alert(msg);
 			    } 
+			        alert(msg);
 			});
 	    }
 </script>
