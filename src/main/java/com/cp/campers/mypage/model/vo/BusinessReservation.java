@@ -20,6 +20,7 @@ public class BusinessReservation{
 	private String userName;
 	private int userNo;
 	private String userPhone;
+	private String reserState;
 	private String request;
 	private String checkIn;
 	private String checkOut;

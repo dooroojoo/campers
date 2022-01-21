@@ -89,7 +89,7 @@
 	                  
                     <div class="previewBox">
                         <div class="inputImgPreview preview1"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
-                		<input type="file" class="imageinput image1" name="campMultiFiles"  accept="image/*" hidden>
+                		<input type="file" class="imageinput image1" name="campMultiFiles"  accept="image/*" hidden required>
                         <div class="inputImgPreview preview2"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
 	                    <input type="file" class="imageinput image2" name="campMultiFiles"  accept="image/*" hidden>
                         <div class="inputImgPreview preview3"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
@@ -238,7 +238,7 @@
 	                  
 	                    <div class="previewBox">
 	                        <div class="inputImgPreview preview21"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
-                		<input type="file" class="imageinput image21" name="roomMultiFiles"  accept="image/*" hidden>
+                		<input type="file" class="imageinput image21" name="roomMultiFiles"  accept="image/*" hidden required>
 	                        <div class="inputImgPreview preview22"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
 	                    <input type="file" class="imageinput image22" name="roomMultiFiles"  accept="image/*" hidden>
 	                        <div class="inputImgPreview preview23"><img class="beforeInput" src="/resources/images/board/cameraImg.png"></div>
@@ -359,21 +359,19 @@
 
     </script>
     
-    <!-- <script>
-    	$("#enrollForm input[type=button]").on("click", function(){
-    		let param = {};
-    		param.roomMember = $("#enrollForm [name=roomMember]").val();
-    		param.roomName = $("#enrollForm [name=roomName]").val();
-    		param.roomPrice = $("#enrollForm [name=roomPrice]").val();
-    		param.roomSize = $("#enrollForm [name=roomSize]").val();
-    		param.roomInfo = $("#enrollForm [name=roomInfo]").val();
-    		param.roomMember = $("#enrollForm [name=roomMember]").val();
-    		param.roomFloor = $("#enrollForm [name=roomFloor]").val();
-    		param.roomParking = $("#enrollForm [name=roomParking]").val();
-    		param.roomForm = $("#enrollForm [name=roomForm]").val();
-    		param.roomAmount = $("#enrollForm [name=roomAmount]").val();
-    	});
-    </script> -->
-     
+    <!-- 
+    <script>
+    	
+    $(document).on("keyup","#campName", function(){
+    	let regExp = /^[가-힣a-zA-Z-0-9]$/;
+    	if(regExp.test($("#campName").val())){
+    		$(".nameRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$("")
+    	}
+    })   
+    </script>
+      -->
 </body>
 </html>
