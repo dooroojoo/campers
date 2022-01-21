@@ -434,10 +434,7 @@
 	var IMP = window.IMP; // 생략 가능
 	IMP.init("imp21661729"); // 예: imp00000000
 	
-	function requestPay() {
-		let amount = parseInt($('#totalValue').val());
-		alert(amount);
-		
+	function requestPay() {		
 		 // IMP.request_pay(param, callback) 결제창 호출
 			IMP.request_pay({
 			    pg : 'html5_inicis',
@@ -445,7 +442,6 @@
 			    merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
 			    name : '객실 결제', // 주문명:결제테스트
 			    amount : parseInt($('#totalValue').val()), // 가격
-			    buyer_email : 'onhwav4432@naver.com',
 			    buyer_name : $("#reserName").val(),  //구매자 이름
 			    buyer_tel : $("#phone").val(), // 구매자 휴대폰 번호 
 			    buyer_postcode : '123-456'
@@ -487,8 +483,8 @@
 			    	//결제 시작 페이지로 리디렉션되기 전에 오류가 난 경우
 			        var msg = '오류로 인하여 결제가 시작되지 못하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
-			    } 
 			        alert(msg);
+			    } 
 			});
 	    }
 </script>
