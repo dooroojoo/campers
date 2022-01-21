@@ -105,8 +105,8 @@
 }
 
 .remove{
-    width : 16px;
-    height: 16px;
+    width : 20px;
+    height: 20px;
 }
 
 .checkbox{
@@ -179,6 +179,16 @@
 }
 .member_paging .current_page a{
     color: white;
+}
+
+.selectDelete_btn{
+	background-color: red;
+	height:30px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+	
 }
 
 /* 푸터 */

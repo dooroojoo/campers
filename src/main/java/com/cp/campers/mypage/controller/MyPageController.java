@@ -76,7 +76,7 @@ public class MyPageController {
 	 */
 	@GetMapping("")
 	public ModelAndView mypageMember(Model model, Member member, Board board, ModelAndView mv,
-			@AuthenticationPrincipal UserImpl user) {
+			@AuthenticationPrincipal UserImpl user, Camp camp) {
 
 		int writer = user.getUserNo();
 		int userNo = user.getUserNo();
@@ -89,7 +89,7 @@ public class MyPageController {
 		/* 찜한 캠핑장 검색*/
 		Map<String, Object> map3 = mypageService.selectMyWishCampList(userNo, page);
 		/* 사업자용 내숙소 관리 */
-		Map<String, Object> map4 = mypageService.selectMyCampList(userNo, page);
+		Map<String, Object> map4 = mypageService.selectMyCampList(camp, userNo, page);
 		
 		// 슬라이더 캠핑장 추천 리스트
 		List<Recommend> mainSlider = mainService.mainSlider();
@@ -363,7 +363,7 @@ public class MyPageController {
 		// log.info("page : " + page);
 		// log.info("user : " + user.toString());
 		
-		Map<String, Object> map = mypageService.selectMyCampList(userNo, page);
+		Map<String, Object> map = mypageService.selectMyCampList(camp, userNo, page);
 
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
@@ -721,7 +721,7 @@ public class MyPageController {
 		log.info("page : " + page);
 		log.info("user : " + user.toString());
 		
-		Map<String, Object> map = mypageService.selectMyCampList(userNo, page);
+		Map<String, Object> map = mypageService.selectMyCampList(camp, userNo, page);
 
 		model.addAttribute("campList", map.get("campList"));
 		model.addAttribute("pi", map.get("pi"));
@@ -742,7 +742,7 @@ public class MyPageController {
 
 	/* 회원 예약 내역 */
 	@GetMapping("/mypageGuestReserve")
-	public String mypageGuestReserve(@AuthenticationPrincipal UserImpl user, Model model) {
+	public String mypageGuestReserve(@AuthenticationPrincipal UserImpl user, Model model,Camp camp, CampRecord campRecord) {
 	
 		int page = 1;
 		int userNo = user.getUserNo();
@@ -779,6 +779,7 @@ public class MyPageController {
 		return "mypage/mypage_guest_reserve";
 	}
 	
+	/* 예약 취소 */
 	@GetMapping("/reserveCancle")
 	public String reserveCancle(int reserNo, RedirectAttributes rttr, Locale locale) {
 		
@@ -789,6 +790,21 @@ public class MyPageController {
 		}
 		
 		return "redirect:/mypage/mypageGuestReserve";
+	}
+	
+	/* 캠핑장 해지 */
+	@GetMapping("/reserveDelete")
+	public String reserveDelete(int campNo, RedirectAttributes rttr, Locale locale) {
+		
+		int result = mypageService.reserveDelete(campNo);
+		
+		/*
+		if(result > 0) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("reserveCancle", null, locale));
+		}
+		*/
+		
+		return "redirect:/mypage/mypageCampManagement";
 	}
 
 	/* 사업자 예약 내역 */
@@ -836,5 +852,18 @@ public class MyPageController {
 		
 		return "mypage/wishCamp";
 	}
+	
+	/* 찜 삭제 */
+	@GetMapping("/likeDown/{campNo}")
+	 @ResponseBody
+	 public String campLikeDown(@PathVariable int campNo, @AuthenticationPrincipal UserImpl loginUser) {
+		 Map<String, Object> param = new HashMap<>(); 
+		 param.put("campNo", campNo);
+		 param.put("userNo", loginUser.getUserNo()); 
+		 
+		 String count = mypageService.campLikeDown(param);
+		 
+		 return count;
+	 }
 
 }

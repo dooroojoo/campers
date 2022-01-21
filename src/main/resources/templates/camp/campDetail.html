@@ -106,13 +106,18 @@
                 </div>
                 <div>
                     <span class="accom_profile_icon"><i class="fas fa-share-alt"></i></span>
-                    <span class="text_controller" id="share" onclick="share();">공유하기</span><label class="likeCount" th:text="${likeCounts}"></label>
-	                    <div class="likeCountDiv">
-		                    <span class="heart likeUp" th:if="${likedCampNo} == null"></span>
-		                    <span class="heart likeDown is-active" th:unless="${likedCampNo} == null"></span>
-	                    	
-	                	</div>
+                    <span class="text_controller" id="share" onclick="share();">공유하기</span>
                 </div>
+	                <div class="likeCountDiv">
+	                	<span class="accom_profile_icon">
+	                	<img class="heart likeUp" src="/resources/images/mypage/red_hearts.png" th:if="${likedCampNo} == null"></span>
+		                <img class="heart likeDown" src="/resources/images/mypage/black_heart.png" th:unless="${likedCampNo} == null"></span>
+		                <!-- 
+		                <span class="heart likeUp" th:if="${likedCampNo} == null"></span>
+		                <span class="heart likeDown" th:unless="${likedCampNo} == null"></span>
+	                  	 -->
+	                  	<label class="likeCount" th:text="${likeCounts}"></label>
+	              	</div>
                 <div>    
                     <input class="hiddenCampNo" type="hidden" th:value="${camp.campNo}">
                     <input class="hiddenUseNo" type="hidden" th:value="${#authentication.principal.userNo}">

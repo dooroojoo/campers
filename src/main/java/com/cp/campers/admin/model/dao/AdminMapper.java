@@ -87,7 +87,7 @@ public interface AdminMapper {
 	void recordToNew(int campNo);
 	
 	// 해지이력
-	void recordToDelete(int campNo);
+	int recordToDelete(int campNo);
 	
 	// 정산관리 목록 개수 
 	int getcalculateListCount();

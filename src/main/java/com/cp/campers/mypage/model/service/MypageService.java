@@ -60,7 +60,7 @@ public interface MypageService{
 	void mypageCampEnrollmentRoom(Room room, Attachment atta2);
 
 	/* 내 숙소 찾기 */
-	Map<String, Object> selectMyCampList(int userNo, int page);
+	Map<String, Object> selectMyCampList(Camp camp, int userNo, int page);
 
 	/* 사업자 예약내역 확인   */
 	Map<String, Object> selectMyHostReserveList(int userNo, int page);
@@ -95,6 +95,8 @@ public interface MypageService{
 	String campLikeDown(Map<String, Object> param);
 
 	String selectLikedCampNo(Map<String, Object> campNoAndUserNo);
+	
+	int reserveDelete(int campNo);
 
 	/*
 	Member pwdCheck(Member member);

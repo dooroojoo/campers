@@ -171,6 +171,8 @@ public interface MypageMapper {
 	void campLikeDown(Map<String, Object> param);
 
 	String selectLikedCampNo(Map<String, Object> campNoAndUserNo);
+
+	void deleteCamp(int campNo);
 	
 	// public Map<String, Object> findAllMember();
 }
