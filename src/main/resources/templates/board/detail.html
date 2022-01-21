@@ -207,7 +207,9 @@
 	line-height: 15px;
 	margin-top: 25px;
 }
-
+.comment-right {
+position: relative;
+}
 .comment-rightTop img {
 	width: 17px;
 	float: right;
@@ -243,7 +245,8 @@
 .comment-box, .refcomment-box {
 	display: flex;
 	justify-content: space-between;
-	padding-bottom: 15px;
+	    padding-top: 10px;
+    padding-bottom: 30px;
 }
 
 .comment-content {
@@ -301,13 +304,14 @@
 }
 
 .refComment-textarea {
-	border: 1px solid #D1D1D1;
-	height: 100px;
-	margin-left: 80px;
-	margin-bottom: 20px;
-	padding: 5px 5px;
-	font-size: 14px;
-	max-width: 718px;
+	    border: 1px solid #D1D1D1;
+    height: 110px;
+    margin-left: 80px;
+    margin-bottom: 20px;
+    padding: 5px 5px;
+    font-size: 14px;
+    border-radius: 10px;
+    max-width: 718px;
 }
 
 .refComment-writer {
@@ -327,13 +331,14 @@
 }
 
 .refComment-submit button {
-	border: none;
-	border-radius: 3px;
-	padding: 3px 6px;
-	cursor: pointer;
-	position: absolute;
-	left: 53%;
-	margin-top: -50%;
+    border: none;
+    border-radius: 0 0 10px 0;
+    padding: 4px 8px;
+    cursor: pointer;
+    position: absolute;
+    left: 53%;
+    margin-top: -50%;
+
 }
 
 .ref {
@@ -352,6 +357,15 @@
 .comment-leftBottom {
 	display: flex;
 }
+.refcomment-box .comment-leftBottom p {
+    flex-flow: nowrap;
+    width: 510px;
+        line-height: 20px;
+   }
+   
+.comment-leftBottom p {
+       max-width: 670px;
+   }
 
 .comment-leftBottom label {
 	margin-top: 16px;
@@ -373,7 +387,11 @@
 }
 
 .comment-rightBottom label {
-	cursor: pointer;
+	    position: absolute;
+    cursor: pointer;
+    width: 60px;
+    bottom: -15px;
+    left: -12px;
 }
 
 .sub_div {
@@ -812,7 +830,7 @@
 
 
 				<!--댓글-->
-				<div th:if="${commentList} != null">
+				<div style="width: 810px;" th:if="${commentList} != null">
 					<div class="comment-content" th:each="comment : ${ commentList }">
 						<div class="comment-box"
 							th:if="${ comment.refCid == 0} AND ${comment.status} == 'N'">
@@ -1113,12 +1131,14 @@
 
 			if ($(e).parentsUntil("comment-box").next().attr("hidden")) {
 				$(e).text('답글접기');
+				$(e).css('left',-38+'px')
 				$(e).parentsUntil("comment-box").next().removeAttr("hidden");
 				$(e).next().html(html);
 
 			} else {
 				$(e).parentsUntil("comment-box").next(".refComment-writer")
 						.prop("hidden", "true");
+				$(e).css('left',-12+'px')
 				$(e).text('답글');
 			}
 		}
