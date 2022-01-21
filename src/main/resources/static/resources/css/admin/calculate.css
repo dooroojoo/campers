@@ -22,12 +22,18 @@ ul, li {
 }
 /* 숙소신청 헤더 */
 .calculate_title{
-    padding-left: 20px;
-    border-bottom: 1px solid black;
-}
-.calculate_title h2 {
+    font-size: 25px;
+    display: inline;
     margin: 10px auto;
+    font-weight: bold;
 }
+
+.flexBlock{
+ 	 display: flex;
+     padding: 0px 20px 11px 20px;
+     border-bottom: 1px solid black
+}
+
 
 .calculate_list{
     min-height: 700px;
@@ -54,7 +60,7 @@ ul, li {
     align-items: center;
 }
 .calculate_list .calcul_num {
-    width: 10%;
+    width: 17%;
 }
 .calculate_list .business_name {
     width: 13%;
@@ -77,10 +83,10 @@ ul, li {
 	width: 10%;
 }
 
-.select_wrap{ /* 화살표 대체 */
-    display: inline-block;
-    position: relative;
+/* .monthSelect{
+	margin-left: 850px;
 }
+ */
 
 .select_wrap:before{
     content:'';
@@ -100,6 +106,8 @@ ul, li {
 #monInq{
     width: 75px;
     height: 32px;
+    margin-left: 730px;
+    margin-top: 15px;
 }
 
 .calculate_list select{
@@ -160,10 +168,10 @@ ul, li {
 }
 
 /* select 설정 */
-.select_wrap{ /* 화살표 대체 */
+/* .select_wrap{ 화살표 대체
     display: inline-block;
-    position: relative;
-}
+} */
+
 .select_wrap:before{
     content:'';
     display: block;
