@@ -438,6 +438,12 @@
 		 WHERE CAMP_NO = #{ campNo }
 	</update>
 	
+	<update id="wait" parameterType="_int">
+		UPDATE CAMP
+		   SET CAMP_STATUS = 'N'
+		 WHERE CAMP_NO = #{ campNo }
+	</update>
+	
 	<insert id="recordToEnroll" parameterType="_int">
 		INSERT INTO CAMP_RECORD 
 		VALUES (SEQ_CR_NO.NEXTVAL
@@ -494,9 +500,5 @@
 	                    ORDER BY C.CAMP_NO) A)
 		 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 	</select> 
-	 
-	
-	
-	
 	
 </mapper>

@@ -507,11 +507,21 @@ public class MypageServiceImpl implements MypageService{
 
 	/* 캠핑장 해지 버튼 */
 	@Override
+	@Transactional
 	public int reserveDelete(int campNo) {
 		
-		mypageMapper.deleteCamp(campNo);
+		/* 1. 캠핑장 상태 변경(대기) */
+		int result1 = adminMapper.wait(campNo);
 		
-		return adminMapper.recordToDelete(campNo);
+		/* 2. 해지 신청 */
+		int result2 = adminMapper.recordToDelete(campNo);
+		
+		if(result1 == 1 && result2 == 1) {
+			return 1;
+		} else {
+			return 0;
+		}
+		
 	}
 
 	
