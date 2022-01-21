@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cp.campers.admin.model.dao.AdminMapper;
+import com.cp.campers.admin.model.vo.CampRecord;
 import com.cp.campers.board.model.vo.Attachment;
 import com.cp.campers.board.model.vo.Board;
 import com.cp.campers.camp.model.dao.CampMapper;
@@ -301,7 +302,7 @@ public class MypageServiceImpl implements MypageService{
 	/* 내 캠프장 리스트 */
 	@Transactional
 	@Override
-	public Map<String, Object> selectMyCampList(int userNo, int page) {
+	public Map<String, Object> selectMyCampList(Camp camp, int userNo, int page) {
 		// int listCount = mypageMapper.getListCountMyHostReserveList(userNo);
 		/* 등록한 캠프장 수 */
 		// log.info("listCount : " + listCount+"");
@@ -318,7 +319,7 @@ public class MypageServiceImpl implements MypageService{
 		log.info("param : " + param.toString());		
 		
 		List<MypageCampManagement> mypageCampManagementList = mypageMapper.selectmypageCampManagementList(param);
-		
+				
 		List<Camp> campList = mypageMapper.selectMyCampList(param);
 		
 		List<Camp> campImageList = mypageMapper.selectCampImageList();	
@@ -504,7 +505,16 @@ public class MypageServiceImpl implements MypageService{
 		return mypageMapper.selectLikedCampNo(campNoAndUserNo);
 	}
 
-	
+	/* 캠핑장 해지 버튼 */
+	@Override
+	public int reserveDelete(int campNo) {
+		
+		mypageMapper.deleteCamp(campNo);
+		
+		return adminMapper.recordToDelete(campNo);
+	}
 
+	
+	
 	
 }

@@ -928,6 +928,12 @@
 		where user_no = #{userNo}
 		and camp_no = #{campNo}
 	</select>
+	
+	<update id="deleteCamp" parameterType="int">
+		UPDATE CAMP
+		   SET CAMP_STATUS = 'X'
+		 WHERE CAMP_NO = #{ campNo }
+	</update>
 
 
 </mapper>

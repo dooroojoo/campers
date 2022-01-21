@@ -42,8 +42,12 @@
             		<p class="wishcamp_content_address" th:text="${ wishCamp.campAddress }">
             		<p class="phone" th:text="${ wishCamp.campPhone }">
             		<hr class="line">
-            		<input class="checkbox" type="checkbox" name="wishBtn">
+            		<input class="checkbox" type="checkbox" data-campNo="${ wishCamp.campNo }" name="wishBtn" id="wishBtn">
             	</div>
+            	<div>    
+                    <input class="hiddenCampNo" type="hidden" th:value="${wishCamp.campNo}">
+                    <input class="hiddenUseNo" type="hidden" th:value="${#authentication.principal.userNo}">
+                </div>            	
             	
             	<hr class="line2"> 
             	 
@@ -51,7 +55,58 @@
         </div>
         <div class="button_content">
             <div class="full_check"><input class="checkbox" type="checkbox" id="allCheckbox">전체 선택</div>
-            <div class="one_check"><img class="remove" src="/resources/images/mypage/remove.png">선택 삭제</div>
+            
+            <script>
+			    /* 전체선택 */
+			    $(document).on('click', "#allCheckbox", function(){
+			        $('.checkbox:not(:disabled)').not(this).prop('checked', this.checked);
+			    });
+			</script>            
+            
+            <div class="one_check"><img class="remove" src="/resources/images/mypage/remove.png">
+            <input type="button" value="선택삭제" class="selectDelete_btn"></div>
+        
+        	<script>	
+        	/*
+        		#wishBtn 찜캠프 체크박스 버튼
+        		#allCheckbox 모두선택 버튼
+        		.selectDelete_btn 선택삭제 버튼
+						let campNo = $(".hiddenCampNo").val();
+				            console.log(campNo);
+        	*/
+        	
+        	$(document).on("click",".selectDelete_btn",function(){
+						
+        			let confirm_val = confirm("찜한 목록을 삭제 하시겠습니까 ?");
+        			
+        			if(confirm_val){
+        				let checkArr = new Array();
+        				
+        				$("input[name='wishBtn']:checked").each(function(){
+        					checkArr.push($(this).attr("data-campNo"));
+        					console.log(checkArr);
+        				});
+					
+        				$.ajax({
+							url : "/mypage/likeDown/"+campNo, /* wishCamp 에 campNo 로*/
+							dataType : "json",
+							contentType : "application/json; charset=utf-8",
+							type : "get",
+							data : { wishBtn : checkArr },
+							success : function(data){
+							 		
+									console.log("wishBtn"+data);
+															 			
+							 	},
+						    	error: function(e){
+								console.log(e);
+					    		}
+					 });	
+        			};
+        		});	        		
+			</script>
+        
+        
         </div>
         <!-- 페이징 처리 -->
     <div class="member_pages">
@@ -112,13 +167,6 @@
 
 <!-- footer -->
 <div th:replace="common/footer.html"></div>
-
-<script>
-    /* 전체선택 */
-    $(document).on('click', "#allCheckbox", function(){
-        $('.checkbox:not(:disabled)').not(this).prop('checked', this.checked);
-    });
-</script>
 
 </body>
 </html>
