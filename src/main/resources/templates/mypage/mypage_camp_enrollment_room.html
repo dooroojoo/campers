@@ -54,23 +54,23 @@
                 </tr>
                 <tr>
                     <th>객실 최대인원</th>
-                    <td><input class="textbox" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요."></td>
+                    <td><input class="textbox" id="roomMember" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요."><label class="roomMemberRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomMemberCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 이름(호수)</th>
-                    <td><input class="textbox" name="roomName" type="text" placeholder="객실 이름을 입력해주세요."></td>
+                    <td><input class="textbox" id="roomName" name="roomName" type="text" placeholder="객실 이름을 입력해주세요."><label class="roomNameRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomNameCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 가격</th>
-                    <td><input class="textbox" name="roomPrice" type="text" placeholder="객실 가격을 입력해주세요."></td>
+                    <td><input class="textbox" id="roomPrice" name="roomPrice" type="text" placeholder="객실 가격을 입력해주세요."><label class="roomPriceRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomPriceCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 크기</th>
-                    <td><input class="textbox" name="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요."></td>
+                    <td><input class="textbox" id="roomSize" name="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요."><label class="roomSizeRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomSizeCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 소개</th>
-                    <td><input class="textbox" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."></td>
+                    <td><input class="textbox" id="roomInfo" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요."><label class="roomInfoRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomInfoCheck" disabled hidden/></label></td>
                 </tr>
                  <tr>
                     <th>객실 사진</th>
@@ -259,21 +259,106 @@
     }
     </script>
     
-    <!-- <script>
-    	$("#enrollForm input[type=button]").on("click", function(){
-    		let param = {};
-    		param.roomMember = $("#enrollForm [name=roomMember]").val();
-    		param.roomName = $("#enrollForm [name=roomName]").val();
-    		param.roomPrice = $("#enrollForm [name=roomPrice]").val();
-    		param.roomSize = $("#enrollForm [name=roomSize]").val();
-    		param.roomInfo = $("#enrollForm [name=roomInfo]").val();
-    		param.roomMember = $("#enrollForm [name=roomMember]").val();
-    		param.roomFloor = $("#enrollForm [name=roomFloor]").val();
-    		param.roomParking = $("#enrollForm [name=roomParking]").val();
-    		param.roomForm = $("#enrollForm [name=roomForm]").val();
-    		param.roomAmount = $("#enrollForm [name=roomAmount]").val();
-    	});
-    </script> -->
-     
+    <script>
+    $(document).on("keyup","#roomMember", function(){
+    	let regExp = /^[0-9]+$/;
+    	if(regExp.test($("#roomMember").val())){
+    		$(".roomMemberRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomMemberCheck").prop('checked',false);
+    		$(".roomMemberRed").text("객실 최대인원을 숫자로 입력해주세요.")
+    	}
+    }).on("focusout","#roomMember",function(){
+    	let regExp = /^[0-9]+$/;
+    	if(regExp.test($("#roomMember").val())){
+    		$(".roomMemberCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomMemberRed").text("객실 최대인원을 숫자로 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomName", function(){
+    	let regExp = /^[\s가-힣a-zA-Z-0-9,]{2,}$/;
+    	if(regExp.test($("#roomName").val())){
+    		$(".roomNameRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomNameCheck").prop('checked',false);
+    		$(".roomNameRed").text("객실 이름을 입력해주세요.(특수문자는 사용할 수 없습니다)")
+    	}
+    }).on("focusout","#roomName",function(){
+    	let regExp = /^[\s가-힣a-zA-Z-0-9","]{2,}$/;
+    	if(regExp.test($("#roomName").val())){
+    		$(".roomNameCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomNameRed").text("객실 이름을 입력해주세요.(특수문자는 사용할 수 없습니다)")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomPrice", function(){
+    	let regExp = /^[0-9,]+$/;
+    	if(regExp.test($("#roomPrice").val())){
+    		$(".roomPriceRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomPriceCheck").prop('checked',false);
+    		$(".roomPriceRed").text("객실 가격을 숫자와 , 만 입력해주세요.")
+    	}
+    }).on("focusout","#roomPrice",function(){
+    	let regExp = /^[0-9,]+$/;
+    	if(regExp.test($("#roomPrice").val())){
+    		$(".roomPriceCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomPriceRed").text("객실 가격을 숫자와 , 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomSize", function(){
+    	let regExp = /^[평mM0-9]{2,}$/;
+    	if(regExp.test($("#roomSize").val())){
+    		$(".roomSizeRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomSizeCheck").prop('checked',false);
+    		$(".roomSizeRed").text("객실 평수를 입력해주세요.")
+    	}
+    }).on("focusout","#roomSize",function(){
+    	let regExp = /^[가-힣a-zA-Z-0-9]{2,}$/;
+    	if(regExp.test($("#roomSize").val())){
+    		$(".roomSizeCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomSizeRed").text("객실 평수를 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomInfo", function(){
+    	let regExp = /\s/g;
+    	if(regExp.test($("#roomInfo").val())){
+    		$(".roomInfoRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomInfoCheck").prop('checked',false);
+    		$(".roomInfoRed").text("객실 소개를 입력해주세요.")
+    	}
+    }).on("focusout","#roomInfo",function(){
+    	let regExp = /\s/g;
+    	if(regExp.test($("#roomInfo").val())){
+    		$(".roomInfoCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomInfoRed").text("객실 소개를 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    </script>
 </body>
 </html>

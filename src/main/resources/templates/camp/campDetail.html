@@ -111,7 +111,7 @@
 	                <th:block sec:authorize="hasRole('MEMBER')">
 		                <div class="likeCountDiv">
 		                	<span class="accom_profile_icon">
-		                	<img class="heart likeUp" src="/resources/images/mypage/red_hearts.png" th:if="${likedCampNo} == null"></span>
+		                	<img class="heart likeUp" id="heart" src="/resources/images/mypage/red_hearts.png" th:if="${likedCampNo} == null" onclick="heartChange();"></span>
 			                <img class="heart likeDown" src="/resources/images/mypage/black_heart.png" th:unless="${likedCampNo} == null"></span>
 			                <!-- 
 			                <span class="heart likeUp" th:if="${likedCampNo} == null"></span>
@@ -677,6 +677,12 @@ function changeLoad() {
 <div th:replace="common/footer.html"></div>
 
 <!-- 찜 버튼 -->
+<script>
+	
+</script>
+
+
+
 <script>
 	$(document).on("click",".likeUp",function(){
 							
