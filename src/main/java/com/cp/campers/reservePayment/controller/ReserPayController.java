@@ -56,9 +56,9 @@ private ReserPayService reserPayService;
       String msg = reserPayService.insertReserPay(reserveInfo, paymentInfo) > 0 ? "예약 및 결제가 완료되었습니다." : "예약 및 결제에 실패하였습니다.";
       
       Map<String, String> map = new HashMap<>();
-       map.put("msg", msg);
+      map.put("msg", msg);
          
-       return map;
+      return map;
    }
    
    
