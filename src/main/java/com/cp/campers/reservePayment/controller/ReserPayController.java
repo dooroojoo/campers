@@ -37,7 +37,7 @@ private ReserPayService reserPayService;
          
       model.addAttribute("userName", user.getUserName());
       
-       log.info("userName : {} ", user.getUserName());
+      log.info("userName : {} ", user.getUserName());
       
       return "reservePayment/reserPay";
    }

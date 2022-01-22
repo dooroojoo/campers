@@ -17,10 +17,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
     <!-- JavaScript-->
     <!-- <script type="text/javascript" src="../resources/js/payment.js"></script> -->
-   
+	
 </head>
 <body>
-   <div th:include="common/header.html"></div>
+	<div th:include="common/header.html"></div>
 
     <!-- 예약 및 결제 html -->
     <div class="reserPay_Outer">
@@ -85,17 +85,14 @@
                 <div class="reserName">예약자명<span class="red">(*)</span></div>
                 <div class="inp_text">
                     <span>
-
 	                    <input type="text" th:value="${userName}" name="reserName" id="reserName" readonly/>
                     </span>
                 </div>
                 <div class="phone">휴대폰 번호<span class="red">(*)</span></div>
                 <div class="inp_text">
-
-                	 <span>
-                       <input type="text" placeholder="010-1234-5678"  name="phone" id="phone" />
-                   </span>
-
+                	<span>
+	                    <input type="text" placeholder="010-1234-5678"  name="phone" id="phone" />
+                	</span>
                 </div>
                 <div class="request">예약 요청사항(선택)</div>
                 <div class="textbox">
@@ -108,23 +105,21 @@
             <div class="reserPay_inner">
                 <div class="account_hol">예금주<span class="red">(*)</span></div>
                 <div class="inp_text">
-
                 	<span>
-                       <input type="text" placeholder="홍길동"  name="accountHol" id="accountHol" />
-                   </span>
+	                    <input type="text" placeholder="홍길동"  name="accountHol" id="accountHol" />
+                	</span>
                 </div>
                 <div class="accountNum">계좌번호<span class="red">(*)</span></div>
                 <div class="inp_text">
-                   <span>
-                       <input type="text" placeholder="환불 받으실 계좌번호를 입력해주세요."  name="accountNum" id="accountNum" />
-                   </span>
+                	<span>
+	                    <input type="text" placeholder="환불 받으실 계좌번호를 입력해주세요."  name="accountNum" id="accountNum" />
+                	</span>
                 </div>
                 <div class="bank">은행<span class="red">(*)</span></div>
                 <div class="inp_text">
-                   <span>
-                       <input type="text" placeholder="환불 받으실 계좌번호의 은행을 입력해주세요"  name="bank" id="bank" />
-                   </span>
-
+                	<span>
+	                    <input type="text" placeholder="환불 받으실 계좌번호의 은행을 입력해주세요"  name="bank" id="bank" />
+                	</span>
                 </div>
             </div>
             <div class="title1">
@@ -193,11 +188,9 @@
                 <div class="tit">[객실요금]</div>
                 <!-- <div class="addr">예약 날짜 :  2021년 12월 07일 (화)</div> -->
                 <input type="hidden" id="roomPrice" name="roomPrice" th:value="${param.roomPrice}">
-
-                <div class="reserRoomSu">예약 객실 수량 :   <span id="date"></span>박 * <span th:text="${param.roomPrice} + '원 *'"></span> <span id="su"></span>(객실수) = <span id="total"></span>원</div>      
+                <div class="reserRoomSu">예약 객실 수량 :   <span id="date"></span>박 * <span th:text="${param.roomPrice} + '원 *'"></span> <span id="su"></span>(객실수) = <span id="total"></span>원</div>		
                 <input type="hidden" id="totalValue">
-                <div>총 결제 금액 : <b><span class="totalPay"></span>원</b></div> 		
-
+                <div>총 결제 금액 : <b><span class="totalPay"></span>원</b></div>		
             </div>
             <div class="title1">
                 <span>결제방법</span>
@@ -210,62 +203,58 @@
             </form>
         </div>
     </div>
-   
-   
-      <div th:include="common/footer.html"></div>
-
+	
+	
+		<div th:include="common/footer.html"></div>
 
 
 	<!-- Dday -->
 <script>
-   $(document).ready(function(){
-      let dateIn = $("#dateIn").val();
-      let dateOut = $("#dateOut").val();
-      let arr1 = dateIn.split('-');
-      let arr2 = dateOut.split('-');
-      let date1 = new Date(arr1[0], arr1[1], arr1[2]);
-      let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
-      let diff = date2 - date1;
-      let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
-      let dateResult = parseInt(diff/currDay);
-      $('.camRedDate').text(dateResult);
-   });
-</script>      
-      
-   	
+	$(document).ready(function(){
+		let dateIn = $("#dateIn").val();
+		let dateOut = $("#dateOut").val();
+		let arr1 = dateIn.split('-');
+		let arr2 = dateOut.split('-');
+		let date1 = new Date(arr1[0], arr1[1], arr1[2]);
+		let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
+		let diff = date2 - date1;
+		let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+		let dateResult = parseInt(diff/currDay);
+		$('.camRedDate').text(dateResult);
+	});
+</script>		
 		
 	
-
 <!-- JS -->
  <script>
  
-    // 체크박스 체크 여부에 따른 전체체크박스 체크 or 체크해제
-    function checkSelectAll(checkSelectAll){
-   
-        const checkboxes = document.querySelectorAll('input[name="agreeChk"]');
-   
-        const selectAll = document.querySelector('#selectAll');
-        
-        const checked = document.querySelectorAll('input[name="agreeChk"]:checked');
-   
-        if(checkboxes.length == checked.length) {
-            selectAll.checked = true;
-        } else {
-            selectAll.checked = false;
-        }
-    }
-    
-      $("#selectAll").click(function(){
-           //클릭되었으면
-           if($("#selectAll").prop("checked")){
-               //input태그의 name이 agreeChk인 태그들을 찾아서 checked옵션을 true로 정의
-               $("input[name=agreeChk]").prop("checked",true);
-               //클릭이 안되있으면
-           }else{
-               //input태그의 name이 agreeChk인 태그들을 찾아서 checked옵션을 false로 정의
-               $("input[name=agreeChk]").prop("checked",false);
-           }
-       })
+	 // 체크박스 체크 여부에 따른 전체체크박스 체크 or 체크해제
+	 function checkSelectAll(checkSelectAll){
+	
+	     const checkboxes = document.querySelectorAll('input[name="agreeChk"]');
+	
+	     const selectAll = document.querySelector('#selectAll');
+	     
+	     const checked = document.querySelectorAll('input[name="agreeChk"]:checked');
+	
+	     if(checkboxes.length == checked.length) {
+	         selectAll.checked = true;
+	     } else {
+	         selectAll.checked = false;
+	     }
+	 }
+	 
+	   $("#selectAll").click(function(){
+	        //클릭되었으면
+	        if($("#selectAll").prop("checked")){
+	            //input태그의 name이 agreeChk인 태그들을 찾아서 checked옵션을 true로 정의
+	            $("input[name=agreeChk]").prop("checked",true);
+	            //클릭이 안되있으면
+	        }else{
+	            //input태그의 name이 agreeChk인 태그들을 찾아서 checked옵션을 false로 정의
+	            $("input[name=agreeChk]").prop("checked",false);
+	        }
+	    })
 
 
     // 슬라이드 다운 
@@ -277,68 +266,64 @@
             $(this).next("pre").slideUp(); 
         }
     });
-
 	
-    // 객실 수, 총금액 로드 됐을 때 표시         
+   // 객실 수, 총금액 로드 됐을 때 표시		   
    $(document).ready(function(){
-            let roomQua = $('#pRoomSu').find('input').val();
-            let roomPrice = $("#roomPrice").val();
-            let roomNo = $('#roomNo').val();
-         let dateIn = $("#dateIn").val();
-         let dateOut = $("#dateOut").val();
-         let arr1 = dateIn.split('-');
-         let arr2 = dateOut.split('-');
-         let date1 = new Date(arr1[0], arr1[1], arr1[2]);
-         let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
-         let diff = date2 - date1;
-         let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
-         let dateResult = parseInt(diff/currDay);
-         
-         let total = dateResult*roomQua*roomPrice;
-          let totalPrice = total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-         $("#total").text(totalPrice);
-         $(".totalPay").text(totalPrice); 
-         $("#totalValue").val(total);
-         $('#su').text(roomQua);
-         $("#date").text(dateResult);
-
+	   		let roomQua = $('#pRoomSu').find('input').val();
+	   		let roomPrice = $("#roomPrice").val();
+	   		let roomNo = $('#roomNo').val();
+			let dateIn = $("#dateIn").val();
+			let dateOut = $("#dateOut").val();
+			let arr1 = dateIn.split('-');
+			let arr2 = dateOut.split('-');
+			let date1 = new Date(arr1[0], arr1[1], arr1[2]);
+			let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
+			let diff = date2 - date1;
+			let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			let dateResult = parseInt(diff/currDay);
+			
+			let total = dateResult*roomQua*roomPrice;
+	    	let totalPrice = total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			$("#total").text(totalPrice);
+			$(".totalPay").text(totalPrice); 
+			$("#totalValue").val(total);
+			$('#su').text(roomQua);
+			$("#date").text(dateResult);
     });
     
     
     // 객실 수량  +
     function qtyUp(num){
-
 		if ($(num).parent('.inp_qty').hasClass('readOnly')) {return false;}
-      var thisVal = parseInt($(num).parents('.inp_qty').find("input").val());
-      intVal = thisVal+1;
-      if( intVal < 6) {
-         $(num).parents('.inp_qty').find("input").val(intVal);
-         $('#su').text(intVal);
-         
-      }
-      
-      // 총 결제 금액 계산
-      let roomPrice = $("#roomPrice").val();
-      let roomNo = $('#roomNo').val();
-      let dateIn = $("#dateIn").val();
-      let dateOut = $("#dateOut").val();
-      let arr1 = dateIn.split('-');
-      let arr2 = dateOut.split('-');
-      let date1 = new Date(arr1[0], arr1[1], arr1[2]);
-      let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
-      let diff = date2 - date1;
-      let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
-      let dateResult = parseInt(diff/currDay);
-      
-   
-      let total = dateResult*intVal*roomPrice;
-       let totalPrice = total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-       
-      $("#total").text(totalPrice);
-      $(".totalPay").text(totalPrice);
-      $("#totalValue").val(total);
-      $("#date").text(dateResult);
-
+		var thisVal = parseInt($(num).parents('.inp_qty').find("input").val());
+		intVal = thisVal+1;
+		if( intVal < 6) {
+			$(num).parents('.inp_qty').find("input").val(intVal);
+			$('#su').text(intVal);
+			
+		}
+		
+		// 총 결제 금액 계산
+		let roomPrice = $("#roomPrice").val();
+		let roomNo = $('#roomNo').val();
+		let dateIn = $("#dateIn").val();
+		let dateOut = $("#dateOut").val();
+		let arr1 = dateIn.split('-');
+		let arr2 = dateOut.split('-');
+		let date1 = new Date(arr1[0], arr1[1], arr1[2]);
+		let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
+		let diff = date2 - date1;
+		let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+		let dateResult = parseInt(diff/currDay);
+		
+	
+		let total = dateResult*intVal*roomPrice;
+    	let totalPrice = total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    	
+		$("#total").text(totalPrice);
+		$(".totalPay").text(totalPrice);
+		$("#totalValue").val(total);
+		$("#date").text(dateResult);
     }
     
     
@@ -351,28 +336,27 @@
             $(num).parents('.inp_qty').find("input").val(value);
             $('#su').text(value);
         }
-
+        
     	// 총 결제 금액 계산
-      let roomPrice = $("#roomPrice").val();
-      let roomNo = $('#roomNo').val();
-      let dateIn = $("#dateIn").val();
-      let dateOut = $("#dateOut").val();
-      let arr1 = dateIn.split('-');
-      let arr2 = dateOut.split('-');
-      let date1 = new Date(arr1[0], arr1[1], arr1[2]);
-      let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
-      let diff = date2 - date1;
-      let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
-      let dateResult = parseInt(diff/currDay);
-      
-      
-      let total = dateResult*value*roomPrice;
-       let totalPrice = total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-      
-      $("#total").text(totalPrice);
-      $(".totalPay").text(totalPrice);
-      $("#totalValue").val(total);
-
+		let roomPrice = $("#roomPrice").val();
+		let roomNo = $('#roomNo').val();
+		let dateIn = $("#dateIn").val();
+		let dateOut = $("#dateOut").val();
+		let arr1 = dateIn.split('-');
+		let arr2 = dateOut.split('-');
+		let date1 = new Date(arr1[0], arr1[1], arr1[2]);
+		let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
+		let diff = date2 - date1;
+		let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+		let dateResult = parseInt(diff/currDay);
+		
+		
+		let total = dateResult*value*roomPrice;
+    	let totalPrice = total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+		
+		$("#total").text(totalPrice);
+		$(".totalPay").text(totalPrice);
+		$("#totalValue").val(total);
     }
     
    
@@ -381,51 +365,47 @@
 
 
 <script>
-
 	// 유효성 검사 
-   function formChk(){
-       let regExp = new RegExp('pattern', 'gmi');
-       regExp = /pattern/gmi;
-       
-       let selectAll = document.querySelector('#selectAll');
-       let agreeChk1 = document.querySelector('#agreeChk1');
-       let agreeChk2 = document.querySelector('#agreeChk2');
-       let agreeChk3 = document.querySelector('#agreeChk3');
-       let agreeChk4 = document.querySelector('#agreeChk4');
-       let chk2 = document.querySelector('#chk2');
-         
-        if(!check(/^\d{3}-\d{3,4}-\d{4}$/, document.getElementById('phone'), 
-
+	function formChk(){
+		 let regExp = new RegExp('pattern', 'gmi');
+		 regExp = /pattern/gmi;
+		 
+		 let selectAll = document.querySelector('#selectAll');
+		 let agreeChk1 = document.querySelector('#agreeChk1');
+		 let agreeChk2 = document.querySelector('#agreeChk2');
+		 let agreeChk3 = document.querySelector('#agreeChk3');
+		 let agreeChk4 = document.querySelector('#agreeChk4');
+		 let chk2 = document.querySelector('#chk2');
+		   
+	     if(!check(/^\d{3}-\d{3,4}-\d{4}$/, document.getElementById('phone'), 
          "핸드폰 번호는 -를 포함한 숫자로만 입력해주세요"))
-           return false;
-        if(!check(/^[가-힣]{2,}$/, document.getElementById('accountHol'),
-        "이름은 한글로 2글자 이상 입력하세요"))
+	    	 return false;
+	     if(!check(/^[가-힣]{2,}$/, document.getElementById('accountHol'),
+    	 "이름은 한글로 2글자 이상 입력하세요"))
          return false;
-        if(!check(/^[0-9]+$/, document.getElementById('accountNum'),
-        "계좌번호를 확인해 주세요"))
+	     if(!check(/^[0-9]+$/, document.getElementById('accountNum'),
+    	 "계좌번호를 확인해 주세요"))
          return false;
-        if(!check(/^[가-힣]{2,}$/, document.getElementById('bank'),
-        "은행명을 확인해 주세요"))
+	     if(!check(/^[가-힣]{2,}$/, document.getElementById('bank'),
+    	 "은행명을 확인해 주세요"))
          return false;
-
 	     
 	     if(!chk1.checked || !chk2.checked) {
-           alert("예약자 질의응답에 체크하셔야 합니다");
-            return false;
-        }
-        if(!selectAll.checked || !agreeChk1.checked || !agreeChk2.checked || !agreeChk3.checked || !agreeChk4.checked) {
-           alert("이용약관에 동의하셔야 합니다");
-            return false;
-        }
-       requestPay();
-   }
+	    	 alert("예약자 질의응답에 체크하셔야 합니다");
+	         return false;
+	     }
+	     if(!selectAll.checked || !agreeChk1.checked || !agreeChk2.checked || !agreeChk3.checked || !agreeChk4.checked) {
+	    	 alert("이용약관에 동의하셔야 합니다");
+	         return false;
+	     }
+		 requestPay();
+	}
 
-
-   // 정규 표현식 객체, 사용자가 input태그에 입력한 태그, 그때 내가 전달할 메세지 
+	// 정규 표현식 객체, 사용자가 input태그에 입력한 태그, 그때 내가 전달할 메세지 
     function check(regExp, input, msg){
         // 정규 표현식 만족할 경우 true 리턴
         if(regExp.test(input.value)) 
-           return true;
+        	return true;
         // 정규 표현식 불만족할 경우 
         alert(msg); 
         input.value = ''; 
@@ -438,64 +418,62 @@
 
 <!-- 아임포트 연동 - 결제 -->
 <script>
-
-	 var IMP = window.IMP; // 생략 가능
-   IMP.init("imp21661729"); // 예: imp00000000
-   
-   function requestPay() {      
-       // IMP.request_pay(param, callback) 결제창 호출
-         IMP.request_pay({
-             pg : 'html5_inicis',
-             pay_method : 'card', //생략 가능
-             merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
-             name : '객실 결제', // 주문명:결제테스트
-             amount : parseInt($('#totalValue').val()), // 가격
-             buyer_name : $("#reserName").val(),  //구매자 이름
-             buyer_tel : $("#phone").val(), // 구매자 휴대폰 번호 
-             buyer_postcode : '123-456'
-         }, function(rsp) {
-             if ( rsp.success ) {
-                 $.ajax({
-                   url : '/reserPay/insert',
-                   data : {
-                      "reserName" : $('#reserName').val(),
-                      "phone" : $("#phone").val(),
-                      "request" : $("#request").val(),
-                      "checkIn" : $("#dateIn").val(), 
-                      "checkOut" : $("#dateOut").val(), 
-                      "accountNum" : $("#accountNum").val(),
-                      "accountHol" : $("#accountHol").val(),
-                      "bank" : $("#bank").val(),
-                      "roomQua" : $('#pRoomSu').find('input').val(),
-                      "roomNo" : $('#roomNo').val(),   
-                      // 결제 insert : 
-                      // 결제번호(NEXTVAL) 또는  rsp.imp_uid; - 아임포트 고유 결제번호
-                      "payAmount" : rsp.paid_amount,    // 결제 금액
-                      "payKind" : rsp.pay_method        // 결제수단
-                   },
-                   dataType : "json",
-                   type : "post",
-                    success : function(result){
-                         console.log(result);
-                         alert(result.msg);
-                         
-                         $("#reserPayForm")[0].reset(); /* 입력값 지우기 */
-                         
-                         location.href="/main"
-                      },
-                   error : function(e){
-                     console.log(e);
-                  }   
-                }); 
-             } else{
-                //결제 시작 페이지로 리디렉션되기 전에 오류가 난 경우
-                 var msg = '오류로 인하여 결제가 시작되지 못하였습니다.';
-                 msg += '에러내용 : ' + rsp.error_msg;
-                 alert(msg);
-             } 
-         });
-       }
-
+	var IMP = window.IMP; // 생략 가능
+	IMP.init("imp21661729"); // 예: imp00000000
+	
+	function requestPay() {		
+		 // IMP.request_pay(param, callback) 결제창 호출
+			IMP.request_pay({
+			    pg : 'html5_inicis',
+			    pay_method : 'card', //생략 가능
+			    merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+			    name : '객실 결제', // 주문명:결제테스트
+			    amount : parseInt($('#totalValue').val()), // 가격
+			    buyer_name : $("#reserName").val(),  //구매자 이름
+			    buyer_tel : $("#phone").val(), // 구매자 휴대폰 번호 
+			    buyer_postcode : '123-456'
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			     	$.ajax({
+			    		url : '/reserPay/insert',
+			    		data : {
+			    			"reserName" : $('#reserName').val(),
+			    			"phone" : $("#phone").val(),
+			    			"request" : $("#request").val(),
+			    			"checkIn" : $("#dateIn").val(), 
+			    			"checkOut" : $("#dateOut").val(), 
+			    			"accountNum" : $("#accountNum").val(),
+			    			"accountHol" : $("#accountHol").val(),
+			    			"bank" : $("#bank").val(),
+			    			"roomQua" : $('#pRoomSu').find('input').val(),
+			    			"roomNo" : $('#roomNo').val(),   
+			    			// 결제 insert : 
+			    			// 결제번호(NEXTVAL) 또는  rsp.imp_uid; - 아임포트 고유 결제번호
+			    			"payAmount" : rsp.paid_amount,    // 결제 금액
+			    			"payKind" : rsp.pay_method        // 결제수단
+			    		},
+			    		dataType : "json",
+			    		type : "post",
+		    		    success : function(result){
+		                   console.log(result);
+		                   alert(result.msg);
+		                   
+		                   $("#reserPayForm")[0].reset(); /* 입력값 지우기 */
+		                   
+		                   location.href="/main"
+		                },
+			    		error : function(e){
+							console.log(e);
+						}	
+			    	}); 
+			    } else{
+			    	//결제 시작 페이지로 리디렉션되기 전에 오류가 난 경우
+			        var msg = '오류로 인하여 결제가 시작되지 못하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			        alert(msg);
+			    } 
+			});
+	    }
 </script>
 
 
@@ -505,3 +483,4 @@
 
 </body>
 </html>
+
