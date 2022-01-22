@@ -47,15 +47,15 @@
                 </tr>
                 <tr>
                     <th>캠핑장 이름</th>
-                    <td><input class="textbox" name="campName" type="text" placeholder="캠핑장 이름을 입력하세요." required></td>
+                    <td><input class="textbox" id="campName" name="campName" type="text" placeholder="캠핑장 이름을 입력하세요." required><label class="nameRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="nameCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>캠핑장 주소</th>
-                    <td><input class="textbox" name="campAddress" type="text" placeholder="캠핑장 주소를 입력하세요." required></td>
+                    <td><input class="textbox" id="campAddress" name="campAddress" type="text" placeholder="캠핑장 주소를 입력하세요." required><label class="addressRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="addressCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>사업장 대표번호</th>
-                    <td><input class="textbox" name="campPhone" type="text" placeholder="사업장 대표번호를 입력하세요." required></td>
+                    <td><input class="textbox" id="campPhone" name="campPhone" type="text" placeholder="사업장 대표번호를 입력하세요." required><label class="phoneRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="phoneCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>사업장 형태</th>
@@ -119,7 +119,7 @@
                             <option value="우체국은행">우체국은행</option>
                             <option value="카카오뱅크">카카오뱅크</option>
                         </select>
-                        <input class="textbox" name="accountNum" type="text" placeholder="계좌번호" required>
+                        <input class="textbox" id="accountNum" name="accountNum" type="text" placeholder="계좌번호" required><label class="accountNumRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="accountNumCheck" disabled hidden/></label>
                     </td>
                 </tr>
                 <tr>
@@ -195,7 +195,7 @@
                 <tr>
                     <th>사업장 운영정책</th>
                     <td>
-                        <textarea name="campPolicy" cols="90" rows="10" placeholder="가이드 외 사업장 운영정책을 입력 해주세요.
+                        <textarea name="campPolicy" id="campPolicy" cols="90" rows="10" placeholder="가이드 외 사업장 운영정책을 입력 해주세요.
 1. 코로나 4단계 기간에는 동거가족 외 4인 이상의 캠핑을 금지합니다.
 2. 안전주의사항 : 개별숯 화롯대 장작 개인화기 일체사용금지 (안전과 화재예방을 위해서 개별숯 화롯대 장작 개인화기 바베큐장 외 사용 금지합니다.)
 3. 반려동물 주의사항 : 반려동물 구역 외 출입금지
@@ -205,32 +205,34 @@
 7. 바베큐비용 : 바베큐 그릴 + 숯 + 석쇠 현장결제 가격
 8. 장작 : 장작 현장결제 가격
 9. 샤워장 이용 규칙 : 온수 유무, 사용시간 등등
-10. 차량주차유무 : 차량 추가 주차 가능여부 입력 해주세요. (차량 추가 시 금액)" required></textarea>
+10. 차량주차유무 : 차량 추가 주차 가능여부 입력 해주세요. (차량 추가 시 금액)" required></textarea><br>
+				<label class="policyRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="policyCheck" disabled hidden/></label>
                     </td>
                 </tr>
                 <tr>
                     <th>사업장 소개</th>
-                    <td><textarea name="campIntro" cols="90" rows="10" placeholder="사업장 소개를 입력 해주세요." required></textarea></td>
+                    <td><textarea name="campIntro" id="campIntro" cols="90" rows="10" placeholder="사업장 소개를 입력 해주세요." required></textarea><br>
+                    <label class="introRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="introCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 최대인원</th>
-                    <td><input class="textbox" name="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요." required></td>
+                    <td><input class="textbox" name="roomMember" id="roomMember" type="text" placeholder="객실 최대인원을 입력해주세요." required><label class="roomMemberRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomMemberCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 이름(호수)</th>
-                    <td><input class="textbox" name="roomName" type="text" placeholder="객실 이름을 입력해주세요." required></td>
+                    <td><input class="textbox" name="roomName" id="roomName" type="text" placeholder="객실 이름을 입력해주세요." required><label class="roomNameRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomNameCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 가격</th>
-                    <td><input class="textbox" name="roomPrice" type="text" placeholder="객실 가격을 입력해주세요." required></td>
+                    <td><input class="textbox" name="roomPrice" id="roomPrice" type="text" placeholder="객실 가격을 입력해주세요." required><label class="roomPriceRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomPriceCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 크기</th>
-                    <td><input class="textbox" name="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요." required></td>
+                    <td><input class="textbox" name="roomSize" id="roomSize" type="text" placeholder="㎡ 기준(평수) 수치를 입력 해주세요." required><label class="roomSizeRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomSizeCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 소개</th>
-                    <td><input class="textbox" name="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요." required></td>
+                    <td><input class="textbox" name="roomInfo" id="roomInfo" type="text" placeholder="객실 소개 및 구비물품 을 입력해주세요." required><label class="roomInfoRed" style="color:red; margin-left:30px;"><label for="todo" class="item"></label><input type="checkbox" id="todo" class="roomInfoCheck" disabled hidden/></label></td>
                 </tr>
                 <tr>
                     <th>객실 사진</th>
@@ -359,19 +361,232 @@
 
     </script>
     
-    <!-- 
+     
     <script>
     	
     $(document).on("keyup","#campName", function(){
-    	let regExp = /^[가-힣a-zA-Z-0-9]$/;
+    	let regExp = /^[가-힣a-zA-Z-0-9]{2,}$/;
     	if(regExp.test($("#campName").val())){
     		$(".nameRed").text("");
     		nameCheck = true;    		
     	} else{
-    		$("")
+    		$(".nameCheck").prop('checked',false);
+    		$(".nameRed").text("캠핑장 이름을 한글, 영문, 숫자로 만들어주세요.")
     	}
-    })   
+    }).on("focusout","#campName",function(){
+    	let regExp = /^[가-힣a-zA-Z-0-9]{2,}$/;
+    	if(regExp.test($("#campName").val())){
+    		$(".nameCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".nameRed").text("캠핑장 이름을 한글, 영문, 숫자로 만들어주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#campAddress", function(){
+    	let regExp = /^[\s가-힣a-zA-Z-0-9]{2,}$/;
+    	if(regExp.test($("#campAddress").val())){
+    		$(".addressRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".addressCheck").prop('checked',false);
+    		$(".addressRed").text("캠핑장 주소를 한글, 영문, 숫자로 만들어주세요.")
+    	}
+    }).on("focusout","#campAddress",function(){
+    	let regExp = /^[\s가-힣a-zA-Z-0-9]{2,}$/;
+    	if(regExp.test($("#campAddress").val())){
+    		$(".addressCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".addressRed").text("캠핑장 주소를 한글, 영문, 숫자, -로 만들어주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+     $(document).on("keyup","#campPhone", function(){
+    	let regExp = /^\d{2,3}-\d{3,4}-\d{4}$/;
+    	if(regExp.test($("#campPhone").val())){
+    		$(".phoneRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".phoneCheck").prop('checked',false);
+    		$(".phoneRed").text("대표번호를 -포함 숫자만 입력해주세요.")
+    	}
+    }).on("focusout","#campPhone",function(){
+    	let regExp = /^\d{2,3}-\d{3,4}-\d{4}$/;
+    	if(regExp.test($("#campPhone").val())){
+    		$(".phoneCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".phoneRed").text("대표번호를 -포함 숫자만 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })    
+    
+    $(document).on("keyup","#accountNum", function(){
+    	let regExp = /^[\s0-9--]+$/;
+    	if(regExp.test($("#accountNum").val())){
+    		$(".phoneRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".accountNumCheck").prop('checked',false);
+    		$(".accountNumRed").text("계좌번호를 입력해주세요.")
+    	}
+    }).on("focusout","#accountNum",function(){
+    	let regExp = /^[\s0-9--]+$/;
+    	if(regExp.test($("#accountNum").val())){
+    		$(".accountNumCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".accountNumRed").text("계좌번호를 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    
+     $(document).on("keyup","#campPolicy", function(){
+    	let regExp = /\s/g;
+    	if(regExp.test($("#campPolicy").val())){
+    		$(".policyRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".policyCheck").prop('checked',false);
+    		$(".policyRed").text("캠핑장 정책을 입력해주세요.")
+    	}
+    }).on("focusout","#campPolicy",function(){
+    	let regExp = /\s/g;
+    	if(regExp.test($("#campPolicy").val())){
+    		$(".policyCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".policyRed").text("캠핑장 정책을 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+     $(document).on("keyup","#campIntro", function(){
+    	let regExp = /\s/g;
+    	if(regExp.test($("#campIntro").val())){
+    		$(".introRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".introCheck").prop('checked',false);
+    		$(".introRed").text("캠핑장 소개를 입력해주세요.")
+    	}
+    }).on("focusout","#campIntro",function(){
+    	let regExp = /\s/g;
+    	if(regExp.test($("#campIntro").val())){
+    		$(".introCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".introRed").text("캠핑장 소개를 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomMember", function(){
+    	let regExp = /^[0-9]+$/;
+    	if(regExp.test($("#roomMember").val())){
+    		$(".roomMemberRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomMemberCheck").prop('checked',false);
+    		$(".roomMemberRed").text("객실 최대인원을 숫자로 입력해주세요.")
+    	}
+    }).on("focusout","#roomMember",function(){
+    	let regExp = /^[0-9]+$/;
+    	if(regExp.test($("#roomMember").val())){
+    		$(".roomMemberCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomMemberRed").text("객실 최대인원을 숫자로 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomName", function(){
+    	let regExp = /^[\s가-힣a-zA-Z-0-9,]{2,}$/;
+    	if(regExp.test($("#roomName").val())){
+    		$(".roomNameRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomNameCheck").prop('checked',false);
+    		$(".roomNameRed").text("객실 이름을 입력해주세요.(특수문자는 사용할 수 없습니다)")
+    	}
+    }).on("focusout","#roomName",function(){
+    	let regExp = /^[\s가-힣a-zA-Z-0-9","]{2,}$/;
+    	if(regExp.test($("#roomName").val())){
+    		$(".roomNameCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomNameRed").text("객실 이름을 입력해주세요.(특수문자는 사용할 수 없습니다)")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomPrice", function(){
+    	let regExp = /^[0-9,]+$/;
+    	if(regExp.test($("#roomPrice").val())){
+    		$(".roomPriceRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomPriceCheck").prop('checked',false);
+    		$(".roomPriceRed").text("객실 가격을 숫자와 , 만 입력해주세요.")
+    	}
+    }).on("focusout","#roomPrice",function(){
+    	let regExp = /^[0-9,]+$/;
+    	if(regExp.test($("#roomPrice").val())){
+    		$(".roomPriceCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomPriceRed").text("객실 가격을 숫자와 , 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomSize", function(){
+    	let regExp = /^[평mM0-9]{2,}$/;
+    	if(regExp.test($("#roomSize").val())){
+    		$(".roomSizeRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomSizeCheck").prop('checked',false);
+    		$(".roomSizeRed").text("객실 평수를 입력해주세요.")
+    	}
+    }).on("focusout","#roomSize",function(){
+    	let regExp = /^[가-힣a-zA-Z-0-9]{2,}$/;
+    	if(regExp.test($("#roomSize").val())){
+    		$(".roomSizeCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomSizeRed").text("객실 평수를 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    $(document).on("keyup","#roomInfo", function(){
+    	let regExp = /\s/g;
+    	if(regExp.test($("#roomInfo").val())){
+    		$(".roomInfoRed").text("");
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomInfoCheck").prop('checked',false);
+    		$(".roomInfoRed").text("객실 소개를 입력해주세요.")
+    	}
+    }).on("focusout","#roomInfo",function(){
+    	let regExp = /\s/g;
+    	if(regExp.test($("#roomInfo").val())){
+    		$(".roomInfoCheck").prop('checked', true);
+    		nameCheck = true;    		
+    	} else{
+    		$(".roomInfoRed").text("객실 소개를 입력해주세요.")
+    		nameCheck = false;
+    	}
+    })
+    
+    
     </script>
-      -->
+    
 </body>
 </html>

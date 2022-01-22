@@ -55,11 +55,17 @@
                         <li class="reporter_nickname">
                         	<div th:text="${report.susNickName}"></div>
                         </li>
-                        <li class="report_reason" th:if="${report.boardStatus}=='N'">
-                        	<div th:text="${report.replyStatus}" th:onclick="|location.href='@{/board/detail(bid=${report.bid})}'|"></div>
+                        <li class="report_reason" th:if="${#strings.equals(report.reportType, 'board')} AND ${report.boardStatus}=='N'">
+                       		<a th:text="${report.reason}" th:href="@{/board/detail(bid=${report.bid})}"></a>
                         </li>
-                        <li class="delete" th:if="${report.boardStatus}=='Y'">
-                        	<div th:text="${report.reason}"></div>
+                        <li class="delete" th:if="${#strings.equals(report.reportType, 'board')} AND ${report.boardStatus}=='Y'">
+                       		<a th:text="${report.reason}"></a>
+                        </li>
+                        <li class="report_reason" th:if="${#strings.equals(report.reportType, 'reply')} AND ${report.replyStatus}=='N'">
+                        	<a th:text="${report.reason}" th:href="@{/board/detail(bid=${report.bid})}"></a>
+                        </li>
+                        <li class="delete" th:if="${#strings.equals(report.reportType, 'reply')} AND ${report.replyStatus}=='Y'">
+                        	<a th:text="${report.reason}"></a>
                         </li>
                         <li class="report_date" th:text="${#dates.format(report.reportDate, 'yy-MM-dd') }" 
                         th:title="${#dates.format(report.reportDate, 'yyyy-MM-dd hh:mm:ss')}"></li>
