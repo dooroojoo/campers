@@ -2,78 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cp.campers.reservePayment.model.dao.ReserPayMapper">
 
-<resultMap id="reserPayResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
-      <id property="reserNo" column="RESER_NO"/>
-      <result property="userNo" column="USER_NO"/>
-      <result property="reserName" column="RESER_NAME"/>
-      <result property="phone" column="PHONE"/>
-      <result property="reserState" column="RESER_STATE"/>
-      <result property="request" column="REQUEST"/>
-      <result property="checkIn" column="CHECKIN"/>
-      <result property="checkOut" column="CHECKOUT"/>
-      <result property="accountNum" column="ACCOUNT_NUM"/>
-      <result property="accountHol" column="ACCOUNT_HOL"/>
-      <result property="bank" column="BANK"/>
-      <result property="roomQua" column="ROOM_QUA"/>
-      <result property="roomNo" column="ROOM_NO"/>
-   </resultMap>
-   
-   <insert id="insertReserve" parameterType="com.cp.campers.reservePayment.model.vo.ReserveInfo">
-      INSERT 
-        INTO RESERVE
-         (
-             RESER_NO
-           , USER_NO 
-           , RESER_NAME
-           , PHONE
-           , RESER_STATE
-           , REQUEST
-           , CHECKIN
-           , CHECKOUT
-           , ACCOUNT_NUM
-           , ACCOUNT_HOL
-           , BANK
-           , ROOM_QUA
-           , ROOM_NO 
-         )
-         VALUES
-         (
-            SEQ_RESER_NO.NEXTVAL
-            , #{ userNo }   
-            , #{ reserName }
-            , #{ phone }
-            , DEFAULT
-            , #{ request }
-            , #{ checkIn }
-            , #{ checkOut }
-            , #{ accountNum }
-            , #{ accountHol }
-            , #{ bank }
-            , #{ roomQua }
-            , #{ roomNo } 
-         )
-   </insert>
-   
-   
-   <insert id="insertPayment" parameterType="com.cp.campers.reservePayment.model.vo.PaymentInfo">
-      INSERT 
-        INTO PAYMENT
-         (
-             PAY_NO
-           , PAY_AMOUNT 
-           , PAY_DATE
-           , PAY_KIND
-           , RESER_NO
-         )
-         VALUES
-         (
-            SEQ_PAY_NO.NEXTVAL
-            , #{ payAmount }
-            , SYSDATE
-            , #{ payKind }
-            , SEQ_RESER_NO.CURRVAL
-         )
-   </insert>
+	<resultMap id="reserPayResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
+		<id property="reserNo" column="RESER_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="reserName" column="RESER_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="reserState" column="RESER_STATE"/>
+		<result property="request" column="REQUEST"/>
+		<result property="checkIn" column="CHECKIN"/>
+		<result property="checkOut" column="CHECKOUT"/>
+		<result property="accountNum" column="ACCOUNT_NUM"/>
+		<result property="accountHol" column="ACCOUNT_HOL"/>
+		<result property="bank" column="BANK"/>
+		<result property="roomQua" column="ROOM_QUA"/>
+		<result property="roomNo" column="ROOM_NO"/>
+	</resultMap>
+	
+	<insert id="insertReserve" parameterType="com.cp.campers.reservePayment.model.vo.ReserveInfo">
+		INSERT 
+		  INTO RESERVE
+		   (
+		  	  RESER_NO
+		  	, USER_NO 
+		  	, RESER_NAME
+		  	, PHONE
+		  	, RESER_STATE
+		  	, REQUEST
+		  	, CHECKIN
+		  	, CHECKOUT
+		  	, ACCOUNT_NUM
+		  	, ACCOUNT_HOL
+		  	, BANK
+		  	, ROOM_QUA
+		  	, ROOM_NO 
+		   )
+		   VALUES
+		   (
+		      SEQ_RESER_NO.NEXTVAL
+		   	, #{ userNo }   
+		   	, #{ reserName }
+		   	, #{ phone }
+		   	, DEFAULT
+		   	, #{ request }
+		   	, #{ checkIn }
+		   	, #{ checkOut }
+		   	, #{ accountNum }
+		   	, #{ accountHol }
+		   	, #{ bank }
+		   	, #{ roomQua }
+		   	, #{ roomNo } 
+		   )
+	</insert>
+	
+	
+	<insert id="insertPayment" parameterType="com.cp.campers.reservePayment.model.vo.PaymentInfo">
+		INSERT 
+		  INTO PAYMENT
+		   (
+		  	  PAY_NO
+		  	, PAY_AMOUNT 
+		  	, PAY_DATE
+		  	, PAY_KIND
+		  	, RESER_NO
+		   )
+		   VALUES
+		   (
+		      SEQ_PAY_NO.NEXTVAL
+		   	, #{ payAmount }
+		   	, SYSDATE
+		   	, #{ payKind }
+		   	, SEQ_RESER_NO.CURRVAL
+		   )
+	</insert>
+	
+
 
 
 

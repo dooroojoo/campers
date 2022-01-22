@@ -11,33 +11,33 @@ import com.cp.campers.reservePayment.model.vo.ReserveInfo;
 @Service
 public class ReserPayServiceImpl implements ReserPayService{
 
-   private ReserPayMapper reserPayMapper;
-   
-   @Autowired
-   public ReserPayServiceImpl(ReserPayMapper reserPayMapper) {
-      this.reserPayMapper = reserPayMapper;
-   }
-   
-   
-   @Transactional
-   @Override
-   public int insertReserPay(ReserveInfo reserveInfo, PaymentInfo paymentInfo) {
-      
-      int insertReserve =  reserPayMapper.insertReserve(reserveInfo);
-      
-      int insertPayment = reserPayMapper.insertPayment(paymentInfo);
-      
-      int result;
-      
-      if(insertReserve > 0 && insertPayment > 0) {
-         result = 1;
-      } else {
-         result = 0;
-      }
-      
-      return result;
-   }
-   
-   
-   
+	private ReserPayMapper reserPayMapper;
+	
+	@Autowired
+	public ReserPayServiceImpl(ReserPayMapper reserPayMapper) {
+		this.reserPayMapper = reserPayMapper;
+	}
+	
+	
+	@Transactional
+	@Override
+	public int insertReserPay(ReserveInfo reserveInfo, PaymentInfo paymentInfo) {
+		
+		int insertReserve =  reserPayMapper.insertReserve(reserveInfo);
+		
+		int insertPayment = reserPayMapper.insertPayment(paymentInfo);
+		
+		int result;
+		
+		if(insertReserve > 0 && insertPayment > 0) {
+			result = 1;
+		} else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
+	
+	
 }
