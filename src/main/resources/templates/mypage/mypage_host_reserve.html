@@ -48,7 +48,7 @@
                     	<p class="camp_name" th:text="${ businessReservation.roomNo }"></p>
                     </th>
                     <th class="mypage_host_reserve_table_body">
-                    	<img class="mypage_host_reserve_table_img" th:src="${ businessReservation.fileRoute }+${ businessReservation.fileName }">		
+                    	<img class="mypage_host_reserve_table_img" th:each="camp : ${ campList }" th:if="${camp.campNo == businessReservation.campNo} " th:src="${ businessReservation.fileRoute }+${ businessReservation.fileName }">		
                     	<p class="camp_name" th:text="${ businessReservation.campName }"></p>					
                     	<p class="camp_name" th:text="${ businessReservation.roomName }"></p>
                     </th>
