@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class ReserPayController {
 
-   private ReserPayService reserPayService;
+private ReserPayService reserPayService;
    
    @Autowired
    public ReserPayController(ReserPayService reserPayService) {

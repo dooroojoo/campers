@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cp.campers.reservePayment.model.dao.ReserPayMapper">
 
-   <resultMap id="reserPayResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
+<resultMap id="reserPayResultMap" type="com.cp.campers.reservePayment.model.vo.ReserveInfo">
       <id property="reserNo" column="RESER_NO"/>
       <result property="userNo" column="USER_NO"/>
       <result property="reserName" column="RESER_NAME"/>
@@ -74,8 +74,6 @@
             , SEQ_RESER_NO.CURRVAL
          )
    </insert>
-   
-
 
 
 

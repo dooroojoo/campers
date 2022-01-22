@@ -85,14 +85,17 @@
                 <div class="reserName">예약자명<span class="red">(*)</span></div>
                 <div class="inp_text">
                     <span>
-                       <input type="text" th:value="${userName}" name="reserName" id="reserName" readonly/>
+
+	                    <input type="text" th:value="${userName}" name="reserName" id="reserName" readonly/>
                     </span>
                 </div>
                 <div class="phone">휴대폰 번호<span class="red">(*)</span></div>
                 <div class="inp_text">
-                   <span>
+
+                	 <span>
                        <input type="text" placeholder="010-1234-5678"  name="phone" id="phone" />
                    </span>
+
                 </div>
                 <div class="request">예약 요청사항(선택)</div>
                 <div class="textbox">
@@ -105,7 +108,8 @@
             <div class="reserPay_inner">
                 <div class="account_hol">예금주<span class="red">(*)</span></div>
                 <div class="inp_text">
-                   <span>
+
+                	<span>
                        <input type="text" placeholder="홍길동"  name="accountHol" id="accountHol" />
                    </span>
                 </div>
@@ -120,6 +124,7 @@
                    <span>
                        <input type="text" placeholder="환불 받으실 계좌번호의 은행을 입력해주세요"  name="bank" id="bank" />
                    </span>
+
                 </div>
             </div>
             <div class="title1">
@@ -188,9 +193,11 @@
                 <div class="tit">[객실요금]</div>
                 <!-- <div class="addr">예약 날짜 :  2021년 12월 07일 (화)</div> -->
                 <input type="hidden" id="roomPrice" name="roomPrice" th:value="${param.roomPrice}">
+
                 <div class="reserRoomSu">예약 객실 수량 :   <span id="date"></span>박 * <span th:text="${param.roomPrice} + '원 *'"></span> <span id="su"></span>(객실수) = <span id="total"></span>원</div>      
                 <input type="hidden" id="totalValue">
-                <div>총 결제 금액 : <b><span class="totalPay"></span>원</b></div>      
+                <div>총 결제 금액 : <b><span class="totalPay"></span>원</b></div> 		
+
             </div>
             <div class="title1">
                 <span>결제방법</span>
@@ -208,7 +215,8 @@
       <div th:include="common/footer.html"></div>
 
 
-   <!-- Dday -->
+
+	<!-- Dday -->
 <script>
    $(document).ready(function(){
       let dateIn = $("#dateIn").val();
@@ -224,7 +232,10 @@
    });
 </script>      
       
-   
+   	
+		
+	
+
 <!-- JS -->
  <script>
  
@@ -266,8 +277,9 @@
             $(this).next("pre").slideUp(); 
         }
     });
-   
-   // 객실 수, 총금액 로드 됐을 때 표시         
+
+	
+    // 객실 수, 총금액 로드 됐을 때 표시         
    $(document).ready(function(){
             let roomQua = $('#pRoomSu').find('input').val();
             let roomPrice = $("#roomPrice").val();
@@ -289,12 +301,14 @@
          $("#totalValue").val(total);
          $('#su').text(roomQua);
          $("#date").text(dateResult);
+
     });
     
     
     // 객실 수량  +
     function qtyUp(num){
-      if ($(num).parent('.inp_qty').hasClass('readOnly')) {return false;}
+
+		if ($(num).parent('.inp_qty').hasClass('readOnly')) {return false;}
       var thisVal = parseInt($(num).parents('.inp_qty').find("input").val());
       intVal = thisVal+1;
       if( intVal < 6) {
@@ -324,6 +338,7 @@
       $(".totalPay").text(totalPrice);
       $("#totalValue").val(total);
       $("#date").text(dateResult);
+
     }
     
     
@@ -336,8 +351,8 @@
             $(num).parents('.inp_qty').find("input").val(value);
             $('#su').text(value);
         }
-        
-       // 총 결제 금액 계산
+
+    	// 총 결제 금액 계산
       let roomPrice = $("#roomPrice").val();
       let roomNo = $('#roomNo').val();
       let dateIn = $("#dateIn").val();
@@ -357,6 +372,7 @@
       $("#total").text(totalPrice);
       $(".totalPay").text(totalPrice);
       $("#totalValue").val(total);
+
     }
     
    
@@ -365,7 +381,8 @@
 
 
 <script>
-   // 유효성 검사 
+
+	// 유효성 검사 
    function formChk(){
        let regExp = new RegExp('pattern', 'gmi');
        regExp = /pattern/gmi;
@@ -378,6 +395,7 @@
        let chk2 = document.querySelector('#chk2');
          
         if(!check(/^\d{3}-\d{3,4}-\d{4}$/, document.getElementById('phone'), 
+
          "핸드폰 번호는 -를 포함한 숫자로만 입력해주세요"))
            return false;
         if(!check(/^[가-힣]{2,}$/, document.getElementById('accountHol'),
@@ -389,8 +407,9 @@
         if(!check(/^[가-힣]{2,}$/, document.getElementById('bank'),
         "은행명을 확인해 주세요"))
          return false;
-        
-        if(!chk1.checked || !chk2.checked) {
+
+	     
+	     if(!chk1.checked || !chk2.checked) {
            alert("예약자 질의응답에 체크하셔야 합니다");
             return false;
         }
@@ -400,6 +419,7 @@
         }
        requestPay();
    }
+
 
    // 정규 표현식 객체, 사용자가 input태그에 입력한 태그, 그때 내가 전달할 메세지 
     function check(regExp, input, msg){
@@ -418,7 +438,8 @@
 
 <!-- 아임포트 연동 - 결제 -->
 <script>
-   var IMP = window.IMP; // 생략 가능
+
+	 var IMP = window.IMP; // 생략 가능
    IMP.init("imp21661729"); // 예: imp00000000
    
    function requestPay() {      
@@ -474,6 +495,7 @@
              } 
          });
        }
+
 </script>
 
 

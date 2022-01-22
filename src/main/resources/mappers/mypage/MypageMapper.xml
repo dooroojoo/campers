@@ -50,6 +50,25 @@
    </resultMap>
      <!-- <collection property="roomFileNoList" resultMap="RoomFileNoResultMap"/> -->
    
+   <resultMap type="com.cp.campers.mypage.model.vo.Camp" id="CampResultMap2">
+      <id property="campNo" column="CAMP_NO"/>
+      <result property="campName" column="CAMP_NAME"/>
+      <result property="userNo" column="USER_NO"/>
+      <result property="campAddress" column="CAMP_ADDRESS"/>
+      <result property="campIntro" column="CAMP_INTRO"/>
+      <result property="campPath" column="CAMP_PATH"/>
+      <result property="campPolicy" column="CAMP_POLICY"/>
+      <result property="campStatus" column="CAMP_STATUS"/>
+      <result property="accountNum" column="ACCOUNT_NUM"/>
+      <result property="bank" column="BANK"/>
+      <result property="checkin" column="CHECKIN"/>
+      <result property="checkout" column="CHECKOUT"/>
+      <result property="refusal" column="REFUSAL"/>
+      <collection property="imageFileList" resultMap="imageFileResultMap"/>
+      <collection property="campBusinessTypeList" resultMap="CampBusinessTypeResultMap"/>
+      <collection property="campFacilityList" resultMap="CampFacilityResultMap"/>
+   </resultMap>
+   
    <!-- 사진 -->
    <resultMap type="com.cp.campers.mypage.model.vo.ImageFile" id="imageFileResultMap">
       <id property="fileNo" column="FILE_NO"/>
@@ -169,7 +188,7 @@
       <result property="roomNo" column="ROOM_NO"/>
       <result property="roomName" column="ROOM_NAME"/>
       <result property="writeOrNot" column="WRITE_OR_NOT"/>
-      <association property="camp" resultMap="CampResultMap"/>
+      <association property="camp" resultMap="CampResultMap2"/>
    </resultMap>
    
    <resultMap id="BusinessReservationResultMap" type="com.cp.campers.mypage.model.vo.BusinessReservation">

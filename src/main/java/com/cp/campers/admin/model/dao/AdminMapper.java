@@ -79,6 +79,9 @@ public interface AdminMapper {
 
 	// 숙소등록
 	void enroll(int campNo);
+	
+	// 숙소대기(해지신청)
+	int wait(int campNo);
 
 	// 등록이력	
 	void recordToEnroll(int campNo);

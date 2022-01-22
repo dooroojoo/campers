@@ -56,7 +56,8 @@
                     <td class="mypage_guest_reserve_table_body2" th:if="${reserve.deadLine} <= 7 AND ${reserve.deadLine} >0">
 	                    <div th:if="${reserve.writeOrNot} == 'N'">
 	                    	<h6>체크 아웃으로부터 7일 이내에 <br> 리뷰 작성이 가능합니다</h6>
-	                    	<input class="mypage_guest_reserve_button" type="button" th:onclick="|location.href='@{/camp/review(userNo=${#authentication.principal.userNo}, campNo=${reserve.camp.campNo}, reserNo=${reserve.reserNo})}'|" 
+	                    	<input class="mypage_guest_reserve_button" type="button" 
+	                    	th:onclick="|location.href='@{/camp/review(userNo=${#authentication.principal.userNo}, campNo=${reserve.camp.campNo}, reserNo=${reserve.reserNo})}'|" 
 	                    	value="리뷰쓰기">
 	                    </div>
                     	<h5 th:if="${reserve.writeOrNot} == 'Y'">리뷰작성<br>완료</h5>

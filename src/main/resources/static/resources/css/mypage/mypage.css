@@ -188,10 +188,7 @@ body {
 /* ========================================================*/
 
 .content{
-  width :1900px;
   margin:auto;
-  /* float: left; */
-  /*display: flex; */
 }
 
 .mypage_content{

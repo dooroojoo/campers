@@ -59,7 +59,7 @@ public interface BoardService {
 
 	void updateDeletedImage(List<String> deleteList);
 
-	void updateFileLevel(String changeName);
+	void updateFileLevel(String bid);
 
 
 

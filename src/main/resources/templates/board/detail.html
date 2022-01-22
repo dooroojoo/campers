@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <title>detail</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,7 +72,7 @@
 	position: fixed;
 	left: 80%;
 	background: white;
-  z-index: 10;
+	z-index: 10;
 }
 
 .freeBoard-aside a {
@@ -116,13 +117,16 @@
 .freeBoard-content p {
 	text-align: center;
 	margin-bottom: 80px;
-	    max-width: 800px;
-    overflow-wrap: break-word;
-        margin-top: 50px;
+	max-width: 800px;
+	overflow-wrap: break-word;
+	margin-top: 50px;
 }
 
 .content-img img {
-	max-width: 500px;
+	min-width: 600px;
+	min-height: 400px;
+	max-width: 600px;
+	max-height: 400px;
 }
 
 .content-option {
@@ -144,9 +148,9 @@
 }
 
 .content-left label {
-margin-top: 6px;
-    margin-left: 40px;
-    color: grey;
+	margin-top: 6px;
+	margin-left: 40px;
+	color: grey;
 }
 
 .content-right img {
@@ -159,7 +163,6 @@ margin-top: 6px;
 
 .comment-header {
 	margin-top: 15px;
-	
 }
 
 .comment-header label {
@@ -176,15 +179,6 @@ margin-top: 6px;
 	padding: 5px 5px;
 	overflow: overlay;
 }
-.comment-box p {
-overflow-wrap: break-word;
-    width: 698px;
-
-}.refcomment-box p {
-overflow-wrap: break-word;
-    width: 534px;
-    
- }
 
 .comment-textarea:focus, .refComment-textarea:focus {
 	outline: none;
@@ -201,11 +195,11 @@ overflow-wrap: break-word;
 	display: flex;
 }
 
-.comment-write button {    
-width: 60px;
-    border-radius: 0 10px 10px 0;
-    border: none;
-    font-family: 'Nanum Gothic', sans-serif;
+.comment-write button {
+	width: 60px;
+	border-radius: 0 10px 10px 0;
+	border: none;
+	font-family: 'Nanum Gothic', sans-serif;
 }
 
 .comment-content {
@@ -213,7 +207,9 @@ width: 60px;
 	line-height: 15px;
 	margin-top: 25px;
 }
-
+.comment-right {
+position: relative;
+}
 .comment-rightTop img {
 	width: 17px;
 	float: right;
@@ -224,13 +220,14 @@ width: 60px;
 .noProfile {
 	width: 60px;
 }
+
 .haveProfile {
-    border-radius: 70%;
-    max-width: 60px;
-    max-height: 60px;
-    min-height: 60px;
-    min-width: 60px;
-    }
+	border-radius: 70%;
+	max-width: 60px;
+	max-height: 60px;
+	min-height: 60px;
+	min-width: 60px;
+}
 
 .comment-left {
 	display: flex;
@@ -248,14 +245,16 @@ width: 60px;
 .comment-box, .refcomment-box {
 	display: flex;
 	justify-content: space-between;
-	padding-bottom: 15px;
+	    padding-top: 10px;
+    padding-bottom: 30px;
 }
 
 .comment-content {
 	border-bottom: 1px solid #e7e7e7;
 }
-.comment-content:last-child{
-	margin-bottom:40px;
+
+.comment-content:last-child {
+	margin-bottom: 40px;
 }
 
 .comment-right {
@@ -305,13 +304,14 @@ width: 60px;
 }
 
 .refComment-textarea {
-	border: 1px solid #D1D1D1;
-	height: 100px;
-	margin-left: 80px;
-	margin-bottom: 20px;
-	padding: 5px 5px;
-	font-size: 14px;
-	max-width: 718px;
+	    border: 1px solid #D1D1D1;
+    height: 110px;
+    margin-left: 80px;
+    margin-bottom: 20px;
+    padding: 5px 5px;
+    font-size: 14px;
+    border-radius: 10px;
+    max-width: 718px;
 }
 
 .refComment-writer {
@@ -319,21 +319,21 @@ width: 60px;
 }
 
 .refComment-submit {
-	    display: flex;
-    margin-left: 88.5%;
-    position: relative;
+	display: flex;
+	margin-left: 88.5%;
+	position: relative;
 }
 
 .refComment-submit sub {
-	    margin-top: -41%;
-    right: 54%;
-    position: absolute;
+	margin-top: -41%;
+	right: 54%;
+	position: absolute;
 }
 
 .refComment-submit button {
-	border: none;
-    border-radius: 3px;
-    padding: 3px 6px;
+    border: none;
+    border-radius: 0 0 10px 0;
+    padding: 4px 8px;
     cursor: pointer;
     position: absolute;
     left: 53%;
@@ -357,6 +357,15 @@ width: 60px;
 .comment-leftBottom {
 	display: flex;
 }
+.refcomment-box .comment-leftBottom p {
+    flex-flow: nowrap;
+    width: 510px;
+        line-height: 20px;
+   }
+   
+.comment-leftBottom p {
+       max-width: 670px;
+   }
 
 .comment-leftBottom label {
 	margin-top: 16px;
@@ -378,41 +387,208 @@ width: 60px;
 }
 
 .comment-rightBottom label {
-	cursor: pointer;
+	    position: absolute;
+    cursor: pointer;
+    width: 60px;
+    bottom: -15px;
+    left: -12px;
 }
-.sub_div{
+
+.sub_div {
 	position: relative;
 }
-.sub_div sub{
+
+.sub_div sub {
 	position: absolute;
-    color: grey;
-    bottom: 0%;
-    right: 5px;
+	color: grey;
+	bottom: 0%;
+	right: 5px;
 }
+
 .hover:hover {
 	background-color: #fbfbfb;
 }
+
 .heart {
 	position: absolute;
-    left: -34px;
-    top: -35px;
-  width: 100px;
-  height: 100px;
-  background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
-  background-position: 0 0;
-  cursor: pointer;
-  transition: background-position 1s steps(28);
-  transition-duration: 0s;
+	left: -34px;
+	top: -35px;
+	width: 100px;
+	height: 100px;
+	background:
+		url("https://cssanimation.rocks/images/posts/steps/heart.png")
+		no-repeat;
+	background-position: 0 0;
+	cursor: pointer;
+	transition: background-position 1s steps(28);
+	transition-duration: 0s;
 }
+
 .is-active {
-  transition-duration: 1s;
-  background-position: -2800px 0;
+	transition-duration: 1s;
+	background-position: -2800px 0;
 }
 
 .placement {
 	position: relative;
 }
 
+
+#wrapper {
+	width: 600px;
+	margin: 50px auto;
+	height: 400px;
+	position: relative;
+	color: #fff;
+	text-shadow: rgba(0, 0, 0, 0.1) 2px 2px 0px;
+}
+
+#slider-wrap {
+	width: 600px;
+	height: 400px;
+	position: relative;
+	overflow: hidden;
+}
+
+#slider-wrap ul#slider {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#slider-wrap ul#slider li {
+	float: left;
+	position: relative;
+	width: 600px;
+	height: 400px;
+}
+
+#slider-wrap ul#slider li img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.fa {
+	display: inline-block;
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/*btns*/
+.btns {
+	position: absolute;
+	width: 50px;
+	height: 60px;
+	top: 50%;
+	margin-top: -25px;
+	line-height: 57px;
+	text-align: center;
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.1);
+	z-index: 100;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
+	-webkit-transition: all 0.1s ease;
+	-moz-transition: all 0.1s ease;
+	-o-transition: all 0.1s ease;
+	-ms-transition: all 0.1s ease;
+	transition: all 0.1s ease;
+}
+
+.btns:hover {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+#next {
+	right: -50px;
+	border-radius: 7px 0px 0px 7px;
+}
+
+#previous {
+	left: -50px;
+	border-radius: 0px 7px 7px 7px;
+}
+
+#counter {
+	top: 30px;
+	right: 35px;
+	width: auto;
+	position: absolute;
+}
+
+#slider-wrap.active #next {
+	right: 0px;
+}
+
+#slider-wrap.active #previous {
+	left: 0px;
+}
+
+/*bar*/
+#pagination-wrap {
+	min-width: 20px;
+	margin-top: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 15px;
+	position: relative;
+	text-align: center;
+}
+
+#pagination-wrap ul {
+	width: 100%;
+		margin: 0;
+	padding: 0;
+}
+
+#pagination-wrap ul li {
+	margin: 0 4px;
+	display: inline-block;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #fff;
+	opacity: 0.5;
+	position: relative;
+	top: 0;
+}
+
+#pagination-wrap ul li.active {
+	width: 12px;
+	height: 12px;
+	top: 3px;
+	opacity: 1;
+	box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0px;
+}
+
+/*ANIMATION*/
+#slider-wrap ul, #pagination-wrap ul li {
+	-webkit-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+	-moz-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+	-o-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+	-ms-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+	transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+	list-style: none;
+}
+
+.fa-arrow-right:before {
+	content: "\f061";
+}
+
+.fa-arrow-left:before {
+	content: "\f060";
+}
 </style>
 </head>
 <body>
@@ -420,51 +596,54 @@ width: 60px;
 
 	<div class="freeBoard-wrap">
 
- <div class="freeBoard-aside">
-          
-        <div>
-        <th:block sec:authorize="isAuthenticated()">
-            <a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
-        </th:block>
-        <th:block sec:authorize="isAnonymous()">
-      		<a onclick="loginPlz();" class="myboard">내가 쓴 게시물</a>
-        </th:block>
-        </div>
-        <div>
-       	<th:block sec:authorize="isAuthenticated()">
-            <a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
-        </th:block>
-        <th:block sec:authorize="isAnonymous()">
-        	<a onclick="loginPlz();" class="mycomment">내가 쓴 댓글</a>
-        </th:block>
-        </div>
-        <div>
-            <a href="/board/list" class="gotolist">목록으로</a>
-        </div>
-        <div>
-        <th:block sec:authorize="isAuthenticated()">
-            <a href="/board/write" class="boradWrite">글쓰기</a>
-        </th:block>
-        <th:block sec:authorize="isAnonymous()">
-        	<a onclick="loginPlz();" class="boradWrite">글쓰기</a>
-        </th:block>
-        </div>
-       
-    </div>
+		<div class="freeBoard-aside">
+
+			<div>
+				<th:block sec:authorize="isAuthenticated()">
+					<a href="/board/myboard" class="myboard">내가 쓴 게시물</a>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<a onclick="loginPlz();" class="myboard">내가 쓴 게시물</a>
+				</th:block>
+			</div>
+			<div>
+				<th:block sec:authorize="isAuthenticated()">
+					<a href="/board/mycomment" class="mycomment">내가 쓴 댓글</a>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<a onclick="loginPlz();" class="mycomment">내가 쓴 댓글</a>
+				</th:block>
+			</div>
+			<div>
+				<a href="/board/list" class="gotolist">목록으로</a>
+			</div>
+			<div>
+				<th:block sec:authorize="isAuthenticated()">
+					<a href="/board/write" class="boradWrite">글쓰기</a>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<a onclick="loginPlz();" class="boradWrite">글쓰기</a>
+				</th:block>
+			</div>
+
+		</div>
 		<div class="freeBoard-container">
 			<div class="freeBoard-header">
 				<label class="freeBoard-label">자유게시판</label>
 				<th:block sec:authorize="isAuthenticated()">
-				<div class="place-right">
-					<button th:onclick="'location.href=\''+@{/board/update(bid=${param.bid})}+'\''" th:if="${#authentication.principal.userNo} == ${board.writer}">수정</button>
-					<button th:onclick="doYouWantDelete([[${param.bid}]])" th:if="${#authentication.principal.userNo} == ${board.writer} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</button>
-				</div>
+					<div class="place-right">
+						<button
+							th:onclick="'location.href=\''+@{/board/update(bid=${param.bid})}+'\''"
+							th:if="${#authentication.principal.userNo} == ${board.writer}">수정</button>
+						<button th:onclick="doYouWantDelete([[${param.bid}]])"
+							th:if="${#authentication.principal.userNo} == ${board.writer} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</button>
+					</div>
 				</th:block>
 			</div>
 			<script>
-				function doYouWantDelete(bid){
-					if(confirm('게시물을 삭제하시겠습니까?')){
-						location.href="/board/delete?bid="+bid;
+				function doYouWantDelete(bid) {
+					if (confirm('게시물을 삭제하시겠습니까?')) {
+						location.href = "/board/delete?bid=" + bid;
 					}
 				}
 			</script>
@@ -474,101 +653,139 @@ width: 60px;
 					<label th:text="${board.title}"></label>
 				</div>
 				<div class="info-right">
-					<label th:text="|조회수 ${board.bcount}|"></label> <label id="report-board"
-						th:text="${board.nickName}"></label> <label
+					<label th:text="|조회수 ${board.bcount}|"></label> <label
+						id="report-board" th:text="${board.nickName}"></label> <label
 						th:text="${#dates.format(board.createDate,'yyyy년 M월 dd일 hh:mm:ss')}"></label>
 				</div>
 			</div>
 			<div class="freeBoard-content">
-				<div class="content-img" th:each="fileNo : ${boardFileNoList}">
+				<div id="wrapper" th:if="${boardFileNoList}!=null AND ${#lists.size(boardFileNoList) > 1}">
+					<div id="slider-wrap">
+						<ul id="slider" >
+							<li th:each="fileNo : ${boardFileNoList}"><img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}"></li>
+						</ul>
+						<div class="btns" id="next">
+							<i class="fa fa-arrow-right"></i>
+						</div>
+						<div class="btns" id="previous">
+							<i class="fa fa-arrow-left"></i>
+						</div>
+
+						<div id="pagination-wrap">
+							<ul>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="content-img" th:if="${boardFileNoList}!=null AND ${#lists.size(boardFileNoList) <= 1}" th:each="fileNo : ${boardFileNoList}">
 					<img th:src="${fileNo.Attachment.fileRoute}+${fileNo.Attachment.fileName}">
 				</div>
+
 				<p th:text="${board.content}"></p>
-				
+
 				<div class="content-option">
-						<th:block sec:authorize="isAuthenticated()" >
-							<div class="content-left">
-								<div class="placement">
-						        <div class="heart likeUp" th:if="${likedBid} == null"></div>
-						        <div class="heart likeDown is-active" th:unless="${likedBid} == null"></div>
-						    	</div>
-								<label class="likeCount" th:text="${likeCounts}"></label>
-								<input class="hiddenBid" type="hidden" th:value="${board.bid}">
-								<input class="hiddenUseNo" type="hidden" th:value="${#authentication.principal.userNo}">
+					<th:block sec:authorize="isAuthenticated()">
+						<div class="content-left">
+							<div class="placement">
+								<div class="heart likeUp" th:if="${likedBid} == null"></div>
+								<div class="heart likeDown is-active"
+									th:unless="${likedBid} == null"></div>
 							</div>
-						</th:block>
-						<th:block sec:authorize="isAnonymous()">
-							<div class="content-left">
-								<div class="placement">
-						        <div class="heart" onclick="loginPlz();"></div>
-						    	</div>
-								<label class="likeCount" th:text="${likeCounts}"></label>
-								<input class="hiddenBid" type="hidden" th:value="${board.bid}">
+							<label class="likeCount" th:text="${likeCounts}"></label> <input
+								class="hiddenBid" type="hidden" th:value="${board.bid}">
+							<input class="hiddenUseNo" type="hidden"
+								th:value="${#authentication.principal.userNo}">
+						</div>
+					</th:block>
+					<th:block sec:authorize="isAnonymous()">
+						<div class="content-left">
+							<div class="placement">
+								<div class="heart" onclick="loginPlz();"></div>
 							</div>
-						</th:block>
+							<label class="likeCount" th:text="${likeCounts}"></label> <input
+								class="hiddenBid" type="hidden" th:value="${board.bid}">
+						</div>
+					</th:block>
 					<script>
-				
-						$(document).on("click",".likeUp",function(){
-							
-							$(this).attr('class','heart likeDown is-active');
-						   	let bid = $(".hiddenBid").val();
-						    console.log(bid);
-						    
-						    $.ajax({
-						    	url : "/board/likeUp/"+bid,
-						    	dataType : "json",
-					            contentType : "application/json; charset=utf-8",
-						    	type : "get",
-						    	success : function(data){
-						    		console.log("count"+data);
-						    		$(".likeCount").text(data);
-						    	},
-						    	error: function(e){
-						    		console.log(e);
-						    	}
-						    })
-						    
-						    
-						  });
-						
-					
+						$(document)
+								.on(
+										"click",
+										".likeUp",
+										function() {
+
+											$(this).attr('class',
+													'heart likeDown is-active');
+											let bid = $(".hiddenBid").val();
+											console.log(bid);
+
+											$
+													.ajax({
+														url : "/board/likeUp/"
+																+ bid,
+														dataType : "json",
+														contentType : "application/json; charset=utf-8",
+														type : "get",
+														success : function(data) {
+															console.log("count"
+																	+ data);
+															$(".likeCount")
+																	.text(data);
+														},
+														error : function(e) {
+															console.log(e);
+														}
+													})
+
+										});
 					</script>
 					<script>
-					$(document).on("click",".likeDown",function(){
-							$(this).attr('class','heart likeUp');
-						   	let bid = $(".hiddenBid").val();
-						    console.log(bid);
-						    
-						    $.ajax({
-						    	url : "/board/likeDown/"+bid,
-						    	dataType : "json",
-					            contentType : "application/json; charset=utf-8",
-						    	type : "get",
-						    	success : function(data){
-						    		console.log("count"+data);
-						    		$(".likeCount").text(data);
-						    	},
-						    	error: function(e){
-						    		console.log(e);
-						    	}
-						    })
-						})
+						$(document)
+								.on(
+										"click",
+										".likeDown",
+										function() {
+											$(this).attr('class',
+													'heart likeUp');
+											let bid = $(".hiddenBid").val();
+											console.log(bid);
+
+											$
+													.ajax({
+														url : "/board/likeDown/"
+																+ bid,
+														dataType : "json",
+														contentType : "application/json; charset=utf-8",
+														type : "get",
+														success : function(data) {
+															console.log("count"
+																	+ data);
+															$(".likeCount")
+																	.text(data);
+														},
+														error : function(e) {
+															console.log(e);
+														}
+													})
+										})
 					</script>
 					<th:block sec:authorize="isAuthenticated()">
-						<div class="content-right" th:id="'board-div'+${board.bid}" th:onclick="|report(this);|">
-							<input type="hidden" name="id" th:value="${board.bid}">
-							<input type="hidden" name="nickName" th:value="${board.nickName}">
-							<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
-							<input type="hidden" name="suspect" th:value="${board.writer}">
-							<input type="hidden" name="reportType" value="board">
-				            <img src="/resources/images/board/report_img.png" onclick="show()">
-				        </div>
-			        </th:block>
-			        <th:block sec:authorize="isAnonymous()">
-				        <div class="content-right">
-				      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+						<div class="content-right" th:id="'board-div'+${board.bid}"
+							th:onclick="|report(this);|">
+							<input type="hidden" name="id" th:value="${board.bid}"> <input
+								type="hidden" name="nickName" th:value="${board.nickName}">
+							<input type="hidden" name="victim"
+								th:value="${#authentication.principal.userNo}"> <input
+								type="hidden" name="suspect" th:value="${board.writer}">
+							<input type="hidden" name="reportType" value="board"> <img
+								src="/resources/images/board/report_img.png" onclick="show()">
 						</div>
-			        </th:block>
+					</th:block>
+					<th:block sec:authorize="isAnonymous()">
+						<div class="content-right">
+							<img src="/resources/images/board/report_img.png"
+								onclick="loginPlz();">
+						</div>
+					</th:block>
 				</div>
 			</div>
 			<div class="freeBoard-comment">
@@ -580,262 +797,310 @@ width: 60px;
 								style="width: 739px; height: 100px;"></div>
 							<textarea name="reply" class="realTextarea" hidden required></textarea>
 							<div class="sub_div">
-							<sub style="color: grey;">0/250</sub>
+								<sub style="color: grey;">0/250</sub>
 							</div>
-								<th:block sec:authorize="isAuthenticated()">
+							<th:block sec:authorize="isAuthenticated()">
 								<button type="submit" style="cursor: pointer;">등록</button>
-							    </th:block>
-							    <th:block sec:authorize="isAnonymous()">
-							    <button type="reset" onclick="loginPlz();">등록</button>
-							    </th:block>
+							</th:block>
+							<th:block sec:authorize="isAnonymous()">
+								<button type="reset" onclick="loginPlz();">등록</button>
+							</th:block>
 						</div>
 					</form>
 				</div>
 				<script>
-				$(".comment-textarea").keyup(
-						function() {
-							$(this).next().text($(this).text());
-							$(this).next().next().find("sub").html(
-									$(this).text().length + "/250");
+					$(".comment-textarea")
+							.keyup(
+									function() {
+										$(this).next().text($(this).text());
+										$(this).next().next().find("sub").html(
+												$(this).text().length + "/250");
 
-							if ($(this).text().length > 249) {
+										if ($(this).text().length > 249) {
 
-								$(this).text($(this).text().substr(0, 249));
-								alert("250자 이하로 입력 가능합니다.")
-								$(this).blur();
-							}
+											$(this).text(
+													$(this).text().substr(0,
+															249));
+											alert("250자 이하로 입력 가능합니다.")
+											$(this).blur();
+										}
 
-						})
+									})
 				</script>
 
 
 				<!--댓글-->
-				<div th:if="${commentList} != null">
-				<div class="comment-content" th:each="comment : ${ commentList }">
-					<div class="comment-box" th:if="${ comment.refCid == 0} AND ${comment.status} == 'N'">
-						<div class="comment-left">
-							<div class="user-profile">
-								<img class="haveProfile" th:if="${comment.profilePath != null }" th:src="${comment.profilePath}">
-								<img class="noProfile" th:unless="${comment.profilePath != null }" src="/resources/images/board/member_profile_navy.png">
-							</div>
-							<div class="comment-leftTopBottom">
-								<div class="comment-leftTop">
-									<sub id="report-reply" th:text="${comment.nickName}"></sub>
-									<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
-									<th:block sec:authorize="isAuthenticated()">
-									<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" 
-									th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
-									</th:block>
-								</div>
-								<div class="comment-leftBottom">
-									<p th:text="${comment.cContent}"></p>
-								</div>
-							</div>
-						</div>
-						<div class="comment-right">
-							<th:block sec:authorize="isAuthenticated()">
-								<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
-									<input type="hidden" name="id" th:value="${comment.cid}">
-									<input type="hidden" name="nickName" th:value="${comment.nickName}">
-									<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
-									<input type="hidden" name="suspect" th:value="${comment.cWriter}">
-									<input type="hidden" name="reportType" value="reply">
-						            <img src="/resources/images/board/report_img.png" onclick="show()">
-						        </div>
-					        </th:block>
-					        <th:block sec:authorize="isAnonymous()">
-						        <div class="comment-rightTop">
-						      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
-								</div>
-					        </th:block>
-							<div class="comment-rightBottom">
-								<label th:onclick="|javascript:openComment(this)|">답글</label>
-								<div></div>
-							</div>
-						</div>
-					</div>
-					<!-- 삭제된 댓글 -->
-					<div class="comment-box" th:if="${ comment.refCid == 0} AND ${comment.status} == 'Y'">
-						<div class="comment-left">
-							<div class="user-profile">
-								<img class="noProfile"src="/resources/images/board/member_profile_navy.png">
-							</div>
-							<div class="comment-leftTopBottom">
-								<div class="comment-leftTop">
-									<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
-								</div>
-								<div class="comment-leftBottom">
-									<p style="color:grey">삭제된 댓글입니다.</p>
-								</div>
-							</div>
-						</div>
-						<div class="comment-right">
-							<th:block sec:authorize="isAuthenticated()">
-								<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
-									<input type="hidden" name="id" th:value="${comment.cid}">
-									<input type="hidden" name="nickName" th:value="${comment.nickName}">
-									<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
-									<input type="hidden" name="suspect" th:value="${comment.cWriter}">
-									<input type="hidden" name="reportType" value="reply">
-						            <img src="/resources/images/board/report_img.png" onclick="show()">
-						        </div>
-					        </th:block>
-					        <th:block sec:authorize="isAnonymous()">
-						        <div class="comment-rightTop">
-						      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
-								</div>
-					        </th:block>
-							<div class="comment-rightBottom">
-								<label></label>
-								<div></div>
-							</div>
-						</div>
-					</div>
-					<!-- 숨겨진 답글창 -->
-					<div class="refComment-writer" hidden>
-					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refOriginCid},refWriter=${comment.nickName})}" method="post">
-							<div class="refComment-textarea" contenteditable="true"></div>
-							<textarea name="cContent"  class="realTextarea" hidden required></textarea>
-							<div class="refComment-submit">
-								<sub style="color: grey;">0/250</sub>
-								<th:block sec:authorize="isAuthenticated()">
-								<button type="submit"  style="cursor: pointer;">등록</button>
-							    </th:block>
-							    <th:block sec:authorize="isAnonymous()">
-							    <button type="reset" onclick="loginPlz();">등록</button>
-							    </th:block>
-							</div>
-					</form>
-						</div>
-					<!-- 대댓글 -->
-					<div class="refComment"  th:unless="${comment.refCid == 0 }">
-						<div class="refcomment-box" th:if="${comment.status}=='N'" >
-							<div class="comment-left ref">
+				<div style="width: 810px;" th:if="${commentList} != null">
+					<div class="comment-content" th:each="comment : ${ commentList }">
+						<div class="comment-box"
+							th:if="${ comment.refCid == 0} AND ${comment.status} == 'N'">
+							<div class="comment-left">
 								<div class="user-profile">
-									<img class="refImg" style="width: 20px;"
-										src="/resources/images/board/right-arrow.png">
-									<img class="haveProfile" th:if="${comment.profilePath != null }" th:src="${comment.profilePath}">
-								<img class="noProfile" th:unless="${comment.profilePath != null }" src="/resources/images/board/member_profile_navy.png">
+									<img class="haveProfile"
+										th:if="${comment.profilePath != null }"
+										th:src="${comment.profilePath}"> <img class="noProfile"
+										th:unless="${comment.profilePath != null }"
+										src="/resources/images/board/member_profile_navy.png">
 								</div>
 								<div class="comment-leftTopBottom">
 									<div class="comment-leftTop">
-										<sub id="report-reply" th:text="${comment.nickName}"></sub>
-										<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+										<sub id="report-reply" th:text="${comment.nickName}"></sub> <sub
+											th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 										<th:block sec:authorize="isAuthenticated()">
-										<sub style="cursor: pointer;" th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''" 
-										th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
+											<sub style="cursor: pointer;"
+												th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''"
+												th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
 										</th:block>
 									</div>
 									<div class="comment-leftBottom">
-										<label th:text="|@${comment.refWriter}|"></label>
 										<p th:text="${comment.cContent}"></p>
 									</div>
 								</div>
 							</div>
-							
 							<div class="comment-right">
 								<th:block sec:authorize="isAuthenticated()">
-									<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
+									<div class="comment-rightTop"
+										th:id="'reply-div'+${comment.cid}"
+										th:onclick="|report(this);|">
 										<input type="hidden" name="id" th:value="${comment.cid}">
-										<input type="hidden" name="nickName" th:value="${comment.nickName}">
-										<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
-										<input type="hidden" name="suspect" th:value="${comment.cWriter}">
-										<input type="hidden" name="reportType" value="reply">
-							            <img src="/resources/images/board/report_img.png" onclick="show()">
-							        </div>
-						        </th:block>
-						        <th:block sec:authorize="isAnonymous()">
-							        <div class="comment-rightTop">
-							      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+										<input type="hidden" name="nickName"
+											th:value="${comment.nickName}"> <input type="hidden"
+											name="victim" th:value="${#authentication.principal.userNo}">
+										<input type="hidden" name="suspect"
+											th:value="${comment.cWriter}"> <input type="hidden"
+											name="reportType" value="reply"> <img
+											src="/resources/images/board/report_img.png" onclick="show()">
 									</div>
-						        </th:block>
+								</th:block>
+								<th:block sec:authorize="isAnonymous()">
+									<div class="comment-rightTop">
+										<img src="/resources/images/board/report_img.png"
+											onclick="loginPlz();">
+									</div>
+								</th:block>
 								<div class="comment-rightBottom">
-									<label th:onclick="openComment(this);">답글</label>
+									<label th:onclick="|javascript:openComment(this)|">답글</label>
+									<div></div>
 								</div>
 							</div>
 						</div>
 						<!-- 삭제된 댓글 -->
-						<div class="refcomment-box" th:if="${comment.status}=='Y'" >
-							<div class="comment-left ref">
+						<div class="comment-box"
+							th:if="${ comment.refCid == 0} AND ${comment.status} == 'Y'">
+							<div class="comment-left">
 								<div class="user-profile">
-									<img class="refImg" style="width: 20px;"
-										src="/resources/images/board/right-arrow.png">
-									
-								<img class="noProfile"src="/resources/images/board/member_profile_navy.png">
+									<img class="noProfile"
+										src="/resources/images/board/member_profile_navy.png">
 								</div>
 								<div class="comment-leftTopBottom">
 									<div class="comment-leftTop">
-										<sub th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+										<sub
+											th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
 									</div>
 									<div class="comment-leftBottom">
-										<p style="color:grey;">삭제된 댓글입니다.</p>
+										<p style="color: grey">삭제된 댓글입니다.</p>
 									</div>
 								</div>
 							</div>
-							
 							<div class="comment-right">
 								<th:block sec:authorize="isAuthenticated()">
-									<div class="comment-rightTop" th:id="'reply-div'+${comment.cid}" th:onclick="|report(this);|">
+									<div class="comment-rightTop"
+										th:id="'reply-div'+${comment.cid}"
+										th:onclick="|report(this);|">
 										<input type="hidden" name="id" th:value="${comment.cid}">
-										<input type="hidden" name="nickName" th:value="${comment.nickName}">
-										<input type="hidden" name="victim" th:value="${#authentication.principal.userNo}">
-										<input type="hidden" name="suspect" th:value="${comment.cWriter}">
-										<input type="hidden" name="reportType" value="reply">
-							            <img src="/resources/images/board/report_img.png" onclick="show()">
-							        </div>
-						        </th:block>
-						        <th:block sec:authorize="isAnonymous()">
-							        <div class="comment-rightTop">
-							      		<img src="/resources/images/board/report_img.png" onclick="loginPlz();">
+										<input type="hidden" name="nickName"
+											th:value="${comment.nickName}"> <input type="hidden"
+											name="victim" th:value="${#authentication.principal.userNo}">
+										<input type="hidden" name="suspect"
+											th:value="${comment.cWriter}"> <input type="hidden"
+											name="reportType" value="reply"> <img
+											src="/resources/images/board/report_img.png" onclick="show()">
 									</div>
-						        </th:block>
+								</th:block>
+								<th:block sec:authorize="isAnonymous()">
+									<div class="comment-rightTop">
+										<img src="/resources/images/board/report_img.png"
+											onclick="loginPlz();">
+									</div>
+								</th:block>
 								<div class="comment-rightBottom">
 									<label></label>
+									<div></div>
 								</div>
 							</div>
-						
 						</div>
-						<!-- 대댓글의 답글창 -->
+						<!-- 숨겨진 답글창 -->
 						<div class="refComment-writer" hidden>
-					<form th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refCid}, refWriter=${comment.nickName})}" method="post">
-							<div class="refComment-textarea" contenteditable="true"></div>
-							<textarea name="cContent"  class="realTextarea" hidden required></textarea>
-							<div class="refComment-submit">
-								<sub style="color: grey;">0/250</sub>
-								<th:block sec:authorize="isAuthenticated()">
-								<button type="submit"  style="cursor: pointer;">등록</button>
-							    </th:block>
-							    <th:block sec:authorize="isAnonymous()">
-							    <button  type="reset" onclick="loginPlz();">등록</button>
-							    </th:block>
+							<form
+								th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refOriginCid},refWriter=${comment.nickName})}"
+								method="post">
+								<div class="refComment-textarea" contenteditable="true"></div>
+								<textarea name="cContent" class="realTextarea" hidden required></textarea>
+								<div class="refComment-submit">
+									<sub style="color: grey;">0/250</sub>
+									<th:block sec:authorize="isAuthenticated()">
+										<button type="submit" style="cursor: pointer;">등록</button>
+									</th:block>
+									<th:block sec:authorize="isAnonymous()">
+										<button type="reset" onclick="loginPlz();">등록</button>
+									</th:block>
+								</div>
+							</form>
+						</div>
+						<!-- 대댓글 -->
+						<div class="refComment" th:unless="${comment.refCid == 0 }">
+							<div class="refcomment-box" th:if="${comment.status}=='N'">
+								<div class="comment-left ref">
+									<div class="user-profile">
+										<img class="refImg" style="width: 20px;"
+											src="/resources/images/board/right-arrow.png"> <img
+											class="haveProfile" th:if="${comment.profilePath != null }"
+											th:src="${comment.profilePath}"> <img class="noProfile"
+											th:unless="${comment.profilePath != null }"
+											src="/resources/images/board/member_profile_navy.png">
+									</div>
+									<div class="comment-leftTopBottom">
+										<div class="comment-leftTop">
+											<sub id="report-reply" th:text="${comment.nickName}"></sub> <sub
+												th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+											<th:block sec:authorize="isAuthenticated()">
+												<sub style="cursor: pointer;"
+													th:onclick="'location.href=\''+@{/board/comment/delete(cid=${comment.cid},bid=${comment.bid})}+'\''"
+													th:if="${#authentication.principal.userNo} == ${comment.cWriter} OR ${#authorization.expression('hasRole(''ADMIN'')')}">삭제</sub>
+											</th:block>
+										</div>
+										<div class="comment-leftBottom">
+											<label th:text="|@${comment.refWriter}|"></label>
+											<p th:text="${comment.cContent}"></p>
+										</div>
+									</div>
+								</div>
+
+								<div class="comment-right">
+									<th:block sec:authorize="isAuthenticated()">
+										<div class="comment-rightTop"
+											th:id="'reply-div'+${comment.cid}"
+											th:onclick="|report(this);|">
+											<input type="hidden" name="id" th:value="${comment.cid}">
+											<input type="hidden" name="nickName"
+												th:value="${comment.nickName}"> <input type="hidden"
+												name="victim" th:value="${#authentication.principal.userNo}">
+											<input type="hidden" name="suspect"
+												th:value="${comment.cWriter}"> <input type="hidden"
+												name="reportType" value="reply"> <img
+												src="/resources/images/board/report_img.png"
+												onclick="show()">
+										</div>
+									</th:block>
+									<th:block sec:authorize="isAnonymous()">
+										<div class="comment-rightTop">
+											<img src="/resources/images/board/report_img.png"
+												onclick="loginPlz();">
+										</div>
+									</th:block>
+									<div class="comment-rightBottom">
+										<label th:onclick="openComment(this);">답글</label>
+									</div>
+								</div>
 							</div>
-					</form>
+							<!-- 삭제된 댓글 -->
+							<div class="refcomment-box" th:if="${comment.status}=='Y'">
+								<div class="comment-left ref">
+									<div class="user-profile">
+										<img class="refImg" style="width: 20px;"
+											src="/resources/images/board/right-arrow.png"> <img
+											class="noProfile"
+											src="/resources/images/board/member_profile_navy.png">
+									</div>
+									<div class="comment-leftTopBottom">
+										<div class="comment-leftTop">
+											<sub
+												th:text="${#dates.format(comment.modifyDate,'yyyy-MM-dd hh:mm:ss')}"></sub>
+										</div>
+										<div class="comment-leftBottom">
+											<p style="color: grey;">삭제된 댓글입니다.</p>
+										</div>
+									</div>
+								</div>
+
+								<div class="comment-right">
+									<th:block sec:authorize="isAuthenticated()">
+										<div class="comment-rightTop"
+											th:id="'reply-div'+${comment.cid}"
+											th:onclick="|report(this);|">
+											<input type="hidden" name="id" th:value="${comment.cid}">
+											<input type="hidden" name="nickName"
+												th:value="${comment.nickName}"> <input type="hidden"
+												name="victim" th:value="${#authentication.principal.userNo}">
+											<input type="hidden" name="suspect"
+												th:value="${comment.cWriter}"> <input type="hidden"
+												name="reportType" value="reply"> <img
+												src="/resources/images/board/report_img.png"
+												onclick="show()">
+										</div>
+									</th:block>
+									<th:block sec:authorize="isAnonymous()">
+										<div class="comment-rightTop">
+											<img src="/resources/images/board/report_img.png"
+												onclick="loginPlz();">
+										</div>
+									</th:block>
+									<div class="comment-rightBottom">
+										<label></label>
+									</div>
+								</div>
+
+							</div>
+							<!-- 대댓글의 답글창 -->
+							<div class="refComment-writer" hidden>
+								<form
+									th:action="@{/board/refcomment(bid=${comment.bid}, refCid=${comment.refCid}, refWriter=${comment.nickName})}"
+									method="post">
+									<div class="refComment-textarea" contenteditable="true"></div>
+									<textarea name="cContent" class="realTextarea" hidden required></textarea>
+									<div class="refComment-submit">
+										<sub style="color: grey;">0/250</sub>
+										<th:block sec:authorize="isAuthenticated()">
+											<button type="submit" style="cursor: pointer;">등록</button>
+										</th:block>
+										<th:block sec:authorize="isAnonymous()">
+											<button type="reset" onclick="loginPlz();">등록</button>
+										</th:block>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-				</div>
 				<div th:unless="${commentList} != null">
 					<div>
-						<p style="text-align:center; color:grey; margin:50px;">댓글이 없습니다.</p>
+						<p style="text-align: center; color: grey; margin: 50px;">댓글이
+							없습니다.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="another-list">
-	
-		<div style="cursor: pointer;" class="previous-board hover" th:onclick="'location.href=\''+@{/board/detail(bid=${board.prevId})}+'\''" th:if="${board.prevId != 0}">
-			<img src="/resources/images/board/upArrow.png"><label style="cursor: pointer"
-				class="list-label">이전글</label><label th:text="${board.prevTitle}" style="cursor: pointer"></label>
+
+		<div style="cursor: pointer;" class="previous-board hover"
+			th:onclick="'location.href=\''+@{/board/detail(bid=${board.prevId})}+'\''"
+			th:if="${board.prevId != 0}">
+			<img src="/resources/images/board/upArrow.png"><label
+				style="cursor: pointer" class="list-label">이전글</label><label
+				th:text="${board.prevTitle}" style="cursor: pointer"></label>
 		</div>
 		<div class="previous-board" th:unless="${board.prevId != 0}">
 			<img src="/resources/images/board/upArrow.png"><label
 				class="list-label">이전글</label><label>이전글이 없습니다.</label>
 		</div>
-		
-		<div style="cursor: pointer" class="next-board hover"  th:onclick="'location.href=\''+@{/board/detail(bid=${board.nextId})}+'\''" th:if="${board.nextId != 0}">
-			<img src="/resources/images/board/downArrow.png"><label style="cursor: pointer"
-				class="list-label">다음글</label><label style="cursor: pointer" th:text="${board.nextTitle}"></label>
+
+		<div style="cursor: pointer" class="next-board hover"
+			th:onclick="'location.href=\''+@{/board/detail(bid=${board.nextId})}+'\''"
+			th:if="${board.nextId != 0}">
+			<img src="/resources/images/board/downArrow.png"><label
+				style="cursor: pointer" class="list-label">다음글</label><label
+				style="cursor: pointer" th:text="${board.nextTitle}"></label>
 		</div>
 		<div class="next-board" th:unless="${board.nextId != 0}">
 			<img src="/resources/images/board/downArrow.png"><label
@@ -859,56 +1124,128 @@ width: 60px;
 					}
 
 				})
-	
 	</script>
-				
+
 	<script>
-				
 		function openComment(e) {
 
 			if ($(e).parentsUntil("comment-box").next().attr("hidden")) {
 				$(e).text('답글접기');
+				$(e).css('left',-38+'px')
 				$(e).parentsUntil("comment-box").next().removeAttr("hidden");
 				$(e).next().html(html);
-				
 
 			} else {
 				$(e).parentsUntil("comment-box").next(".refComment-writer")
 						.prop("hidden", "true");
+				$(e).css('left',-12+'px')
 				$(e).text('답글');
 			}
 		}
-		
 	</script>
-	
-	<div th:replace="admin/reportModal.html"></div>
-	
-	<script>
-	function loginPlz(){
-		if(confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')){
-			location.href="/member/login";
-		}
-	}
 
-	function report(e){
-		
-		let nickName = $(e).find("input[name=nickName]").val();
-		let id = $(e).find("input[name=id]").val();
-		let victim = $(e).find("input[name=victim]").val();
-		let suspect = $(e).find("input[name=suspect]").val();
-		let reportType = $(e).find("input[name=reportType]").val();
-		
-		$(".writer h3").text(nickName);
-		
-		let html = '<input type="hidden" name="id" value="' + id + '">'
-				 + '<input type="hidden" name="victim" value="' + victim + '">'
-				 + '<input type="hidden" name="suspect" value="' + suspect + '">'
-				 + '<input type="hidden" name="reportType" value="' + reportType + '">';
-		
-		$(".infoArea").html(html);
-	}
+	<div th:replace="admin/reportModal.html"></div>
+
+	<script>
+		function loginPlz() {
+			if (confirm('로그인 후 사용 가능한 서비스입니다. 로그인하시겠습니까?')) {
+				location.href = "/member/login";
+			}
+		}
+
+		function report(e) {
+
+			let nickName = $(e).find("input[name=nickName]").val();
+			let id = $(e).find("input[name=id]").val();
+			let victim = $(e).find("input[name=victim]").val();
+			let suspect = $(e).find("input[name=suspect]").val();
+			let reportType = $(e).find("input[name=reportType]").val();
+
+			$(".writer h3").text(nickName);
+
+			let html = '<input type="hidden" name="id" value="' + id + '">'
+					+ '<input type="hidden" name="victim" value="' + victim + '">'
+					+ '<input type="hidden" name="suspect" value="' + suspect + '">'
+					+ '<input type="hidden" name="reportType" value="' + reportType + '">';
+
+			$(".infoArea").html(html);
+		}
 	</script>
-	
+	<script>
+		//current position
+		var pos = 0;
+		//number of slides
+		var totalSlides = $('#slider-wrap ul li').length;
+		//get the slide width
+		var sliderWidth = $('#slider-wrap').width();
+
+		$(document).ready(function() {
+
+			$('#slider-wrap ul#slider').width(sliderWidth * totalSlides);
+
+			$('#next').click(function() {
+				slideRight();
+			});
+
+			$('#previous').click(function() {
+				slideLeft();
+			});
+
+			var autoSlider = setInterval(slideRight, 3000);
+
+			$.each($('#slider-wrap ul li'), function() {
+
+				var li = document.createElement('li');
+				$('#pagination-wrap ul').append(li);
+			});
+
+			countSlides();
+
+			pagination();
+
+			$('#slider-wrap').hover(function() {
+				$(this).addClass('active');
+				clearInterval(autoSlider);
+			}, function() {
+				$(this).removeClass('active');
+				autoSlider = setInterval(slideRight, 3000);
+			});
+
+		});//DOCUMENT READY
+
+		function slideLeft() {
+			pos--;
+			if (pos == -1) {
+				pos = totalSlides - 1;
+			}
+			$('#slider-wrap ul#slider').css('left', -(sliderWidth * pos));
+
+			//*> optional
+			countSlides();
+			pagination();
+		}
+
+		function slideRight() {
+			pos++;
+			if (pos == totalSlides) {
+				pos = 0;
+			}
+			$('#slider-wrap ul#slider').css('left', -(sliderWidth * pos));
+
+			//*> optional 
+			countSlides();
+			pagination();
+		}
+
+		function countSlides() {
+			$('#counter').html(pos + 1 + ' / ' + totalSlides);
+		}
+
+		function pagination() {
+			$('#pagination-wrap ul li').removeClass('active');
+			$('#pagination-wrap ul li:eq(' + pos + ')').addClass('active');
+		}
+	</script>
 	<div th:replace="common/footer.html"></div>
 
 </body>

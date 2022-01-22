@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.cp.campers.member.model.service.MemberService;
@@ -56,6 +57,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.formLogin() //로그인 설정
 				.loginPage("/member/login") // 로그인페이지
 				.successForwardUrl("/") //로그인 성공후 이동페이지
+				.successHandler(successHandler())
 				.failureHandler(failureHandler())
 			.and()
 				.logout() //로그아웃 설정
@@ -75,7 +77,11 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		
 		auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
 	}
-	
+	@Bean
+	public AuthenticationSuccessHandler successHandler() {
+		return new AuthSuccessureHandler();
+	}
+   
 	@Bean
 	public AuthenticationFailureHandler failureHandler() {
 		return new AuthFailureHandler();

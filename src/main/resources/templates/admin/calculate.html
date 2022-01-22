@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>정산 관리</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link href="/resources/css/admin/calculate.css" rel="stylesheet" type="text/css"></head>
 	<link href="/resources/css/common/header-footer-style.css" rel="stylesheet" type="text/css">
+</head>
 <body>
 <div th:replace="common/adminHeader.html"></div>
 
@@ -13,42 +15,40 @@
 
             <!-- 1. 정산 관리 -->
             <div class="calculate_area">
-                <div class="calculate_title">
-                    <h2>정산 관리</h2>
-                </div>
+            	<div class="flexBlock">
+                   	<!-- <span class="monthSelect">월별조회</span> -->
+                    <div class="calculate_title">정산 관리</div>
+                   	<div class="select_wrap">                <!-- th:onchange="|monthLoad(this, ${calculate.campNo})|"  -->   <!-- th:onchange="'monthLoad(this, '+${calculate.campNo}+')'" -->
+                        <select id="monInq" name="monInq" th:onchange="monthLoad(this)">
+							<option value="1" th:selected="${#strings.equals(param.month, '1')}">1</option>        	
+							<option value="2" th:selected="${#strings.equals(param.month, '2')}">2</option>        	
+							<option value="3" th:selected="${#strings.equals(param.month, '3')}">3</option>        	
+							<option value="4" th:selected="${#strings.equals(param.month, '4')}">4</option>        	
+							<option value="5" th:selected="${#strings.equals(param.month, '5')}">5</option>        	
+							<option value="6" th:selected="${#strings.equals(param.month, '6')}">6</option>        	
+				 			<option value="7" th:selected="${#strings.equals(param.month, '7')}">7</option>        	
+							<option value="8" th:selected="${#strings.equals(param.month, '8')}">8</option>        	
+							<option value="9" th:selected="${#strings.equals(param.month, '9')}">9</option>        	
+							<option value="10" th:selected="${#strings.equals(param.month, '10')}">10</option>        	
+							<option value="11" th:selected="${#strings.equals(param.month, '11')}">11</option>        	
+							<option value="12" th:selected="${#strings.equals(param.month, '11')}">12</option>        	
+                        </select>
+                    </div>
+            	</div>
                 <div class="calculate_list">
                     <ul class="calculate_header">
-                        <li class="calcul_num">속소번호</li>
+                        <li class="calcul_num">숙소번호</li>
                         <li class="business_name">사업자명</li>
                         <li class="account_num">계좌번호</li>
                         <li class="bank">은행</li>
-                        <li class="month">월</li>
-                        <li class="sales_amount">월별 판매금액</li>
-                        <li class="settlement_amount">월별 정산금액</li>
+                        <li class="sales_amount">판매금액</li>
+                        <li class="settlement_amount">정산금액</li>
                     </ul>
                     <ul class="calculate_header" th:each="calculate : ${ calculateList }">
                         <li id="campNo" class="calcul_num" th:text="${ calculate.campNo}"></li>
                         <li class="business_name" th:text="${ calculate.userName}"></li>
                         <li class="account_num"  th:text="${ calculate.accountNum}"></li>
                         <li class="bank" th:text="${ calculate.bank}"></li>
-                        <li class="monInq">  
-                        	<div class="select_wrap">                <!-- th:onchange="|monthLoad(this, ${calculate.campNo})|"  -->
-		                        <select id="monInq" name="monInq" th:onchange="'monthLoad(this, '+${calculate.campNo}+')'">
-									<option value="1" th:selected="${#strings.equals(param.month, '1')}">1</option>        	
-									<option value="2" th:selected="${#strings.equals(param.month, '2')}">2</option>        	
-									<option value="3" th:selected="${#strings.equals(param.month, '3')}">3</option>        	
-									<option value="4" th:selected="${#strings.equals(param.month, '4')}">4</option>        	
-									<option value="5" th:selected="${#strings.equals(param.month, '5')}">5</option>        	
-									<option value="6" th:selected="${#strings.equals(param.month, '6')}">6</option>        	
-						 			<option value="7" th:selected="${#strings.equals(param.month, '7')}">7</option>        	
-									<option value="8" th:selected="${#strings.equals(param.month, '8')}">8</option>        	
-									<option value="9" th:selected="${#strings.equals(param.month, '9')}">9</option>        	
-									<option value="10" th:selected="${#strings.equals(param.month, '10')}">10</option>        	
-									<option value="11" th:selected="${#strings.equals(param.month, '11')}">11</option>        	
-									<option value="12" th:selected="${#strings.equals(param.month, '11')}">12</option>        	
-		                        </select>
-                        	</div>
-                        </li>
                         <li class="sales_amount">500000</li>
                         <li class="settlement_amount">450000</li>
                     </ul>
@@ -91,17 +91,15 @@
    </div>
    
    <script>
-    function monthLoad(m, campNo){
+     function monthLoad(m, campNo){
     	
 	   let month = $(m).val();
 
-	   console.log("location.href=/admin/calculate?month="+month+"&campNo="+campNo);
+	   console.log("location.href=/admin/calculate?month="+month);
 	   
-	   location.href="/admin/calculate?month="+month+"&campNo="+campNo;
-	   //?month"+month+"&campNo="+campNo,
+	  // location.href="/admin/calculate?month="+month;
 	   
-	   
-   }
+   } 
     
    </script>
    

@@ -28,4 +28,6 @@ public interface MemberService extends UserDetailsService{
 
 	void disabledMember(String username);
 
+	void resetFailCount(int userNo);
+
 }

@@ -116,18 +116,21 @@
 	FROM MEMBER
 	WHERE USER_NAME = #{userName}
 	AND USER_PHONE = #{phone}
+	AND STATUS IN('Y','L')
    </select>
    
    <select id="readUser" resultMap="loginMemberResultMap" parameterType="com.cp.campers.member.model.vo.Member">
-   	SELECT USER_ID,USER_PWD,EMAIL
+   	SELECT USER_ID,USER_PWD,EMAIL,STATUS
 	FROM MEMBER
 	WHERE USER_ID = #{id}
 	AND EMAIL = #{email}
+	AND STATUS IN('Y','L')
    </select>
    
    <update id="modifyPw" parameterType="com.cp.campers.member.model.vo.Member">
    UPDATE MEMBER
-   SET USER_PWD = #{pwd}
+   SET USER_PWD = #{pwd},
+       STATUS = 'Y'
    WHERE USER_ID = #{id}
    </update>
    
@@ -154,6 +157,10 @@
    where user_id = #{username}
    </update>
    
-   
+   <update id="resetFailCount">
+   update member
+   set fail_count = 0
+   where user_no = #{userNo}
+   </update>
    
 </mapper>

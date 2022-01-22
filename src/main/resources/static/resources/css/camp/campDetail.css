@@ -196,7 +196,7 @@ ul, li {
     padding-left: 0.6em;;
     border: 1px solid #dadada;
 }
-#roomName{
+#roomSelect{
     width: 180px;
     height: 40px;
     padding: 5px 25px 5px 5px;
@@ -556,24 +556,16 @@ fieldset {
 
 /* 좋아요 버튼 */
 .heart {
-	
-	/*
-	position: relative;
-	*/
 	width: 24px;
 	height: 24px;	
 }
-/*
-.is-active {
-  transition-duration: 1s;
-  background-position: -2800px 0;
-}
-*/
+
 .likeCountDiv{
-	/* margin-left: 30px;
-	margin-top: -10px; */
+	position: relative;
 }
 
 .likeCount{
-	
+	position: absolute;
+    left: 65px;
+    bottom: 20px;
 }
