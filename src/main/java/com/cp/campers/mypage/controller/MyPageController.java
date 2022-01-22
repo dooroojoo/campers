@@ -865,5 +865,6 @@ public class MyPageController {
 		 
 		 return count;
 	 }
+		
 
 }
