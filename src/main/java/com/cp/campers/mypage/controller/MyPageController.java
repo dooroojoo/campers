@@ -799,13 +799,7 @@ public class MyPageController {
 	public String reserveDelete(int campNo, RedirectAttributes rttr, Locale locale) {
 		
 		int result = mypageService.reserveDelete(campNo);
-		
-		/*
-		if(result > 0) {
-			rttr.addFlashAttribute("successMessage", messageSource.getMessage("reserveCancle", null, locale));
-		}
-		*/
-		
+				
 		return "redirect:/mypage/mypageCampManagement";
 	}
 
