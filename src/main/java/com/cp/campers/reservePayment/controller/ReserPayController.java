@@ -24,42 +24,42 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class ReserPayController {
 
-	private ReserPayService reserPayService;
-	
-	@Autowired
-	public ReserPayController(ReserPayService reserPayService) {
-		this.reserPayService = reserPayService;
-	}
-	
-	
-	@GetMapping("/reserPay")
-	public String reserPay(Model model, @AuthenticationPrincipal UserImpl user) {
-			
-		model.addAttribute("userName", user.getUserName());
-		
-		 log.info("userName : {} ", user.getUserName());
-		
-		return "reservePayment/reserPay";
-	}
-	
-	/* 예약 및 결제 insert */
-	@ResponseBody
-	@PostMapping("/reserPay/insert")
-	public Map<String, String> insertReserPay(@ModelAttribute ReserveInfo reserveInfo, 
-			@ModelAttribute PaymentInfo paymentInfo, @AuthenticationPrincipal UserImpl user, Model model) {
-		
-		log.info("예약 정보 : {}", reserveInfo);
-		log.info("결제 정보 : {}", paymentInfo);
-		
-		reserveInfo.setUserNo(user.getUserNo());
-		
-		String msg = reserPayService.insertReserPay(reserveInfo, paymentInfo) > 0 ? "예약 및 결제가 완료되었습니다." : "예약 및 결제에 실패하였습니다.";
-		
-		Map<String, String> map = new HashMap<>();
-	    map.put("msg", msg);
-	      
-	    return map;
-	}
-	
-	
+private ReserPayService reserPayService;
+   
+   @Autowired
+   public ReserPayController(ReserPayService reserPayService) {
+      this.reserPayService = reserPayService;
+   }
+   
+   
+   @GetMapping("/reserPay")
+   public String reserPay(Model model, @AuthenticationPrincipal UserImpl user) {
+         
+      model.addAttribute("userName", user.getUserName());
+      
+       log.info("userName : {} ", user.getUserName());
+      
+      return "reservePayment/reserPay";
+   }
+   
+   /* 예약 및 결제 insert */
+   @ResponseBody
+   @PostMapping("/reserPay/insert")
+   public Map<String, String> insertReserPay(@ModelAttribute ReserveInfo reserveInfo, 
+         @ModelAttribute PaymentInfo paymentInfo, @AuthenticationPrincipal UserImpl user, Model model) {
+      
+      log.info("예약 정보 : {}", reserveInfo);
+      log.info("결제 정보 : {}", paymentInfo);
+      
+      reserveInfo.setUserNo(user.getUserNo());
+      
+      String msg = reserPayService.insertReserPay(reserveInfo, paymentInfo) > 0 ? "예약 및 결제가 완료되었습니다." : "예약 및 결제에 실패하였습니다.";
+      
+      Map<String, String> map = new HashMap<>();
+       map.put("msg", msg);
+         
+       return map;
+   }
+   
+   
 }
