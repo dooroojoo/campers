@@ -27,9 +27,6 @@
         <div class="reserPay_Wrap">
             <div class="reser_tit" th:text="|${param.campName}&${param.roomName}|"></div>
          <form  id="reserPayForm" method="post">
-<!--           <input type="hidden" name="roomNo" value="1">
-         <input type="hidden" name="checkIn" value="1/4">
-         <input type="hidden" name="checkOut" value="1/7">  -->
             <div class="reserPay_flex1">
                 <div class="reser_check">
                     <div class="reser_box">
@@ -43,7 +40,7 @@
                         <div class="inwonsu" th:text="'인원 : ' + ${param.guestNum}+ ' 명'"></div>
                         <div class="camDate_flex">
                            <img class="camcon" src="/resources/images/reservePayment/camping_Icon.png">
-                            <div class="befor_date">캠핑가기 <span class="camRedDate" ></span></div>
+                            <div class="befor_date">캠핑가기 <span class="camRedDate" ></span>일 전</div>
                         </div>
                     </div>
                 </div>
@@ -82,7 +79,7 @@
                 </span>
             </div>
             <div class="title1">
-                <span>예약자 정보</span>   <!--  <span th:text="${userName}" id="reserName"></span> -->
+                <span>예약자 정보</span>  
             </div>
             <div class="reserPay_inner">
                 <div class="reserName">예약자명<span class="red">(*)</span></div>
@@ -189,7 +186,7 @@
             </div>
             <div class="payText">
                 <div class="tit">[객실요금]</div>
-                <div class="addr">예약 날짜 :  2021년 12월 07일 (화)</div>
+                <!-- <div class="addr">예약 날짜 :  2021년 12월 07일 (화)</div> -->
                 <input type="hidden" id="roomPrice" name="roomPrice" th:value="${param.roomPrice}">
                 <div class="reserRoomSu">예약 객실 수량 :   <span id="date"></span>박 * <span th:text="${param.roomPrice} + '원 *'"></span> <span id="su"></span>(객실수) = <span id="total"></span>원</div>		
                 <input type="hidden" id="totalValue">
@@ -210,18 +207,21 @@
 	
 		<div th:include="common/footer.html"></div>
 
+
+	<!-- Dday -->
 <script>
-
-	/* const dateIn = document.querySelector("#dateIn");
-	console.log(dateIn);
-	
-	var today = new Date();
-	var dday = new Date(2020,10,30);
-	var gap = dday.getTime() - today.getTime();
-	var result = Math.ceil(gap / (1000 * 60 * 60 * 24));
-	
-	console.log(result); */
-
+	$(document).ready(function(){
+		let dateIn = $("#dateIn").val();
+		let dateOut = $("#dateOut").val();
+		let arr1 = dateIn.split('-');
+		let arr2 = dateOut.split('-');
+		let date1 = new Date(arr1[0], arr1[1], arr1[2]);
+		let date2 = new Date(arr2[0], arr2[1], arr2[2]); 
+		let diff = date2 - date1;
+		let currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+		let dateResult = parseInt(diff/currDay);
+		$('.camRedDate').text(dateResult);
+	});
 </script>		
 		
 	
@@ -289,9 +289,6 @@
 			$("#totalValue").val(total);
 			$('#su').text(roomQua);
 			$("#date").text(dateResult);
-			
-			
-			
     });
     
     
@@ -379,11 +376,7 @@
 		 let agreeChk3 = document.querySelector('#agreeChk3');
 		 let agreeChk4 = document.querySelector('#agreeChk4');
 		 let chk2 = document.querySelector('#chk2');
-		 
-	     
-	     if(!check(/^[가-힣]{2,}$/, document.getElementById('reserName'),
-	     "이름은 한글로 2글자 이상 입력하세요"))
-             return false;   
+		   
 	     if(!check(/^\d{3}-\d{3,4}-\d{4}$/, document.getElementById('phone'), 
          "핸드폰 번호는 -를 포함한 숫자로만 입력해주세요"))
 	    	 return false;
@@ -405,13 +398,7 @@
 	    	 alert("이용약관에 동의하셔야 합니다");
 	         return false;
 	     }
-	     	
-	     
-		     requestPay();
-	    /*  if($('#card').is(':checked') == true ) {
-	     } else {
-	    	 
-	     } */
+		 requestPay();
 	}
 
 	// 정규 표현식 객체, 사용자가 input태그에 입력한 태그, 그때 내가 전달할 메세지 
