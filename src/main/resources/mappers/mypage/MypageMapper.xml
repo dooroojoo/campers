@@ -850,6 +850,8 @@
        JOIN CAMP_FILE F ON (F.CAMP_NO = C.CAMP_NO)
        JOIN IMAGEFILE I ON (I.FILE_NO = F.FILE_NO)
       WHERE C.USER_NO = #{ userNo }
+        AND I.FILE_STATUS = 'N'
+        AND I.FILE_LEVEL = 0
     </select>
     
     <select id="selectWishCampList" resultMap="WishCampListResultMap">
