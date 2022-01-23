@@ -254,8 +254,23 @@ input[type="number"] {
 .list-top-text{
     margin-left: 5%;
     border-bottom: 1px solid #dfdfdf;
-    
+    display: flex;
+    justify-content:space-between;
 }
+
+.list-top-text select { 
+	width: 100px;
+	height: 47px;
+	-webkit-appearance: none;
+	-moz-appearance: none; 
+	appearance: none; 
+	background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;
+	border: none; 
+	border-radius: 0px;
+	padding: .8em .5em;
+	font-family: inherit;
+}
+
 
 .list-col-img{
     height: 180px;
@@ -376,3 +391,25 @@ input[type="number"] {
 .member_paging .current_page a{
     color: white;
 }
+
+.search-camping-form{
+	margin-bottom: 20%;
+}
+
+.find-refresh{
+	text-align: right;
+}
+.refresh-label{
+	font-size: 14px;
+}
+
+.refresh-label a{
+	text-decoration: none;
+	color: black;
+}
+
+.refresh-label img{
+	width: 15px;
+	height: 15px;
+}
+

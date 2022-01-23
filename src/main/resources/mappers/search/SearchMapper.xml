@@ -114,7 +114,26 @@
                 AND F.FILE_STATUS = 'N' 
                 AND F.FILE_LEVEL = 0 
               GROUP BY C.CAMP_NO, C.CAMP_NAME, C.CAMP_ADDRESS, F.FILE_ROUTE, F.FILE_NAME
+              <choose>
+			  <when test="option == 1">	
               ORDER BY C.CAMP_NAME ASC
+              </when>
+              <when test="option == 2">	
+              ORDER BY C.CAMP_NO DESC
+              </when>
+              <when test="option == 3">	
+              ORDER BY MAX(R.ROOM_MEMBER) DESC
+              </when>
+              <when test="option == 4">	
+              ORDER BY MIN(R.ROOM_PRICE) ASC
+              </when>
+              <when test="option == 5">	
+              ORDER BY MAX(R.ROOM_PRICE) DESC
+              </when>
+              <when test="option == 6">	
+              ORDER BY MAX(R.ROOM_MEMBER) ASC
+              </when>
+              </choose>
 		 )A)
 		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>

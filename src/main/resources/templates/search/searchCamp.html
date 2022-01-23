@@ -33,6 +33,13 @@
         <div class="search-check">
             <div class="search-form">
                 <form class="search-camping-form" action="/search/find" method="get">
+                
+                 <div class="find-refresh">
+		            	<label class="refresh-label">
+		            		<a href="/search/camp"><img src="/resources/images/search/refresh.png">선택 초기화</a>
+		            	</label>
+		            </div>
+		            
                    <p>지역</p>
                    <label class="search-area search-container">
                    <input type="text" placeholder="어디로 여행가세요?" name="area" required>
@@ -140,6 +147,14 @@
                 <!-- 아래 코드는 submit 버튼 눌렀을 때에만 나타나게 -->
                 <div class="list-top-text">
                  <p th:text="${ searchSize }"></p>
+                 <select name="option" id="option" class="select" th:value="${option}">
+				  <option value="1" th:selected="${option}==1">이름순</option>
+				  <option value="2" th:selected="${option}==2">최신등록순</option>
+				  <option value="6" th:selected="${option}==6">최소인원순</option>
+				  <option value="3" th:selected="${option}==3">최대인원순</option>
+				  <option value="4" th:selected="${option}==4">최소가격순</option>
+				  <option value="5" th:selected="${option}==5">최대가격순</option>
+				</select>
                   </div>
                   
 
@@ -158,7 +173,7 @@
                       <li class="list-col-name" style="cursor:pointer" th:text="${search.cName}"
                       th:onclick="|location.href='@{/camp/detail(campNo=${search.cNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></li>
                       <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span>인</li>
-                      <li class="list-col-price"><span th:text="${search.minPrice}+'~'+${search.maxPrice}"></span>원</li>
+                      <li class="list-col-price"><span th:text="${#numbers.formatInteger(search.minPrice, 3, 'COMMA')}+'~'+${#numbers.formatInteger(search.maxPrice, 3, 'COMMA')}"></span>원</li>
                     </ul>
                   </div>
                 </div>
@@ -244,5 +259,19 @@
       });
 
 	  </script>
+	  
+	  
+	  
+	  <script>
+	  var cc = jQuery.noConflict();
+	  cc(function(){
+		  cc(".select").change(function() {
+			  optionVal = cc("#option").val();
+				
+			  location.href="/search/camp?page=1&option="+optionVal;
+				
+			});
+		});
+	</script> 
 </body>
 </html>
