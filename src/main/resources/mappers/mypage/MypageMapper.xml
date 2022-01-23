@@ -734,6 +734,7 @@
               ORDER BY USER_NO DESC) A)     
      </select>
      
+     <!-- 회원 예약내역 조회 -->
      <select id="selectMyGuestReserveList" parameterType="hashmap" resultMap="reserveResultMap">
      SELECT * 
          FROM (SELECT ROWNUM RNUM, A.*
@@ -763,7 +764,8 @@
                       LEFT JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
                      WHERE RV.USER_NO = #{userNo}
                        AND I.FILE_STATUS = 'N'
-                       AND I.FILE_LEVEL = 0) A)
+                       AND I.FILE_LEVEL = 0
+                     ORDER BY RESER_NO DESC) A)
        WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
      </select>
      

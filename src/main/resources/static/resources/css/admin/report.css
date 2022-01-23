@@ -31,8 +31,6 @@ ul, li {
 
 .report_list>ul>li { /* 신고 사유 text */
     padding: 5px;
-    /* white-space: pre-wrap; */
-    /* overflow: visible; */
     word-break: break-all;
 }
 
@@ -82,9 +80,16 @@ ul, li {
     width: 36%;
     text-decoration: line-through;
 }
-
+.report_list .report_reason {
+    width: 36%;
+}
+/* 신고 사유 */
+.report_list .report_reason a{
+	color: black;
+    text-decoration: none;
+}
 .report_id:hover,
-.report_reason:hover {
+.report_reason a:hover {
     cursor: pointer;
     text-decoration: underline;
 }
