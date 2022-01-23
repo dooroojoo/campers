@@ -78,7 +78,6 @@
 					<th:block sec:authorize="hasRole('MEMBER')">
 					<div class="mypage_content_top">찜한 캠핑장</div>
 					<div class="main-slide-wrapper">
-						<div class="slide-container" th:each="slide : ${mainSlider}">
 							<div class="main-slide" id="slide">
 								<div class="slider">
 									<div th:each="wishCamp : ${ wishCampList }">
@@ -102,8 +101,6 @@
 						            </th:block>
 						             -->
 								</div>
-								<input type="hidden" class="slide-cNo" th:value="${slide.cRNo}">
-							</div>
 						</div>
 					</div>
 					</th:block>
@@ -113,7 +110,6 @@
 					<th:block sec:authorize="hasRole('COMPANY')">
 					<div class="mypage_content_top">내 숙소 리스트</div>
 					<div class="main-slide-wrapper">
-						<div class="slide-container" th:each="slide : ${mainSlider}">
 							<div class="main-slide" id="slide">
 								<div class="slider">
 									<div th:each="mypageCampManagement : ${ mypageCampManagementList }">
@@ -135,8 +131,6 @@
 								        </div>	            
 						            </th:block>
 						             -->
-								</div>
-								<input type="hidden" class="slide-cNo" th:value="${slide.cRNo}">
 							</div>
 						</div>
 					</div>
