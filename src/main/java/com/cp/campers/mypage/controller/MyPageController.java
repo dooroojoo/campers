@@ -161,7 +161,7 @@ public class MyPageController {
 		
 		// 리다이렉트
 		return "redirect:/mypage";
-	}
+	} 
 
 	/* 회원 정보 */
 	@GetMapping("/changinfo")
