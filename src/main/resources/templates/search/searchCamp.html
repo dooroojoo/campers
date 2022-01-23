@@ -144,7 +144,6 @@
               <div class="search-list-top">
 
 				
-                <!-- 아래 코드는 submit 버튼 눌렀을 때에만 나타나게 -->
                 <div class="list-top-text">
                  <p th:text="${ searchSize }"></p>
                  <select name="option" id="option" class="select" th:value="${option}">
@@ -173,7 +172,9 @@
                       <li class="list-col-name" style="cursor:pointer" th:text="${search.cName}"
                       th:onclick="|location.href='@{/camp/detail(campNo=${search.cNo},dateIn=${dateIn},dateOut=${dateOut},guest=2)}'|"></li>
                       <li class="list-col-count">최대인원 <span th:text="${search.maxGuest}"></span>인</li>
-                      <li class="list-col-price"><span th:text="${#numbers.formatInteger(search.minPrice, 3, 'COMMA')}+'~'+${#numbers.formatInteger(search.maxPrice, 3, 'COMMA')}"></span>원</li>
+                      <li class="list-col-price">
+                      <span th:text="${#numbers.formatInteger(search.minPrice, 3, 'COMMA')}+'~'+
+                      ${#numbers.formatInteger(search.maxPrice, 3, 'COMMA')}"></span>원</li>
                     </ul>
                   </div>
                 </div>
