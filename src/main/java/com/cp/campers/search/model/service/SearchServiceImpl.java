@@ -23,7 +23,7 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public Map<String, Object> campAllSearch(int nowPage) {
+	public Map<String, Object> campAllSearch(int nowPage, int option) {
 		
 		// 페이지 전체 개수 조회
 		int listCount = searchMapper.campListCount();
@@ -34,7 +34,7 @@ public class SearchServiceImpl implements SearchService{
 		int endRow = startRow + pi.getCampLimit() - 1;
 		
 		// 3. 페이징 처리 된 게시글 목록 조회
-		List<SearchCamp> campAllList = searchMapper.campAllSearch(startRow, endRow);
+		List<SearchCamp> campAllList = searchMapper.campAllSearch(startRow, endRow, option);
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		
@@ -129,6 +129,11 @@ public class SearchServiceImpl implements SearchService{
 		returnMap.put("pi", pi);
 				
 		return returnMap;
+	}
+
+	@Override
+	public List<SearchCamp> selectOptionCamp(int optionVal) {
+		return searchMapper.selectOptionCamp(optionVal);
 	}
 
 

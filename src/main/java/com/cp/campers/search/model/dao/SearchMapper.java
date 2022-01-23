@@ -17,7 +17,7 @@ public interface SearchMapper {
 	int mainSearchCount(Map<String, Object> map);
 	
 	/* 캠핑장 검색페이지에서 전체 조회 및 페이징 처리 */
-	List<SearchCamp> campAllSearch(int startRow, int endRow);
+	List<SearchCamp> campAllSearch(int startRow, int endRow, int option);
 
 	/* 게시글 총 개수 구하기 */
 	int campListCount();
@@ -27,6 +27,9 @@ public interface SearchMapper {
 
 	// 캠핑장 검색페이지에서 조건 검색 조회
 	List<SearchCamp> campFindSearch(Map<String, Object> map);
+
+	// 전체 조회에서 정렬 조회
+	List<SearchCamp> selectOptionCamp(int optionVal);
 
 
 

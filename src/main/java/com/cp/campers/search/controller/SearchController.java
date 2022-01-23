@@ -33,15 +33,20 @@ public class SearchController {
 	// 캠핑장검색 페이지 이동 시 전체 목록 조회
 	@GetMapping("camp")
 	public ModelAndView searchCamp(ModelAndView mv,
-								@RequestParam(value="page", required=false) String page) {
+								@RequestParam(value="page", required=false) String page,
+								@RequestParam(value="option", required=false) String optionVal ){
 		
 		int nowPage = 1;
+		int option = 1;
 		
 		if(page != null) {
 			nowPage = Integer.parseInt(page);
 		}
+		if(optionVal != null) {
+			option = Integer.parseInt(optionVal);
+		}
 		
-		Map<String, Object> map = searchService.campAllSearch(nowPage);
+		Map<String, Object> map = searchService.campAllSearch(nowPage, option);
 		
 		// 선택 없이 상세페이지 접속할 때 한달 후로 날짜 지정 (임시)
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -60,11 +65,12 @@ public class SearchController {
 		mv.addObject("pi", map.get("pi"));
 		mv.addObject("campSearch", map.get("campAllList"));
 		mv.addObject("searchSize", map.get("searchSize"));
+		mv.addObject("option", option);
 		mv.setViewName("search/searchCamp");
 		
 		return mv;
 	}
-	
+
 	
 	// 캠핑장검색 페이지에서 조건 검색 조회
 	@GetMapping("find")
@@ -85,14 +91,14 @@ public class SearchController {
 			nowPage = Integer.parseInt(page);
 		}
 		
-		log.info(area);
-		log.info(daterange);
-		log.info("guest : " + quantity);
-		log.info("name : " + name);
-		log.info("page : " + page);
-		log.info("type : " + typeArr);
-		log.info("faci : " + facilityArr);
-		log.info("floor : " + floorArr);
+//		log.info(area);
+//		log.info(daterange);
+//		log.info("guest : " + quantity);
+//		log.info("name : " + name);
+//		log.info("page : " + page);
+//		log.info("type : " + typeArr);
+//		log.info("faci : " + facilityArr);
+//		log.info("floor : " + floorArr);
 		
 		
 		// 날짜 자르기
