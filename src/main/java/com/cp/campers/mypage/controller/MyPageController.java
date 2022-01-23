@@ -187,9 +187,10 @@ public class MyPageController {
 	/* 회원탈퇴 입력 폼 */
 	@PostMapping("/changinfo/changinfoMemberout")
 	@ResponseBody
-	public String changeInfoMemberout(Model model, Member member,
+	public String changeInfoMemberout(@AuthenticationPrincipal UserImpl user, Model model, Member member,
 			RedirectAttributes rttr, Locale locale) {
 		
+		member.setUserNo(user.getUserNo());
 		log.info("@@@@@@@@member="+member);
 				
 		int result = mypageService.changeInfoMemberout(member);
@@ -277,17 +278,18 @@ public class MyPageController {
 	 /* 비밀번호 체크 */	
 	 @PostMapping("/pwdCheck")	 
 	 @ResponseBody /*Member member, Model model*/
-	 public String pwdCheck(Member member, @RequestBody String pwd, HttpSession session) {	 
+	 public String pwdCheck(Member member, @RequestBody String pwd,@AuthenticationPrincipal UserImpl user, HttpSession session) {	 
 	 /*member에 id를 가져와서 userPwd로 비밀번호 체크 String userPwd =*/
 		 log.info("비밀번호 확인 요청 발생");
 		 
 		 String result = null;
 		 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		 
+		 member.setId(user.getId());
 		 member.setPwd(pwd);
 		 log.info("member 비밀번호 확인용 : " + member.getPwd());
 		 log.info("form 에서 받아온 비밀번호 : " + pwd);
-		 
+		 log.info("member 정보 : " + member.toString());
 		 if(encoder.matches(pwd, member.getPwd())) {
 			 result ="pwdConfirmOK";
 		 } else {
@@ -330,12 +332,12 @@ public class MyPageController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 		
-//		log.info("비밀번호변경 member 정보 : " + member.toString());
-//		//log.info("newPwd 정보 : " + newPwd.toString());
-//		
-//		log.info("pwd : " + pwd.toString());
-//		log.info("newPwd : " + newPwd.toString());
-//		log.info("userId : " + userId.toString());
+		log.info("비밀번호변경 member 정보 : " + member.toString());
+		log.info("newPwd 정보 : " + newPwd.toString());		
+		log.info("pwd : " + pwd.toString());
+		log.info("newPwd : " + newPwd.toString());
+		log.info("userId : " + userId.toString());
+		
 		
 		mypageService.pwdUpdate(userId, pwd, passwordEncoder.encode(newPwd));
 

@@ -97,7 +97,7 @@ public class SearchController {
 //		log.info("name : " + name);
 //		log.info("page : " + page);
 //		log.info("type : " + typeArr);
-//		log.info("faci : " + facilityArr);
+		log.info("faci : " + facilityArr);
 //		log.info("floor : " + floorArr);
 		
 		
@@ -159,11 +159,11 @@ public class SearchController {
 			nowPage = Integer.parseInt(page);
 		}
 		
-		log.info(area);
-		log.info(daterange);
-		log.info("guest : " + quantity);
-		log.info("page : " + page);
-		log.info("type : " + typeArr);
+//		log.info(area);
+//		log.info(daterange);
+//		log.info("guest : " + quantity);
+//		log.info("page : " + page);
+//		log.info("type : " + typeArr);
 		
 		
 		// 날짜 자르기

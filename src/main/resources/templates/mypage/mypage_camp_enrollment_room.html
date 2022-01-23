@@ -307,7 +307,7 @@
     		nameCheck = true;    		
     	} else{
     		$(".roomPriceCheck").prop('checked',false);
-    		$(".roomPriceRed").text("객실 가격을 숫자와 , 만 입력해주세요.")
+    		$(".roomPriceRed").text("객실 가격을 숫자만 입력해주세요.")
     	}
     }).on("focusout","#roomPrice",function(){
     	let regExp = /^[0-9,]+$/;
@@ -315,7 +315,7 @@
     		$(".roomPriceCheck").prop('checked', true);
     		nameCheck = true;    		
     	} else{
-    		$(".roomPriceRed").text("객실 가격을 숫자와 , 입력해주세요.")
+    		$(".roomPriceRed").text("객실 가격을 숫자만 입력해주세요.")
     		nameCheck = false;
     	}
     })
