@@ -500,8 +500,8 @@
 	<!-- parameterType="com.cp.campers.member.model.vo.Member" -->
 	<update id="pwdUpdate" parameterType="map">
 		UPDATE MEMBER
-		   SET USER_PWD = #{ pwd }
-		 WHERE USER_ID = #{ id }
+		   SET USER_PWD = #{ newPwd }
+		 WHERE USER_ID = #{ userId }
 		   AND USER_PWD = #{ pwd }
 	</update>	
 	
