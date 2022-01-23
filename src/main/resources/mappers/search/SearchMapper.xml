@@ -186,9 +186,10 @@
 				 #{type}
 				 </foreach>
 			   </if>
-			    <if test="faci != null and !faci.isEmpty() and !''.equals(faci) and faci.size != 0">
-			    <foreach item="faci" collection="faci">
-			     AND L.FACILITY_NAME = #{faci}
+			   <if test="faci != null and !faci.isEmpty() and !''.equals(faci) and faci.size != 0">
+			    AND L.FACILITY_NAME IN
+			    <foreach item="faci" collection="faci" open="(" separator="," close=")">
+			     #{faci}
 			    </foreach>
 			    </if>
 			     <if test="floor != null and !floor.isEmpty() and !''.equals(floor) and floor.size != 0">
@@ -243,8 +244,9 @@
 				 </foreach>
 			   </if>
 			    <if test="faci != null and !faci.isEmpty() and !''.equals(faci) and faci.size != 0">
-			    <foreach item="faci" collection="faci">
-			     AND L.FACILITY_NAME = #{faci}
+			    AND L.FACILITY_NAME IN
+			    <foreach item="faci" collection="faci" open="(" separator="," close=")">
+			     #{faci}
 			    </foreach>
 			    </if>
 			     <if test="floor != null and !floor.isEmpty() and !''.equals(floor) and floor.size != 0">
