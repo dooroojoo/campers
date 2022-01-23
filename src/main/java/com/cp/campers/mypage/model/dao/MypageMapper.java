@@ -155,7 +155,7 @@ public interface MypageMapper {
 	List<WishCamp> selectWishCampList(int userNo);
 
 	Camp campDetail(int campNo);
-	
+	 
 	List<MypageCampManagement> selectmypageCampManagementList(Map<String, Object> param);
 
 	void insertImageNo3(int roomNo);

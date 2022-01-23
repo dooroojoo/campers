@@ -83,7 +83,7 @@ public interface MypageService{
 	String roomInsert(Room room);
 
 	void roomImageInsert(Attachment atta2);
-
+ 
 	Map<String, Object> selectwishCampList(int userNo, int page);
 
 	Map<String, Object> selectMyWishCampList(int userNo, int page);

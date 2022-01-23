@@ -479,7 +479,7 @@ public class MypageServiceImpl implements MypageService{
 		map.put("wishCampList", wishCampList);
 				
 		return map;
-	}
+	} 
 
 	@Override
 	public String campLikeUp(Map<String, Object> param) {
