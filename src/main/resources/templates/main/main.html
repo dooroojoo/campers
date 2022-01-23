@@ -28,6 +28,7 @@
 	}
 </script>
 </head>
+
 <body>
 
     <!-- header -->
@@ -91,7 +92,7 @@
         <!-- 슬라이드 형식 추천 리스트 -->
         <div class="main-gallery bestCamping">
           <div class="mian-gallery-title">
-            캠퍼스 추천! 겨울에 가면 더 좋은 캠핑장
+            캠퍼스 추천! 겨울에 가면 더 좋은 강원도 캠핑장
           </div>
             <div class="main-slider">
               <div class="prev" id="main-arrow"><img src="resources/images/main/prev.png"></div>
@@ -100,7 +101,8 @@
                 <div class="slide-container" th:each="slide : ${mainSlider}">
                 <div class="main-slide" id="slide">
                   <img class="slideImg" th:src="@{${slide.fRRoute}+${slide.fRName}}" style="cursor:pointer"
-                  th:onclick="|location.href='@{/camp/detail(campNo=${slide.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|"></div>
+                  th:onclick="|location.href='@{/camp/detail(campNo=${slide.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|">
+                  </div>
                   <div class="slide-text" th:text="${slide.cRName}"></div>
                   <input type="hidden" class="slide-cNo" th:value="${slide.cRNo}">
                 </div>
@@ -135,9 +137,10 @@
          	<div class="main-best-content">
           
             <div class="main-img-wrap" th:each="best : ${mainBestList}">
-              <div class="main-best-img" style="cursor:pointer">
-              <img class="bestImg" th:src="@{${best.fRRoute}+${best.fRName}}" style="cursor:pointer"
+              <div class="main-best-img"
               th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|">
+              <div class="best-img" th:style="'background-image:url(' + @{${best.fRRoute}+${best.fRName}} + ');
+              background-repeat: no-repeat; background-position: 50% 50%; background-size:90% 90%;cursor:pointer;height:150px;'"></div>
               <p class="main-best-title text" th:text="${best.cRName}"
               style="cursor:pointer"
               th:onclick="|location.href='@{/camp/detail(campNo=${best.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|"></p>
@@ -162,10 +165,10 @@
 
             <div class="main-img-wrap" th:each="mainNew : ${mainNewList}">
             <input type="hidden" class="new-cNo" th:value="${mainNew.cRNo}">
-              <div class="main-best-img" style="cursor:pointer">
-              <img class="newImg" th:src="@{${mainNew.fRRoute}+${mainNew.fRName}}"
-              style="cursor:pointer"
+              <div class="main-best-img" id="new-img" style="cursor:pointer" 
               th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|">
+              <div class="best-img" th:style="'background-image:url(' + @{${mainNew.fRRoute}+${mainNew.fRName}} + ');
+              background-repeat: no-repeat; background-position: 50% 50%; background-size:90% 90%;cursor:pointer;height:150px;'"></div>
               <p class="main-best-title text" th:text="${mainNew.cRName}"
               style="cursor:pointer"
               th:onclick="|location.href='@{/camp/detail(campNo=${mainNew.cRNo},dateIn=${dateIn},dateOut=${dateOut},guest=0)}'|"></p>
