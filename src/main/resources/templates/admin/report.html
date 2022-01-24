@@ -61,8 +61,11 @@
                         <li class="delete" th:if="${#strings.equals(report.reportType, 'board')} AND ${report.boardStatus}=='Y'">
                        		<a th:text="${report.reason}"></a>
                         </li>
-                        <li class="report_reason" th:if="${#strings.equals(report.reportType, 'reply')} AND ${report.replyStatus}=='N'">
+                        <li class="report_reason" th:if="${#strings.equals(report.reportType, 'reply')} AND ${report.replyStatus}=='N' AND ${report.boardStatus}=='N'">
                         	<a th:text="${report.reason}" th:href="@{/board/detail(bid=${report.bid})}"></a>
+                        </li>
+                        <li class="delete" th:if="${#strings.equals(report.reportType, 'reply')} AND ${report.replyStatus}=='N' AND ${report.boardStatus}=='Y'">
+                        	<a th:text="${report.reason}"></a>
                         </li>
                         <li class="delete" th:if="${#strings.equals(report.reportType, 'reply')} AND ${report.replyStatus}=='Y'">
                         	<a th:text="${report.reason}"></a>

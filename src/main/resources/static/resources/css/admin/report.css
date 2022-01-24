@@ -33,6 +33,16 @@ ul, li {
     padding: 5px;
     word-break: break-all;
 }
+/* 신고 사유 */
+.report_list .report_reason a{
+	color: black;
+    
+}
+.report_id:hover,
+.report_reason a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 .report_list>ul {
     min-height: 60px;
@@ -83,16 +93,7 @@ ul, li {
 .report_list .report_reason {
     width: 36%;
 }
-/* 신고 사유 */
-.report_list .report_reason a{
-	color: black;
-    text-decoration: none;
-}
-.report_id:hover,
-.report_reason a:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
+
 
 /* 완료 버튼 */
 .report_update button {
