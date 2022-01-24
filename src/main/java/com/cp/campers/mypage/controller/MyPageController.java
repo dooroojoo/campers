@@ -191,6 +191,7 @@ public class MyPageController {
 			RedirectAttributes rttr, Locale locale) {
 		
 		member.setUserNo(user.getUserNo());
+		member.setPwd(user.getPwd());
 		log.info("@@@@@@@@member="+member);
 				
 		int result = mypageService.changeInfoMemberout(member);

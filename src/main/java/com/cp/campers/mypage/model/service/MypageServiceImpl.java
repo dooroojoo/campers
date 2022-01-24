@@ -170,13 +170,13 @@ public class MypageServiceImpl implements MypageService{
 	public int changeInfoMemberout(Member member) {
 		String pwd = mypageMapper.selectPwd(member);
 		
+		log.info("impl pwd : "+pwd.toString());
+		log.info("impl member : "+member.toString());
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if(encoder.matches(member.getPwd(), pwd)) {
 			return mypageMapper.changeInfoMemberout(member);
 		}
-		log.info("impl pwd : "+pwd.toString());
-		log.info("impl member : "+member.toString());
 		
 		return 0;
 	}
