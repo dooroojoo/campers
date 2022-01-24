@@ -38,11 +38,11 @@ KH 정보교육원 파이널프로젝트 'CAMPERS'
 
 ## 설계 
 
-- #### ERD <a href="https://github.com/dooroojoo/campers/src/main/resources/static/resources/images/search/erd2.png"> Click</a>
-- #### Class Diagram - main<a href="https://github.com/dooroojoo/campers/src/main/resources/static/resources/images/search/class-main.png"> Click</a>
-- #### Class Diagram - searchCamp <a href="https://github.com/dooroojoo/campers/src/main/resources/static/resources/images/search/search-main.png"> Click</a>
-- #### Process Diagram <a href="https://github.com/dooroojoo/campers/src/main/resources/static/resources/images/search/process.png"> Click</a>
-- #### Sequence Diagram <a href="https://github.com/dooroojoo/campers/src/main/resources/static/resources/images/search/sequence.png"> Click</a>
+- #### ERD <a href="src/main/resources/static/resources/images/search/erd2.png"> Click</a>
+- #### Class Diagram - main<a href="src/main/resources/static/resources/images/search/class-main.png"> Click</a>
+- #### Class Diagram - searchCamp <a href="src/main/resources/static/resources/images/search/search-main.png"> Click</a>
+- #### Process Diagram <a href="src/main/resources/static/resources/images/search/process.png"> Click</a>
+- #### Sequence Diagram <a href="src/main/resources/static/resources/images/search/sequence.png"> Click</a>
 
 <br>
 
