@@ -632,6 +632,41 @@
            AND RESER_STATE = 'Y'
      </select>
      
+          <!-- 회원 예약내역 조회 -->
+     <select id="selectMyGuestReserveList" parameterType="hashmap" resultMap="reserveResultMap">
+     SELECT * 
+         FROM (SELECT ROWNUM RNUM, A.*
+               FROM (SELECT RESER_NO
+                       , RV.USER_NO
+                       , RESER_NAME
+                       , RESER_STATE
+                       , RV.CHECKIN
+                       , RV.CHECKOUT
+                       , FLOOR(SYSDATE - to_date(RV.CHECKOUT, 'YYYY-MM-DD')) DEADLINE
+                       , RV.ROOM_NO
+                       , ROOM_NAME
+                       , WRITE_OR_NOT
+                       , C.CAMP_NO
+                       , CAMP_NAME
+                       , CAMP_ADDRESS
+                       , CAMP_PHONE
+                       , I.FILE_NO
+                       , I.FILE_NAME
+                       , I.FILE_ROUTE
+                       , I.FILE_LEVEL
+                      FROM RESERVE RV
+                      LEFT JOIN MEMBER M ON(RV.USER_NO = M.USER_NO)
+                      LEFT JOIN ROOM R ON(RV.ROOM_NO = R.ROOM_NO)
+                      LEFT JOIN CAMP C ON(R.CAMP_NO = C.CAMP_NO)
+                      LEFT JOIN CAMP_FILE CF ON(C.CAMP_NO = CF.CAMP_NO)
+                      LEFT JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
+                     WHERE RV.USER_NO = #{userNo}
+                       AND I.FILE_STATUS = 'N'
+                       AND I.FILE_LEVEL = 0
+                     ORDER BY RESER_NO DESC) A)
+       WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
+     </select>
+     
      <select id="getListCountMyBoard" resultType="int">
       select count(*)
       from board
@@ -734,38 +769,7 @@
               ORDER BY USER_NO DESC) A)     
      </select>
      
-     <select id="selectMyGuestReserveList" parameterType="hashmap" resultMap="reserveResultMap">
-     SELECT * 
-         FROM (SELECT ROWNUM RNUM, A.*
-               FROM (SELECT RESER_NO
-                       , RV.USER_NO
-                       , RESER_NAME
-                       , RESER_STATE
-                       , RV.CHECKIN
-                       , RV.CHECKOUT
-                       , FLOOR(SYSDATE - to_date(RV.CHECKOUT, 'YYYY-MM-DD')) DEADLINE
-                       , RV.ROOM_NO
-                       , ROOM_NAME
-                       , WRITE_OR_NOT
-                       , C.CAMP_NO
-                       , CAMP_NAME
-                       , CAMP_ADDRESS
-                       , CAMP_PHONE
-                       , I.FILE_NO
-                       , I.FILE_NAME
-                       , I.FILE_ROUTE
-                       , I.FILE_LEVEL
-                      FROM RESERVE RV
-                      LEFT JOIN MEMBER M ON(RV.USER_NO = M.USER_NO)
-                      LEFT JOIN ROOM R ON(RV.ROOM_NO = R.ROOM_NO)
-                      LEFT JOIN CAMP C ON(R.CAMP_NO = C.CAMP_NO)
-                      LEFT JOIN CAMP_FILE CF ON(C.CAMP_NO = CF.CAMP_NO)
-                      LEFT JOIN IMAGEFILE I ON(I.FILE_NO = CF.FILE_NO)
-                     WHERE RV.USER_NO = #{userNo}
-                       AND I.FILE_STATUS = 'N'
-                       AND I.FILE_LEVEL = 0) A)
-       WHERE RNUM BETWEEN #{ pi.startRow } AND #{ pi.endRow }
-     </select>
+
      
      <update id="reserveCancle">
         UPDATE RESERVE
